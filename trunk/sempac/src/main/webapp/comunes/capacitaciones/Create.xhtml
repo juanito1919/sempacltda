@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CapacitacionesCreateDlg" widgetVar="CapacitacionesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCapacitacionesTitle}">
+            <h:form id="CapacitacionesCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{capacitacionesController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_idCapacitaciones}" for="idCapacitaciones" />
+                        <p:inputText id="idCapacitaciones" value="#{capacitacionesController.selected.idCapacitaciones}" title="#{bundle.CreateCapacitacionesTitle_idCapacitaciones}" required="true" requiredMessage="#{bundle.CreateCapacitacionesRequiredMessage_idCapacitaciones}"/>
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_institucion}" for="institucion" />
+                        <p:inputText id="institucion" value="#{capacitacionesController.selected.institucion}" title="#{bundle.CreateCapacitacionesTitle_institucion}" required="true" requiredMessage="#{bundle.CreateCapacitacionesRequiredMessage_institucion}"/>
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{capacitacionesController.selected.nombre}" title="#{bundle.CreateCapacitacionesTitle_nombre}" />
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_fechaInico}" for="fechaInico" />
+                        <p:calendar id="fechaInico" pattern="MM/dd/yyyy" value="#{capacitacionesController.selected.fechaInico}" title="#{bundle.EditCapacitacionesTitle_fechaInico}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{capacitacionesController.selected.fechaFin}" title="#{bundle.EditCapacitacionesTitle_fechaFin}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{capacitacionesController.selected.url}" title="#{bundle.CreateCapacitacionesTitle_url}" />
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_idUsuario}" for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{capacitacionesController.selected.idUsuario}" required="true" requiredMessage="#{bundle.EditCapacitacionesRequiredMessage_idUsuario}">
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idUsuarioItem"
+                                           itemValue="#{idUsuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_idTipoCertificado}" for="idTipoCertificado" />
+                        <p:selectOneMenu id="idTipoCertificado" value="#{capacitacionesController.selected.idTipoCertificado}" >
+                            <f:selectItems value="#{tipoCertificadoController.itemsAvailableSelectOne}"
+                                           var="idTipoCertificadoItem"
+                                           itemValue="#{idTipoCertificadoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_idTipoEvento}" for="idTipoEvento" />
+                        <p:selectOneMenu id="idTipoEvento" value="#{capacitacionesController.selected.idTipoEvento}" >
+                            <f:selectItems value="#{tipoEventoController.itemsAvailableSelectOne}"
+                                           var="idTipoEventoItem"
+                                           itemValue="#{idTipoEventoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCapacitacionesLabel_idAreaCapacitacion}" for="idAreaCapacitacion" />
+                        <p:selectOneMenu id="idAreaCapacitacion" value="#{capacitacionesController.selected.idAreaCapacitacion}" >
+                            <f:selectItems value="#{areaCapacitacionController.itemsAvailableSelectOne}"
+                                           var="idAreaCapacitacionItem"
+                                           itemValue="#{idAreaCapacitacionItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{capacitacionesController.create}" value="#{bundle.Save}" update="display,:CapacitacionesListForm:datalist,:growl" oncomplete="handleSubmit(args,'CapacitacionesCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CapacitacionesCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

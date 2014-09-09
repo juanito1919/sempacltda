@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresaEditDlg" widgetVar="EmpresaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditEmpresaTitle}">
+            <h:form id="EmpresaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empresaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditEmpresaLabel_idEmpresa}" for="idEmpresa" />
+                        <p:inputText id="idEmpresa" value="#{empresaController.selected.idEmpresa}" title="#{bundle.EditEmpresaTitle_idEmpresa}" required="true" requiredMessage="#{bundle.EditEmpresaRequiredMessage_idEmpresa}"/>
+                        <p:outputLabel value="#{bundle.EditEmpresaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{empresaController.selected.nombre}" title="#{bundle.EditEmpresaTitle_nombre}" required="true" requiredMessage="#{bundle.EditEmpresaRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.EditEmpresaLabel_ruc}" for="ruc" />
+                        <p:inputText id="ruc" value="#{empresaController.selected.ruc}" title="#{bundle.EditEmpresaTitle_ruc}" />
+                        <p:outputLabel value="#{bundle.EditEmpresaLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{empresaController.selected.direccion}" title="#{bundle.EditEmpresaTitle_direccion}" />
+                        <p:outputLabel value="#{bundle.EditEmpresaLabel_idClaseEmpresa}" for="idClaseEmpresa" />
+                        <p:selectOneMenu id="idClaseEmpresa" value="#{empresaController.selected.idClaseEmpresa}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{claseEmpresaController.itemsAvailableSelectOne}"
+                                           var="idClaseEmpresaItem"
+                                           itemValue="#{idClaseEmpresaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditEmpresaLabel_idCiudad}" for="idCiudad" />
+                        <p:selectOneMenu id="idCiudad" value="#{empresaController.selected.idCiudad}" required="true" requiredMessage="#{bundle.EditEmpresaRequiredMessage_idCiudad}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{ciudadController.itemsAvailableSelectOne}"
+                                           var="idCiudadItem"
+                                           itemValue="#{idCiudadItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empresaController.update}" value="#{bundle.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EmpresaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EmpresaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

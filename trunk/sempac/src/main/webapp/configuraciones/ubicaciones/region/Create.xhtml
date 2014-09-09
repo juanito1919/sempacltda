@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegionCreateDlg" widgetVar="RegionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleEtiquetasES.NuevaRegion}">
+            <h:form id="RegionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{regionController.selected != null}">                      
+                        <p:outputLabel value="#{bundleEtiquetasES.Nombre}" 
+                                       for="nombre" />
+                        <p:inputText id="nombre" 
+                                     value="#{regionController.selected.nombre}" 
+                                     validator="#{regionController.validateUnico}"
+                                     title="#{bundleTitulosES.NombreRegion}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleMensajesES.NombreRegion} - #{bundleMensajesES.CampoRequerido}">
+                            <f:ajax event="change"/>
+                        </p:inputText>
+                        <p:outputLabel value="#{bundleEtiquetasES.Pais}" 
+                                       for="idPais" />
+                        <p:selectOneMenu id="idPais" 
+                                         value="#{regionController.selected.idPais}"
+                                         validator="#{regionController.validateUnico}"
+                                         required="true" 
+                                         requiredMessage="#{bundleMensajesES.NombrePais} - #{bundleMensajesES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleMensajesES.Seleccione}"/>
+                            <f:selectItems value="#{regionController.listaPais}"
+                                           var="idPaisItem"
+                                           itemValue="#{idPaisItem}"
+                                           itemLabel="#{idPaisItem.nombre}"/>
+                            <f:converter binding="#{paisConverter}"/>
+                            <f:ajax event="change"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{regionController.saveNew}" value="#{bundleEtiquetasES.Guardar}" update="display,:RegionListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegionCreateDialog');"/>
+                    <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="RegionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

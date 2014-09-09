@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstudiosEspecializadosViewDlg" widgetVar="EstudiosEspecializadosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEstudiosEspecializadosTitle}">
+            <h:form id="EstudiosEspecializadosViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{estudiosEspecializadosController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEstudiosEspecializadosLabel_idEstudiosEspecializados}"/>
+                        <h:outputText value="#{estudiosEspecializadosController.selected.idEstudiosEspecializados}" title="#{bundle.ViewEstudiosEspecializadosTitle_idEstudiosEspecializados}"/>
+                        <h:outputText value="#{bundle.ViewEstudiosEspecializadosLabel_titulo}"/>
+                        <h:outputText value="#{estudiosEspecializadosController.selected.titulo}" title="#{bundle.ViewEstudiosEspecializadosTitle_titulo}"/>
+                        <h:outputText value="#{bundle.ViewEstudiosEspecializadosLabel_url}"/>
+                        <h:outputText value="#{estudiosEspecializadosController.selected.url}" title="#{bundle.ViewEstudiosEspecializadosTitle_url}"/>
+                        <h:outputText value="#{bundle.ViewEstudiosEspecializadosLabel_idUsuario}"/>
+                        <h:outputText value="#{estudiosEspecializadosController.selected.idUsuario}" title="#{bundle.ViewEstudiosEspecializadosTitle_idUsuario}"/>
+                        <h:outputText value="#{bundle.ViewEstudiosEspecializadosLabel_idTipoEstudio}"/>
+                        <h:outputText value="#{estudiosEspecializadosController.selected.idTipoEstudio}" title="#{bundle.ViewEstudiosEspecializadosTitle_idTipoEstudio}"/>
+                        <h:outputText value="#{bundle.ViewEstudiosEspecializadosLabel_idUniversidad}"/>
+                        <h:outputText value="#{estudiosEspecializadosController.selected.idUniversidad}" title="#{bundle.ViewEstudiosEspecializadosTitle_idUniversidad}"/>
+                        <h:outputText value="#{bundle.ViewEstudiosEspecializadosLabel_idCampoEstudio}"/>
+                        <h:outputText value="#{estudiosEspecializadosController.selected.idCampoEstudio}" title="#{bundle.ViewEstudiosEspecializadosTitle_idCampoEstudio}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EstudiosEspecializadosViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

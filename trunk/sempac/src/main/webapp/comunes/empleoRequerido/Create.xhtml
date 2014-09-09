@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleoRequeridoCreateDlg" widgetVar="EmpleoRequeridoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEmpleoRequeridoTitle}">
+            <h:form id="EmpleoRequeridoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empleoRequeridoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateEmpleoRequeridoLabel_idEmpleoRequerido}" for="idEmpleoRequerido" />
+                        <p:inputText id="idEmpleoRequerido" value="#{empleoRequeridoController.selected.idEmpleoRequerido}" title="#{bundle.CreateEmpleoRequeridoTitle_idEmpleoRequerido}" required="true" requiredMessage="#{bundle.CreateEmpleoRequeridoRequiredMessage_idEmpleoRequerido}"/>
+                        <p:outputLabel value="#{bundle.CreateEmpleoRequeridoLabel_nombreEmpleoRequerido}" for="nombreEmpleoRequerido" />
+                        <p:inputText id="nombreEmpleoRequerido" value="#{empleoRequeridoController.selected.nombreEmpleoRequerido}" title="#{bundle.CreateEmpleoRequeridoTitle_nombreEmpleoRequerido}" />
+                        <p:outputLabel value="#{bundle.CreateEmpleoRequeridoLabel_activo}" for="activo" />
+                        <p:selectBooleanCheckbox id="activo" value="#{empleoRequeridoController.selected.activo}" required="true" requiredMessage="#{bundle.EditEmpleoRequeridoRequiredMessage_activo}"/>
+                        <p:outputLabel value="#{bundle.CreateEmpleoRequeridoLabel_fechaModificacion}" for="fechaModificacion" />
+                        <p:calendar id="fechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleoRequeridoController.selected.fechaModificacion}" title="#{bundle.EditEmpleoRequeridoTitle_fechaModificacion}" required="true" requiredMessage="#{bundle.EditEmpleoRequeridoRequiredMessage_fechaModificacion}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateEmpleoRequeridoLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{empleoRequeridoController.selected.eliminado}" />
+                        <p:outputLabel value="#{bundle.CreateEmpleoRequeridoLabel_idUsuario}" for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{empleoRequeridoController.selected.idUsuario}" >
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idUsuarioItem"
+                                           itemValue="#{idUsuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateEmpleoRequeridoLabel_idAdministrador}" for="idAdministrador" />
+                        <p:selectOneMenu id="idAdministrador" value="#{empleoRequeridoController.selected.idAdministrador}" >
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idAdministradorItem"
+                                           itemValue="#{idAdministradorItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empleoRequeridoController.create}" value="#{bundle.Save}" update="display,:EmpleoRequeridoListForm:datalist,:growl" oncomplete="handleSubmit(args,'EmpleoRequeridoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EmpleoRequeridoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

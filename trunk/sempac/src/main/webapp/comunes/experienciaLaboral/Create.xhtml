@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ExperienciaLaboralCreateDlg" widgetVar="ExperienciaLaboralCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateExperienciaLaboralTitle}">
+            <h:form id="ExperienciaLaboralCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{experienciaLaboralController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_cargo}" for="cargo" />
+                        <p:inputText id="cargo" value="#{experienciaLaboralController.selected.cargo}" title="#{bundle.CreateExperienciaLaboralTitle_cargo}" />
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_fechaInicio}" for="fechaInicio" />
+                        <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{experienciaLaboralController.selected.fechaInicio}" title="#{bundle.EditExperienciaLaboralTitle_fechaInicio}" required="true" requiredMessage="#{bundle.EditExperienciaLaboralRequiredMessage_fechaInicio}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{experienciaLaboralController.selected.fechaFin}" title="#{bundle.EditExperienciaLaboralTitle_fechaFin}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_actividades}" for="actividades" />
+                        <p:inputText id="actividades" value="#{experienciaLaboralController.selected.actividades}" title="#{bundle.CreateExperienciaLaboralTitle_actividades}" />
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{experienciaLaboralController.selected.url}" title="#{bundle.CreateExperienciaLaboralTitle_url}" />
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_tiempo}" for="tiempo" />
+                        <p:inputText id="tiempo" value="#{experienciaLaboralController.selected.tiempo}" title="#{bundle.CreateExperienciaLaboralTitle_tiempo}" required="true" requiredMessage="#{bundle.CreateExperienciaLaboralRequiredMessage_tiempo}"/>
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_empresa}" for="empresa" />
+                        <p:selectOneMenu id="empresa" value="#{experienciaLaboralController.selected.empresa}" required="true" requiredMessage="#{bundle.EditExperienciaLaboralRequiredMessage_empresa}">
+                            <f:selectItems value="#{empresaController.itemsAvailableSelectOne}"
+                                           var="empresaItem"
+                                           itemValue="#{empresaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{experienciaLaboralController.selected.usuario}" required="true" requiredMessage="#{bundle.EditExperienciaLaboralRequiredMessage_usuario}">
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{experienciaLaboralController.create}" value="#{bundle.Save}" update="display,:ExperienciaLaboralListForm:datalist,:growl" oncomplete="handleSubmit(args,'ExperienciaLaboralCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ExperienciaLaboralCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

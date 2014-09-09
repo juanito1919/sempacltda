@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoCertificadoEditDlg" widgetVar="TipoCertificadoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTipoCertificadoTitle}">
+            <h:form id="TipoCertificadoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoCertificadoController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditTipoCertificadoLabel_idTipoCertificado}" for="idTipoCertificado" />
+                        <p:inputText id="idTipoCertificado" value="#{tipoCertificadoController.selected.idTipoCertificado}" title="#{bundle.EditTipoCertificadoTitle_idTipoCertificado}" required="true" requiredMessage="#{bundle.EditTipoCertificadoRequiredMessage_idTipoCertificado}"/>
+                        <p:outputLabel value="#{bundle.EditTipoCertificadoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoCertificadoController.selected.nombre}" title="#{bundle.EditTipoCertificadoTitle_nombre}" required="true" requiredMessage="#{bundle.EditTipoCertificadoRequiredMessage_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoCertificadoController.update}" value="#{bundle.Save}" update="display,:TipoCertificadoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipoCertificadoEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoCertificadoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
