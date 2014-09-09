@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AreaCapacitacionEditDlg" widgetVar="AreaCapacitacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditAreaCapacitacionTitle}">
+            <h:form id="AreaCapacitacionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{areaCapacitacionController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditAreaCapacitacionLabel_idAreaCapacitacion}" for="idAreaCapacitacion" />
+                        <p:inputText id="idAreaCapacitacion" value="#{areaCapacitacionController.selected.idAreaCapacitacion}" title="#{bundle.EditAreaCapacitacionTitle_idAreaCapacitacion}" required="true" requiredMessage="#{bundle.EditAreaCapacitacionRequiredMessage_idAreaCapacitacion}"/>
+                        <p:outputLabel value="#{bundle.EditAreaCapacitacionLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{areaCapacitacionController.selected.nombre}" title="#{bundle.EditAreaCapacitacionTitle_nombre}" required="true" requiredMessage="#{bundle.EditAreaCapacitacionRequiredMessage_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{areaCapacitacionController.update}" value="#{bundle.Save}" update="display,:AreaCapacitacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AreaCapacitacionEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AreaCapacitacionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

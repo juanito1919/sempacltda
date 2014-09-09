@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <h:form id="UsuarioListForm">
+        <p:panel header="#{bundle.ListUsuarioTitle}">
+            <p:dataTable id="datalist" value="#{usuarioController.items}" var="item"
+                         selectionMode="single" selection="#{usuarioController.selected}"
+                         paginator="true"
+                         rowKey="#{item.idUsuario}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         >
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_idUsuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idUsuario}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_username}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.username}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_nombres}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombres}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_apellidos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellidos}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_direccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccion}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_correoElectronico}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.correoElectronico}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_contrasena}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.contrasena}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_fechaNacimiento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaNacimiento}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_tipoIdentidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoIdentidad}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_identidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.identidad}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_genero}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.genero}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_estadoCivil}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estadoCivil}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_telefonoFijo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefonoFijo}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_telefonoMovil}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefonoMovil}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_edad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.edad}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_url}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.url}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_tipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipo}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_fechaModificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaModificacion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_disponibilidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.disponibilidad}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_coorLongitud}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.coorLongitud}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_coorLatitud}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.coorLatitud}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_idCiudad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idCiudad}"/>
+                </p:column>
+                
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</ui:composition>

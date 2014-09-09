@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstudiosEspecializadosEditDlg" widgetVar="EstudiosEspecializadosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditEstudiosEspecializadosTitle}">
+            <h:form id="EstudiosEspecializadosEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{estudiosEspecializadosController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditEstudiosEspecializadosLabel_idEstudiosEspecializados}" for="idEstudiosEspecializados" />
+                        <p:inputText id="idEstudiosEspecializados" value="#{estudiosEspecializadosController.selected.idEstudiosEspecializados}" title="#{bundle.EditEstudiosEspecializadosTitle_idEstudiosEspecializados}" required="true" requiredMessage="#{bundle.EditEstudiosEspecializadosRequiredMessage_idEstudiosEspecializados}"/>
+                        <p:outputLabel value="#{bundle.EditEstudiosEspecializadosLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{estudiosEspecializadosController.selected.titulo}" title="#{bundle.EditEstudiosEspecializadosTitle_titulo}" />
+                        <p:outputLabel value="#{bundle.EditEstudiosEspecializadosLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{estudiosEspecializadosController.selected.url}" title="#{bundle.EditEstudiosEspecializadosTitle_url}" />
+                        <p:outputLabel value="#{bundle.EditEstudiosEspecializadosLabel_idUsuario}" for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{estudiosEspecializadosController.selected.idUsuario}" required="true" requiredMessage="#{bundle.EditEstudiosEspecializadosRequiredMessage_idUsuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idUsuarioItem"
+                                           itemValue="#{idUsuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditEstudiosEspecializadosLabel_idTipoEstudio}" for="idTipoEstudio" />
+                        <p:selectOneMenu id="idTipoEstudio" value="#{estudiosEspecializadosController.selected.idTipoEstudio}" required="true" requiredMessage="#{bundle.EditEstudiosEspecializadosRequiredMessage_idTipoEstudio}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoEstudioController.itemsAvailableSelectOne}"
+                                           var="idTipoEstudioItem"
+                                           itemValue="#{idTipoEstudioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditEstudiosEspecializadosLabel_idUniversidad}" for="idUniversidad" />
+                        <p:selectOneMenu id="idUniversidad" value="#{estudiosEspecializadosController.selected.idUniversidad}" required="true" requiredMessage="#{bundle.EditEstudiosEspecializadosRequiredMessage_idUniversidad}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{universidadController.itemsAvailableSelectOne}"
+                                           var="idUniversidadItem"
+                                           itemValue="#{idUniversidadItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditEstudiosEspecializadosLabel_idCampoEstudio}" for="idCampoEstudio" />
+                        <p:selectOneMenu id="idCampoEstudio" value="#{estudiosEspecializadosController.selected.idCampoEstudio}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{campoEstudioController.itemsAvailableSelectOne}"
+                                           var="idCampoEstudioItem"
+                                           itemValue="#{idCampoEstudioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estudiosEspecializadosController.update}" value="#{bundle.Save}" update="display,:EstudiosEspecializadosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EstudiosEspecializadosEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EstudiosEspecializadosEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CiudadViewDlg" widgetVar="CiudadViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCiudadTitle}">
+            <h:form id="CiudadViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ciudadController.selected != null}">
+                        <h:outputText value="#{bundle.ViewCiudadLabel_idCiudad}"/>
+                        <h:outputText value="#{ciudadController.selected.idCiudad}" title="#{bundle.ViewCiudadTitle_idCiudad}"/>
+                        <h:outputText value="#{bundle.ViewCiudadLabel_nombre}"/>
+                        <h:outputText value="#{ciudadController.selected.nombre}" title="#{bundle.ViewCiudadTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewCiudadLabel_idRegion}"/>
+                        <h:outputText value="#{ciudadController.selected.idRegion}" title="#{bundle.ViewCiudadTitle_idRegion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="CiudadViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

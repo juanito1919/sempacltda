@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="IdiomaDominadoCreateDlg" widgetVar="IdiomaDominadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateIdiomaDominadoTitle}">
+            <h:form id="IdiomaDominadoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{idiomaDominadoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateIdiomaDominadoLabel_nivelHablado}" for="nivelHablado" />
+                        <p:inputText id="nivelHablado" value="#{idiomaDominadoController.selected.nivelHablado}" title="#{bundle.CreateIdiomaDominadoTitle_nivelHablado}" required="true" requiredMessage="#{bundle.CreateIdiomaDominadoRequiredMessage_nivelHablado}"/>
+                        <p:outputLabel value="#{bundle.CreateIdiomaDominadoLabel_nivelEscrito}" for="nivelEscrito" />
+                        <p:inputText id="nivelEscrito" value="#{idiomaDominadoController.selected.nivelEscrito}" title="#{bundle.CreateIdiomaDominadoTitle_nivelEscrito}" required="true" requiredMessage="#{bundle.CreateIdiomaDominadoRequiredMessage_nivelEscrito}"/>
+                        <p:outputLabel value="#{bundle.CreateIdiomaDominadoLabel_idioma}" for="idioma" />
+                        <p:selectOneMenu id="idioma" value="#{idiomaDominadoController.selected.idioma}" required="true" requiredMessage="#{bundle.EditIdiomaDominadoRequiredMessage_idioma}">
+                            <f:selectItems value="#{idiomaController.itemsAvailableSelectOne}"
+                                           var="idiomaItem"
+                                           itemValue="#{idiomaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateIdiomaDominadoLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{idiomaDominadoController.selected.usuario}" required="true" requiredMessage="#{bundle.EditIdiomaDominadoRequiredMessage_usuario}">
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{idiomaDominadoController.create}" value="#{bundle.Save}" update="display,:IdiomaDominadoListForm:datalist,:growl" oncomplete="handleSubmit(args,'IdiomaDominadoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="IdiomaDominadoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

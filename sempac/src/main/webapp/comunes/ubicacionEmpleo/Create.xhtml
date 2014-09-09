@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UbicacionEmpleoCreateDlg" widgetVar="UbicacionEmpleoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateUbicacionEmpleoTitle}">
+            <h:form id="UbicacionEmpleoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ubicacionEmpleoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateUbicacionEmpleoLabel_idUbicacionEmpleo}" for="idUbicacionEmpleo" />
+                        <p:inputText id="idUbicacionEmpleo" value="#{ubicacionEmpleoController.selected.idUbicacionEmpleo}" title="#{bundle.CreateUbicacionEmpleoTitle_idUbicacionEmpleo}" required="true" requiredMessage="#{bundle.CreateUbicacionEmpleoRequiredMessage_idUbicacionEmpleo}"/>
+                        <p:outputLabel value="#{bundle.CreateUbicacionEmpleoLabel_zonaUbiacion}" for="zonaUbiacion" />
+                        <p:inputText id="zonaUbiacion" value="#{ubicacionEmpleoController.selected.zonaUbiacion}" title="#{bundle.CreateUbicacionEmpleoTitle_zonaUbiacion}" required="true" requiredMessage="#{bundle.CreateUbicacionEmpleoRequiredMessage_zonaUbiacion}"/>
+                        <p:outputLabel value="#{bundle.CreateUbicacionEmpleoLabel_idEmpleoRequerido}" for="idEmpleoRequerido" />
+                        <p:selectOneMenu id="idEmpleoRequerido" value="#{ubicacionEmpleoController.selected.idEmpleoRequerido}" required="true" requiredMessage="#{bundle.EditUbicacionEmpleoRequiredMessage_idEmpleoRequerido}">
+                            <f:selectItems value="#{empleoRequeridoController.itemsAvailableSelectOne}"
+                                           var="idEmpleoRequeridoItem"
+                                           itemValue="#{idEmpleoRequeridoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateUbicacionEmpleoLabel_idCiudad}" for="idCiudad" />
+                        <p:selectOneMenu id="idCiudad" value="#{ubicacionEmpleoController.selected.idCiudad}" required="true" requiredMessage="#{bundle.EditUbicacionEmpleoRequiredMessage_idCiudad}">
+                            <f:selectItems value="#{ciudadController.itemsAvailableSelectOne}"
+                                           var="idCiudadItem"
+                                           itemValue="#{idCiudadItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{ubicacionEmpleoController.create}" value="#{bundle.Save}" update="display,:UbicacionEmpleoListForm:datalist,:growl" oncomplete="handleSubmit(args,'UbicacionEmpleoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UbicacionEmpleoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EspectativasCreateDlg" widgetVar="EspectativasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEspectativasTitle}">
+            <h:form id="EspectativasCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{espectativasController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateEspectativasLabel_idEspectativas}" for="idEspectativas" />
+                        <p:inputText id="idEspectativas" value="#{espectativasController.selected.idEspectativas}" title="#{bundle.CreateEspectativasTitle_idEspectativas}" required="true" requiredMessage="#{bundle.CreateEspectativasRequiredMessage_idEspectativas}"/>
+                        <p:outputLabel value="#{bundle.CreateEspectativasLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{espectativasController.selected.nombre}" title="#{bundle.CreateEspectativasTitle_nombre}" required="true" requiredMessage="#{bundle.CreateEspectativasRequiredMessage_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{espectativasController.create}" value="#{bundle.Save}" update="display,:EspectativasListForm:datalist,:growl" oncomplete="handleSubmit(args,'EspectativasCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EspectativasCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaisEditDlg" widgetVar="PaisEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleEtiquetasES.EditaPais}">
+            <h:form id="PaisEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{paisController.selected != null}">
+                        <p:outputLabel value="#{bundleEtiquetasES.Nombre}" 
+                                       for="nombre" />
+                        <p:inputText id="nombre" value="#{paisController.selected.nombre}" 
+                                     title="#{bundleTitulosES.NombrePais}"  
+                                     required="true" 
+                                     requiredMessage="#{bundleMensajesES.NombrePais} - #{bundleMensajesES.CampoRequerido}"/>
+                        <p:outputLabel value="#{bundleEtiquetasES.Eliminado}" 
+                                       for="eliminado" />
+                        <h:outputText id="eliminado" value="#{(paisController.selected.eliminado) ? bundleEtiquetasES.Si : bundleEtiquetasES.No}" 
+                                      title="#{bundleTitulosES.Eliminado}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{paisController.save}" 
+                                     value="#{bundleEtiquetasES.Guardar}" 
+                                     update="display,:PaisListForm:datalist,:growl" 
+                                     oncomplete="handleSubmit(args, 'PaisEditDialog');"/>
+                    <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="PaisEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

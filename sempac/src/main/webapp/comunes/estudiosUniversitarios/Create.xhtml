@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstudiosUniversitariosCreateDlg" widgetVar="EstudiosUniversitariosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEstudiosUniversitariosTitle}">
+            <h:form id="EstudiosUniversitariosCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{estudiosUniversitariosController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateEstudiosUniversitariosLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{estudiosUniversitariosController.selected.titulo}" title="#{bundle.CreateEstudiosUniversitariosTitle_titulo}" required="true" requiredMessage="#{bundle.CreateEstudiosUniversitariosRequiredMessage_titulo}"/>
+                        <p:outputLabel value="#{bundle.CreateEstudiosUniversitariosLabel_tiempoEstudios}" for="tiempoEstudios" />
+                        <p:inputText id="tiempoEstudios" value="#{estudiosUniversitariosController.selected.tiempoEstudios}" title="#{bundle.CreateEstudiosUniversitariosTitle_tiempoEstudios}" />
+                        <p:outputLabel value="#{bundle.CreateEstudiosUniversitariosLabel_anioEgresado}" for="anioEgresado" />
+                        <p:inputText id="anioEgresado" value="#{estudiosUniversitariosController.selected.anioEgresado}" title="#{bundle.CreateEstudiosUniversitariosTitle_anioEgresado}" />
+                        <p:outputLabel value="#{bundle.CreateEstudiosUniversitariosLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{estudiosUniversitariosController.selected.url}" title="#{bundle.CreateEstudiosUniversitariosTitle_url}" />
+                        <p:outputLabel value="#{bundle.CreateEstudiosUniversitariosLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{estudiosUniversitariosController.selected.usuario}" required="true" requiredMessage="#{bundle.EditEstudiosUniversitariosRequiredMessage_usuario}">
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateEstudiosUniversitariosLabel_universidad}" for="universidad" />
+                        <p:selectOneMenu id="universidad" value="#{estudiosUniversitariosController.selected.universidad}" required="true" requiredMessage="#{bundle.EditEstudiosUniversitariosRequiredMessage_universidad}">
+                            <f:selectItems value="#{universidadController.itemsAvailableSelectOne}"
+                                           var="universidadItem"
+                                           itemValue="#{universidadItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateEstudiosUniversitariosLabel_carrera}" for="carrera" />
+                        <p:selectOneMenu id="carrera" value="#{estudiosUniversitariosController.selected.carrera}" required="true" requiredMessage="#{bundle.EditEstudiosUniversitariosRequiredMessage_carrera}">
+                            <f:selectItems value="#{carreraController.itemsAvailableSelectOne}"
+                                           var="carreraItem"
+                                           itemValue="#{carreraItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estudiosUniversitariosController.create}" value="#{bundle.Save}" update="display,:EstudiosUniversitariosListForm:datalist,:growl" oncomplete="handleSubmit(args,'EstudiosUniversitariosCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EstudiosUniversitariosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,86 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 02-sep-2014, 23:43:00
+    Author     : pablo
+*/
+body {
+    font-size: x-small;
+    margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px 
+}
+.panelBanner {
+    margin-left: 0px; margin-right: auto;
+    background-image: url(../resources/images/baner.png);
+    background-size: 100%;
+    text-align: right;
+    top: 0px;
+    width: 80%;
+    height: 110px;
+    display: block;
+}
+.panelLogin{
+    position:absolute;
+    top: 0px;
+    right:0px;
+    width: 20%;
+    height: 110px;
+
+}
+.panelLogin.ui-panel, .panelLogin.ui-panel-content {
+    background-image: url(../resources/images/fondoLogin.JPG);
+    border-color:#d4d4fc;
+}
+.encabezadosDialog
+{
+    font-size:  medium;
+    font-weight:  bold;
+    font-size: 12px;
+}
+.panelInformacion{
+    height: 220px;
+    width: 100%;
+    margin: 0 auto 0 auto;
+
+}
+.panelInformacion.ui-panel, .panelInformacion.ui-panel-content {
+    background-color:#cc0000;
+    background-image: url(../resources/images/fondoInformacion.JPG);
+}
+.panelBarra{
+    height: 60px;
+}
+.butonBarra{
+    margin-top: 0;
+    height: 60px;
+    width: 120px;
+}
+.imagenLogin{
+    width: 70px;
+    height: 80px;
+    border-radius: 50px;
+
+}
+.panelFormulario{
+    width: 80%;
+    margin-left: 10%; margin-top: 5px; margin-right: 10%; margin-bottom: 10px;
+    border: 1px;
+    border-style: dotted;
+    border-top-width: 0px;
+    border-color: #ccccff;
+}
+.panelTitulo{
+    background-color:#ececec;
+    font-weight: bold;
+    font-size: 1.2em;
+    border-radius: 5px;
+    height: 20px;
+    font-family: Arial;
+    text-align: center;
+    color:#cc0000;
+    margin:10px auto 10px auto;
+    padding-top: 5px;
+
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoEstudioCreateDlg" widgetVar="TipoEstudioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTipoEstudioTitle}">
+            <h:form id="TipoEstudioCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoEstudioController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateTipoEstudioLabel_idTipoEstudio}" for="idTipoEstudio" />
+                        <p:inputText id="idTipoEstudio" value="#{tipoEstudioController.selected.idTipoEstudio}" title="#{bundle.CreateTipoEstudioTitle_idTipoEstudio}" required="true" requiredMessage="#{bundle.CreateTipoEstudioRequiredMessage_idTipoEstudio}"/>
+                        <p:outputLabel value="#{bundle.CreateTipoEstudioLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{tipoEstudioController.selected.descripcion}" title="#{bundle.CreateTipoEstudioTitle_descripcion}" required="true" requiredMessage="#{bundle.CreateTipoEstudioRequiredMessage_descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoEstudioController.create}" value="#{bundle.Save}" update="display,:TipoEstudioListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipoEstudioCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoEstudioCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

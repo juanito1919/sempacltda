@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HabilidadesEditDlg" widgetVar="HabilidadesEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditHabilidadesTitle}">
+            <h:form id="HabilidadesEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{habilidadesController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditHabilidadesLabel_idHabilidades}" for="idHabilidades" />
+                        <p:inputText id="idHabilidades" value="#{habilidadesController.selected.idHabilidades}" title="#{bundle.EditHabilidadesTitle_idHabilidades}" required="true" requiredMessage="#{bundle.EditHabilidadesRequiredMessage_idHabilidades}"/>
+                        <p:outputLabel value="#{bundle.EditHabilidadesLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{habilidadesController.selected.nombre}" title="#{bundle.EditHabilidadesTitle_nombre}" required="true" requiredMessage="#{bundle.EditHabilidadesRequiredMessage_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{habilidadesController.update}" value="#{bundle.Save}" update="display,:HabilidadesListForm:datalist,:growl" oncomplete="handleSubmit(args, 'HabilidadesEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="HabilidadesEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

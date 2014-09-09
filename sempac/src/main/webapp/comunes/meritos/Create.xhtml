@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MeritosCreateDlg" widgetVar="MeritosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMeritosTitle}">
+            <h:form id="MeritosCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{meritosController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateMeritosLabel_idMeritos}" for="idMeritos" />
+                        <p:inputText id="idMeritos" value="#{meritosController.selected.idMeritos}" title="#{bundle.CreateMeritosTitle_idMeritos}" required="true" requiredMessage="#{bundle.CreateMeritosRequiredMessage_idMeritos}"/>
+                        <p:outputLabel value="#{bundle.CreateMeritosLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{meritosController.selected.nombre}" title="#{bundle.CreateMeritosTitle_nombre}" />
+                        <p:outputLabel value="#{bundle.CreateMeritosLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{meritosController.selected.url}" title="#{bundle.CreateMeritosTitle_url}" />
+                        <p:outputLabel value="#{bundle.CreateMeritosLabel_idUsuario}" for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{meritosController.selected.idUsuario}" >
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idUsuarioItem"
+                                           itemValue="#{idUsuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateMeritosLabel_idTipoCertificado}" for="idTipoCertificado" />
+                        <p:selectOneMenu id="idTipoCertificado" value="#{meritosController.selected.idTipoCertificado}" >
+                            <f:selectItems value="#{tipoCertificadoController.itemsAvailableSelectOne}"
+                                           var="idTipoCertificadoItem"
+                                           itemValue="#{idTipoCertificadoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateMeritosLabel_idTipoEvento}" for="idTipoEvento" />
+                        <p:selectOneMenu id="idTipoEvento" value="#{meritosController.selected.idTipoEvento}" >
+                            <f:selectItems value="#{tipoEventoController.itemsAvailableSelectOne}"
+                                           var="idTipoEventoItem"
+                                           itemValue="#{idTipoEventoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateMeritosLabel_idTipoMerito}" for="idTipoMerito" />
+                        <p:selectOneMenu id="idTipoMerito" value="#{meritosController.selected.idTipoMerito}" >
+                            <f:selectItems value="#{tipoMeritoController.itemsAvailableSelectOne}"
+                                           var="idTipoMeritoItem"
+                                           itemValue="#{idTipoMeritoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{meritosController.create}" value="#{bundle.Save}" update="display,:MeritosListForm:datalist,:growl" oncomplete="handleSubmit(args,'MeritosCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MeritosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

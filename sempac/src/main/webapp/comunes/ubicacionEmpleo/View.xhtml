@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UbicacionEmpleoViewDlg" widgetVar="UbicacionEmpleoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewUbicacionEmpleoTitle}">
+            <h:form id="UbicacionEmpleoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ubicacionEmpleoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewUbicacionEmpleoLabel_idUbicacionEmpleo}"/>
+                        <h:outputText value="#{ubicacionEmpleoController.selected.idUbicacionEmpleo}" title="#{bundle.ViewUbicacionEmpleoTitle_idUbicacionEmpleo}"/>
+                        <h:outputText value="#{bundle.ViewUbicacionEmpleoLabel_zonaUbiacion}"/>
+                        <h:outputText value="#{ubicacionEmpleoController.selected.zonaUbiacion}" title="#{bundle.ViewUbicacionEmpleoTitle_zonaUbiacion}"/>
+                        <h:outputText value="#{bundle.ViewUbicacionEmpleoLabel_idEmpleoRequerido}"/>
+                        <h:outputText value="#{ubicacionEmpleoController.selected.idEmpleoRequerido}" title="#{bundle.ViewUbicacionEmpleoTitle_idEmpleoRequerido}"/>
+                        <h:outputText value="#{bundle.ViewUbicacionEmpleoLabel_idCiudad}"/>
+                        <h:outputText value="#{ubicacionEmpleoController.selected.idCiudad}" title="#{bundle.ViewUbicacionEmpleoTitle_idCiudad}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="UbicacionEmpleoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MeritosEditDlg" widgetVar="MeritosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMeritosTitle}">
+            <h:form id="MeritosEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{meritosController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMeritosLabel_idMeritos}" for="idMeritos" />
+                        <p:inputText id="idMeritos" value="#{meritosController.selected.idMeritos}" title="#{bundle.EditMeritosTitle_idMeritos}" required="true" requiredMessage="#{bundle.EditMeritosRequiredMessage_idMeritos}"/>
+                        <p:outputLabel value="#{bundle.EditMeritosLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{meritosController.selected.nombre}" title="#{bundle.EditMeritosTitle_nombre}" />
+                        <p:outputLabel value="#{bundle.EditMeritosLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{meritosController.selected.url}" title="#{bundle.EditMeritosTitle_url}" />
+                        <p:outputLabel value="#{bundle.EditMeritosLabel_idUsuario}" for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{meritosController.selected.idUsuario}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idUsuarioItem"
+                                           itemValue="#{idUsuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMeritosLabel_idTipoCertificado}" for="idTipoCertificado" />
+                        <p:selectOneMenu id="idTipoCertificado" value="#{meritosController.selected.idTipoCertificado}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoCertificadoController.itemsAvailableSelectOne}"
+                                           var="idTipoCertificadoItem"
+                                           itemValue="#{idTipoCertificadoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMeritosLabel_idTipoEvento}" for="idTipoEvento" />
+                        <p:selectOneMenu id="idTipoEvento" value="#{meritosController.selected.idTipoEvento}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoEventoController.itemsAvailableSelectOne}"
+                                           var="idTipoEventoItem"
+                                           itemValue="#{idTipoEventoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMeritosLabel_idTipoMerito}" for="idTipoMerito" />
+                        <p:selectOneMenu id="idTipoMerito" value="#{meritosController.selected.idTipoMerito}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoMeritoController.itemsAvailableSelectOne}"
+                                           var="idTipoMeritoItem"
+                                           itemValue="#{idTipoMeritoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{meritosController.update}" value="#{bundle.Save}" update="display,:MeritosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MeritosEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MeritosEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
