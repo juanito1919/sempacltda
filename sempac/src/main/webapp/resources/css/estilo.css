@@ -9,7 +9,9 @@ and open the template in the editor.
 */
 body {
     font-size: x-small;
-    margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px 
+    font-family: Arial;
+    margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px ;
+    background-image: url(../resources/images/fondoPantalla.JPG);
 }
 .panelBanner {
     margin-left: 0px; margin-right: auto;
@@ -32,6 +34,7 @@ body {
 .panelLogin.ui-panel, .panelLogin.ui-panel-content {
     background-image: url(../resources/images/fondoLogin.JPG);
     border-color:#d4d4fc;
+    border-style: dotted;
 }
 .encabezadosDialog
 {
@@ -68,8 +71,9 @@ body {
     margin-left: 10%; margin-top: 5px; margin-right: 10%; margin-bottom: 10px;
     border: 1px;
     border-style: dotted;
-    border-top-width: 0px;
-    border-color: #ccccff;
+    border-top-width: 0px; border-top-left-radius: 5px; border-top-right-radius: 5px;
+    border-color: #9999ff;
+    background-color: #ffffff;
 }
 .panelTitulo{
     background-color:#ececec;
@@ -83,4 +87,19 @@ body {
     margin:10px auto 10px auto;
     padding-top: 5px;
 
+}
+.column1Class,.column3Class{
+    text-align: right;
+    font-weight: bold;
+    color: #cc0000;
+    width: 200px;
+}
+
+.column2Class,.column4Class{
+    width: 230px;
+}
+.inputText{
+    width: 200px;
+    height: 15px;
+    text-transform: uppercase;
 }
