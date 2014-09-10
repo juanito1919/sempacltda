@@ -10,71 +10,61 @@
         INFORMACION PERSONAL
     </div> 
     <h:form id="UsuarioEditForm">
-        <div style="width: 60%; float: left;">
-            <p:panel header="Información personal" >
+        <div style="width: 70%; float: left;">
+            <p:panel header="Información personal" style="border: none;" >
                 <h:panelGroup id="display">
-                    <h:panelGrid columns="2" border="0">
+                    <h:panelGrid columns="4" 
+                                 border="0" 
+                                 cellspacing="4" 
+                                 cellpadding="0" 
+                                 columnClasses="column1Class, column2Class,column3Class,column4Class" >
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_tipoDocumento}" for="tipoDocumento" />
+                        <p:inputText id="tipoDocumento" styleClass="inputText" value="0105951271" title="#{bundle.EditUsuarioLabel_tipoDocumento}"  disabled="true"/>
+                        <p:outputLabel/>
+                        <p:outputLabel/>
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_nombres}" for="nombres" />
-                        <p:inputText id="nombres" value="#{usuarioController.selected.nombres}" title="#{bundle.EditUsuarioTitle_nombres}" />
+                        <p:inputText id="nombres" styleClass="inputText" value="#{usuarioController.selected.nombres}" title="#{bundle.EditUsuarioTitle_nombres}" />
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_apellidos}" for="apellidos" />
-                        <p:inputText id="apellidos" value="#{usuarioController.selected.apellidos}" title="#{bundle.EditUsuarioTitle_apellidos}" />
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_direccion}" for="direccion" />
-                        <p:inputText id="direccion" value="#{usuarioController.selected.direccion}" title="#{bundle.EditUsuarioTitle_direccion}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_direccion}"/>
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_correoElectronico}" for="correoElectronico" />
-                        <p:inputText id="correoElectronico" value="#{usuarioController.selected.correoElectronico}" title="#{bundle.EditUsuarioTitle_correoElectronico}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_correoElectronico}"/>
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_contrasena}" for="contrasena" />
-                        <p:inputText id="contrasena" value="#{usuarioController.selected.contrasena}" title="#{bundle.EditUsuarioTitle_contrasena}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_contrasena}"/>
+                        <p:inputText id="apellidos" styleClass="inputText" value="#{usuarioController.selected.apellidos}" title="#{bundle.EditUsuarioTitle_apellidos}" />
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_fechaNacimiento}" for="fechaNacimiento" />
-                        <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{usuarioController.selected.fechaNacimiento}" title="#{bundle.EditUsuarioTitle_fechaNacimiento}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_fechaNacimiento}"/>
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_tipoIdentidad}" for="tipoIdentidad" />
-                        <p:inputText id="tipoIdentidad" value="#{usuarioController.selected.tipoIdentidad}" title="#{bundle.EditUsuarioTitle_tipoIdentidad}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_tipoIdentidad}"/>
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_identidad}" for="identidad" />
-                        <p:inputText id="identidad" value="#{usuarioController.selected.identidad}" title="#{bundle.EditUsuarioTitle_identidad}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_identidad}"/>
+                        <p:calendar id="fechaNacimiento"  pattern="MM/dd/yyyy" value="#{usuarioController.selected.fechaNacimiento}" title="#{bundle.EditUsuarioTitle_fechaNacimiento}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_fechaNacimiento}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_edad}" for="edad" />
+                        <p:inputText id="edad" styleClass="inputText" value="#{usuarioController.selected.edad}" title="#{bundle.EditUsuarioTitle_edad}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_edad}" disabled="true"/>
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_genero}" for="genero" />
-                        <p:selectOneMenu id="genero" value="#{selectOneMenuView.console}">
-                            <f:selectItem itemLabel="Masculino" itemValue="" />
-                            <f:selectItem itemLabel="Femenino" itemValue="" />
+                        <p:selectOneMenu id="genero" value="#{selectOneMenuView.console}" >
+                            <f:selectItem itemLabel="MASCULINO" itemValue="" />
+                            <f:selectItem itemLabel="FEMENINO" itemValue="" />
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_estadoCivil}" for="estadoCivil" />
                         <p:selectOneMenu id="estadoCivil" value="#{selectOneMenuView.console}">
-                            <f:selectItem itemLabel="Casado" itemValue="" />
-                            <f:selectItem itemLabel="Soltero" itemValue="" />
-                            <f:selectItem itemLabel="Union Libre" itemValue="" />
-                            <f:selectItem itemLabel="Divorciado" itemValue="" />
-                            <f:selectItem itemLabel="Viudo" itemValue="" />
+                            <f:selectItem itemLabel="SOLTERO" itemValue="" />
+                            <f:selectItem itemLabel="CASADO" itemValue="" />
+                            <f:selectItem itemLabel="UNION LIBRE" itemValue="" />
+                            <f:selectItem itemLabel="DIVORCIADO" itemValue="" />
+                            <f:selectItem itemLabel="VIUDO" itemValue="" />
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoFijo}" for="telefonoFijo" />
-                        <p:inputText id="telefonoFijo" value="#{usuarioController.selected.telefonoFijo}" title="#{bundle.EditUsuarioTitle_telefonoFijo}" />
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoMovil}" for="telefonoMovil" />
-                        <p:inputText id="telefonoMovil" value="#{usuarioController.selected.telefonoMovil}" title="#{bundle.EditUsuarioTitle_telefonoMovil}" />
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_edad}" for="edad" />
-                        <p:inputText id="edad" value="#{usuarioController.selected.edad}" title="#{bundle.EditUsuarioTitle_edad}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_edad}"/>
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_url}" for="url" />
-                        <p:inputText id="url" value="#{usuarioController.selected.url}" title="#{bundle.EditUsuarioTitle_url}" />
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_tipo}" for="tipo" />
-                        <p:inputText id="tipo" value="#{usuarioController.selected.tipo}" title="#{bundle.EditUsuarioTitle_tipo}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_tipo}"/>
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_fechaModificacion}" for="fechaModificacion" />
-                        <p:calendar id="fechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{usuarioController.selected.fechaModificacion}" title="#{bundle.EditUsuarioTitle_fechaModificacion}"  />
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_disponibilidad}" for="disponibilidad" />
-                        <p:inputText id="disponibilidad" value="#{usuarioController.selected.disponibilidad}" title="#{bundle.EditUsuarioTitle_disponibilidad}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_disponibilidad}"/>
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_coorLongitud}" for="coorLongitud" />
-                        <p:inputText id="coorLongitud" value="#{usuarioController.selected.coorLongitud}" title="#{bundle.EditUsuarioTitle_coorLongitud}" />
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_coorLatitud}" for="coorLatitud" />
-                        <p:inputText id="coorLatitud" value="#{usuarioController.selected.coorLatitud}" title="#{bundle.EditUsuarioTitle_coorLatitud}" />
+                        <p:selectOneMenu id="disponibilidad" value="#{selectOneMenuView.console}" >
+                            <f:selectItem itemLabel="TIEMPO COMPLETO" itemValue="" />
+                            <f:selectItem itemLabel="MEDIO TIEMPO" itemValue="" />
+                            <f:selectItem itemLabel="OTROS" itemValue="" />
+                        </p:selectOneMenu>
+                        <p:outputLabel/>
+                        <p:outputLabel/>
                     </h:panelGrid>
                 </h:panelGroup>
 
             </p:panel>
         </div>
-        <div style="width: 40%; float:left;">
-            <p:panel header="Foto">
-                <h:panelGrid columns="1" border="0" >
-                    <h:graphicImage value="http://localhost:8080/siscontrol1-war/upload/#{empresaController.selected.empLog}" height="200" width="220" />
+        <div style="width: 30%; float:left;">
+            <p:panel header="Foto" style="border: none;">
+                <h:panelGrid columns="1" border="0" cellspacing="2" >
+                    <h:graphicImage value="http://localhost:8080/siscontrol1-war/upload/#{empresaController.selected.empLog}" height="140" width="160" />
                     <p:commandButton value="Cambiar Foto" type="button" onclick="PF('dlg2').show();" />
                 </h:panelGrid>
                 <p:dialog header="Selecionar foto de Perfil" widgetVar="dlg2" modal="true" height="250" resizable="false">
                     <h:form id="formFoto" enctype="multipart/form-data">
-                        <h:panelGrid border="0"  columns="1" cellspacing="5" width="100%">
+                        <h:panelGrid border="0"  columns="1" cellspacing="5" style="margin-left: auto;" width="100%">
                             <p:panel>
                                 <h:panelGrid columns="2" width="50%">
                                     <p:commandButton value="Establecer como foto de perfil"
@@ -111,19 +101,35 @@
                 </p:dialog>  
             </p:panel>
         </div>
-        <div style="clear:both;">
-            <p:panel header="Direccion Domiciliaria Actual">
+        <div style="clear:both; width: 70%;">
+            <p:panel header="Direccion Domiciliaria" style="border: none;">
                 <h:panelGroup id="display1">
-                    <p:panelGrid columns="4">
-                        <p:outputLabel for="pais" value="Pais:" />
-                        <p:selectOneMenu id="pais" value="#{selectOneMenuView.console}">
-                            <f:selectItem itemLabel="Select One" itemValue="" />
+                    <h:panelGrid columns="4"
+                                 border="0" 
+                                 cellspacing="4" 
+                                 cellpadding="0"
+                                 columnClasses="column1Class, column2Class,column3Class,column4Class">
+                        <p:outputLabel for="pais" value="PAIS:" />
+                        <p:selectOneMenu id="pais" value=" "  >
+                            <f:selectItems value="#{paisController.items}" var="pais" itemLabel="#{pais.nombre}" />
                         </p:selectOneMenu>  
-                        <p:outputLabel for="provincia" value="Provincia:" />
+                        <p:outputLabel for="provincia" value="PROVINCIA:" />
                         <p:selectOneMenu id="provincia" value="#{selectOneMenuView.console}">
                             <f:selectItem itemLabel="Select One" itemValue="" />
                         </p:selectOneMenu> 
-                    </p:panelGrid>
+                        <p:outputLabel for="ciudad" value="CIUDAD:" />
+                        <p:selectOneMenu id="ciudad" value="#{selectOneMenuView.console}">
+                            <f:selectItems value="#{ciudadController.items}"  var="ciudad" itemLabel="#{ciudad.nombre}"/>
+                        </p:selectOneMenu> 
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" styleClass="inputText" value="#{usuarioController.selected.direccion}" title="#{bundle.EditUsuarioTitle_direccion}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_direccion}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoFijo}" for="telefonoFijo" />
+                        <p:inputText id="telefonoFijo" styleClass="inputText" value="#{usuarioController.selected.telefonoFijo}" title="#{bundle.EditUsuarioTitle_telefonoFijo}" />
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoMovil}" for="telefonoMovil" />
+                        <p:inputText id="telefonoMovil" styleClass="inputText" value="#{usuarioController.selected.telefonoMovil}" title="#{bundle.EditUsuarioTitle_telefonoMovil}" />
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_correoElectronico}" for="correoElectronico" />
+                        <p:inputText id="correoElectronico" styleClass="inputText" value="#{usuarioController.selected.correoElectronico}" title="#{bundle.EditUsuarioTitle_correoElectronico}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_correoElectronico}"/>
+                    </h:panelGrid>
                 </h:panelGroup>
             </p:panel>
         </div>
