@@ -100,6 +100,7 @@ public class ReferenciaPersonal implements Serializable {
     }
 
     public String getNombres() {
+        //System.out.println("holaaaaaaa"+getNombres());
         return nombres;
     }
 

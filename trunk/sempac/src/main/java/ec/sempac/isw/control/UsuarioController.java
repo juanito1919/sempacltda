@@ -2,7 +2,6 @@ package ec.sempac.isw.control;
 
 import ec.sempac.isw.modelo.Usuario;
 import ec.sempac.isw.negocio.UsuarioFacade;
-
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -32,5 +31,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     @Override
     protected void initializeEmbeddableKey() {
     }
-
+    
+    
+  
 }

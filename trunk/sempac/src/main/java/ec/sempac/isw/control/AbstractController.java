@@ -82,6 +82,7 @@ public abstract class AbstractController<T> {
     }
 
     public void saveNew(ActionEvent event) {
+        
         String msg = "";
         persist(PersistAction.CREATE, msg);        
         if (!isValidationFailed()) {

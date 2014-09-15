@@ -41,4 +41,9 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             return null;
         }
     }
+     public List<Usuario> getItemsUsuarioEliminado(boolean eliminado) {
+        Query query = this.em.createNamedQuery(Usuario.findByEliminado);
+        query.setParameter("eliminado", eliminado);
+         return query.getResultList();  
+    }
 }

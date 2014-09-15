@@ -68,6 +68,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByUsernameEmail ="Usuario.findByUsernameEmail";
+    public static final String findByEliminado ="Usuario.findByEliminado";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

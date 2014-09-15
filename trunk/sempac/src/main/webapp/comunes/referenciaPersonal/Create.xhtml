@@ -25,13 +25,18 @@
                         <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_url}" for="url" />
                         <p:inputText id="url" value="#{referenciaPersonalController.selected.url}" title="#{bundle.CreateReferenciaPersonalTitle_url}" />
                         <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_usuario}" for="usuario" />
-                        <p:selectOneMenu id="usuario" value="#{referenciaPersonalController.selected.usuario}" required="true" requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_usuario}">
-                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                        <p:selectOneMenu id="usuario" 
+                                         value="#{referenciaPersonalController.selected.usuario}" 
+                                         required="true" 
+                                         requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_usuario}">
+                            <f:selectItems value="#{referenciaPersonalController.listaUsuario}"
                                            var="usuarioItem"
-                                           itemValue="#{usuarioItem}"/>
+                                           itemValue="#{usuarioItem}"
+                                           itemLabel="#{usuarioItem.nombres}" />
+                            <f:converter binding="#{usuarioConverter}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{referenciaPersonalController.create}" value="#{bundle.Save}" update="display,:ReferenciaPersonalListForm:datalist,:growl" oncomplete="handleSubmit(args,'ReferenciaPersonalCreateDialog');"/>
+                    <p:commandButton actionListener="#{referenciaPersonalController.saveNew}" value="#{bundle.Save}" update="display,:ReferenciaPersonalListForm:datalist,:growl" oncomplete="handleSubmit(args,'ReferenciaPersonalCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ReferenciaPersonalCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
