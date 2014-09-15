@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "USUARIO", catalog = "jmj", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"USERNAME"})})
+    @UniqueConstraint(columnNames = {"USERNAME"}),
+    @UniqueConstraint(columnNames = {"CORREO_ELECTRONICO"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
@@ -167,6 +169,8 @@ public class Usuario implements Serializable {
     private List<PersonalRequerido> personalRequeridoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Capacitaciones> capacitacionesList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private SistemaUsuario sistemaUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<IdiomaDominado> idiomaDominadoList;
     @OneToMany(mappedBy = "idUsuario")
@@ -452,6 +456,14 @@ public class Usuario implements Serializable {
 
     public void setCapacitacionesList(List<Capacitaciones> capacitacionesList) {
         this.capacitacionesList = capacitacionesList;
+    }
+
+    public SistemaUsuario getSistemaUsuario() {
+        return sistemaUsuario;
+    }
+
+    public void setSistemaUsuario(SistemaUsuario sistemaUsuario) {
+        this.sistemaUsuario = sistemaUsuario;
     }
 
     @XmlTransient

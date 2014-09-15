@@ -33,8 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author miguesaca
  */
 @Entity
-@Table(catalog = "jmj", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"ID_UNIVERSIDAD"})})
+@Table(catalog = "jmj", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Universidad.findAll", query = "SELECT u FROM Universidad u"),
