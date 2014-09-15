@@ -8,61 +8,189 @@
 
     <ui:composition>
 
-        <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateUsuarioTitle}">
+        <p:dialog id="UsuarioCreateDlg" 
+                  widgetVar="UsuarioCreateDialog" 
+                  modal="true" 
+                  resizable="false" 
+                  appendTo="@(body)" 
+                  closeOnEscape="true"
+                  >
+            <f:facet name="header">
+                <h:outputLabel value="#{bundleEtiquetasES.Registro}"
+                               styleClass="encabezadosDialog"/>
+            </f:facet>
             <h:form id="UsuarioCreateForm">
+                <p:messages id="mensaje" showDetail="true" autoUpdate="true" closable="true" />
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_idUsuario}" for="idUsuario" />
-                        <p:inputText id="idUsuario" value="#{usuarioController.selected.idUsuario}" title="#{bundle.CreateUsuarioTitle_idUsuario}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_idUsuario}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_username}" for="username" />
-                        <p:inputText id="username" value="#{usuarioController.selected.username}" title="#{bundle.CreateUsuarioTitle_username}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_username}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_nombres}" for="nombres" />
-                        <p:inputText id="nombres" value="#{usuarioController.selected.nombres}" title="#{bundle.CreateUsuarioTitle_nombres}" />
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_apellidos}" for="apellidos" />
-                        <p:inputText id="apellidos" value="#{usuarioController.selected.apellidos}" title="#{bundle.CreateUsuarioTitle_apellidos}" />
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_direccion}" for="direccion" />
-                        <p:inputText id="direccion" value="#{usuarioController.selected.direccion}" title="#{bundle.CreateUsuarioTitle_direccion}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_direccion}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_correoElectronico}" for="correoElectronico" />
-                        <p:inputText id="correoElectronico" value="#{usuarioController.selected.correoElectronico}" title="#{bundle.CreateUsuarioTitle_correoElectronico}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_correoElectronico}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_contrasena}" for="contrasena" />
-                        <p:inputText id="contrasena" value="#{usuarioController.selected.contrasena}" title="#{bundle.CreateUsuarioTitle_contrasena}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_contrasena}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_fechaNacimiento}" for="fechaNacimiento" />
-                        <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{usuarioController.selected.fechaNacimiento}" title="#{bundle.EditUsuarioTitle_fechaNacimiento}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_fechaNacimiento}" showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_tipoIdentidad}" for="tipoIdentidad" />
-                        <p:inputText id="tipoIdentidad" value="#{usuarioController.selected.tipoIdentidad}" title="#{bundle.CreateUsuarioTitle_tipoIdentidad}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_tipoIdentidad}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_identidad}" for="identidad" />
-                        <p:inputText id="identidad" value="#{usuarioController.selected.identidad}" title="#{bundle.CreateUsuarioTitle_identidad}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_identidad}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_genero}" for="genero" />
-                        <p:inputText id="genero" value="#{usuarioController.selected.genero}" title="#{bundle.CreateUsuarioTitle_genero}" />
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_estadoCivil}" for="estadoCivil" />
-                        <p:inputText id="estadoCivil" value="#{usuarioController.selected.estadoCivil}" title="#{bundle.CreateUsuarioTitle_estadoCivil}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_estadoCivil}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_telefonoFijo}" for="telefonoFijo" />
-                        <p:inputText id="telefonoFijo" value="#{usuarioController.selected.telefonoFijo}" title="#{bundle.CreateUsuarioTitle_telefonoFijo}" />
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_telefonoMovil}" for="telefonoMovil" />
-                        <p:inputText id="telefonoMovil" value="#{usuarioController.selected.telefonoMovil}" title="#{bundle.CreateUsuarioTitle_telefonoMovil}" />
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_edad}" for="edad" />
-                        <p:inputText id="edad" value="#{usuarioController.selected.edad}" title="#{bundle.CreateUsuarioTitle_edad}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_edad}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_url}" for="url" />
-                        <p:inputText id="url" value="#{usuarioController.selected.url}" title="#{bundle.CreateUsuarioTitle_url}" />
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_tipo}" for="tipo" />
-                        <p:inputText id="tipo" value="#{usuarioController.selected.tipo}" title="#{bundle.CreateUsuarioTitle_tipo}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_tipo}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_fechaModificacion}" for="fechaModificacion" />
-                        <p:calendar id="fechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{usuarioController.selected.fechaModificacion}" title="#{bundle.EditUsuarioTitle_fechaModificacion}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_disponibilidad}" for="disponibilidad" />
-                        <p:inputText id="disponibilidad" value="#{usuarioController.selected.disponibilidad}" title="#{bundle.CreateUsuarioTitle_disponibilidad}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_disponibilidad}"/>
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_coorLongitud}" for="coorLongitud" />
-                        <p:inputText id="coorLongitud" value="#{usuarioController.selected.coorLongitud}" title="#{bundle.CreateUsuarioTitle_coorLongitud}" />
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_coorLatitud}" for="coorLatitud" />
-                        <p:inputText id="coorLatitud" value="#{usuarioController.selected.coorLatitud}" title="#{bundle.CreateUsuarioTitle_coorLatitud}" />
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_idCiudad}" for="idCiudad" />
-                        <p:selectOneMenu id="idCiudad" value="#{usuarioController.selected.idCiudad}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_idCiudad}">
-                            <f:selectItems value="#{ciudadController.itemsAvailableSelectOne}"
-                                           var="idCiudadItem"
-                                           itemValue="#{idCiudadItem}"/>
+                    <h:panelGrid columns="3" 
+                                 rendered="#{usuarioController.selected!=null}"
+                                 border="0">
+                        <p:outputLabel value="#{bundleEtiquetasES.TipoIdientidad}" for="tipoIdentidad" />
+                        <p:selectOneMenu id="tipoIdentidad" 
+                                         value="#{usuarioController.selected.tipoIdentidad}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.TipoIdientidad}  #{bundleEtiquetasES.CampoRequerido}">                          
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Cedula}" itemValue="C" />  
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Ruc}" itemValue="R" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Pasaporte}" itemValue="P" />                                       
                         </p:selectOneMenu>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{usuarioController.create}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args,'UsuarioCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="UsuarioCreateDialog.hide()"/>
+                        <p:message id="mensajeTipoIdentidad" for="tipoIdentidad" />
+                        <p:outputLabel value="#{bundleEtiquetasES.Identidad}" for="identidad" />
+                        <p:inputText id="identidad" 
+                                     value="#{usuarioController.selected.identidad}" 
+                                     title="#{bundleEtiquetasES.Identidad}"
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.Identidad} #{bundleEtiquetasES.CampoRequerido}" />
+                        <p:message id="mensajeIdentidad" for="identidad" />
+                        <p:outputLabel value="#{bundleEtiquetasES.Nombres}" for="nombres" />
+                        <p:inputText id="nombres" 
+                                     value="#{usuarioController.selected.nombres}" 
+                                     title="#{bundleEtiquetasES.Nombres}"
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.Nombres} #{bundleEtiquetasES.CampoRequerido}" />
+                        <p:message id="mensajeNombres" for="nombres" />
+                        <p:outputLabel value="#{bundleEtiquetasES.Apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" 
+                                     value="#{usuarioController.selected.apellidos}" 
+                                     title="#{bundleEtiquetasES.Apellidos}" />
+                        <p:message id="mensajeApellidos" for="apellidos" />
+                        <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
+                        <p:inputText id="username" 
+                                     value="#{usuarioController.selected.username}" 
+                                     title="#{bundleEtiquetasES.UserName}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.UserName} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{usuarioController.revisaNombre()}" 
+                                    update=":UsuarioCreateForm:mensaje"/>
+                        </p:inputText>
+                        <p:message id="mensajeUserName" for="username" />
+                        <p:outputLabel value="#{bundleEtiquetasES.Contrasena}" for="contrasena" />
+                        <p:password id="contrasena" 
+                                    value="#{usuarioController.contrasena}" 
+                                    title="#{bundleEtiquetasES.Contrasena}" 
+                                    required="true" 
+                                    requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{usuarioController.revisaContasena()}" 
+                                    update=":UsuarioCreateForm:mensaje"/>
+                        </p:password>
+                        <p:message id="mensajeConfirmar" for="contrasena" />
+                        <p:outputLabel value="#{bundleEtiquetasES.ConfirmeContrasena}" for="confirmarContrasena" />
+                        <p:password id="confirmarContrasena" 
+                                    value="#{usuarioController.confirmaContrasena}" 
+                                    title="#{bundleEtiquetasES.Contrasena}" 
+                                    required="true" 
+                                    requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{usuarioController.revisaContasena()}" 
+                                    update=":UsuarioCreateForm:mensaje"/>
+                        </p:password>
+                        <p:message id="mensajeConfirmarContrasena" for="confirmarContrasena" />
+                        <p:outputLabel value="#{bundleEtiquetasES.FechaNacimiento}" for="fechaNacimiento" />
+                        <p:calendar id="fechaNacimiento" 
+                                    pattern="dd/MM/yyyy" 
+                                    value="#{usuarioController.selected.fechaNacimiento}" 
+                                    title="#{bundleEtiquetasES.FechaNacimiento}" 
+                                    required="true" 
+                                    requiredMessage="#{bundleEtiquetasES.FechaNacimiento} #{bundleEtiquetasES.CampoRequerido}" 
+                                    showOn="button"/>
+                        <p:message id="mensajeFechaNacimiento" for="fechaNacimiento" />
+                        <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
+                        <p:selectOneMenu id="pais" 
+                                         value="#{usuarioController.pais}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{usuarioController.itemPaises}"
+                                           var="PaisItem"
+                                           itemValue="#{PaisItem}"
+                                           itemLabel="#{PaisItem.nombre}"
+                                           />
+                            <f:converter binding="#{paisConverter}"/>
+                            <p:ajax event="change" 
+                                    listener="#{usuarioController.cambiaPais()}" 
+                                    update=":UsuarioCreateForm:provincia,:UsuarioCreateForm:ciudad"/>
+                        </p:selectOneMenu>
+                        <p:message id="mensajePais" for="pais" />
+                        <p:outputLabel value="#{bundleEtiquetasES.Provincia}" for="provincia" />
+                        <p:selectOneMenu id="provincia" 
+                                         value="#{usuarioController.provincia}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{usuarioController.itemProvincias}"
+                                           var="ProvinciaItem"
+                                           itemValue="#{ProvinciaItem}"
+                                           itemLabel="#{ProvinciaItem.nombre}"
+                                           />
+                            <f:converter binding="#{regionConverter}"/>
+                            <p:ajax event="change" 
+                                    listener="#{usuarioController.cambiaProvincia()}" 
+                                    update=":UsuarioCreateForm:ciudad"/>
+                        </p:selectOneMenu>
+                        <p:message id="mensajeProvincia" for="provincia" />
+                        <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
+                        <p:selectOneMenu id="ciudad" 
+                                         value="#{usuarioController.selected.idCiudad}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{usuarioController.itemCiudades}"
+                                           var="CiudadItem"
+                                           itemValue="#{CiudadItem}"
+                                           itemLabel="#{CiudadItem.nombre}"
+                                           />
+                            <f:converter binding="#{ciudadConverter}"/>
+                        </p:selectOneMenu>
+                        <p:message id="mensajeCiudad" for="ciudad" />
+                        <p:outputLabel value="#{bundleEtiquetasES.Direccion}" 
+                                       for="direccion" />
+                        <p:inputText id="direccion" 
+                                     value="#{usuarioController.selected.direccion}" 
+                                     title="#{bundleEtiquetasES.Direccion}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.Direccion} #{bundleEtiquetasES.CampoRequerido}"/>
+                        <p:message id="mensajeDireccion" for="direccion" />
+                        <p:outputLabel value="#{bundleEtiquetasES.CorreoElectronico}" for="correoElectronico" />
+                        <p:inputText id="correoElectronico" 
+                                     value="#{usuarioController.selected.correoElectronico}" 
+                                     title="#{bundleEtiquetasES.CorreoElectronico}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.CorreoElectronico} #{bundleEtiquetasES.CampoRequerido}">
+                        <p:ajax event="blur" 
+                                listener="#{usuarioController.revisaMail()}" 
+                                update=":UsuarioCreateForm:mensaje"/>
+                        </p:inputText>
+                        <p:message for="correoElectronico" />
+                        <p:outputLabel value="#{bundleEtiquetasES.EstadoCivil}"   for="estadoCivil" />
+                        <p:selectOneMenu id="estadoCivil" 
+                                         value="#{usuarioController.selected.estadoCivil}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Soltero}" itemValue="S" />  
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Casado}" itemValue="C" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Divorciado}" itemValue="D" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.UnionLibre}" itemValue="U" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Viudo}" itemValue="V" />  
+                        </p:selectOneMenu>
+                        <p:message id="mensajeEstadoCivil" for="estadoCivil" />
+                        <p:outputLabel value="#{bundleEtiquetasES.Disponibilidad}" for="disponibilidad" />
+                        <p:selectOneMenu id="disponibilidad" 
+                                         value="#{usuarioController.selected.disponibilidad}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.TiempoCompleto}" itemValue="C" />  
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.MedioTiempo}" itemValue="M" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Otro}" itemValue="O" />  
+                        </p:selectOneMenu>
+                        <p:message id="mensajeDisponibilidad" for="disponibilidad" />
+                    </h:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.registraCuenta}" value="#{bundleEtiquetasES.Registrar}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');"/>
+                    <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="UsuarioCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

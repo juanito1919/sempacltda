@@ -39,11 +39,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Region.findByNombre", query = "SELECT r FROM Region r WHERE r.nombre = :nombre"),
     @NamedQuery(name = "Region.findByEliminado", query = "SELECT r FROM Region r WHERE r.eliminado = :eliminado"),
     //PERSONALIZADA
+    @NamedQuery(name = "Region.findByPaisEliminado", query = "SELECT r FROM Region r WHERE r.eliminado = :eliminado AND r.idPais.idPais = :pais"),
     @NamedQuery(name = "Region.findByUniquePaisRegion", query = "SELECT r FROM Region r WHERE r.nombre = :nombre AND r.idPais.idPais = :idPais")
     })
 public class Region implements Serializable {
     private static final long serialVersionUID = 1L;
-    public static final String findByUniquePaisRegion ="Region.findByUniquePaisRegion";
+    public static final String findByUniquePaisRegion ="Region.findByUniquePaisRegion";    
+    public static final String findByPaisEliminado ="Region.findByPaisEliminado";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

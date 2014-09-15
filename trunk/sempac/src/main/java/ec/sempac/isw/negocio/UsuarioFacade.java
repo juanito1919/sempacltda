@@ -46,4 +46,24 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         query.setParameter("eliminado", eliminado);
          return query.getResultList();  
     }
+     
+     public Usuario getItemsCorreo(String correoElectronico) {
+        Query query = this.em.createNamedQuery(Usuario.findByCorreoElectronico);
+        query.setParameter("username", correoElectronico);
+        try{
+            return (Usuario)query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
+    }
+    
+    public Usuario getItemsUserName(String username) {
+        Query query = this.em.createNamedQuery(Usuario.findByUsername);
+        query.setParameter("username", username);
+        try{
+            return (Usuario)query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
+    }
 }

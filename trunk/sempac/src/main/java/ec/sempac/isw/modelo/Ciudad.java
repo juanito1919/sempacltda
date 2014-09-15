@@ -37,9 +37,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ciudad.findAll", query = "SELECT c FROM Ciudad c"),
     @NamedQuery(name = "Ciudad.findByIdCiudad", query = "SELECT c FROM Ciudad c WHERE c.idCiudad = :idCiudad"),
     @NamedQuery(name = "Ciudad.findByNombre", query = "SELECT c FROM Ciudad c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Ciudad.findByEliminado", query = "SELECT c FROM Ciudad c WHERE c.eliminado = :eliminado")})
+    @NamedQuery(name = "Ciudad.findByEliminado", query = "SELECT c FROM Ciudad c WHERE c.eliminado = :eliminado"),
+    //Personalizadas
+    @NamedQuery(name = "Ciudad.findByRegionEliminado", query = "SELECT c FROM Ciudad c WHERE c.eliminado = :eliminado AND c.idRegion.idRegion = :region")
+})
 public class Ciudad implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String findByRegionEliminado ="Ciudad.findByRegionEliminado";    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

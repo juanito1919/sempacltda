@@ -27,6 +27,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -71,6 +72,8 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByUsernameEmail ="Usuario.findByUsernameEmail";
     public static final String findByEliminado ="Usuario.findByEliminado";
+    public static final String findByUsername ="Usuario.findByUsername";
+    public static final String findByCorreoElectronico ="Usuario.findByCorreoElectronico";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -98,6 +101,7 @@ public class Usuario implements Serializable {
     @NotNull
     @Size(min = 1, max = 64)
     @Column(name = "CORREO_ELECTRONICO", nullable = false, length = 64)
+    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",message = "Correo inválido")
     private String correoElectronico;
     @Basic(optional = false)
     @NotNull

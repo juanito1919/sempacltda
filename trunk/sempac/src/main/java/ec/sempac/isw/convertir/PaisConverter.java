@@ -34,9 +34,9 @@ public class PaisConverter implements Converter {
         return this.ejbFacade.find(getKey(value));
     }
 
-    java.lang.Long getKey(String value) {
-        java.lang.Long key;
-        key = Long.valueOf(value);
+    java.lang.Short getKey(String value) {
+        java.lang.Short key;
+        key = Short.valueOf(value);
         return key;
     }
 
