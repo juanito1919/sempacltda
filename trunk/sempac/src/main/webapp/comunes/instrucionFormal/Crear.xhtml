@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:form id="UsuarioEditForm">
+        <div style="width: 30%;">
+            <p:panel header="Nivel de Instrucción:" style="border: none; float: left;" >
+                <h:panelGroup id="display">
+                    <h:panelGrid columns="2" 
+                                 border="0" 
+                                 cellspacing="4" 
+                                 cellpadding="0" columnClasses="column1Class">
+                        <p:outputLabel for="nivelInstrucion"  value="NIVEL DE INSTRUCION:" />
+                        <p:selectOneMenu id="nivelInstrucion" value="#{usuarioController.selected.estadoCivil}" onchange="PF('dlg1').show();">
+                            <f:selectItem itemLabel="NINGUNA" itemValue="S" />
+                            <f:selectItem itemLabel="SECUNDARIA" itemValue="C" />
+                            <f:selectItem itemLabel="TECNOLOGICA" itemValue="U" />
+                            <f:selectItem itemLabel="TERCER NIVEL" itemValue="D" />
+                            <f:selectItem itemLabel="CUARTO NIVEL" itemValue="V" />
+                        </p:selectOneMenu>
+
+                    </h:panelGrid> 
+                </h:panelGroup>
+            </p:panel>
+        </div>
+        <div style="float: left; width:70%; ">
+            <p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
+                <h:outputText value="Resistance to PrimeFaces is futile!" />
+            </p:dialog>
+        </div >
+        <div style="clear:both; width: 100%;">
+
+        </div>
+        <div style="width: 100%;">
+
+        </div>
+    </h:form>
+
+
+</ui:composition>
