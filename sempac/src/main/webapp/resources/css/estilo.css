@@ -60,6 +60,14 @@ body {
     height: 60px;
     width: 120px;
 }
+.butonBarra .ui-icon{
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+}
+.butonBarra.ui-panel{
+    background-color: #cc0000;
+}
 .imagenLogin{
     width: 70px;
     height: 80px;
@@ -92,14 +100,14 @@ body {
     text-align: right;
     font-weight: bold;
     color: #cc0000;
-    width: 200px;
+    width: 250px;
 }
 
 .column2Class,.column4Class{
     width: 230px;
 }
 .inputText{
-    width: 200px;
+    width: 230px;
     height: 15px;
     text-transform: uppercase;
 }

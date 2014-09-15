@@ -11,30 +11,36 @@
                 <p:commandButton id="paguinaPrincipalBot" styleClass="butonBarra" value="Paguina Principal"
                                  title="Paguina Principal" 
                                  icon="ui-icon-home" 
-                                 disabled=""  /> 
+                                 /> 
                 <p:separator/>
                 <p:commandButton id="infoPersonalBot" styleClass="butonBarra" value="Informacion Personal"
                                  title="Informacion Personal" 
                                  icon="ui-icon-person" 
-                                 disabled=""  />                 
-
+                                 />  
+               
+                
                 <p:commandButton id="prefeLaboralesBot" styleClass="butonBarra" value="Preferencias Laborales"
                                  title="Preferencias Laborales" 
-                                 icon="ui-icon-check"  
-                                 disabled=""/> 
+                                 icon="ui-icon-check"
+                                 
+                                /> 
                 
                 <p:commandButton id="instrucionFormalBot" styleClass="butonBarra" value="Instrucción formal"
                                  title="Instrucción formal" 
                                  icon=""  
-                                 disabled=""/>
+                                 />
                 <p:commandButton id="logrosPersonalesBot" styleClass="butonBarra" value="Logros Personales"
                                  title="Logros Personales" 
-                                 icon=""  
-                                 disabled=""/> 
-                <p:commandButton id="ReferenciasPersonalesBot" styleClass="butonBarra" value="Referencias Personales"
+                                 icon=""
+                                /> 
+                <p:commandButton id="ReferenciasPersonalesBot" 
+                                 styleClass="butonBarra" 
+                                 actionListener="#{referenciaPersonalController.prepareCreate}"
+                                 value="Referencias Personales"
                                  title="Referencias Personales" 
-                                 icon=""  
-                                 disabled=""/> 
+                                 update=":ReferenciaPersonalCreateForm"
+                                 icon=""
+                                /> 
             </p:toolbarGroup>
         </p:toolbar>
     </h:form>

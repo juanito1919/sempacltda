@@ -22,9 +22,9 @@ public class Validaciones {
     private static final String PATTERN_SEGURIDAD_BAJA = "(?=^.{1,5}$)(?=.*[A-Z])(?=.*[a-z]).*";
     private static final String PATTERN_SEGURIDAD_MEDIA = "(?=^.{6,8}$)(?=.*\\d)(?=.*[A-Z])(?=.*[a-z]).*";
     private static final String PATTERN_SEGURIDAD_ALTA = "(?=^.{8,15}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*";
-    private static final String PATTERN_NUMERO="[\\d]*";
-    private static final String PATTERN_LETRAS="[a-zA-Z]*";
-    private static final String PATTERN_PALABRAS="[a-zA-Z[\\s]]*";
+    private static final String PATTERN_NUMERO = "[\\d]*";
+    private static final String PATTERN_LETRAS = "[a-zA-Z]*";
+    private static final String PATTERN_PALABRAS = "[a-zA-Z[\\s]]*";
     public static String msg = "";
 
     /**
@@ -90,6 +90,16 @@ public class Validaciones {
 
     }
 
+    public static boolean validarNumeros(String numero) {
+        Pattern pattern = Pattern.compile(PATTERN_NUMERO);
+        Matcher matcher = pattern.matcher(numero);
+        return matcher.matches();
+    }
+    public static boolean validarPalabras(String numero) {
+        Pattern pattern = Pattern.compile(PATTERN_PALABRAS);
+        Matcher matcher = pattern.matcher(numero);
+        return matcher.matches();
+    }
     public static boolean validaPersonaMayorEdad(Date fechaNacimiento) {
 
         int y1 = fechaNacimiento.getYear() + 1900;
