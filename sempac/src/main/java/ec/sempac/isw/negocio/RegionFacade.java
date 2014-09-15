@@ -7,6 +7,7 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Region;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -40,5 +41,12 @@ public class RegionFacade extends AbstractFacade<Region> {
             return null;
         }
 
+    }
+    
+    public List<Region> getItemsReionesPais(boolean eliminado, Short pais) {
+        Query query = this.em.createNamedQuery(Region.findByPaisEliminado);
+        query.setParameter("eliminado", eliminado);
+        query.setParameter("pais", pais);
+        return query.getResultList();
     }
 }
