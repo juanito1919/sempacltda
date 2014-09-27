@@ -43,7 +43,7 @@ import org.primefaces.context.RequestContext;
 @ManagedBean(name = "usuarioLoginController")
 @SessionScoped
 public class UsuarioLoginController extends AbstractController<Usuario> implements Serializable {
-    
+
     @EJB
     private UsuarioFacade ejbFacade;
     @EJB
@@ -80,7 +80,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
     public UsuarioLoginController() {
         super(Usuario.class);
     }
-    
+
     @PostConstruct
     public void init() {
         super.setFacade(ejbFacade);
@@ -95,13 +95,14 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         this.setContrasenaNueva(null);
         this.repiteContrasena = false;
     }
-    
+
     public void validaUsuario() {
         try {
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
             Usuario listUsuario = this.ejbFacade.getItemsPais(username);
             if (listUsuario == null) {
+
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("UsuarioNoExiste"));
                 return;
             }
@@ -112,9 +113,11 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             // Validando si el usuario esta asignado al SISTEMA MINKASOFTWARE
             //List<UsuarioSistema> listUsuarioSistema = ejbFacade.getUsuarioSistema(getUsuario(), this.contrasena);
             usuarioSistema = ejbFacadeUsuarioSistema.find(listUsuario.getIdUsuario());
+
             if (usuarioSistema == null) {
+
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/propiedadesMensajesEC").getString("UsuarioNoExiste"));
-                
+
                 return;
             }
             //Verificando el Estado del Usuario
@@ -122,8 +125,12 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
 
             // Colocando el tiempo de inactividad que tiene el sistema
             Sesion.tiempoInactividad(100);
-            if (usuarioSistema.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
-                if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
+            //if (usuarioSistema.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
+            if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
+
+                // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
+                if (estadoUsuario.equals("V")) {
+                    System.out.println("entrossss");
                     // Iniciando la variable de session con los datos del usuario mediante la entidad.                      
                     ActivacionUsuario.setUsuario(this.getUsuario());
                     // ActivacionUsuario.setCodigoIfip(this.getUsuario().getCodigoIfip().getCodigo());
@@ -145,7 +152,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
                     //Colocando el codigo del acceso al sistema
                     ActivacionUsuario.setCodigoAccesoSistema(this.getUsuarioAccesoSistema().getIdSistemaAcceso());
                     //Accediendo al Menu
-                    String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlAgenciaMKS");
+                    String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principal");
                     Sesion.redireccionaPagina(url);
                     // Si la contraseña ha caducado
                 } else if (estadoUsuario.equals("V") && Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
@@ -195,15 +202,14 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             // Muestra el Mensaje del Error en la Capa
             MuestraMensaje.addErrorCapaControl();
             // Registra el error en el log del servidor
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, ErrorException.errorNoCapturadoCapaDeControl,
-                    new Object[]{"contrasenaUsuarioController", "cambiarContrasenaUsuario", ErrorException.getErrorException(ex)});
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, ErrorException.errorNoCapturadoCapaDeControl, ex.getMessage());
         }
     }
-    
+
     public void muestraDialogoCambioContrasena() {
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("CambioContrasenaDialogo.show()");
-        
+
     }
 
     public void cambiaContrasena() throws IOException {
@@ -213,8 +219,8 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         ActivacionUsuario.setCodigoUsuario(this.getUsuario().getIdUsuario());
         ActivacionUsuario.setCambiarContrasena(true);
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("CambioContrasenaDialogo.hide()");        
-        
+        context.execute("CambioContrasenaDialogo.hide()");
+
         String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlCambiaContrasena");
         FacesContext.getCurrentInstance().getExternalContext().redirect(url);
     }
@@ -226,7 +232,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         try {
             if (!Sesion.MD5(this.getContrasenaActual()).equals(usuarioSistema.getContrasena())) {
                 msg = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaActual");
-                
+
             }
         } catch (Exception ex) {
             msg = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ValidarContrasena");
@@ -244,7 +250,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
                 sistemaUsuario.setFechaCaducidad(obtieneFechaCaducidad());
                 ejbFacadeUsuarioSistema.edit(sistemaUsuario);
             }
-            
+
         }
     }
 
@@ -263,14 +269,14 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         } else if (this.mensajeComplejidad == null) {
             this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaInsegura");;
         }
-        
+
         msg = (mensajeComplejidad != null && !complejidadContrasena) ? "Contraseña no Cumple con Complejidad Aceptable. " + this.mensajeComplejidad : null;
-        
+
         return complejidadContrasena;
     }
 
     public Date obtieneFechaCaducidad() {
-        
+
         GregorianCalendar calendario = new GregorianCalendar();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         calendario.add(Calendar.MONTH, 12);//meses
@@ -279,13 +285,13 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         Date envioFechaExpiracion = null;
         try {
             envioFechaExpiracion = formato.parse(fecha);
-            
+
         } catch (ParseException ex) {
             Logger.getLogger(Usuario.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
         return envioFechaExpiracion;
-        
+
     }
 
     /**

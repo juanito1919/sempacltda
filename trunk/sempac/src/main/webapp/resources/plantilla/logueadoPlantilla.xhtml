@@ -19,7 +19,7 @@
                 <h:panelGrid columns="2" width="100%">
                     <p:outputLabel value="Bienvenido/a" style="color:gray; font-size: 1.1em; "/>
                     <p:outputLabel value=""/>
-                    <p:outputLabel value="Juan Pablo Japa" style="color:#000000; font-size: 1.2em; font-weight: bold; "/>
+                    <p:outputLabel value="#{usuarioLoginController.usuario.nombres} #{usuarioLoginController.usuario.apellidos}" style="color:#000000; font-size: 1.2em; font-weight: bold; "/>
                     <h:form>
                         <p:growl id="messages" showDetail="true"/>
                         <p:menuButton value="" style="height: 30px; width: 30px;" >

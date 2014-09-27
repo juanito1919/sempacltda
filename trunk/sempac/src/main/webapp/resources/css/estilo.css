@@ -7,18 +7,19 @@ and open the template in the editor.
     Created on : 02-sep-2014, 23:43:00
     Author     : pablo
 */
+
 body {
+    top: 0px;
     font-size: x-small;
     font-family: Arial;
+     font-weight:normal;
     margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px ;
     background-image: url(../resources/images/fondoPantalla.JPG);
 }
 .panelBanner {
     margin-left: 0px; margin-right: auto;
-    background-image: url(../resources/images/baner.png);
-    background-size: 100%;
-    text-align: right;
     top: 0px;
+    left: 0px;
     width: 80%;
     height: 110px;
     display: block;
@@ -111,3 +112,16 @@ body {
     height: 15px;
     text-transform: uppercase;
 }
+
+.ui-widget-header{
+    background:#ffffff!important;
+    height: 50px;
+}
+.ui-shadow{
+    box-shadow:none;
+}
+
+.ui-dialog-content{
+    background-color:#eaf2f3!important; 
+}
+
