@@ -9,9 +9,14 @@ import ec.sempac.isw.negocio.CiudadFacade;
 import ec.sempac.isw.negocio.PaisFacade;
 import ec.sempac.isw.negocio.RegionFacade;
 import ec.sempac.isw.negocio.UsuarioFacade;
+import ec.sempac.isw.seguridades.Sesion;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -42,6 +47,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     private Ciudad ciudad;
     private String confirmaContrasena;
     private String contrasena;
+    String msj;
 
     public UsuarioController() {
         super(Usuario.class);
@@ -72,34 +78,49 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     }
     
     public void revisaContasena(){
-        System.out.println("Entroooo "+this.contrasena+" "+confirmaContrasena);
-        this.getSelected().setContrasena(contrasena);
+        msj="";
         if (!this.getSelected().getContrasena().equals(this.confirmaContrasena)){
-            MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("ContrasenaNoConisiden"));
+            msj=ResourceBundle.getBundle("/BundleMensajesES").getString("ContrasenaNoConisiden");
+            MuestraMensaje.addError(msj);
         }
     }
         
     public void revisaNombre(){
-        System.out.println("Usuario "+this.getSelected().getUsername());
+        msj="";
         Usuario user=this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
         if (user!=null){
-            MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
+            msj=ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste");
+            MuestraMensaje.addError(msj);
         }
     }
     
     public void revisaMail(){
-        System.out.println("Mail "+this.getSelected().getCorreoElectronico());
+        msj="";
         Usuario user=this.ejbFacade.getItemsCorreo(this.getSelected().getCorreoElectronico());
         if (user!=null){
-            MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
+            msj=ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste");
+            MuestraMensaje.addError(msj);
         }
     }
     
     public void registraCuenta(ActionEvent event){
         System.out.println("Entro guardar");
-        this.getSelected().setTipo('U');
-        this.getSelected().setEliminado(false);
-        this.saveNew(event);
+        boolean ok=true;
+        revisaContasena();if (msj!=null)ok=false;
+        revisaMail();if (msj!=null)ok=false;
+        revisaNombre();if (msj!=null)ok=false;
+        if (ok) {            
+            try {
+                this.getSelected().setContrasena(Sesion.MD5(contrasena));
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.getSelected().setTipo('U');
+            this.getSelected().setEliminado(false);
+            this.saveNew(event);
+        }
     }
 
     @Override
