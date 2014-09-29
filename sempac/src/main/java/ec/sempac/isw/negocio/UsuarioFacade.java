@@ -49,7 +49,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
      
      public Usuario getItemsCorreo(String correoElectronico) {
         Query query = this.em.createNamedQuery(Usuario.findByCorreoElectronico);
-        query.setParameter("username", correoElectronico);
+        query.setParameter("correoElectronico", correoElectronico);
         try{
             return (Usuario)query.getSingleResult();
         }catch(NoResultException e){
