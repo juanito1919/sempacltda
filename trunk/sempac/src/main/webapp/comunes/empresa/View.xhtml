@@ -12,18 +12,19 @@
             <h:form id="EmpresaViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{empresaController.selected != null}">
-                        <h:outputText value="#{bundle.ViewEmpresaLabel_idEmpresa}"/>
-                        <h:outputText value="#{empresaController.selected.idEmpresa}" title="#{bundle.ViewEmpresaTitle_idEmpresa}"/>
-                        <h:outputText value="#{bundle.ViewEmpresaLabel_nombre}"/>
-                        <h:outputText value="#{empresaController.selected.nombre}" title="#{bundle.ViewEmpresaTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewEmpresaLabel_ruc}"/>
-                        <h:outputText value="#{empresaController.selected.ruc}" title="#{bundle.ViewEmpresaTitle_ruc}"/>
-                        <h:outputText value="#{bundle.ViewEmpresaLabel_direccion}"/>
-                        <h:outputText value="#{empresaController.selected.direccion}" title="#{bundle.ViewEmpresaTitle_direccion}"/>
-                        <h:outputText value="#{bundle.ViewEmpresaLabel_idClaseEmpresa}"/>
-                        <h:outputText value="#{empresaController.selected.idClaseEmpresa}" title="#{bundle.ViewEmpresaTitle_idClaseEmpresa}"/>
-                        <h:outputText value="#{bundle.ViewEmpresaLabel_idCiudad}"/>
-                        <h:outputText value="#{empresaController.selected.idCiudad}" title="#{bundle.ViewEmpresaTitle_idCiudad}"/>
+                        <h:outputText value="#{bundleEtiquetasES.Codigo}"/>
+                        <h:outputText value="#{empresaController.selected.idEmpresa}" title="#{bundleEtiquetasES.Codigo}"/>
+                        <h:outputText value="#{bundleEtiquetasES.Ruc}"/>
+                        <h:outputText value="#{empresaController.selected.ruc}" title="#{bundleEtiquetasES.Ruc}"/>
+                        <h:outputText value="#{bundleEtiquetasES.Nombre}"/>
+                        <h:outputText value="#{empresaController.selected.nombre}" title="#{bundleEtiquetasES.Nombre}"/>
+                        <h:outputText value="#{bundleEtiquetasES.Ciudad}"/>
+                        <h:outputText value="#{empresaController.selected.idCiudad.nombre}" title="#{bundleEtiquetasES.Ciudad}"/>
+                        <h:outputText value="#{bundleEtiquetasES.Direccion}"/>
+                        <h:outputText value="#{empresaController.selected.direccion}" title="#{bundleEtiquetasES.Direccion}"/>
+                        <h:outputText value="#{bundleEtiquetasES.TipoEmpresa}"/>
+                        <h:outputText value="#{empresaController.selected.idClaseEmpresa.nombre}" title="#{bundleEtiquetasES.TipoEmpresa}"/>
+                        
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="EmpresaViewDialog.hide()"/>
                 </h:panelGroup>

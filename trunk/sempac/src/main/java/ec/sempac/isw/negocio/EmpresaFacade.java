@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Empresa;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,9 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         super(Empresa.class);
     }
     
+    public List<Empresa> getItemsEmpresa(boolean eliminado) {
+        Query query = this.em.createNamedQuery(Empresa.findByEliminado);
+        query.setParameter("eliminado", eliminado);
+        return query.getResultList();
+    }
 }

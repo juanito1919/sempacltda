@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class ClaseEmpresa implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByNombre ="ClaseEmpresa.findByNombre";
+    public static final String findByEliminado ="ClaseEmpresa.findByEliminado";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
