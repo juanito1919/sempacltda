@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="panelTitulo">
+        INFORMACION PERSONAL
+    </div> 
+    <h:form id="UsuarioEditForm">
+        <div style="width: 70%; float: left;">
+            <p:panel header="Información personal" style="border: none;" >
+                <h:panelGroup id="display">
+                    <h:panelGrid columns="4" 
+                                 border="0" 
+                                 cellspacing="4" 
+                                 cellpadding="0" 
+                                 columnClasses="column1Class, column2Class,column3Class,column4Class" >
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_tipoDocumento}" for="tipoDocumento" />
+                        <p:inputText id="tipoDocumento" styleClass="inputText" value="0105951271" title="#{bundle.EditUsuarioLabel_tipoDocumento}"  disabled="true"/>
+                        <p:outputLabel/>
+                        <p:outputLabel/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" styleClass="inputText" value="#{usuarioController.selected.nombres}" title="#{bundle.EditUsuarioTitle_nombres}" required="true" >
+
+                        </p:inputText>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" styleClass="inputText" value="#{usuarioController.selected.apellidos}" title="#{bundle.EditUsuarioTitle_apellidos}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_fechaNacimiento}" for="fechaNacimiento" />
+                        <p:calendar id="fechaNacimiento"  pattern="MM/dd/yyyy" value="#{usuarioController.selected.fechaNacimiento}" title="#{bundle.EditUsuarioTitle_fechaNacimiento}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_fechaNacimiento}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_edad}" for="edad" />
+                        <p:inputText id="edad" styleClass="inputText" value="#{usuarioController.selected.edad}" title="#{bundle.EditUsuarioTitle_edad}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_edad}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_genero}" for="genero" />
+                        <p:selectOneMenu id="genero" value="#{usuarioController.selected.genero}" >
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Masculino}" itemValue="M" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Femenino}" itemValue="F" />
+                        </p:selectOneMenu>
+                          <p:outputLabel value="#{bundleEtiquetasES.EstadoCivil}"   for="estadoCivil" />
+                        <p:selectOneMenu id="estadoCivil" 
+                                         value="#{usuarioController.selected.estadoCivil}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Soltero}" itemValue="S" />  
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Casado}" itemValue="C" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Divorciado}" itemValue="D" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.UnionLibre}" itemValue="U" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Viudo}" itemValue="V" />  
+                        </p:selectOneMenu>
+                         <p:outputLabel value="#{bundleEtiquetasES.Disponibilidad}" for="disponibilidad" />
+                        <p:selectOneMenu id="disponibilidad" 
+                                         value="#{usuarioController.selected.disponibilidad}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.TiempoCompleto}" itemValue="C" />  
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.MedioTiempo}" itemValue="M" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Otro}" itemValue="O" />  
+                        </p:selectOneMenu>
+                        <p:outputLabel/>
+                        <p:outputLabel/>
+                    </h:panelGrid>
+                </h:panelGroup>
+
+            </p:panel>
+        </div>
+        <div style="width: 30%; float:left;">
+            <p:panel header="Foto" style="border: none;">
+                <h:panelGrid columns="1" border="0"  style="margin: 0 auto;">
+                    <h:graphicImage value="/resources/images/3133959831.jpg" height="140" width="160" />
+                    <p:commandButton value="Cambiar Foto" icon="ui-icon-refresh" type="button" onclick="PF('dlg2').show();" />
+                </h:panelGrid>
+                <p:dialog header="Selecionar foto de Perfil" widgetVar="dlg2" modal="true" height="250" resizable="false">
+                    <h:form id="formFoto" enctype="multipart/form-data">
+                        <h:panelGrid border="0"  columns="1" cellspacing="5" style="margin-left: auto;" width="100%">
+                            <p:panel>
+                                <h:panelGrid columns="2" width="50%">
+                                    <p:commandButton value="Establecer como foto de perfil"
+                                                     disabled="#{editorUsuarioFoto.imageTemp==null}"
+                                                     action="#{editorUsuarioFoto.actionGuardarFoto}"
+                                                     process="@form"
+                                                     oncomplete="ventanaFoto.hide();"
+                                                     />
+                                    <p:commandButton value="Cancelar"
+                                                     type="button"
+                                                     onclick="ventanaFoto.hide();"/>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel styleClass="editorFoto">
+                                <p:imageCropper value="#{editorUsuarioFoto.croppeFoto}"
+                                                image="/usuario/temp/#{editorUsuarioFoto.imageTemp}"
+                                                rendered="#{editorUsuarioFoto.imageTemp!=null}"
+                                                initialCoords="0,0,140,150"
+                                                minSize="70,75"
+                                                maxSize="280,300"
+                                                aspectRatio="0.9"/>
+                                <p:fileUpload fileUploadListener="#{editorUsuarioFoto.uploadFile}"
+                                              rendered="#{editorUsuarioFoto.imageTemp==null}"
+                                              mode="advanced"
+                                              label="Seleccione Foto (max.500Kb)"
+                                              auto="true"
+                                              update="formFoto"
+                                              sizeLimit="500000"
+                                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                            </p:panel>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>  
+            </p:panel>
+        </div>
+        <div style="clear:both; width: 70%;">
+            <p:panel header="Direccion Domiciliaria" style="border: none;">
+                <h:panelGroup id="display1">
+                    <h:panelGrid columns="4"
+                                 border="0" 
+                                 cellspacing="4" 
+                                 cellpadding="0"
+                                 columnClasses="column1Class, column2Class,column3Class,column4Class">
+                       <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
+                        <p:selectOneMenu id="pais" 
+                                         value="#{usuarioController.pais}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{usuarioController.itemPaises}"
+                                           var="PaisItem"
+                                           itemValue="#{PaisItem}"
+                                           itemLabel="#{PaisItem.nombre}"
+                                           />
+                            <f:converter binding="#{paisConverter}"/>
+                            <p:ajax event="change" 
+                                    listener="#{usuarioController.cambiaPais()}" 
+                                    update=":UsuarioEditForm:provincia,:UsuarioEditForm:ciudad"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{bundleEtiquetasES.Provincia}" for="provincia" />
+                        <p:selectOneMenu id="provincia" 
+                                         value="#{usuarioController.provincia}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{usuarioController.itemProvincias}"
+                                           var="ProvinciaItem"
+                                           itemValue="#{ProvinciaItem}"
+                                           itemLabel="#{ProvinciaItem.nombre}"
+                                           />
+                            <f:converter binding="#{regionConverter}"/>
+                            <p:ajax event="change" 
+                                    listener="#{usuarioController.cambiaProvincia()}" 
+                                    update=":UsuarioEditForm:ciudad"/>
+                        </p:selectOneMenu>
+
+                       <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
+                        <p:selectOneMenu id="ciudad" 
+                                         value="#{usuarioController.selected.idCiudad}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{usuarioController.itemCiudades}"
+                                           var="CiudadItem"
+                                           itemValue="#{CiudadItem}"
+                                           itemLabel="#{CiudadItem.nombre}"
+                                           />
+                            <f:converter binding="#{ciudadConverter}"/>
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" styleClass="inputText" value="#{usuarioController.selected.direccion}" title="#{bundle.EditUsuarioTitle_direccion}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_direccion}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoFijo}" for="telefonoFijo" />
+                        <p:inputText id="telefonoFijo" styleClass="inputText" value="#{usuarioController.selected.telefonoFijo}" title="#{bundle.EditUsuarioTitle_telefonoFijo}" />
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoMovil}" for="telefonoMovil" />
+                        <p:inputText id="telefonoMovil" styleClass="inputText" value="#{usuarioController.selected.telefonoMovil}" title="#{bundle.EditUsuarioTitle_telefonoMovil}">
+                            <f:validator validatorId="numeroCelularValidador"/>
+                            <p:message for="telefonoMovil" display="tooltip" />
+                        </p:inputText>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_correoElectronico}" for="correoElectronico" />
+                        <p:inputText id="correoElectronico" styleClass="inputText" value="#{usuarioController.selected.correoElectronico}" title="#{bundle.EditUsuarioTitle_correoElectronico}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_correoElectronico}" validatorMessage="Invalid email format">
+                        </p:inputText>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </p:panel>
+            <div style="margin-left: 50%; margin-bottom: 20px;">
+                <p:commandButton value="Save" action="sumbit" icon="ui-icon-disk" ajax="false" validateClient="true"/>
+                <p:commandButton value="Cancelar" icon="ui-icon-closethick"/>
+            </div>
+        </div>
+
+    </h:form>
+</ui:composition>
+

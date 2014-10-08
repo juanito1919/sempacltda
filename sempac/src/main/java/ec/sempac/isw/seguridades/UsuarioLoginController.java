@@ -101,6 +101,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
             Usuario listUsuario = this.ejbFacade.getItemsPais(username);
+            System.out.println("holAAA");
             if (listUsuario == null) {
 
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("UsuarioNoExiste"));

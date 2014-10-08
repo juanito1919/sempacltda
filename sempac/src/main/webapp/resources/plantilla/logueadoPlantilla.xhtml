@@ -9,17 +9,16 @@
     <html>
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-            
             <h:outputStylesheet library="css" name="estilo.css"/>
             <title>Facelets Template</title>
         </h:head>
-        <p:panel styleClass="panelLogin">
+        <p:panel styleClass="panelLogin" style="border: none; border-radius: 0px">
             <h:panelGrid columns="2"  width="100%">
                 <p:graphicImage styleClass="imagenLogin" value="/resources/images/3133959831.jpg"/> 
                 <h:panelGrid columns="2" width="100%">
                     <p:outputLabel value="Bienvenido/a" style="color:gray; font-size: 1.1em; "/>
                     <p:outputLabel value=""/>
-                    <p:outputLabel value="#{usuarioLoginController.usuario.nombres} #{usuarioLoginController.usuario.apellidos}" style="color:#000000; font-size: 1.2em; font-weight: bold; "/>
+                    <p:outputLabel value="Pablo" style="color:#000000; font-size: 1.2em; font-weight: bold; "/>
                     <h:form>
                         <p:growl id="messages" showDetail="true"/>
                         <p:menuButton value="" style="height: 30px; width: 30px;" >
