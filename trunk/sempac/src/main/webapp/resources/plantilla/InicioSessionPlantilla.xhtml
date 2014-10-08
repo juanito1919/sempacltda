@@ -25,21 +25,23 @@
 
         <!-- panel que contine dos botones uno para el registro y otros para iniciar session -->  
         <h:form>
-            <p:panel styleClass="panelLogin">
+            <p:panel styleClass="panelLogin" style="border: none;">
                 <h:panelGrid columns="2" cellspacing="5" cellpadding="5" style="margin: 0px auto 0px auto;">
                     <h:commandButton value="Registrarse" style="height: 70px; width: 100px; 
                                      background-color:#33cc00; border: none;
-                                     border-radius: 10px; color: #ffffff;" >
+                                     border-radius: 10px; color: #ffffff;" 
+                                     onclick="PF('UsuarioCreateDialog').show();">
                         
                     </h:commandButton>
                     <h:commandButton value="Iniciar Session"  style="height: 70px; width: 120px;
                                      background-color:#6666ff; border: none;
                                      border-radius: 10px;
                                      border: none; color: #ffffff;"
-                                   onclick="PF('dlEscojerTipoInicio').show();"/>
+                                     onclick="PF('dlEscojerTipoInicio').show()"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>
+        <ui:include src="../../configuraciones/registro/registroUsuario.xhtml"/>
         <!-- dialog para iniciar session --> 
         <h:form> 
             <p:growl id="growl" sticky="true" showDetail="true"  life="3000" />
@@ -58,7 +60,6 @@
                                  required="true" 
                                  style="height: 25px; font-size: 1.2em;"
                                  label="username" size="37" >
-
                         <p:watermark for="username" value="Correo electronico"/>
                     </p:inputText>
                     <p:password id="password" 
@@ -72,7 +73,6 @@
                     <h:panelGrid columns="3" >
                         <p:selectBooleanCheckbox value="" />
                         <h:outputText value="Recordar mi cuenta" />
-                  
                             <p:commandButton value="Iniciar sesion" 
                                              style="margin-left: 67px;"
                                              update="growl" 
