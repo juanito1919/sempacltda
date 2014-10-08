@@ -66,7 +66,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByCoorLatitud", query = "SELECT u FROM Usuario u WHERE u.coorLatitud = :coorLatitud"),
     @NamedQuery(name = "Usuario.findByEliminado", query = "SELECT u FROM Usuario u WHERE u.eliminado = :eliminado"),
     //personalizadas
-    @NamedQuery(name = "Usuario.findByUsernameEmail", query = "SELECT u FROM Usuario u WHERE (u.username = :username OR u.correoElectronico = :username) AND u.eliminado = :eliminado")
+    @NamedQuery(name = "Usuario.findByUsernameEmail", query = "SELECT u FROM Usuario u WHERE (u.username = :username OR u.correoElectronico = :username) AND u.eliminado = :eliminado"),
+    @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE  u.correoElectronico = :correoElectronico AND u.eliminado = :eliminado")    
 })
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -74,6 +75,7 @@ public class Usuario implements Serializable {
     public static final String findByEliminado ="Usuario.findByEliminado";
     public static final String findByUsername ="Usuario.findByUsername";
     public static final String findByCorreoElectronico ="Usuario.findByCorreoElectronico";
+    public static final String findByEmail ="Usuario.findByEmail";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

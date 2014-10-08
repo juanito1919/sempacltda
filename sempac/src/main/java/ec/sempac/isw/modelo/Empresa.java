@@ -7,6 +7,7 @@
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -54,6 +56,21 @@ public class Empresa implements Serializable {
     @Size(min = 1, max = 64)
     @Column(nullable = false, length = 64)
     private String nombre;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 32)
+    @Column(nullable = false, length = 32)
+    private String username;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 64)
+    @Column(name = "CORREO_ELECTRONICO", nullable = false, length = 64)
+    private String correoElectronico;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 64)
+    @Column(nullable = false, length = 64)
+    private String contrasena;
     @Size(max = 16)
     @Column(length = 16)
     private String ruc;
@@ -65,7 +82,7 @@ public class Empresa implements Serializable {
     @Column(nullable = false)
     private boolean eliminado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpresa")
-    private List<PersonalRequerido> personalRequeridoList;
+    private Collection<PersonalRequerido> personalRequeridoCollection;
     @JoinColumn(name = "ID_CLASE_EMPRESA", referencedColumnName = "ID_CLASE_EMPRESA")
     @ManyToOne
     private ClaseEmpresa idClaseEmpresa;
@@ -73,7 +90,9 @@ public class Empresa implements Serializable {
     @ManyToOne(optional = false)
     private Ciudad idCiudad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresa")
-    private List<ExperienciaLaboral> experienciaLaboralList;
+    private Collection<ExperienciaLaboral> experienciaLaboralCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "empresa")
+    private SistemaEmpresa sistemaEmpresa;
 
     public Empresa() {
     }
@@ -82,9 +101,12 @@ public class Empresa implements Serializable {
         this.idEmpresa = idEmpresa;
     }
 
-    public Empresa(Integer idEmpresa, String nombre, boolean eliminado) {
+    public Empresa(Integer idEmpresa, String nombre, String username, String correoElectronico, String contrasena, boolean eliminado) {
         this.idEmpresa = idEmpresa;
         this.nombre = nombre;
+        this.username = username;
+        this.correoElectronico = correoElectronico;
+        this.contrasena = contrasena;
         this.eliminado = eliminado;
     }
 
@@ -102,6 +124,30 @@ public class Empresa implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getRuc() {
@@ -129,12 +175,12 @@ public class Empresa implements Serializable {
     }
 
     @XmlTransient
-    public List<PersonalRequerido> getPersonalRequeridoList() {
-        return personalRequeridoList;
+    public Collection<PersonalRequerido> getPersonalRequeridoCollection() {
+        return personalRequeridoCollection;
     }
 
-    public void setPersonalRequeridoList(List<PersonalRequerido> personalRequeridoList) {
-        this.personalRequeridoList = personalRequeridoList;
+    public void setPersonalRequeridoCollection(Collection<PersonalRequerido> personalRequeridoCollection) {
+        this.personalRequeridoCollection = personalRequeridoCollection;
     }
 
     public ClaseEmpresa getIdClaseEmpresa() {
@@ -154,12 +200,20 @@ public class Empresa implements Serializable {
     }
 
     @XmlTransient
-    public List<ExperienciaLaboral> getExperienciaLaboralList() {
-        return experienciaLaboralList;
+    public Collection<ExperienciaLaboral> getExperienciaLaboralCollection() {
+        return experienciaLaboralCollection;
     }
 
-    public void setExperienciaLaboralList(List<ExperienciaLaboral> experienciaLaboralList) {
-        this.experienciaLaboralList = experienciaLaboralList;
+    public void setExperienciaLaboralCollection(Collection<ExperienciaLaboral> experienciaLaboralCollection) {
+        this.experienciaLaboralCollection = experienciaLaboralCollection;
+    }
+
+    public SistemaEmpresa getSistemaEmpresa() {
+        return sistemaEmpresa;
+    }
+
+    public void setSistemaEmpresa(SistemaEmpresa sistemaEmpresa) {
+        this.sistemaEmpresa = sistemaEmpresa;
     }
 
     @Override
