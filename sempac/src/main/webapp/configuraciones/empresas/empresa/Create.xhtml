@@ -8,33 +8,111 @@
 
     <ui:composition>
 
-        <p:dialog id="EmpresaCreateDlg" widgetVar="EmpresaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEmpresaTitle}">
+        <p:dialog id="EmpresaCreateDlg" 
+                  widgetVar="EmpresaCreateDialog" 
+                  modal="true" 
+                  resizable="false" 
+                  appendTo="@(body)" 
+                  closeOnEscape="true">
+            <f:facet name="header">
+                <h:outputLabel value="#{bundleEtiquetasES.Crear} #{bundleEtiquetasES.Empresa}"
+                               styleClass="encabezadosDialog"/>
+            </f:facet>
             <h:form id="EmpresaCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{empresaController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_idEmpresa}" for="idEmpresa" />
-                        <p:inputText id="idEmpresa" value="#{empresaController.selected.idEmpresa}" title="#{bundle.CreateEmpresaTitle_idEmpresa}" required="true" requiredMessage="#{bundle.CreateEmpresaRequiredMessage_idEmpresa}"/>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{empresaController.selected.nombre}" title="#{bundle.CreateEmpresaTitle_nombre}" required="true" requiredMessage="#{bundle.CreateEmpresaRequiredMessage_nombre}"/>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_ruc}" for="ruc" />
-                        <p:inputText id="ruc" value="#{empresaController.selected.ruc}" title="#{bundle.CreateEmpresaTitle_ruc}" />
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_direccion}" for="direccion" />
-                        <p:inputText id="direccion" value="#{empresaController.selected.direccion}" title="#{bundle.CreateEmpresaTitle_direccion}" />
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_idClaseEmpresa}" for="idClaseEmpresa" />
-                        <p:selectOneMenu id="idClaseEmpresa" value="#{empresaController.selected.idClaseEmpresa}" >
-                            <f:selectItems value="#{claseEmpresaController.itemsAvailableSelectOne}"
-                                           var="idClaseEmpresaItem"
-                                           itemValue="#{idClaseEmpresaItem}"/>
+                    <h:panelGrid columns="2" 
+                                 rendered="#{usuarioController.selected!=null}"
+                                 border="0">
+                        <p:outputLabel 
+                            value="#{bundleEtiquetasES.Ruc}" 
+                            for="ruc" />
+                        <p:inputText id="ruc" 
+                                     value="#{empresaController.selected.ruc}" 
+                                     title="#{bundleEtiquetasES.Ruc}" />
+
+                        <p:outputLabel 
+                            value="#{bundleEtiquetasES.Nombre}" 
+                            for="nombre" />
+                        <p:inputText id="nombre" 
+                                     value="#{empresaController.selected.nombre}" 
+                                     title="#{bundleEtiquetasES.Nombre}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.Nombre}  #{bundleEtiquetasES.CampoRequerido}"/>                       
+
+                        <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
+                        <p:selectOneMenu id="pais" 
+                                         value="#{empresaController.pais}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{empresaController.itemPaises}"
+                                           var="PaisItem"
+                                           itemValue="#{PaisItem}"
+                                           itemLabel="#{PaisItem.nombre}"
+                                           />
+                            <f:converter binding="#{paisConverter}"/>
+                            <p:ajax event="change" 
+                                    listener="#{empresaController.cambiaPais()}" 
+                                    update=":EmpresaCreateForm:provincia,:EmpresaCreateForm:ciudad"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_idCiudad}" for="idCiudad" />
-                        <p:selectOneMenu id="idCiudad" value="#{empresaController.selected.idCiudad}" required="true" requiredMessage="#{bundle.EditEmpresaRequiredMessage_idCiudad}">
-                            <f:selectItems value="#{ciudadController.itemsAvailableSelectOne}"
-                                           var="idCiudadItem"
-                                           itemValue="#{idCiudadItem}"/>
+                        <p:outputLabel value="#{bundleEtiquetasES.Provincia}" 
+                                       for="provincia" />
+                        <p:selectOneMenu id="provincia" 
+                                         value="#{empresaController.provincia}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{empresaController.itemProvincias}"
+                                           var="ProvinciaItem"
+                                           itemValue="#{ProvinciaItem}"
+                                           itemLabel="#{ProvinciaItem.nombre}"
+                                           />
+                            <f:converter binding="#{regionConverter}"/>
+                            <p:ajax event="change" 
+                                    listener="#{empresaController.cambiaProvincia()}" 
+                                    update=":EmpresaCreateForm:ciudad"/>
                         </p:selectOneMenu>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{empresaController.create}" value="#{bundle.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args,'EmpresaCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="EmpresaCreateDialog.hide()"/>
+                        <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
+                        <p:selectOneMenu id="ciudad" 
+                                         value="#{empresaController.selected.idCiudad}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{empresaController.itemCiudades}"
+                                           var="CiudadItem"
+                                           itemValue="#{CiudadItem}"
+                                           itemLabel="#{CiudadItem.nombre}"
+                                           />
+                            <f:converter binding="#{ciudadConverter}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel 
+                            value="#{bundleEtiquetasES.Direccion}" 
+                            for="direccion" />
+                        <p:inputText 
+                            id="direccion" 
+                            value="#{empresaController.selected.direccion}" 
+                            title="#{bundleEtiquetasES.Direccion}" />
+                        
+                        
+                        <p:outputLabel 
+                            value="#{bundleEtiquetasES.TipoEmpresa}" 
+                            for="idClaseEmpresa" />
+                        <p:selectOneMenu id="idClaseEmpresa" 
+                                         value="#{empresaController.selected.idClaseEmpresa}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.TipoEmpresa} #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{empresaController.itemClaseEmpresa}"
+                                           var="ClaseEmpresaItem"
+                                           itemValue="#{ClaseEmpresaItem}"
+                                           itemLabel="#{ClaseEmpresaItem.nombre}"
+                                           />
+                            <f:converter binding="#{claseEmpresaConverter}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:commandButton actionListener="#{empresaController.guardar}" value="#{bundleEtiquetasES.Guardar}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args,'EmpresaCreateDialog');"/>
+                    <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="EmpresaCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
