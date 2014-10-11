@@ -27,13 +27,13 @@
         <h:form>
             <p:panel styleClass="panelLogin" style="border: none;">
                 <h:panelGrid columns="2" cellspacing="5" cellpadding="5" style="margin: 0px auto 0px auto;">
-                    <h:commandButton value="Registrarse" style="height: 70px; width: 100px; 
+                    <p:commandButton value="Registrarse" style="height: 70px; width: 100px; 
                                      background-color:#33cc00; border: none;
                                      border-radius: 10px; color: #ffffff;" 
                                      onclick="PF('UsuarioCreateDialog').show();">
                         
-                    </h:commandButton>
-                    <h:commandButton value="Iniciar Session"  style="height: 70px; width: 120px;
+                    </p:commandButton>
+                    <p:commandButton value="Iniciar Session"  style="height: 70px; width: 120px;
                                      background-color:#6666ff; border: none;
                                      border-radius: 10px;
                                      border: none; color: #ffffff;"
@@ -87,9 +87,8 @@
                     </h:panelGrid>
                     
                     <f:facet name="footer">
-                        <p:commandLink id="olvidaContrasenaBot" 
-
-                                       value="¿Olvidastes tu Contrasena?"/>
+                        <p:commandLink id="olvidaContrasenaBot" value="¿Olvidastes tu Contrasena?"
+                                        />
                     </f:facet> 
                 </h:panelGrid>
             </p:dialog>
