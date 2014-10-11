@@ -119,7 +119,7 @@
                                  cellspacing="4" 
                                  cellpadding="0"
                                  columnClasses="column1Class, column2Class,column3Class,column4Class">
-                       <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
+                      <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
                         <p:selectOneMenu id="pais" 
                                          value="#{usuarioController.pais}"
                                          required="true" 
@@ -135,7 +135,7 @@
                                     listener="#{usuarioController.cambiaPais()}" 
                                     update=":UsuarioEditForm:provincia,:UsuarioEditForm:ciudad"/>
                         </p:selectOneMenu>
-
+                    
                         <p:outputLabel value="#{bundleEtiquetasES.Provincia}" for="provincia" />
                         <p:selectOneMenu id="provincia" 
                                          value="#{usuarioController.provincia}"
@@ -152,8 +152,8 @@
                                     listener="#{usuarioController.cambiaProvincia()}" 
                                     update=":UsuarioEditForm:ciudad"/>
                         </p:selectOneMenu>
-
-                       <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
+                   
+                        <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
                         <p:selectOneMenu id="ciudad" 
                                          value="#{usuarioController.selected.idCiudad}"
                                          required="true" 
@@ -165,8 +165,8 @@
                                            itemLabel="#{CiudadItem.nombre}"
                                            />
                             <f:converter binding="#{ciudadConverter}"/>
-                        </p:selectOneMenu> 
-
+                        </p:selectOneMenu>
+                        
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" styleClass="inputText" value="#{usuarioController.selected.direccion}" title="#{bundle.EditUsuarioTitle_direccion}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_direccion}"/>
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoFijo}" for="telefonoFijo" />
