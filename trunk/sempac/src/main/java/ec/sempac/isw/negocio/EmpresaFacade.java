@@ -10,6 +10,7 @@ import ec.sempac.isw.modelo.Empresa;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -35,5 +36,15 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         Query query = this.em.createNamedQuery(Empresa.findByEliminado);
         query.setParameter("eliminado", eliminado);
         return query.getResultList();
+    }
+    public Empresa getEmpresa(String username) {
+        Query query = this.em.createNamedQuery(Empresa.findByUsernameEmail);
+        query.setParameter("username", username);
+        query.setParameter("eliminado", false);
+        try{
+            return (Empresa)query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
     }
 }

@@ -6,6 +6,7 @@
 
 package ec.sempac.isw.seguridades;
 
+import ec.sempac.isw.modelo.Empresa;
 import ec.sempac.isw.modelo.Usuario;
 
 /**
@@ -35,11 +36,15 @@ public class ActivacionUsuario {
     public static void setCodigoUsuario(Long codigoUsuario) {
         Sesion.setVariable("codigoUsuario", codigoUsuario);
     }
-
+    public static void setCodigoEmpresa(int codigoEmpresa) {
+        Sesion.setVariable("codigoEmpresa", codigoEmpresa);
+    }
     public static void setUsuario(Usuario usuario) {
         Sesion.setVariable("usuario", usuario);
     }
-
+    public static void setEmpresa(Empresa empresa) {
+        Sesion.setVariable("empresa", empresa);
+    }
     public static void setCodigoAccesoSistema(Long codigoAccesoSistema) {
         Sesion.setVariable("codigoAccesoSistemaa", codigoAccesoSistema);
     }
@@ -79,14 +84,19 @@ public class ActivacionUsuario {
     public static Usuario getUsuario() {
         return (Usuario) Sesion.getVariable("usuario");
     }
-
+    public static Empresa getEmpresa() {
+        return (Empresa) Sesion.getVariable("empresa");
+    }
+    
     /**
      * @return the codigoUsuario
      */
     public static Long getCodigoUsuario() {
         return Long.parseLong((Sesion.getVariable("codigoUsuario") != null) ? Sesion.getVariable("codigoUsuario").toString() : null);
     }
-
+    public static int getCodigoEmpresa() {
+        return Integer.parseInt((Sesion.getVariable("codigoEmpresa") != null) ? Sesion.getVariable("codigoEmpresa").toString() : null);
+    }
     public static Long getCodigoIfip() {
         return Long.parseLong((Sesion.getVariable("codigoIfip") != null) ? Sesion.getVariable("codigoIfip").toString() : null);
     }

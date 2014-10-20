@@ -41,7 +41,7 @@ public class SistemaAccesoEmpresa implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_SISTEMA_ACCESO_EMPRESA", nullable = false)
-    private Integer idSistemaAccesoEmpresa;
+    private Long idSistemaAccesoEmpresa;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_ACCESO", nullable = false)
@@ -59,21 +59,21 @@ public class SistemaAccesoEmpresa implements Serializable {
     public SistemaAccesoEmpresa() {
     }
 
-    public SistemaAccesoEmpresa(Integer idSistemaAccesoEmpresa) {
+    public SistemaAccesoEmpresa(Long idSistemaAccesoEmpresa) {
         this.idSistemaAccesoEmpresa = idSistemaAccesoEmpresa;
     }
 
-    public SistemaAccesoEmpresa(Integer idSistemaAccesoEmpresa, Date fechaAcceso, String direccionIp) {
+    public SistemaAccesoEmpresa(Long idSistemaAccesoEmpresa, Date fechaAcceso, String direccionIp) {
         this.idSistemaAccesoEmpresa = idSistemaAccesoEmpresa;
         this.fechaAcceso = fechaAcceso;
         this.direccionIp = direccionIp;
     }
 
-    public Integer getIdSistemaAccesoEmpresa() {
+    public Long getIdSistemaAccesoEmpresa() {
         return idSistemaAccesoEmpresa;
     }
 
-    public void setIdSistemaAccesoEmpresa(Integer idSistemaAccesoEmpresa) {
+    public void setIdSistemaAccesoEmpresa(Long idSistemaAccesoEmpresa) {
         this.idSistemaAccesoEmpresa = idSistemaAccesoEmpresa;
     }
 
