@@ -25,6 +25,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -43,12 +44,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empresa.findByRuc", query = "SELECT e FROM Empresa e WHERE e.ruc = :ruc"),
     @NamedQuery(name = "Empresa.findByDireccion", query = "SELECT e FROM Empresa e WHERE e.direccion = :direccion"),
     @NamedQuery(name = "Empresa.findByEliminado", query = "SELECT e FROM Empresa e WHERE e.eliminado = :eliminado"),
-    //PERSONALIZADA
+    //Personalizados
+    @NamedQuery(name = "Empresa.findByCorreoElectronico", query = "SELECT e FROM Empresa e WHERE e.correoElectronico = :correoElectronico"),
+    @NamedQuery(name = "Empresa.findByUsername", query = "SELECT e FROM Empresa e WHERE e.username = :username"),    
     @NamedQuery(name = "Empresa.findByUsernameEmail", query = "SELECT u FROM Empresa e WHERE (e.username = :username OR e.correoElectronico = :username) AND u.eliminado = :eliminado")
 })
 public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByEliminado ="Empresa.findByEliminado";
+    public static final String findByUsername ="Empresa.findByUsername";
+    public static final String findByEmail ="Empresa.findByUsername";
     public static final String findByUsernameEmail ="Empresa.findByUsernameEmail";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +74,7 @@ public class Empresa implements Serializable {
     @NotNull
     @Size(min = 1, max = 64)
     @Column(name = "CORREO_ELECTRONICO", nullable = false, length = 64)
+    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",message = "Correo inválido")
     private String correoElectronico;
     @Basic(optional = false)
     @NotNull

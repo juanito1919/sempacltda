@@ -19,6 +19,7 @@
                                styleClass="encabezadosDialog"/>
             </f:facet>
             <h:form id="EmpresaCreateForm">
+                <p:messages id="mensaje" showDetail="true" autoUpdate="true" closable="true" />
                 <h:panelGroup id="display">
                     <h:panelGrid columns="2" 
                                  rendered="#{usuarioController.selected!=null}"
@@ -39,6 +40,47 @@
                                      required="true" 
                                      requiredMessage="#{bundleEtiquetasES.Nombre}  #{bundleEtiquetasES.CampoRequerido}"/>                       
 
+                        <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
+                        <p:inputText id="username" 
+                                     value="#{empresaController.selected.username}" 
+                                     title="#{bundleEtiquetasES.UserName}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.UserName} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{empresaController.revisaNombre()}" 
+                                    update=""/>
+                        </p:inputText>
+                        
+                        <p:outputLabel value="#{bundleEtiquetasES.Contrasena}" for="contrasena" />
+                        <p:password id="contrasena" 
+                                    value="#{empresaController.contrasena}" 
+                                    title="#{bundleEtiquetasES.Contrasena}" 
+                                    required="true" 
+                                    requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{empresaController.revisaContasena()}" 
+                                    update=""/>
+                        </p:password>
+                        <p:outputLabel value="#{bundleEtiquetasES.ConfirmeContrasena}" for="confirmarContrasena" />
+                        <p:password id="confirmarContrasena" 
+                                    value="#{empresaController.confirmaContrasena}" 
+                                    title="#{bundleEtiquetasES.Contrasena}" 
+                                    required="true" 
+                                    requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{empresaController.revisaContasena()}" 
+                                    update=""/>
+                        </p:password>
+                        <p:outputLabel value="#{bundleEtiquetasES.CorreoElectronico}" for="correoElectronico" />
+                        <p:inputText id="correoElectronico" 
+                                     value="#{empresaController.selected.correoElectronico}" 
+                                     title="#{bundleEtiquetasES.CorreoElectronico}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.CorreoElectronico} #{bundleEtiquetasES.CampoRequerido}">
+                        <p:ajax event="blur" 
+                                listener="#{usuarioController.revisaMail()}" 
+                                update=""/>
+                        </p:inputText>
                         <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
                         <p:selectOneMenu id="pais" 
                                          value="#{empresaController.pais}"

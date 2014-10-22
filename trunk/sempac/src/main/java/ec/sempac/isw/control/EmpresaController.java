@@ -1,5 +1,6 @@
 package ec.sempac.isw.control;
 
+import ec.sempac.isw.control.util.MuestraMensaje;
 import ec.sempac.isw.modelo.Ciudad;
 import ec.sempac.isw.modelo.ClaseEmpresa;
 import ec.sempac.isw.modelo.Empresa;
@@ -9,9 +10,15 @@ import ec.sempac.isw.negocio.CiudadFacade;
 import ec.sempac.isw.negocio.ClaseEmpresaFacade;
 import ec.sempac.isw.negocio.PaisFacade;
 import ec.sempac.isw.negocio.RegionFacade;
+import ec.sempac.isw.seguridades.Sesion;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -45,6 +52,10 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
     private List<Ciudad> itemCiudades;
     private Ciudad ciudad;
     private List<ClaseEmpresa> itemClaseEmpresa;
+    
+    private String contrasena;
+    private String confirmaContrasena;
+    private String msj;
     
     public EmpresaController() {
         super(Empresa.class);
@@ -98,13 +109,83 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
         this.setItemProvincias(null);
         this.setItemCiudades(null);
+        this.pais=null;
+        this.provincia=null;
+        this.ciudad=null;
     }
 
+    public void revisaNombre() {
+        setMsj("");
+        Empresa user = this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
+        if (user != null) {
+            System.out.println(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
+            setMsj(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
+            MuestraMensaje.addError(getMsj());
+        }
+    }
+    
+    public void revisaMail() {
+        msj = "";
+        Empresa user = this.ejbFacade.getItemsUserName(this.getSelected().getCorreoElectronico());
+        if (user != null) {
+            msj = ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste");
+            MuestraMensaje.addError(msj);
+        }
+    }
+    
+    public void revisaContasena() {
+        msj = "";
+        if (!this.contrasena.equals(this.confirmaContrasena)) {
+            msj = ResourceBundle.getBundle("/BundleMensajesES").getString("ContrasenaNoConisiden");
+            MuestraMensaje.addError(msj);
+        }
+    }
     
     public void guardar(ActionEvent event){
-        this.save(event);
-        this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
-        this.setSelected(null);
+        boolean ok = true;
+        revisaContasena();
+        if (msj != "") {
+            ok = false;
+        }
+        revisaMail();
+        if (msj != "") {
+            ok = false;
+        }
+        revisaNombre();
+        if (msj != "") {
+            ok = false;
+        }
+        if (ok) {
+            try {
+                this.getSelected().setContrasena(Sesion.MD5(contrasena));
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.getSelected().setEliminado(false);
+            this.save(event);
+            this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
+            this.setSelected(null);
+        }    
+    }
+    
+    public void editar(ActionEvent event){
+        boolean ok = true;
+        revisaMail();
+        if (msj != "") {
+            ok = false;
+        }
+        revisaNombre();
+        if (msj != "") {
+            ok = false;
+        }
+        if (ok) {
+            this.getSelected().setEliminado(false);
+            this.save(event);
+            this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
+            this.setSelected(null);
+        }    
     }
     
     public void eliminar(ActionEvent event){
@@ -280,6 +361,48 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
      */
     public void setItemsEmpresa(List<Empresa> itemsEmpresa) {
         this.itemsEmpresa = itemsEmpresa;
+    }
+
+    /**
+     * @return the contrasena
+     */
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    /**
+     * @param contrasena the contrasena to set
+     */
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    /**
+     * @return the confirmaContrasena
+     */
+    public String getConfirmaContrasena() {
+        return confirmaContrasena;
+    }
+
+    /**
+     * @param confirmaContrasena the confirmaContrasena to set
+     */
+    public void setConfirmaContrasena(String confirmaContrasena) {
+        this.confirmaContrasena = confirmaContrasena;
+    }
+
+    /**
+     * @return the msj
+     */
+    public String getMsj() {
+        return msj;
+    }
+
+    /**
+     * @param msj the msj to set
+     */
+    public void setMsj(String msj) {
+        this.msj = msj;
     }
 
 

@@ -37,10 +37,20 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         query.setParameter("eliminado", eliminado);
         return query.getResultList();
     }
-    public Empresa getEmpresa(String username) {
-        Query query = this.em.createNamedQuery(Empresa.findByUsernameEmail);
+    
+    public Empresa getItemsUserName(String username) {
+        Query query = this.em.createNamedQuery(Empresa.findByUsername);
         query.setParameter("username", username);
-        query.setParameter("eliminado", false);
+        try{
+            return (Empresa)query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
+    }
+    
+    public Empresa getUserEmail(String email) {
+        Query query = this.em.createNamedQuery(Empresa.findByEmail);
+        query.setParameter("correoElectronico", email);
         try{
             return (Empresa)query.getSingleResult();
         }catch(NoResultException e){
