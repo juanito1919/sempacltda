@@ -27,6 +27,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+import ec.sempac.isw.seguridades.ActivacionUsuario;
 
 @ManagedBean(name = "empresaController")
 @SessionScoped
@@ -77,6 +78,9 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
     }
 
     protected void initializeEmbeddableKey() {
+    }
+      public void asignarEmpresa() {
+        this.setSelected(ActivacionUsuario.getEmpresa());
     }
     
     public void cambiaPais() {

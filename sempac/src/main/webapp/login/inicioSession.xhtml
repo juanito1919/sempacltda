@@ -109,7 +109,7 @@
                 <h:panelGrid columns="1" 
                              cellpadding="10">
                     <p:inputText id="username" 
-                                 value="#{usuarioLoginController.username}" 
+                                 value="#{empresaLoginController.username}" 
                                  required="true" 
                                  style="height: 25px; font-size: 1.2em;"
                                  label="username" size="37" >
@@ -117,7 +117,7 @@
                     </p:inputText>
                     <p:password id="password" 
                                 size="37" 
-                                value="#{usuarioLoginController.contrasena}" 
+                                value="#{empresaLoginController.contrasena}" 
                                 required="true" 
                                 style="height: 25px; font-size: 1.2em;"
                                 label="password">
@@ -125,8 +125,8 @@
                     </p:password>
                     <h:panelGrid columns="3" >
                         <p:commandButton value="Iniciar sesion" 
-                                         ajax="true"
-                                         action="#{usuarioLoginController.validaUsuario()}"
+                                         ajax="false"
+                                         action="#{empresaLoginController.validaUsuario()}"
                                          style="margin-left: 67px;"
                                          update="growl" 
                                          styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"                                              

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
@@ -38,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SistemaAccesoEmpresa.findByFechaAcceso", query = "SELECT s FROM SistemaAccesoEmpresa s WHERE s.fechaAcceso = :fechaAcceso"),
     @NamedQuery(name = "SistemaAccesoEmpresa.findByDireccionIp", query = "SELECT s FROM SistemaAccesoEmpresa s WHERE s.direccionIp = :direccionIp")})
 public class SistemaAccesoEmpresa implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -128,5 +128,5 @@ public class SistemaAccesoEmpresa implements Serializable {
     public String toString() {
         return "ec.sempac.isw.modelo.SistemaAccesoEmpresa[ idSistemaAccesoEmpresa=" + idSistemaAccesoEmpresa + " ]";
     }
-    
+
 }

@@ -1,14 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                template="../../resources/plantilla/ventanaInicioEmpleadoPlantilla.xhtml"
-                xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      template="../../resources/plantilla/ventanaInicioEmpleadoPlantilla.xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <ui:define  name="formulario">
         <!-- ̣̣̣̣**************************************************************************
              PANEL PRINCIPAL                                                     -->                                                   
-       <div class="panelTitulo">
-            
+        <div class="panelTitulo">
+
         </div> 
         <div style="width: 70%; float:left;">
             <p:panel id="panelPerfil" header="Datos Personales" style="border: none; width: 100%;" >
@@ -32,7 +33,7 @@
         </div>
         <div style="width: 30%; float:left;">
             <p:panel id="panelCV" header="Actualizar CV" style="border: none; width: 99%;" >
-                
+
                 <div><img src="../../resources/images/cv_1.png" alt="" width="150" height="150"/></div>
                 <h:link outcome="/configuraciones/usuario/inicio"  styleClass="link" value="Actualizar Hoja de vida"/>
 
@@ -40,7 +41,7 @@
         </div>
         <div style=" clear:both; width: 70%; float:left;">
             <p:panel id="panelnoti" header="Notificaciones" style="border: none; width: 99%;" >
-                
+
             </p:panel> 
         </div>
     </ui:define>
