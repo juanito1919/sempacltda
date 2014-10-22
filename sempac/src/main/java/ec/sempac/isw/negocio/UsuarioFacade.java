@@ -34,7 +34,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public Usuario getItemsPais(String username) {
         Query query = this.em.createNamedQuery(Usuario.findByUsernameEmail);
         query.setParameter("username", username);
-        query.setParameter("eliminado", false);
+        //query.setParameter("eliminado", false);
         try{
             return (Usuario)query.getSingleResult();
         }catch(NoResultException e){

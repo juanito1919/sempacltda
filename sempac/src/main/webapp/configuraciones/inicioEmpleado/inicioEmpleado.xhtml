@@ -2,10 +2,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="../../resources/plantilla/ventanaInicioEmpleadoPlantilla.xhtml">
+                template="../../resources/plantilla/ventanaInicioEmpleadoPlantilla.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html">
     <ui:define  name="formulario">
         <!-- ̣̣̣̣**************************************************************************
              PANEL PRINCIPAL                                                     -->                                                   
-        
+       <div class="panelTitulo">
+            
+        </div> 
+        <div style="width: 70%; float:left;">
+            <p:panel id="panelPerfil" header="Datos Personales" style="border: none; width: 100%;" >
+                <div style="width: 20%; float:left;">
+                    <h:graphicImage  id="fotoPerfil" value="/usuario/null.jpg" height="150" width="150" />
+                    <div>
+                        <h:link value="Editar información personal" styleClass="link"/>
+                    </div>
+                </div>
+                <div style=" width: 50%; float:left; margin-left: 10px; border-left-width: 10px;">
+                    <div style="font-size: 1.8em; color: #0066ff;">#{usuarioController.selected.nombres.toUpperCase()} #{usuarioController.selected.apellidos.toUpperCase()}</div>
+                    <div style="font-size: 1.2em;">Genero: #{usuarioController.selected.genero}</div>
+                    <div style="font-size: 1.2em;">Cedula/Pasaporte: #{usuarioController.selected.identidad}</div>
+                    <div style="font-size: 1.2em;">Edad: #{usuarioController.selected.edad}</div>
+                    <div style="font-size: 1.2em;">Telefono/Celular: #{usuarioController.selected.telefonoFijo}</div>
+                    <div style="font-size: 1.2em;">Celular: #{usuarioController.selected.telefonoMovil}</div>
+                    <div style="font-size: 1.2em;">Email: #{usuarioController.selected.correoElectronico}</div>
+                    <div style="font-size: 1.2em;">Dirección: #{usuarioController.selected.direccion}</div>
+                </div>
+            </p:panel>
+        </div>
+        <div style="width: 30%; float:left;">
+            <p:panel id="panelCV" header="Actualizar CV" style="border: none; width: 99%;" >
+                
+                <div><img src="../../resources/images/cv_1.png" alt="" width="150" height="150"/></div>
+                <h:link outcome="/configuraciones/usuario/inicio"  styleClass="link" value="Actualizar Hoja de vida"/>
+
+            </p:panel>
+        </div>
+        <div style=" clear:both; width: 70%; float:left;">
+            <p:panel id="panelnoti" header="Notificaciones" style="border: none; width: 99%;" >
+                
+            </p:panel> 
+        </div>
     </ui:define>
 </ui:composition>

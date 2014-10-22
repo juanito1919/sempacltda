@@ -14,7 +14,10 @@ import ec.sempac.isw.negocio.SistemaUsuarioFacade;
 import ec.sempac.isw.negocio.UsuarioFacade;
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,29 +69,50 @@ public class ContrasenaController extends AbstractController<Usuario> implements
 
     public String generarClave() {
 
-        return "127";
+        Random r = new Random();
+        char[] caracter
+                = {
+                    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+                    'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u',
+                    'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E',
+                    'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'P',
+                    'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                    '1', '2', '3', '4', '5', '6', '7', '8', '9'
+                };
+        String key = "";
+        for (int i = 0; i < 12; i++) {
+            key += caracter[r.nextInt(59)];
+        }
+        return key;
     }
 
     public void contrasenaOlvidada(ActionEvent event) {
-        Usuario user = this.ejbFacade.getItemsCorreo(correoElectronico);
-        if (user == null) {
-            
-            MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("CorreoNoRegistrado"));
-            return;
-        }
-
-        user.setContrasena(generarClave());
-        this.setSelected(user);
-        this.save(event);
-        SendEmail sendMail = new SendEmail();
-        SistemaUsuario usuarioSistema;
-        // Colocando la Entidad del Usuario
-        sendMail.enviarMail(getCorreoElectronico(), "empresaSempac@info.com", "Recuperacion Clave",
-                "La clave es: " + user.getContrasena());
-        this.setUsuario(user);
         try {
-            ctx.redirect(ctxPath + "/faces/index.xhtml");
-        } catch (IOException ex) {
+            Usuario user = this.ejbFacade.getItemsCorreo(correoElectronico);
+            if (user == null) {
+                MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("CorreoNoRegistrado"));
+                return;
+            }
+            String clave=generarClave();
+            user.setContrasena(Sesion.MD5(clave));
+            this.setSelected(user);
+            this.save(event);
+            SendEmail sendMail = new SendEmail();
+            SistemaUsuario usuarioSistema;
+            // Colocando la Entidad del Usuario
+            sendMail.enviarMail(getCorreoElectronico(), "empresaSempac@info.com", "Recuperacion Clave",
+                    "La clave es: " + clave);
+            this.setUsuario(user);
+            try {
+                ctx.redirect(ctxPath + "/faces/index.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(ContrasenaController.class.getName()).log(Level.SEVERE, null, ex);
+                
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ContrasenaController.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(ContrasenaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

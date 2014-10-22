@@ -12,25 +12,29 @@
             <h:outputStylesheet library="css" name="estilo.css"/>
             <title>Facelets Template</title>
         </h:head>
-        <p:panel styleClass="panelLogin" style="border: none; border-radius: 0px">
-            <h:panelGrid columns="2"  width="100%">
-                <p:graphicImage styleClass="imagenLogin" value="/resources/images/3133959831.jpg"/> 
-                <h:panelGrid columns="2" width="100%">
-                    <p:outputLabel value="Bienvenido/a" style="color:gray; font-size: 1.1em; "/>
-                    <p:outputLabel value=""/>
-                    <p:outputLabel value="Pablo" style="color:#000000; font-size: 1.2em; font-weight: bold; "/>
-                    <h:form>
+        <h:form id="formUsuarioLogeado">
+            <p:panel styleClass="panelLogin" style="border: none; border-radius: 0px">
+                <h:panelGrid columns="2"  width="100%">
+                    <p:graphicImage styleClass="imagenLogin" value="/usuario/null.jpg"/> 
+                    <h:panelGrid columns="2" width="100%">
+                        <p:outputLabel value="Bienvenido/a" style="color:gray; font-size: 1.1em; "/>
+                      
+                        <p:outputLabel value="#{usuarioLoginController.usuario.nombres} #{usuarioLoginController.usuario.apellidos}" style="color:#000000; font-size: 1.2em; font-weight: bold; "/>
+                        #{usuarioController.asignarUsuario()}
                         <p:growl id="messages" showDetail="true"/>
                         <p:menuButton value="" style="height: 30px; width: 30px;" >
                             <p:menuitem value="Modificar Perfil"  update="messages" icon="ui-icon-disk"/>
-                            <p:menuitem value="Cambiar Contrasena"  update="messages" icon="ui-icon-arrowrefresh-1-w"/>
+                            <p:menuitem value="Cambiar Foto" onclick="PF('dlg2').show();"   update="messages" icon="ui-icon-disk"/>
+                            <p:menuitem value="Cambiar Contrasena" url="../../configuraciones/usuario/cambioClave/inicio.xhtml"  update="messages" icon="ui-icon-arrowrefresh-1-w"/>
+                          
                             <p:menuitem value="Cuenta"  update="messages" icon="ui-icon-arrowrefresh-1-w"/>
                             <p:separator />
-                            <p:menuitem value="Salir" icon="ui-icon-extlink"/>
+                            <p:menuitem value="Salir" icon="ui-icon-extlink" ajax="false"  action="#{usuarioLoginController.cerrarSession}"/>
                         </p:menuButton>
-                    </h:form>
+                       
+                    </h:panelGrid>
                 </h:panelGrid>
-            </h:panelGrid>
-        </p:panel>
+            </p:panel>
+        </h:form>
     </html>
 </f:view>

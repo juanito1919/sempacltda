@@ -11,13 +11,12 @@
             <h:outputStylesheet library="css" name="style.css"/>
             <h:outputScript library="js" name="pfcrud.js"/>
             <h:outputScript library="js" name="primefaces.js"/>
-
-
+            <h:outputScript library="js" name="script.js"/>
             <title>Empresa Sempac</title>
         </h:head>
         <h:body>
             <ui:include src="bannerPlantilla.xhtml"/> 
-            <ui:include src="InicioSessionPlantilla.xhtml"/>
+            <ui:include src="../../login/inicioSession.xhtml"/>
             <ui:include src="barraPrincipalPlantilla.xhtml"/>
             <div class="panelFormulario" style="height:600px; ">
                 <ui:insert name="formulario"/>
