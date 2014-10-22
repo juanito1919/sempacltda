@@ -55,6 +55,7 @@ public class Empresa implements Serializable {
     public static final String findByUsername ="Empresa.findByUsername";
     public static final String findByEmail ="Empresa.findByUsername";
     public static final String findByUsernameEmail ="Empresa.findByUsernameEmail";
+    public static final String findByCorreoElectronico ="Empresa.findByCorreoElectronico";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
