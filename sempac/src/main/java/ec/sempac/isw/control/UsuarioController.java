@@ -4,15 +4,25 @@ import ec.sempac.isw.control.util.MuestraMensaje;
 import ec.sempac.isw.modelo.Ciudad;
 import ec.sempac.isw.modelo.Pais;
 import ec.sempac.isw.modelo.Region;
+import ec.sempac.isw.modelo.SistemaUsuario;
 import ec.sempac.isw.modelo.Usuario;
 import ec.sempac.isw.negocio.CiudadFacade;
 import ec.sempac.isw.negocio.PaisFacade;
 import ec.sempac.isw.negocio.RegionFacade;
+import ec.sempac.isw.negocio.SistemaUsuarioFacade;
 import ec.sempac.isw.negocio.UsuarioFacade;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
+import ec.sempac.isw.seguridades.Sesion;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -35,6 +45,9 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     @EJB
     private CiudadFacade ejbFacadeCiudad;
     
+    @EJB
+    private SistemaUsuarioFacade ejbFacadeSistemaUsuario;
+    
     private List <Pais> itemPaises;
     private Pais pais;
     private List <Region> itemProvincias;
@@ -43,6 +56,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     private Ciudad ciudad;
     private String confirmaContrasena;
     private String contrasena;
+    private String msj;
 
     public UsuarioController() {
         super(Usuario.class);
@@ -82,6 +96,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         System.out.println("Entroooo "+this.contrasena+" "+confirmaContrasena);
         this.getSelected().setContrasena(contrasena);
         if (!this.getSelected().getContrasena().equals(this.confirmaContrasena)){
+            this.setMsj(ResourceBundle.getBundle("/BundleMensajesES").getString("ContrasenaNoConisiden"));
             MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("ContrasenaNoConisiden"));
         }
     }
@@ -90,6 +105,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         System.out.println("Usuario "+this.getSelected().getUsername());
         Usuario user=this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
         if (user!=null){
+            this.setMsj(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
             MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
         }
     }
@@ -98,15 +114,66 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         System.out.println("Mail "+this.getSelected().getCorreoElectronico());
         Usuario user=this.ejbFacade.getItemsCorreo(this.getSelected().getCorreoElectronico());
         if (user!=null){
+            this.setMsj(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
             MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
         }
     }
     
+    public void prepareNuevo(){
+        System.err.println("entro nuevo");
+        this.setSelected(new Usuario());
+        this.setCiudad(null);
+        this.setProvincia(null);
+        this.setPais(null);
+        this.setContrasena("");
+        this.setConfirmaContrasena("");
+    }
+    
     public void registraCuenta(ActionEvent event){
         System.out.println("Entro guardar");
-        this.getSelected().setTipo('U');
-        this.getSelected().setEliminado(false);
-        this.saveNew(event);
+        this.setMsj("");
+        boolean ok = true;
+        revisaContasena();
+        if (getMsj() != "") {
+            ok = false;
+        }
+        revisaMail();
+        if (getMsj() != "") {
+            ok = false;
+        }
+        revisaNombre();
+        if (getMsj() != "") {
+            ok = false;
+        }
+        if (ok) {
+            try {
+                this.getSelected().setContrasena(Sesion.MD5(contrasena));
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.getSelected().setTipo('U');
+            this.getSelected().setEliminado(false);
+            this.saveNew(event);
+            SistemaUsuario sisUser=new SistemaUsuario ();
+            this.setSelected(this.ejbFacade.getItemsUserName(this.getSelected().getUsername()));
+            sisUser.setIdUsuario(this.getSelected().getIdUsuario());
+            sisUser.setFechaAsignacion(new Date());
+            sisUser.setEstado('V');
+            sisUser.setTiempoBloqueo(0);
+            this.ejbFacadeSistemaUsuario.create(sisUser);
+            File miDir = new File(".");
+            File folder;
+            try {
+                folder = new File(miDir.getCanonicalPath() + File.separator+"Documentos"+File.separator + getSelected().getUsername());
+                folder.mkdirs();
+            } catch (IOException ex) {
+
+            }
+        }else{
+            MuestraMensaje.addError(msj);
+        }
     }
 
     @Override
@@ -229,6 +296,34 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
      */
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    /**
+     * @return the msj
+     */
+    public String getMsj() {
+        return msj;
+    }
+
+    /**
+     * @param msj the msj to set
+     */
+    public void setMsj(String msj) {
+        this.msj = msj;
+    }
+
+    /**
+     * @return the ejbFacadeSistemaUsuario
+     */
+    public SistemaUsuarioFacade getEjbFacadeSistemaUsuario() {
+        return ejbFacadeSistemaUsuario;
+    }
+
+    /**
+     * @param ejbFacadeSistemaUsuario the ejbFacadeSistemaUsuario to set
+     */
+    public void setEjbFacadeSistemaUsuario(SistemaUsuarioFacade ejbFacadeSistemaUsuario) {
+        this.ejbFacadeSistemaUsuario = ejbFacadeSistemaUsuario;
     }
 
 }

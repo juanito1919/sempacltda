@@ -24,11 +24,12 @@
                                      value="#{empresaController.selected.idEmpresa}" 
                                      title="#{bundleEtiquetasES.Codigo}"
                                      disabled="true"/>
-                        
+
                         <p:outputLabel 
                             value="#{bundleEtiquetasES.Ruc}" 
                             for="ruc" />
                         <p:inputText id="ruc" 
+                                     onkeyup="value = value.toUpperCase()"
                                      value="#{empresaController.selected.ruc}" 
                                      title="#{bundleEtiquetasES.Ruc}" />
 
@@ -36,11 +37,12 @@
                             value="#{bundleEtiquetasES.Nombre}" 
                             for="nombre" />
                         <p:inputText id="nombre" 
+                                     onkeyup="value = value.toUpperCase()"
                                      value="#{empresaController.selected.nombre}" 
                                      title="#{bundleEtiquetasES.Nombre}" 
                                      required="true" 
                                      requiredMessage="#{bundleEtiquetasES.Nombre}  #{bundleEtiquetasES.CampoRequerido}"/>                       
-                        
+
                         <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
                         <p:inputText id="username" 
                                      value="#{empresaController.selected.username}" 
@@ -57,11 +59,11 @@
                                      title="#{bundleEtiquetasES.CorreoElectronico}" 
                                      required="true" 
                                      requiredMessage="#{bundleEtiquetasES.CorreoElectronico} #{bundleEtiquetasES.CampoRequerido}">
-                        <p:ajax event="blur" 
-                                listener="#{usuarioController.revisaMail()}" 
-                                update=""/>
+                            <p:ajax event="blur" 
+                                    listener="#{usuarioController.revisaMail()}" 
+                                    update=""/>
                         </p:inputText>
-                        
+
                         <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
                         <p:selectOneMenu id="pais" 
                                          value="#{empresaController.pais}"
@@ -108,16 +110,17 @@
                                            />
                             <f:converter binding="#{ciudadConverter}"/>
                         </p:selectOneMenu>
-                        
+
                         <p:outputLabel 
                             value="#{bundleEtiquetasES.Direccion}" 
                             for="direccion" />
                         <p:inputText 
+                            onkeyup="value = value.toUpperCase()"
                             id="direccion" 
                             value="#{empresaController.selected.direccion}" 
                             title="#{bundleEtiquetasES.Direccion}" />
-                        
-                        
+
+
                         <p:outputLabel 
                             value="#{bundleEtiquetasES.TipoEmpresa}" 
                             for="idClaseEmpresa" />

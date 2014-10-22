@@ -6,15 +6,18 @@ import ec.sempac.isw.modelo.ClaseEmpresa;
 import ec.sempac.isw.modelo.Empresa;
 import ec.sempac.isw.modelo.Pais;
 import ec.sempac.isw.modelo.Region;
+import ec.sempac.isw.modelo.SistemaEmpresa;
 import ec.sempac.isw.negocio.CiudadFacade;
 import ec.sempac.isw.negocio.ClaseEmpresaFacade;
 import ec.sempac.isw.negocio.PaisFacade;
 import ec.sempac.isw.negocio.RegionFacade;
+import ec.sempac.isw.negocio.SistemaEmpresaFacade;
 import ec.sempac.isw.seguridades.Sesion;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -43,6 +46,9 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
     
     @EJB
     private ClaseEmpresaFacade ejbFacadeClaseEmpresa;
+    
+    @EJB
+    private SistemaEmpresaFacade ejbFacadeSistEmpresa;
 
     private List<Empresa> itemsEmpresa;
     private List<Pais> itemPaises;
@@ -165,6 +171,13 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
             }
             this.getSelected().setEliminado(false);
             this.save(event);
+            SistemaEmpresa empUser=new SistemaEmpresa();
+            this.setSelected(this.ejbFacade.getItemsUserName(this.getSelected().getUsername()));
+            empUser.setIdEmpresa(this.getSelected().getIdEmpresa());
+            empUser.setFechaAsignacion(new Date());
+            empUser.setEstado('V');
+            empUser.setTiempoBloqueo(0);
+            this.ejbFacadeSistEmpresa.create(empUser);
             this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
             this.setSelected(null);
         }    
@@ -403,6 +416,20 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
      */
     public void setMsj(String msj) {
         this.msj = msj;
+    }
+
+    /**
+     * @return the ejbFacadeSistEmpresa
+     */
+    public SistemaEmpresaFacade getEjbFacadeSistEmpresa() {
+        return ejbFacadeSistEmpresa;
+    }
+
+    /**
+     * @param ejbFacadeSistEmpresa the ejbFacadeSistEmpresa to set
+     */
+    public void setEjbFacadeSistEmpresa(SistemaEmpresaFacade ejbFacadeSistEmpresa) {
+        this.ejbFacadeSistEmpresa = ejbFacadeSistEmpresa;
     }
 
 

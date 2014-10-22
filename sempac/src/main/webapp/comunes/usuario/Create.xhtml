@@ -38,6 +38,7 @@
                         <p:message id="mensajeTipoIdentidad" for="tipoIdentidad" />
                         <p:outputLabel value="#{bundleEtiquetasES.Identidad}" for="identidad" />
                         <p:inputText id="identidad" 
+                                     onkeyup="value=value.toUpperCase()"
                                      value="#{usuarioController.selected.identidad}" 
                                      title="#{bundleEtiquetasES.Identidad}"
                                      required="true" 
@@ -45,6 +46,7 @@
                         <p:message id="mensajeIdentidad" for="identidad" />
                         <p:outputLabel value="#{bundleEtiquetasES.Nombres}" for="nombres" />
                         <p:inputText id="nombres" 
+                                     onkeyup="value=value.toUpperCase()"
                                      value="#{usuarioController.selected.nombres}" 
                                      title="#{bundleEtiquetasES.Nombres}"
                                      required="true" 
@@ -52,6 +54,7 @@
                         <p:message id="mensajeNombres" for="nombres" />
                         <p:outputLabel value="#{bundleEtiquetasES.Apellidos}" for="apellidos" />
                         <p:inputText id="apellidos" 
+                                     onkeyup="value=value.toUpperCase()"
                                      value="#{usuarioController.selected.apellidos}" 
                                      title="#{bundleEtiquetasES.Apellidos}" />
                         <p:message id="mensajeApellidos" for="apellidos" />
@@ -148,6 +151,7 @@
                         <p:outputLabel value="#{bundleEtiquetasES.Direccion}" 
                                        for="direccion" />
                         <p:inputText id="direccion" 
+                                     onkeyup="value=value.toUpperCase()"
                                      value="#{usuarioController.selected.direccion}" 
                                      title="#{bundleEtiquetasES.Direccion}" 
                                      required="true" 
