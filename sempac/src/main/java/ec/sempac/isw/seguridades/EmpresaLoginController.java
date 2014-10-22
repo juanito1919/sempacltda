@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.seguridades;
 
 import ec.sempac.isw.control.AbstractController;
@@ -42,7 +41,8 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean(name = "empresaLoginController")
 @SessionScoped
-public class EmpresaLoginController extends AbstractController<Empresa> implements Serializable{
+public class EmpresaLoginController extends AbstractController<Empresa> implements Serializable {
+
     @EJB
     private EmpresaFacade ejbFacade;
     @EJB
@@ -231,7 +231,10 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
         try {
             if (!Sesion.MD5(this.getContrasenaActual()).equals(usuarioSistema.getContrasena())) {
                 msg = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaActual");
+                System.out.println(ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaActual"));
+            } else if (!contrasenaNueva.equals(confirmacionContrasena)) {
 
+                msg = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ConfirmaContrasena");
             }
         } catch (Exception ex) {
             msg = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ValidarContrasena");
@@ -248,7 +251,12 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
                 sistemaUsuario.setEstado('V');
                 sistemaUsuario.setFechaCaducidad(obtieneFechaCaducidad());
                 ejbFacadeEmpresaSistema.edit(sistemaUsuario);
+                MuestraMensaje.addSatisfactorio("Contrasena Actualizada");
+            } else {
+                MuestraMensaje.addError(msg);
             }
+        } else {
+            MuestraMensaje.addError(msg);
 
         }
     }
@@ -256,18 +264,23 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
     public boolean validaComplejidadContrasena() {
         boolean complejidadContrasena = false;
         mensajeComplejidad = null;
-        if (Validaciones.contrasenaComplejidadBaja(this.getContrasenaNueva())) {
-            complejidadContrasena = false;
-            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadBaja");
-        } else if (Validaciones.contrasenaComplejidadMedia(this.getContrasenaNueva())) {
+        if (this.contrasenaNueva.length() >= 8) {
             complejidadContrasena = true;
-            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadMedia");;
-        } else if (Validaciones.contrasenaComplejidadAlta(this.getContrasenaNueva())) {
-            complejidadContrasena = true;
-            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadAlta");;
-        } else if (this.mensajeComplejidad == null) {
-            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaInsegura");;
+        } else {
+            this.mensajeComplejidad = "La Contrasena debe tener al menos 8 caracteres";
         }
+//        if (Validaciones.contrasenaComplejidadBaja(this.getContrasenaNueva())) {
+//            complejidadContrasena = false;
+//            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadBaja");
+//        } else if (Validaciones.contrasenaComplejidadMedia(this.getContrasenaNueva())) {
+//            complejidadContrasena = true;
+//            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadMedia");;
+//        } else if (Validaciones.contrasenaComplejidadAlta(this.getContrasenaNueva())) {
+//            complejidadContrasena = true;
+//            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadAlta");;
+//        } else if (this.mensajeComplejidad == null) {
+//            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaInsegura");;
+//        }
 
         msg = (mensajeComplejidad != null && !complejidadContrasena) ? "Contraseña no Cumple con Complejidad Aceptable. " + this.mensajeComplejidad : null;
 
