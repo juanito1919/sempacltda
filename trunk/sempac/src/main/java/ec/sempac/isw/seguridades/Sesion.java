@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.seguridades;
 
 import java.io.IOException;
@@ -14,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,6 @@ import javax.servlet.http.HttpSession;
  *
  * @author miguesaca
  */
-
 public class Sesion {
 
     public static void creaSesion() {
@@ -58,10 +57,10 @@ public class Sesion {
         //System.out.println("ActivacionUsuario.isCambiarContrasena() "+ActivacionUsuario.isCambiarContrasena());
         if (Sesion.getVariable("usuario") == null) {
             String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlLoginMKS");
-            FacesContext.getCurrentInstance().getExternalContext().redirect(url);             
+            FacesContext.getCurrentInstance().getExternalContext().redirect(url);
         } else if (Sesion.getVariable("usuario") != null && ActivacionUsuario.isCambiarContrasena()) {
             String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlLoginMKS");
-            FacesContext.getCurrentInstance().getExternalContext().redirect(url);        
+            FacesContext.getCurrentInstance().getExternalContext().redirect(url);
         }
 
     }
@@ -79,6 +78,15 @@ public class Sesion {
         } catch (IOException ex) {
             Logger.getLogger(Sesion.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static String cerrarSession2() {
+        FacesContext faceContext = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        request.getSession().removeAttribute("usuario");
+        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Session cerrada correctamente", null);
+        faceContext.addMessage(null, facesMessage);
+        return "index";
     }
 
     public static void invalidaSesion() throws ServletException {
@@ -108,4 +116,3 @@ public class Sesion {
     }
 
 }
-

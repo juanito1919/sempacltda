@@ -2,15 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/resources/plantilla/ventanaInicioEmpleadoPlantilla.xhtml"
-                xmlns:h="http://java.sun.com/jsf/html">
-    
+                template="/resources/plantilla/ventanaPlantilla.xhtml">
     <ui:define  name="formulario">
         <!-- ̣̣̣̣**************************************************************************
-             PANEL PRINCIPAL  
-        -->       
-        <h:form>
-            <p:commandLink  value="Actualizar Curriculum" ajax="false" action="#{usuarioController.asignarUsuario()}" />                    
-        </h:form>    
+             PANEL PRINCIPAL                                                     -->                                                   
+            <ui:include src="Cambio.xhtml"/>
     </ui:define>
 </ui:composition>

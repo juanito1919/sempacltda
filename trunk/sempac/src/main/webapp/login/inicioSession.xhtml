@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <html>
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <h:outputStylesheet library="css" name="estilo.css"/>
+            <script type="text/javascript">
+                function handleLoginRequest(xhr, status, args) {
+                    if (args.validationFailed || !args.loggedIn) {
+                        PF('dlIniciarSession').jq.effect("shake", {times: 5}, 100);
+                    }
+                    else {
+                        PF('dlIniciarSession').hide();
+                        $('#loginLink').fadeOut();
+                    }
+                }
+            </script>
+        </h:head>
+        <!-- panel que contine dos botones uno para el registro y otros para iniciar session -->  
+        <h:form>
+            <p:panel styleClass="panelLogin" style="border: none;">
+                <h:panelGrid columns="2" cellspacing="5" cellpadding="5" style="margin: 0px auto 0px auto;">
+                    <p:commandButton value="Registrarse" style="height: 70px; width: 100px; 
+                                     background-color:#33cc00; border: none;
+                                     border-radius: 10px; color: #ffffff;" 
+                                     onclick="PF('UsuarioCreateDialog').show();">
+
+                    </p:commandButton>
+                    <p:commandButton value="Iniciar Session"  style="height: 70px; width: 120px;
+                                     background-color:#6666ff; border: none;
+                                     border-radius: 10px;
+                                     border: none; color: #ffffff;"
+                                     onclick="PF('dlEscojerTipoInicio').show()"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+        <ui:include src="../configuraciones/registro/registroUsuario.xhtml"/>
+        <!-- dialog para iniciar session -->
+
+        <p:dialog   widgetVar="dlIniciarSessionEmpleados" 
+                    header="Acceso a Usuarios"
+                    minHeight="40" 
+                    width="400"
+                    resizable="false"
+                    styleClass="ui-widget-content ui-helper-clearfix:after ui-widget-header ui-shadow .ui-dialog .ui-dialog-content"
+                    modal="true">
+            <h:form id="formInicioSessionEmpleados"> 
+                <p:growl id="growl"  life="3000" />
+                <h:panelGrid columns="1" 
+                             cellpadding="10">
+                    <p:inputText id="username" 
+                                 value="#{usuarioLoginController.username}" 
+                                 required="true" 
+                                 style="height: 25px; font-size: 1.2em;"
+                                 label="username" size="37" >
+                        <p:watermark for="username" value="Correo electronico"/>
+                    </p:inputText>
+                    <p:password id="password" 
+                                size="37" 
+                                value="#{usuarioLoginController.contrasena}" 
+                                required="true" 
+                                style="height: 25px; font-size: 1.2em;"
+                                label="password">
+                        <p:watermark for="password" value="Contrasena"/>
+                    </p:password>
+                    <h:panelGrid columns="2" >
+                        <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidada" style="color: #0066ff; font-size:0.8em; " value="¿Olvidastes tu Contrasena?" target="_blank"/>
+                        <p:commandButton value="Entrar" 
+                                         ajax="false"
+                                         action="#{usuarioLoginController.validaUsuario()}"
+                                         style="margin-left: 55px; width: 130px;"
+                                         update="growl" 
+                                         styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"                                              
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </h:panelGrid>
+                   
+                    <f:facet name="footer">
+                    <p:outputLabel value="Iniciar sesión con" style="margin: 0px auto;"/>
+                    <h:panelGrid columns="2" style="margin: 0 auto;" >
+                        <p:graphicImage value="/resources/images/face.png" style="width: 64px; height: 64px;"/>
+                         <p:graphicImage value="/resources/images/Twitter.png" style="width: 64px; height: 64px;"/>
+                    </h:panelGrid>
+                    </f:facet> 
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        
+        
+        
+        
+        
+        <p:dialog   widgetVar="dlIniciarSessionEmpresas" 
+                    header="Acceso Empresas"
+                    minHeight="40" 
+                    width="400"
+                    resizable="false"
+                    styleClass="ui-widget-content ui-helper-clearfix:after ui-widget-header ui-shadow .ui-dialog .ui-dialog-content"
+                    modal="true">
+            <h:form id="formInicioSessionEmpresas"> 
+                <p:growl id="growl"  life="3000" />
+                <h:panelGrid columns="1" 
+                             cellpadding="10">
+                    <p:inputText id="username" 
+                                 value="#{usuarioLoginController.username}" 
+                                 required="true" 
+                                 style="height: 25px; font-size: 1.2em;"
+                                 label="username" size="37" >
+                        <p:watermark for="username" value="Correo electronico"/>
+                    </p:inputText>
+                    <p:password id="password" 
+                                size="37" 
+                                value="#{usuarioLoginController.contrasena}" 
+                                required="true" 
+                                style="height: 25px; font-size: 1.2em;"
+                                label="password">
+                        <p:watermark for="password" value="Contrasena"/>
+                    </p:password>
+                    <h:panelGrid columns="3" >
+                        <p:commandButton value="Iniciar sesion" 
+                                         ajax="true"
+                                         action="#{usuarioLoginController.validaUsuario()}"
+                                         style="margin-left: 67px;"
+                                         update="growl" 
+                                         styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"                                              
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </h:panelGrid>
+                    <p:outputLabel value="Iniciar sesión con" style="margin: 0px auto;"/>
+                    <h:panelGrid columns="2" >
+                        <p:commandButton value="Facebook"/>
+                        <p:commandButton value="Twiter"/>
+                    </h:panelGrid>
+                    <f:facet name="footer">
+                        <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidada" value="¿Olvidastes tu Contrasena?" target="_blank"/>
+                    </f:facet> 
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+        
+        
+        <!-- escojer tipo de empresa o empleado --> 
+
+        <p:dialog   widgetVar="dlEscojerTipoInicio" 
+                    header="Iniciar Session como.?"
+                    minHeight="40" 
+                    height="400"
+                    modal="true"
+                    width="600"
+                    resizable="false"
+                    styleClass="panelInicioSession"
+                    >
+            <h:form>
+                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+          
+                         <h:panelGrid columns="2" border="0">
+                             <p:commandButton id="tipoEmpresaBot" value="Empleadores/Empresas" onclick="PF('dlIniciarSessionEmpresas').show(); dlEscojerTipoInicio.hide();">
+                        </p:commandButton>
+                        <p:commandButton id="tipoUsuarioBot" value="Empleados" onclick="PF('dlIniciarSessionEmpleados').show(); dlEscojerTipoInicio.hide();">
+                        </p:commandButton>
+                    </h:panelGrid>
+               
+            </h:form>
+        </p:dialog>
+    </html>
+</f:view>
+

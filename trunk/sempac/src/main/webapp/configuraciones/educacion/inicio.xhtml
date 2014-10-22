@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/plantilla/ventanaPlantilla.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"> 
+
+    <ui:define  name="formulario">
+        <div class="panelTitulo">
+            INSTRUCION FORMAL
+        </div> 
+        <div id="divEscojerIntrucion">
+            <p:outputLabel value="Nivel de Intrucion" for="nivelInstrucion"/>
+            <p:selectOneMenu id="nivelInstrucion" 
+                             value="#{tipoEstudioController.tipoEstudio}"
+                             required="true">
+                <f:selectItem itemLabel="PRIMARIA"/>
+                <f:selectItem itemLabel="SECUNDARIA" itemValue="S" />  
+                <f:selectItem itemLabel="UNIVERSITARIO" itemValue="C" /> 
+                <p:ajax event="change" 
+                        listener="#{tipoEstudioController.abrirVentana()}"/>
+            </p:selectOneMenu>
+        </div>
+        <div>
+          
+        </div>
+    </ui:define>
+</ui:composition>

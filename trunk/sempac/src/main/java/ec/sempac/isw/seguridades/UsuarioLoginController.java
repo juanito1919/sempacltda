@@ -91,7 +91,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         this.numeroIntentos = 0;
         ActivacionUsuario.setCambiarContrasena(false);
         this.setContrasenaActual(null);
-        this.confirmacionContrasena = null;
+        this.setConfirmacionContrasena(null);
         this.setContrasenaNueva(null);
         this.repiteContrasena = false;
     }
@@ -101,7 +101,8 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
             Usuario listUsuario = this.ejbFacade.getItemsPais(username);
-            System.out.println("holAAA");
+            System.out.println("user " + username);
+            System.out.println("contra " + contrasena);
             if (listUsuario == null) {
 
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("UsuarioNoExiste"));
@@ -125,9 +126,10 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             String estadoUsuario = String.valueOf(usuarioSistema.getEstado());
 
             // Colocando el tiempo de inactividad que tiene el sistema
-            Sesion.tiempoInactividad(100);
-            //if (usuarioSistema.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
-            if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
+            Sesion.tiempoInactividad(1000);
+
+            if (usuarioSistema.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
+            //if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
 
                 // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
                 if (estadoUsuario.equals("V")) {
@@ -233,7 +235,13 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         try {
             if (!Sesion.MD5(this.getContrasenaActual()).equals(usuarioSistema.getContrasena())) {
                 msg = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaActual");
+                System.out.println(ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaActual"));
+            } else if (!contrasenaNueva.equals(confirmacionContrasena)) {
 
+                //System.out.println("actual :"+contrasenaActual);
+                // System.out.println("cofirmacion :"+confirmacionContrasena);
+                msg = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ConfirmaContrasena");
+                // System.out.println(ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ConfirmaContrasena"));
             }
         } catch (Exception ex) {
             msg = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ValidarContrasena");
@@ -250,26 +258,36 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
                 sistemaUsuario.setEstado('V');
                 sistemaUsuario.setFechaCaducidad(obtieneFechaCaducidad());
                 ejbFacadeUsuarioSistema.edit(sistemaUsuario);
+                MuestraMensaje.addSatisfactorio("Contrasena Actualizada");
+            } else {
+                MuestraMensaje.addError(msg);
             }
-
+        } else {
+            MuestraMensaje.addError(msg);
         }
     }
 
     public boolean validaComplejidadContrasena() {
         boolean complejidadContrasena = false;
         mensajeComplejidad = null;
-        if (Validaciones.contrasenaComplejidadBaja(this.getContrasenaNueva())) {
-            complejidadContrasena = false;
-            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadBaja");
-        } else if (Validaciones.contrasenaComplejidadMedia(this.getContrasenaNueva())) {
+        if (this.contrasenaNueva.length() >= 8) {
             complejidadContrasena = true;
-            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadMedia");;
-        } else if (Validaciones.contrasenaComplejidadAlta(this.getContrasenaNueva())) {
-            complejidadContrasena = true;
-            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadAlta");;
-        } else if (this.mensajeComplejidad == null) {
-            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaInsegura");;
+        } else {
+            this.mensajeComplejidad = "La Contrasena debe tener al menos 8 caracteres";
         }
+//        if (Validaciones.contrasenaComplejidadBaja(this.getContrasenaNueva())) {
+//            complejidadContrasena = false;
+//            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadBaja");
+//        } else if (Validaciones.contrasenaComplejidadMedia(this.getContrasenaNueva())) {
+//            complejidadContrasena = true;
+//            
+//            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadMedia");;
+//        } else if (Validaciones.contrasenaComplejidadAlta(this.getContrasenaNueva())) {
+//            complejidadContrasena = true;
+//            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("SeguridadAlta");;
+//        } else if (this.mensajeComplejidad == null) {
+//            this.mensajeComplejidad = ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaInsegura");;
+//        }
 
         msg = (mensajeComplejidad != null && !complejidadContrasena) ? "Contraseña no Cumple con Complejidad Aceptable. " + this.mensajeComplejidad : null;
 
@@ -392,4 +410,22 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
     public void setContrasenaNueva(String contrasenaNueva) {
         this.contrasenaNueva = contrasenaNueva;
     }
+
+    /**
+     * @return the confirmacionContrasena
+     */
+    public String getConfirmacionContrasena() {
+        return confirmacionContrasena;
+    }
+
+    /**
+     * @param confirmacionContrasena the confirmacionContrasena to set
+     */
+    public void setConfirmacionContrasena(String confirmacionContrasena) {
+        this.confirmacionContrasena = confirmacionContrasena;
+    }
+
+    /**
+     * @return the repiteContrasena
+     */
 }
