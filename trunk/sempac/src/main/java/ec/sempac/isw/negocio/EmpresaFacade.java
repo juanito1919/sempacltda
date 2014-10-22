@@ -68,4 +68,13 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
             return null;
         }
     }
+    public Empresa getItemsCorreo(String correoElectronico) {
+        Query query = this.em.createNamedQuery(Empresa.findByCorreoElectronico);
+        query.setParameter("correoElectronico", correoElectronico);
+        try{
+            return (Empresa)query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
+    }
 }
