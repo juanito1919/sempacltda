@@ -57,4 +57,15 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
             return null;
         }
     }
+    
+    public Empresa getEmpresa(String username) {
+        Query query = this.em.createNamedQuery(Empresa.findByUsernameEmail);
+        query.setParameter("username", username);
+        query.setParameter("eliminado", false);
+        try{
+            return (Empresa)query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
+    }
 }
