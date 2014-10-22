@@ -123,13 +123,13 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
             String estadoUsuario = String.valueOf(empresaSistema.getEstado());
 
             // Colocando el tiempo de inactividad que tiene el sistema
-            Sesion.tiempoInactividad(100);
-            //if (empresaSistema.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
-            if (empresaSistema.getEmpresa().getContrasena().equals(this.contrasena)) {
+            Sesion.tiempoInactividad(1000);
+            if (empresaSistema.getEmpresa().getContrasena().equals(Sesion.MD5(this.contrasena))) {
+            //if (empresaSistema.getEmpresa().getContrasena().equals(this.contrasena)) {
 
                 // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {
                 if (estadoUsuario.equals("V")) {
-                    System.out.println("entrossss");
+                  
                     // Iniciando la variable de session con los datos del usuario mediante la entidad.                      
                     ActivacionUsuario.setEmpresa(this.getUsuario());
                     // ActivacionUsuario.setCodigoIfip(this.getUsuario().getCodigoIfip().getCodigo());
@@ -138,12 +138,13 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
 
                     // Inserta  el Acceso al Sistema
                     this.sistemaAccesoEmpresa = new SistemaAccesoEmpresa();
+                    
                     this.sistemaAccesoEmpresa.setIdEmpresa(empresaSistema);
                     this.sistemaAccesoEmpresa.setDireccionIp(ObtieneInformacionCliente.obtenerDireccionIP());
                     this.sistemaAccesoEmpresa.setFechaAcceso(new Date());
 
                     // Registrando el acceso al sistema
-                    ejbFacadeEmpAcc.create(getSistemaAccesoEmpresa());
+                    ejbFacadeEmpAcc.create(sistemaAccesoEmpresa);
 
                     // coloca la fecha de Acceso al Sistema
                     this.setFecha(this.getSistemaAccesoEmpresa().getFechaAcceso());
