@@ -8,8 +8,13 @@
 
     <ui:composition>
 
-        <p:dialog id="EmpresaEditDlg" widgetVar="EmpresaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditEmpresaTitle}">
+        <p:dialog id="EmpresaEditDlg" widgetVar="EmpresaEditDialog" modal="true" resizable="false" appendTo="@(body)">
+            <f:facet name="header">
+                <h:outputLabel value="#{bundleEtiquetasES.Editar} #{bundleEtiquetasES.Empresa}"
+                               styleClass="encabezadosDialog"/>
+            </f:facet>
             <h:form id="EmpresaEditForm">
+                <p:messages id="mensaje" showDetail="true" autoUpdate="true" closable="true" />
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{empresaController.selected != null}">
                         <p:outputLabel 
@@ -35,7 +40,28 @@
                                      title="#{bundleEtiquetasES.Nombre}" 
                                      required="true" 
                                      requiredMessage="#{bundleEtiquetasES.Nombre}  #{bundleEtiquetasES.CampoRequerido}"/>                       
-
+                        
+                        <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
+                        <p:inputText id="username" 
+                                     value="#{empresaController.selected.username}" 
+                                     title="#{bundleEtiquetasES.UserName}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.UserName} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{empresaController.revisaNombre()}" 
+                                    update=""/>
+                        </p:inputText>
+                        <p:outputLabel value="#{bundleEtiquetasES.CorreoElectronico}" for="correoElectronico" />
+                        <p:inputText id="correoElectronico" 
+                                     value="#{empresaController.selected.correoElectronico}" 
+                                     title="#{bundleEtiquetasES.CorreoElectronico}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.CorreoElectronico} #{bundleEtiquetasES.CampoRequerido}">
+                        <p:ajax event="blur" 
+                                listener="#{usuarioController.revisaMail()}" 
+                                update=""/>
+                        </p:inputText>
+                        
                         <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
                         <p:selectOneMenu id="pais" 
                                          value="#{empresaController.pais}"
@@ -108,7 +134,7 @@
                             <f:converter binding="#{claseEmpresaConverter}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{empresaController.guardar}" value="#{bundleEtiquetasES.Guardar}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EmpresaEditDialog');"/>
+                    <p:commandButton actionListener="#{empresaController.editar}" value="#{bundleEtiquetasES.Guardar}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EmpresaEditDialog');"/>
                     <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="EmpresaEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
