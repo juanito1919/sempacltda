@@ -202,6 +202,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
                 this.ejbFacadeUsuarioSistema.edit(usuarioSistema);
             }
         } catch (Exception ex) {
+            System.err.println(ex);
             // Muestra el Mensaje del Error en la Capa
             MuestraMensaje.addErrorCapaControl();
             // Registra el error en el log del servidor
