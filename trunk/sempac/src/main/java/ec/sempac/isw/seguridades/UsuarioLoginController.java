@@ -223,7 +223,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         ActivacionUsuario.setCambiarContrasena(true);
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("CambioContrasenaDialogo.hide()");
-
+ 
         String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlCambiaContrasena");
         FacesContext.getCurrentInstance().getExternalContext().redirect(url);
     }
