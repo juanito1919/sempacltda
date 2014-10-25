@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="idiomaDominadoListForm">
+        <p:panel header="Lista de Referencias" style="border: none; width: 100%; margin: 0 auto;">
+            <p:dataTable id="datalist" value="#{idiomaDominadoController.itemsIdiomasDominados}" var="item"
+                         selectionMode="single" 
+                         selection="#{idiomaDominadoController.seleccion}"
+                         paginator="true"
+                         rowKey="#{item.idiomaDominadoPK}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,20,30"
+                         >
+                <p:ajax
+                    event="rowSelect"
+                    listener="#{idiomaDominadoController.mostrar()}"
+                    />
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.Idioma}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idioma.nombre}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.NivelHablado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nivelHablado}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.NiivelEscrito}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nivelEscrito}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</ui:composition>

@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Idioma;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,9 @@ public class IdiomaFacade extends AbstractFacade<Idioma> {
         super(Idioma.class);
     }
     
+    public List<Idioma> getItemsIdiomasEliminado(boolean eliminado) {
+        Query query = this.em.createNamedQuery(Idioma.findByEliminado);
+        query.setParameter("eliminado", eliminado);
+        return query.getResultList();
+    }
 }
