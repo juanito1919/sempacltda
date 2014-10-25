@@ -68,6 +68,7 @@ public class UserHabilidadesEspectativasController extends AbstractController<Us
         this.save(event);
         this.getItemsHabExp().add(this.getSelected());
         this.setSelected(new UserHabilidadesEspectativas());
+        this.getSelected().setUserHabilidadesEspectativasPK(new UserHabilidadesEspectativasPK());
     }
     
     public void mostrar(){
