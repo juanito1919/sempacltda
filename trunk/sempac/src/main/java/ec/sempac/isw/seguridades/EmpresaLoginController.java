@@ -124,8 +124,8 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
 
             // Colocando el tiempo de inactividad que tiene el sistema
             Sesion.tiempoInactividad(1000);
-            if (empresaSistema.getEmpresa().getContrasena().equals(Sesion.MD5(this.contrasena))) {
-            //if (empresaSistema.getEmpresa().getContrasena().equals(this.contrasena)) {
+            //if (empresaSistema.getEmpresa().getContrasena().equals(Sesion.MD5(this.contrasena))) {
+            if (empresaSistema.getEmpresa().getContrasena().equals(this.contrasena)) {
 
                 // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {
                 if (estadoUsuario.equals("V")) {
@@ -142,7 +142,6 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
                     this.sistemaAccesoEmpresa.setIdEmpresa(empresaSistema);
                     this.sistemaAccesoEmpresa.setDireccionIp(ObtieneInformacionCliente.obtenerDireccionIP());
                     this.sistemaAccesoEmpresa.setFechaAcceso(new Date());
-
                     // Registrando el acceso al sistema
                     ejbFacadeEmpAcc.create(sistemaAccesoEmpresa);
 

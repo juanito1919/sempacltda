@@ -42,7 +42,6 @@ public class SistemaAccesoEmpresa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_SISTEMA_ACCESO_EMPRESA", nullable = false)
     private Long idSistemaAccesoEmpresa;
     @Basic(optional = false)
