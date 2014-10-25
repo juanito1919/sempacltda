@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "UserHabilidadesEspectativas.findByIdEspectativas", query = "SELECT u FROM UserHabilidadesEspectativas u WHERE u.userHabilidadesEspectativasPK.idEspectativas = :idEspectativas"),
     @NamedQuery(name = "UserHabilidadesEspectativas.findByIdHabilidades", query = "SELECT u FROM UserHabilidadesEspectativas u WHERE u.userHabilidadesEspectativasPK.idHabilidades = :idHabilidades")})
 public class UserHabilidadesEspectativas implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;    
+    public static final String findByIdUsuario ="UserHabilidadesEspectativas.findByIdUsuario";  
     @EmbeddedId
     protected UserHabilidadesEspectativasPK userHabilidadesEspectativasPK;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", nullable = false, insertable = false, updatable = false)

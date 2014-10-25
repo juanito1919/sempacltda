@@ -55,6 +55,10 @@ public class ReferenciaPersonalController  extends AbstractController<Referencia
         this.listaUsuario = listaUsuario;
     }
     
+    public void iniciaSelected(){
+        this.setSelected(new ReferenciaPersonal());
+    }
+    
    
 
 }

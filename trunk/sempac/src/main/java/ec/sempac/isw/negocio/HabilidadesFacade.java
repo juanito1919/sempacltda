@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Habilidades;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,9 @@ public class HabilidadesFacade extends AbstractFacade<Habilidades> {
         super(Habilidades.class);
     }
     
+    public List<Habilidades> getItemsHabilidadesEliminado(boolean eliminado) {
+        Query query = this.em.createNamedQuery(Habilidades.findByEliminado);
+        query.setParameter("eliminado", eliminado);
+        return query.getResultList();
+    }
 }

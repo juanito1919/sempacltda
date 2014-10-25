@@ -6,10 +6,13 @@
 
 package ec.sempac.isw.negocio;
 
+import ec.sempac.isw.modelo.Habilidades;
 import ec.sempac.isw.modelo.UserHabilidadesEspectativas;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +32,9 @@ public class UserHabilidadesEspectativasFacade extends AbstractFacade<UserHabili
         super(UserHabilidadesEspectativas.class);
     }
     
+    public List<UserHabilidadesEspectativas> getItemsHabilidadesUsuario(Long idUsuario) {
+        Query query = this.em.createNamedQuery(UserHabilidadesEspectativas.findByIdUsuario);
+        query.setParameter("idUsuario", idUsuario);
+        return query.getResultList();
+    }
 }
