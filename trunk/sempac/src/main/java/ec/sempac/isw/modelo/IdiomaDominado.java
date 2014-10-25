@@ -33,9 +33,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "IdiomaDominado.findByIdUsuario", query = "SELECT i FROM IdiomaDominado i WHERE i.idiomaDominadoPK.idUsuario = :idUsuario"),
     @NamedQuery(name = "IdiomaDominado.findByNivelHablado", query = "SELECT i FROM IdiomaDominado i WHERE i.nivelHablado = :nivelHablado"),
     @NamedQuery(name = "IdiomaDominado.findByNivelEscrito", query = "SELECT i FROM IdiomaDominado i WHERE i.nivelEscrito = :nivelEscrito"),
-    @NamedQuery(name = "IdiomaDominado.findByEliminado", query = "SELECT i FROM IdiomaDominado i WHERE i.eliminado = :eliminado")})
+    @NamedQuery(name = "IdiomaDominado.findByEliminado", query = "SELECT i FROM IdiomaDominado i WHERE i.eliminado = :eliminado"),
+    //Personalizados
+    @NamedQuery(name = "IdiomaDominado.findByUsuarioEliminado", query = "SELECT i FROM IdiomaDominado i WHERE i.usuario.idUsuario = :idUsuario AND i.eliminado = :eliminado")
+})
 public class IdiomaDominado implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String findByUsuarioEliminado ="IdiomaDominado.findByUsuarioEliminado"; 
     @EmbeddedId
     protected IdiomaDominadoPK idiomaDominadoPK;
     @Basic(optional = false)
