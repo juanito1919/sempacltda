@@ -19,7 +19,8 @@
                     columns="4" 
                     border="0"
                     columnClasses="column1Class, column2Class,column3Class,column4Class" 
-                    rendered="#{referenciaPersonalController.selected != null}">
+                    >
+                    #{referenciaPersonalController.iniciaSelected()}
                     <p:outputLabel rendered="true" value="#{bundle.CreateReferenciaPersonalLabel_referenciaPersonalPK_idReferenciaPersonal}" 
                                    for="referenciaPersonalPK_idReferenciaPersonal" />
                     <p:inputText rendered="true" id="referenciaPersonalPK_idReferenciaPersonal" 
@@ -44,7 +45,7 @@
                     <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_telefono}" 
                                    for="telefono" />
                     <p:inputText id="telefono" 
-                                 value="#{referenciaPersonalController.selected.telefono}" 
+                                 value="#{ referenciaPersonalController.selected.telefono}" 
                                  title="#{bundle.CreateReferenciaPersonalTitle_telefono}" 
                                  required="true"
                                  requiredMessage="#{bundle.CreateReferenciaPersonalRequiredMessage_telefono}"/>

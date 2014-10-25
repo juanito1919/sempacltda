@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Espectativas;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,12 @@ public class EspectativasFacade extends AbstractFacade<Espectativas> {
 
     public EspectativasFacade() {
         super(Espectativas.class);
+    }
+    
+    public List<Espectativas> getItemsEspectativasEliminado(boolean eliminado) {
+        Query query = this.em.createNamedQuery(Espectativas.findByEliminado);
+        query.setParameter("eliminado", eliminado);
+        return query.getResultList();
     }
     
 }

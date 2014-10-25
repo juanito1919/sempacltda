@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="userHabilidadesEspectativasListForm">
+        <p:panel header="Lista de Referencias" style="border: none; width: 100%; margin: 0 auto;">
+            <p:dataTable id="datalist" value="#{userHabilidadesEspectativasController.itemsHabExp}" var="item"
+                         selectionMode="single" 
+                         selection="#{userHabilidadesEspectativasController.seleccion}"
+                         paginator="true"
+                         rowKey="#{item.userHabilidadesEspectativasPK}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,20,30"
+                         >
+                <p:ajax
+                    event="rowSelect"
+                    listener="#{userHabilidadesEspectativasController.mostrar()}"
+                    />
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.Habilidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.habilidades.nombre}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.Espectativa}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.espectativas.nombre}"/>
+                </p:column>
+                
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</ui:composition>

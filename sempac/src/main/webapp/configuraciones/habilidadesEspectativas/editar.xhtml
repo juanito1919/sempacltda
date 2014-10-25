@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog id="ReferenciaPersonalEditDlg" 
+              widgetVar="ReferenciaPersonalEditDialog" 
+              modal="true" resizable="false" 
+              appendTo="@(body)" 
+              header="#{bundle.EditReferenciaPersonalTitle}">
+        <h:form id="ReferenciaPersonalEditForm">
+             <p:panelGrid columns="2" 
+                          
+                          rendered="#{referenciaPersonalController.selected != null}">
+                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_referenciaPersonalPK_idReferenciaPersonal}" 
+                                   for="referenciaPersonalPK_idReferenciaPersonal" />
+                    <p:inputText id="referenciaPersonalPK_idReferenciaPersonal" 
+                                 value="#{referenciaPersonalController.selected.referenciaPersonalPK.idReferenciaPersonal}" 
+                                 title="#{bundle.EditReferenciaPersonalTitle_referenciaPersonalPK_idReferenciaPersonal}" 
+                                 required="true" 
+                                 requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_referenciaPersonalPK_idReferenciaPersonal}"/>
+                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_nombres}" 
+                                   for="nombres" />
+                    <p:inputText id="nombres" 
+                                 value="#{referenciaPersonalController.selected.nombres}" 
+                                 title="#{bundle.EditReferenciaPersonalTitle_nombres}" 
+                                 required="true" 
+                                 requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_nombres}"/>
+                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_apellidos}"
+                                   for="apellidos" />
+                    <p:inputText id="apellidos" 
+                                 value="#{referenciaPersonalController.selected.apellidos}" 
+                                 title="#{bundle.EditReferenciaPersonalTitle_apellidos}" 
+                                 required="true" 
+                                 requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_apellidos}"/>
+                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_telefono}" 
+                                   for="telefono" />
+                    <p:inputText id="telefono" 
+                                 value="#{referenciaPersonalController.selected.telefono}" 
+                                 title="#{bundle.EditReferenciaPersonalTitle_telefono}" 
+                                 required="true"
+                                 requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_telefono}"/>
+                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_correo}" 
+                                   for="correo" />
+                    <p:inputText id="correo" 
+                                 value="#{referenciaPersonalController.selected.correo}" 
+                                 title="#{bundle.EditReferenciaPersonalTitle_correo}" />
+                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_url}" 
+                                   for="url" />
+                    <p:inputText id="url" 
+                                 value="#{referenciaPersonalController.selected.url}" 
+                                 title="#{bundle.EditReferenciaPersonalTitle_url}" />
+                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_usuario}" 
+                                   for="usuario" />
+                    <p:selectOneMenu id="usuario" 
+                                     value="#{referenciaPersonalController.selected.usuario}" 
+                                     required="true" 
+                                     requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_usuario}">
+                        <f:selectItems value="#{referenciaPersonalController.listaUsuario}"
+                                       var="usuarioItem"
+                                       itemValue="#{usuarioItem}"
+                                       itemLabel="#{usuarioItem.nombres}" />
+                        <f:converter binding="#{usuarioConverter}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <p:commandButton actionListener="#{referenciaPersonalController.update}" 
+                                 value="#{bundle.Save}" 
+                                 update=":ReferenciaPersonalListForm"/>
+                <p:commandButton value="#{bundle.Cancel}" 
+                                 onclick="ReferenciaPersonalEditDialog.hide()"/>
+        </h:form>
+       
+    </p:dialog>
+
+</ui:composition>
+
+
