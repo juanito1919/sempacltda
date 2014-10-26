@@ -11,7 +11,7 @@
         #{bundleEtiquetasES.Idiomas}
     </div> 
 
-    <p:panel header="Idiomas" 
+    <p:panel header="Idioma" 
              style="border: none; width: 75%; margin: 5px auto;">
         <h:form id="idiomaDominadoCreateForm">
             <h:panelGroup id="display">
@@ -19,7 +19,7 @@
                 <h:panelGrid 
                     columns="6" 
                     border="0"
-                    columnClasses="column1Class, column2Class,column3Class,column4Class" 
+                    columnClasses="column1Class, column2Class,column3Class,column4Class,column1Class,column6Class" 
                     >
                     <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Idioma}" 
                                for="idioma" />
@@ -39,8 +39,9 @@
                     <p:outputLabel rendered="true" value="#{bundleEtiquetasES.NivelHablado}" 
                                    for="hablado" />
                     <p:selectOneMenu id="hablado" 
+                                     required="false"
                                      value="#{idiomaDominadoController.selected.nivelHablado}">
-                        <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}" itemValue="-"/>
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Alto}" itemValue="A" />  
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Medio}" itemValue="M" />
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Bajo}" itemValue="B" />  
@@ -49,8 +50,9 @@
                     <p:outputLabel rendered="true" value="#{bundleEtiquetasES.NiivelEscrito}" 
                                    for="escrito" />
                     <p:selectOneMenu id="escrito" 
+                                     required="false"
                                      value="#{idiomaDominadoController.selected.nivelEscrito}">
-                        <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}" itemValue="-"/>
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Alto}" itemValue="A" />  
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Medio}" itemValue="M" />
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Bajo}" itemValue="B" />  

@@ -49,7 +49,7 @@ public class IdiomaDominadoController extends AbstractController<IdiomaDominado>
     
     public void guardaNuevo(ActionEvent event){
         System.out.println("guarda "+this.getSelected());
-        if (this.getSelected().getIdioma()==null ||this.getSelected().getNivelEscrito()==null || this.getSelected().getNivelHablado()==null)
+        if (this.getSelected().getIdioma()==null ||this.getSelected().getNivelEscrito()=="-" || this.getSelected().getNivelHablado()=="-")
             return;
         for (int i=0;i<this.itemsIdiomasDominados.size();i++){
             if (this.itemsIdiomasDominados.get(i).getIdioma().getIdIdioma()==this.getSelected().getIdioma().getIdIdioma())
@@ -71,7 +71,6 @@ public class IdiomaDominadoController extends AbstractController<IdiomaDominado>
     public void eliminar (ActionEvent event){
         System.out.println("seleccion "+seleccion);
         if (seleccion!=null){
-            System.err.println(seleccion);
             seleccion.setEliminado(true);
             this.ejbFacade.edit(seleccion);
             this.itemsIdiomasDominados.remove(seleccion);
