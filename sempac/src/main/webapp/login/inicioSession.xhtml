@@ -13,10 +13,12 @@
             <script type="text/javascript">
                 function handleLoginRequest(xhr, status, args) {
                     if (args.validationFailed || !args.loggedIn) {
-                        PF('dlIniciarSession').jq.effect("shake", {times: 5}, 100);
+                        PF('dlIniciarSessionEmpleados').jq.effect("shake", {times: 5}, 100);
+                        PF('dlIniciarSessionEmpresas').jq.effect("shake", {times: 5}, 100);
                     }
                     else {
-                        PF('dlIniciarSession').hide();
+                        PF('dlIniciarSessionEmpleados').hide();
+                        PF('dlIniciarSessionEmpresas').hide();
                         $('#loginLink').fadeOut();
                     }
                 }
@@ -25,20 +27,31 @@
         <!-- panel que contine dos botones uno para el registro y otros para iniciar session -->  
         <h:form>
             <p:panel styleClass="panelLogin" style="border: none;">
+                 <h:commandButton value="Soy Una Empresa" style=" margin-left: 10px; height: 30px; width: 220px; 
+                                     background-color:#b5b5b5; border: none;
+                                     border-radius: 10px; color: #ffffff;" 
+                                     action="#{usuarioController.prepareNuevo()}"
+                                     onclick="dlIniciarSessionEmpresas.show();
+                                             return false;">
+
+                    </h:commandButton>
                 <h:panelGrid columns="2" cellspacing="5" cellpadding="5" style="margin: 0px auto 0px auto;">
-                    <p:commandButton value="Registrarse" style="height: 70px; width: 100px; 
+                      <h:commandButton value="Iniciar Session" style="height: 70px; width: 100px; 
+                                     background-color:#0066ff; border: none;
+                                     border-radius: 10px; color: #ffffff;" 
+                                     onclick="dlIniciarSessionEmpleados.show();
+                                               return false;"/>
+                    
+                    <h:commandButton value="Registrarse" style="height: 70px; width: 100px; 
                                      background-color:#33cc00; border: none;
                                      border-radius: 10px; color: #ffffff;" 
                                      action="#{usuarioController.prepareNuevo()}"
-                                     onclick="PF('UsuarioCreateDialog').show();">
+                                     onclick="UsuarioCreateDialog.show();
+                                             return false;">
 
-                    </p:commandButton>
-                    <p:commandButton value="Iniciar Session"  style="height: 70px; width: 120px;
-                                     background-color:#6666ff; border: none;
-                                     border-radius: 10px;
-                                     border: none; color: #ffffff;"
-                                     onclick="PF('dlEscojerTipoInicio').show()"/>
+                    </h:commandButton>
                 </h:panelGrid>
+                
             </p:panel>
         </h:form>
         <ui:include src="../configuraciones/registro/registroUsuario.xhtml"/>
@@ -73,30 +86,30 @@
                     <h:panelGrid columns="2" >
                         <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidada" style="color: #0066ff; font-size:0.8em; " value="¿Olvidastes tu Contrasena?" target="_blank"/>
                         <p:commandButton value="Entrar" 
-                                         ajax="false"
+                                      
                                          action="#{usuarioLoginController.validaUsuario()}"
                                          style="margin-left: 55px; width: 130px;"
                                          update="growl" 
                                          styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"                                              
                                          oncomplete="handleLoginRequest(xhr, status, args)" />
                     </h:panelGrid>
-                   
+
                     <f:facet name="footer">
-                    <p:outputLabel value="Iniciar sesión con" style="margin: 0px auto;"/>
-                    <h:panelGrid columns="2" style="margin: 0 auto;" >
-                        <p:graphicImage value="/resources/images/face.png" style="width: 64px; height: 64px;"/>
-                         <p:graphicImage value="/resources/images/Twitter.png" style="width: 64px; height: 64px;"/>
-                    </h:panelGrid>
+                        <p:outputLabel value="Iniciar sesión con" style="margin: 0px auto;"/>
+                        <h:panelGrid columns="2" style="margin: 0 auto;" >
+                            <p:graphicImage value="/resources/images/face.png" style="width: 64px; height: 64px;"/>
+                            <p:graphicImage value="/resources/images/Twitter.png" style="width: 64px; height: 64px;"/>
+                        </h:panelGrid>
                     </f:facet> 
                 </h:panelGrid>
             </h:form>
         </p:dialog>
 
-        
-        
-        
-        
-        
+
+
+
+
+
         <p:dialog   widgetVar="dlIniciarSessionEmpresas" 
                     header="Acceso Empresas"
                     minHeight="40" 
@@ -125,7 +138,6 @@
                     </p:password>
                     <h:panelGrid columns="3" >
                         <p:commandButton value="Iniciar sesion" 
-                                         ajax="false"
                                          action="#{empresaLoginController.validaUsuario()}"
                                          style="margin-left: 67px;"
                                          update="growl" 
@@ -138,36 +150,15 @@
                         <p:commandButton value="Twiter"/>
                     </h:panelGrid>
                     <f:facet name="footer">
-                        <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidada" value="¿Olvidastes tu Contrasena?" target="_blank"/>
+                        <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidadaEmpresa" value="¿Olvidastes tu Contrasena?" target="_blank"/>
                     </f:facet> 
                 </h:panelGrid>
             </h:form>
         </p:dialog>
-        
-        
+
+
         <!-- escojer tipo de empresa o empleado --> 
 
-        <p:dialog   widgetVar="dlEscojerTipoInicio" 
-                    header="Iniciar Session como.?"
-                    minHeight="40" 
-                    height="400"
-                    modal="true"
-                    width="600"
-                    resizable="false"
-                    styleClass="panelInicioSession"
-                    >
-            <h:form>
-                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-          
-                         <h:panelGrid columns="2" border="0">
-                             <p:commandButton id="tipoEmpresaBot" value="Empleadores/Empresas" onclick="PF('dlIniciarSessionEmpresas').show(); dlEscojerTipoInicio.hide();">
-                        </p:commandButton>
-                        <p:commandButton id="tipoUsuarioBot" value="Empleados" onclick="PF('dlIniciarSessionEmpleados').show(); dlEscojerTipoInicio.hide();">
-                        </p:commandButton>
-                    </h:panelGrid>
-               
-            </h:form>
-        </p:dialog>
     </html>
 </f:view>
 

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <html>
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <h:outputStylesheet library="css" name="estilo.css"/>
+            <title></title>
+        </h:head>
+
+        <h:form id="formUsuarioLogeado">
+            <p:panel styleClass="panelLogin" style="border: none; border-radius: 0px">
+                <h:panelGrid columns="2"  width="100%">
+                    <p:graphicImage styleClass="imagenLogin" value="/resources/images/icon-business.png"/> 
+                    <h:panelGrid columns="1" width="100%">
+                        <p:outputLabel value="Bienvenido/a" style="color:#ff6600; font-size: 1.1em; "/>
+                        <h:panelGrid columns="2" width="100%">
+                            <p:outputLabel value="Compu Tron" style="color:#3366ff; font-size: 1.3em; font-weight: bold;" />
+                            <p:menuButton value="" style="height: 30px; width: 30px; color: white;" >
+                                <p:menuitem value="Modificar Perfil"  icon="ui-icon-disk"/>
+                                <p:menuitem value="Cambiar Foto" onclick="PF('dlg2').show();"  icon="ui-icon-disk"/>
+                                <p:menuitem value="Cambiar Contrasena" url="../../configuraciones/usuario/cambioClave/inicio.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+                                <p:menuitem value="Cuenta"  icon="ui-icon-arrowrefresh-1-w"/>
+                                <p:separator/>
+                                <p:menuitem value="Cerrar Session"  icon="ui-icon-extlink" ajax="false"/>
+                            </p:menuButton>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </html>
+</f:view>
+

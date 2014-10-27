@@ -7,16 +7,26 @@
         xmlns:c="http://java.sun.com/jsp/jstl/core">
     <html>
         <h:head>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-         
-            <h:outputStylesheet library="css" name="estilo.css"/>
-            <title>Facelets Template</title>
+            <h:outputStylesheet library="css" name="estiloInformacion.css"/>
         </h:head>
         <p:panel styleClass="panelInformacion">
-            <h:panelGrid columns="2"  width="100%">
-                <h:panelGrid columns="1" width="50%">
-                </h:panelGrid>
-            </h:panelGrid>
+            <div class="contenedor">
+                <div class="izquierda">
+                    <span class="titulo">LINKS DE INTERÉS</span>
+                    <ul class="links">
+                        <li><a href="#"><span class="des">Quiénes somos</span> </a></li> 
+                        <li><a href="#"><span class="des">Preguntas Frecuentes</span> </a></li> 
+                        <li><a href="#"><span class="des">Contáctanos</span> </a></li> 
+                        <li><a href="#"><span class="des">Promociones Vigentes</span></a> </li> 
+                    </ul>
+                </div>
+                <div class="centro">
+
+                </div>
+                <div class="derecha">
+
+                </div>
+            </div>   
         </p:panel>
     </html>
 </f:view>
