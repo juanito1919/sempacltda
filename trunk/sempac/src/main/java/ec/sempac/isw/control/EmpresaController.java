@@ -28,6 +28,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
+import java.io.IOException;
+import javax.mail.Session;
+import javax.servlet.ServletException;
 
 @ManagedBean(name = "empresaController")
 @SessionScoped
@@ -35,7 +38,7 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
 
     @EJB
     private ec.sempac.isw.negocio.EmpresaFacade ejbFacade;
-    
+
     @EJB
     private PaisFacade ejbFacadePais;
 
@@ -44,10 +47,10 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
 
     @EJB
     private CiudadFacade ejbFacadeCiudad;
-    
+
     @EJB
     private ClaseEmpresaFacade ejbFacadeClaseEmpresa;
-    
+
     @EJB
     private SistemaEmpresaFacade ejbFacadeSistEmpresa;
 
@@ -59,14 +62,15 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
     private List<Ciudad> itemCiudades;
     private Ciudad ciudad;
     private List<ClaseEmpresa> itemClaseEmpresa;
-    
+
     private String contrasena;
     private String confirmaContrasena;
     private String msj;
-    
+
     public EmpresaController() {
         super(Empresa.class);
     }
+
     @PostConstruct
     public void init() {
         super.setFacade(ejbFacade);
@@ -74,15 +78,17 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
         this.setItemClaseEmpresa(this.ejbFacadeClaseEmpresa.getItemsClaseEmpresa(false));
     }
+
     protected void setEmbeddableKeys() {
     }
 
     protected void initializeEmbeddableKey() {
     }
-      public void asignarEmpresa() {
+
+    public void asignarEmpresa() {
         this.setSelected(ActivacionUsuario.getEmpresa());
     }
-    
+
     public void cambiaPais() {
         if (pais != null) {
             this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
@@ -105,23 +111,32 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
             this.getSelected().setIdCiudad(null);
         }
     }
-    
-    public void preparaEditar(){        
-        this.pais=this.getSelected().getIdCiudad().getIdRegion().getIdPais();
+
+    public void preparaEditar() {
+        this.pais = this.getSelected().getIdCiudad().getIdRegion().getIdPais();
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
-        this.provincia=this.getSelected().getIdCiudad().getIdRegion();
+        this.provincia = this.getSelected().getIdCiudad().getIdRegion();
         this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
         this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
     }
-    
-    public void preparaCrear(){
+
+    public void preparaCrear() {
         this.setSelected(new Empresa());
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
         this.setItemProvincias(null);
         this.setItemCiudades(null);
-        this.pais=null;
-        this.provincia=null;
-        this.ciudad=null;
+        this.pais = null;
+        this.provincia = null;
+        this.ciudad = null;
+    }
+
+    public void closeEmpresa() throws ServletException {
+        Sesion.cerrarSesion();
+        this.init();
+    }
+
+    public void validaSession() throws IOException {
+        Sesion.validaSesion();
     }
 
     public void revisaNombre() {
@@ -133,7 +148,7 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
             MuestraMensaje.addError(getMsj());
         }
     }
-    
+
     public void revisaMail() {
         msj = "";
         Empresa user = this.ejbFacade.getItemsUserName(this.getSelected().getCorreoElectronico());
@@ -142,7 +157,7 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
             MuestraMensaje.addError(msj);
         }
     }
-    
+
     public void revisaContasena() {
         msj = "";
         if (!this.contrasena.equals(this.confirmaContrasena)) {
@@ -150,8 +165,8 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
             MuestraMensaje.addError(msj);
         }
     }
-    
-    public void guardar(ActionEvent event){
+
+    public void guardar(ActionEvent event) {
         boolean ok = true;
         revisaContasena();
         if (msj != "") {
@@ -175,7 +190,7 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
             }
             this.getSelected().setEliminado(false);
             this.save(event);
-            SistemaEmpresa empUser=new SistemaEmpresa();
+            SistemaEmpresa empUser = new SistemaEmpresa();
             this.setSelected(this.ejbFacade.getItemsUserName(this.getSelected().getUsername()));
             empUser.setIdEmpresa(this.getSelected().getIdEmpresa());
             empUser.setFechaAsignacion(new Date());
@@ -184,10 +199,10 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
             this.ejbFacadeSistEmpresa.create(empUser);
             this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
             this.setSelected(null);
-        }    
+        }
     }
-    
-    public void editar(ActionEvent event){
+
+    public void editar(ActionEvent event) {
         boolean ok = true;
         revisaMail();
         if (msj != "") {
@@ -202,16 +217,16 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
             this.save(event);
             this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
             this.setSelected(null);
-        }    
+        }
     }
-    
-    public void eliminar(ActionEvent event){
+
+    public void eliminar(ActionEvent event) {
         this.getSelected().setEliminado(true);
         this.save(event);
         this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
         this.setSelected(null);
     }
-    
+
     /**
      * @return the ejbFacadePais
      */
@@ -435,6 +450,5 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
     public void setEjbFacadeSistEmpresa(SistemaEmpresaFacade ejbFacadeSistEmpresa) {
         this.ejbFacadeSistEmpresa = ejbFacadeSistEmpresa;
     }
-
 
 }

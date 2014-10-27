@@ -33,6 +33,7 @@ public class Sesion {
     public static void tiempoInactividad(int tiempo) {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         request.getSession().setMaxInactiveInterval(tiempo);
+       
 
     }
 
@@ -55,16 +56,19 @@ public class Sesion {
 
     public static void validaSesion() throws IOException {
         //System.out.println("ActivacionUsuario.isCambiarContrasena() "+ActivacionUsuario.isCambiarContrasena());
-        if (Sesion.getVariable("usuario") == null) {
-            String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlLoginMKS");
+        if (Sesion.getVariable("usuario") == null && Sesion.getVariable("empresa") == null ) {
+            String url = ResourceBundle.getBundle("/BundleObjetosES").getString("index");
             FacesContext.getCurrentInstance().getExternalContext().redirect(url);
-        } else if (Sesion.getVariable("usuario") != null && ActivacionUsuario.isCambiarContrasena()) {
-            String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlLoginMKS");
-            FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+        } 
+        else if (Sesion.getVariable("usuario") != null && ActivacionUsuario.isCambiarContrasena()) {
+           // String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlLoginMKS");
+           // FacesContext.getCurrentInstance().getExternalContext().redirect(url);
         }
 
-    }
+    
+      
 
+    }
     public static void cerrarSesion() throws ServletException {
         try {
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -73,21 +77,14 @@ public class Sesion {
                 //new ActivacionUsuarioMKP().limpiaActivacion();
                 sesion.invalidate();
             }
-            String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlLoginMKS");
+            String url = ResourceBundle.getBundle("/BundleObjetosES").getString("index");
             FacesContext.getCurrentInstance().getExternalContext().redirect(url);
         } catch (IOException ex) {
             Logger.getLogger(Sesion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static String cerrarSession2() {
-        FacesContext faceContext = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        request.getSession().removeAttribute("usuario");
-        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Session cerrada correctamente", null);
-        faceContext.addMessage(null, facesMessage);
-        return "index";
-    }
+
 
     public static void invalidaSesion() throws ServletException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();

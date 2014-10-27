@@ -9,6 +9,7 @@ import ec.sempac.isw.modelo.Usuario;
 import ec.sempac.isw.negocio.CiudadFacade;
 import ec.sempac.isw.negocio.PaisFacade;
 import ec.sempac.isw.negocio.RegionFacade;
+import ec.sempac.isw.negocio.SistemaAccesoFacade;
 import ec.sempac.isw.negocio.SistemaUsuarioFacade;
 import ec.sempac.isw.negocio.UsuarioFacade;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
@@ -28,6 +29,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.servlet.ServletException;
 
 @ManagedBean(name = "usuarioController")
 @SessionScoped
@@ -35,24 +37,27 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
 
     @EJB
     private UsuarioFacade ejbFacade;
-    
+
     @EJB
     private PaisFacade ejbFacadePais;
-    
+
     @EJB
     private RegionFacade ejbFacadeProvincia;
-    
+
     @EJB
     private CiudadFacade ejbFacadeCiudad;
-    
+
     @EJB
     private SistemaUsuarioFacade ejbFacadeSistemaUsuario;
-    
-    private List <Pais> itemPaises;
+
+      @EJB
+    private SistemaAccesoFacade ejbFacadeSistemaAcceso;
+      
+    private List<Pais> itemPaises;
     private Pais pais;
-    private List <Region> itemProvincias;
+    private List<Region> itemProvincias;
     private Region provincia;
-    private List <Ciudad> itemCiudades;
+    private List<Ciudad> itemCiudades;
     private Ciudad ciudad;
     private String confirmaContrasena;
     private String contrasena;
@@ -68,58 +73,74 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
         this.setSelected(new Usuario());
     }
-    
-    public void cambiaPais(){
-        if (pais!=null)
+
+    public void cambiaPais() {
+        if (pais != null) {
             this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
-        else
-            this.setItemProvincias(null);            
-        this.itemCiudades=null;
-        if (this.getSelected().getIdCiudad()!=null)this.getSelected().setIdCiudad(null);
+        } else {
+            this.setItemProvincias(null);
+        }
+        this.itemCiudades = null;
+        if (this.getSelected().getIdCiudad() != null) {
+            this.getSelected().setIdCiudad(null);
+        }
     }
-    
 
     public void asignarUsuario() {
         System.out.println("uruario " + ActivacionUsuario.getUsuario());
         this.setSelected(ActivacionUsuario.getUsuario());
     }
 
-    public void cambiaProvincia(){
-        if (provincia!=null)
+    public void cambiaProvincia() {
+        if (provincia != null) {
             this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
-        else
+        } else {
             this.setItemCiudades(null);
-        if (this.getSelected().getIdCiudad()!=null)this.getSelected().setIdCiudad(null);
+        }
+        if (this.getSelected().getIdCiudad() != null) {
+            this.getSelected().setIdCiudad(null);
+        }
     }
-    
-    public void revisaContasena(){
-        System.out.println("Entroooo "+this.contrasena+" "+confirmaContrasena);
+
+    public void close() throws ServletException {
+        Sesion.cerrarSesion();
+       // ejbFacadeSistemaAcceso.remove(null);
+        this.init();
+        
+    }
+
+    public void validaSession() throws IOException {
+        Sesion.validaSesion();
+    }
+
+    public void revisaContasena() {
+        System.out.println("Entroooo " + this.contrasena + " " + confirmaContrasena);
         this.getSelected().setContrasena(contrasena);
-        if (!this.getSelected().getContrasena().equals(this.confirmaContrasena)){
+        if (!this.getSelected().getContrasena().equals(this.confirmaContrasena)) {
             this.setMsj(ResourceBundle.getBundle("/BundleMensajesES").getString("ContrasenaNoConisiden"));
             MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("ContrasenaNoConisiden"));
         }
     }
-        
-    public void revisaNombre(){
-        System.out.println("Usuario "+this.getSelected().getUsername());
-        Usuario user=this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
-        if (user!=null){
+
+    public void revisaNombre() {
+        System.out.println("Usuario " + this.getSelected().getUsername());
+        Usuario user = this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
+        if (user != null) {
             this.setMsj(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
             MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
         }
     }
-    
-    public void revisaMail(){
-        System.out.println("Mail "+this.getSelected().getCorreoElectronico());
-        Usuario user=this.ejbFacade.getItemsCorreo(this.getSelected().getCorreoElectronico());
-        if (user!=null){
+
+    public void revisaMail() {
+        System.out.println("Mail " + this.getSelected().getCorreoElectronico());
+        Usuario user = this.ejbFacade.getItemsCorreo(this.getSelected().getCorreoElectronico());
+        if (user != null) {
             this.setMsj(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
             MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
         }
     }
-    
-    public void prepareNuevo(){
+
+    public void prepareNuevo() {
         System.err.println("entro nuevo");
         this.setSelected(new Usuario());
         this.setCiudad(null);
@@ -128,8 +149,8 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         this.setContrasena("");
         this.setConfirmaContrasena("");
     }
-    
-    public void registraCuenta(ActionEvent event){
+
+    public void registraCuenta(ActionEvent event) {
         System.out.println("Entro guardar");
         this.setMsj("");
         boolean ok = true;
@@ -156,7 +177,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
             this.getSelected().setTipo('U');
             this.getSelected().setEliminado(false);
             this.saveNew(event);
-            SistemaUsuario sisUser=new SistemaUsuario ();
+            SistemaUsuario sisUser = new SistemaUsuario();
             this.setSelected(this.ejbFacade.getItemsUserName(this.getSelected().getUsername()));
             sisUser.setIdUsuario(this.getSelected().getIdUsuario());
             sisUser.setFechaAsignacion(new Date());
@@ -166,12 +187,12 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
             File miDir = new File(".");
             File folder;
             try {
-                folder = new File(miDir.getCanonicalPath() + File.separator+"Documentos"+File.separator + getSelected().getUsername());
+                folder = new File(miDir.getCanonicalPath() + File.separator + "Documentos" + File.separator + getSelected().getUsername());
                 folder.mkdirs();
             } catch (IOException ex) {
 
             }
-        }else{
+        } else {
             MuestraMensaje.addError(msj);
         }
     }
@@ -183,20 +204,18 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     @Override
     protected void initializeEmbeddableKey() {
     }
-    
-    
-  
+
     /**
      * @return the itemPaises
      */
-    public List <Pais> getItemPaises() {
+    public List<Pais> getItemPaises() {
         return itemPaises;
     }
 
     /**
      * @param itemPaises the itemPaises to set
      */
-    public void setItemPaises(List <Pais> itemPaises) {
+    public void setItemPaises(List<Pais> itemPaises) {
         this.itemPaises = itemPaises;
     }
 
@@ -217,14 +236,14 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     /**
      * @return the itemProvincias
      */
-    public List <Region> getItemProvincias() {
+    public List<Region> getItemProvincias() {
         return itemProvincias;
     }
 
     /**
      * @param itemProvincias the itemProvincias to set
      */
-    public void setItemProvincias(List <Region> itemProvincias) {
+    public void setItemProvincias(List<Region> itemProvincias) {
         this.itemProvincias = itemProvincias;
     }
 
@@ -245,14 +264,14 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     /**
      * @return the itemCiudades
      */
-    public List <Ciudad> getItemCiudades() {
+    public List<Ciudad> getItemCiudades() {
         return itemCiudades;
     }
 
     /**
      * @param itemCiudades the itemCiudades to set
      */
-    public void setItemCiudades(List <Ciudad> itemCiudades) {
+    public void setItemCiudades(List<Ciudad> itemCiudades) {
         this.itemCiudades = itemCiudades;
     }
 

@@ -33,6 +33,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.Pattern;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -70,6 +71,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
     // FIN DE PARAMETROS PERSONALIZADOS
     // --------------------------------------------------------------------------
     private String contrasenaActual;
+    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})", message = "Seguridad baja")
     private String contrasenaNueva;
     private String confirmacionContrasena;
     private boolean repiteContrasena;
@@ -90,7 +92,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
         this.numeroIntentos = 0;
         ActivacionUsuario.setCambiarContrasena(false);
         this.setContrasenaActual(null);
-        this.confirmacionContrasena = null;
+        this.setConfirmacionContrasena(null);
         this.setContrasenaNueva(null);
         this.repiteContrasena = false;
     }
@@ -123,13 +125,13 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
             String estadoUsuario = String.valueOf(empresaSistema.getEstado());
 
             // Colocando el tiempo de inactividad que tiene el sistema
-            Sesion.tiempoInactividad(1000);
-            //if (empresaSistema.getEmpresa().getContrasena().equals(Sesion.MD5(this.contrasena))) {
-            if (empresaSistema.getEmpresa().getContrasena().equals(this.contrasena)) {
+            Sesion.tiempoInactividad(10000);
+           if (empresaSistema.getEmpresa().getContrasena().equals(Sesion.MD5(this.contrasena))) {
+            //if (empresaSistema.getEmpresa().getContrasena().equals(this.contrasena)) {
 
-                // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {
-                if (estadoUsuario.equals("V")) {
-                  
+               if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {
+                //if (estadoUsuario.equals("V")) {
+
                     // Iniciando la variable de session con los datos del usuario mediante la entidad.                      
                     ActivacionUsuario.setEmpresa(this.getUsuario());
                     // ActivacionUsuario.setCodigoIfip(this.getUsuario().getCodigoIfip().getCodigo());
@@ -138,7 +140,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
 
                     // Inserta  el Acceso al Sistema
                     this.sistemaAccesoEmpresa = new SistemaAccesoEmpresa();
-                    
+
                     this.sistemaAccesoEmpresa.setIdEmpresa(empresaSistema);
                     this.sistemaAccesoEmpresa.setDireccionIp(ObtieneInformacionCliente.obtenerDireccionIP());
                     this.sistemaAccesoEmpresa.setFechaAcceso(new Date());
@@ -151,7 +153,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
                     //Colocando el codigo del acceso al sistema
                     ActivacionUsuario.setCodigoAccesoSistema(this.getSistemaAccesoEmpresa().getIdSistemaAccesoEmpresa());
                     //Accediendo al Menu
-                    String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principal");
+                    String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principalEmpresa");
                     Sesion.redireccionaPagina(url);
                     // Si la contraseña ha caducado
                 } else if (estadoUsuario.equals("V") && Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {
@@ -402,5 +404,19 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
      */
     public void setContrasenaNueva(String contrasenaNueva) {
         this.contrasenaNueva = contrasenaNueva;
+    }
+
+    /**
+     * @return the confirmacionContrasena
+     */
+    public String getConfirmacionContrasena() {
+        return confirmacionContrasena;
+    }
+
+    /**
+     * @param confirmacionContrasena the confirmacionContrasena to set
+     */
+    public void setConfirmacionContrasena(String confirmacionContrasena) {
+        this.confirmacionContrasena = confirmacionContrasena;
     }
 }

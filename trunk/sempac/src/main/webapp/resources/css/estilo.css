@@ -14,7 +14,8 @@ body {
     font-family: Arial;
     font-weight:normal;
     margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px ;
-    background-image: url(../resources/images/fondoPantalla.JPG);
+    
+    font-family: 'Lato', sans-serif;
 }
 .panelRedSocial{
     background-color: #ff1721;
@@ -61,7 +62,7 @@ body {
     top: 0px;
     margin-left: 10%;
     width: 60%;
-    height: 115px;
+    height: 140px;
     display: block;
 
 }
@@ -75,7 +76,7 @@ body {
 
 }
 .panelLogin.ui-panel, .panelLogin.ui-panel-content {
-    background-image: url(../resources/images/fondoLogin.JPG);
+   
     border-color:#d4d4fc;
     border-style: dotted;
 }

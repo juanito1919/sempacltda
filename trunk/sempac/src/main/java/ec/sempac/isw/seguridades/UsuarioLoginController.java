@@ -34,6 +34,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.Pattern;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -59,7 +60,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
     // Almancena el la Entidad del Usuario con los datos de usuario quien accedio al sistema
     private Usuario usuario;
     // Guarda la Entidad del Acceso al Sistema del Usuario
-    private SistemaAcceso usuarioAccesoSistema;
+   // private SistemaAcceso usuarioAccesoSistema;
     // Fecha de Acceso al Sistema.
     private Date fecha;
     //Mensaje en el Dialogo de Cambio de Contraseña
@@ -70,7 +71,10 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
     private boolean habilitaPanelUsuario;
     // FIN DE PARAMETROS PERSONALIZADOS
     // --------------------------------------------------------------------------
+    
     private String contrasenaActual;
+    
+    @Pattern(regexp = "((?=.*\\d).{8,20})", message = "Debe tener almenos 8 caracteres y un Numero")
     private String contrasenaNueva;
     private String confirmacionContrasena;
     private boolean repiteContrasena;
@@ -101,8 +105,6 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
             Usuario listUsuario = this.ejbFacade.getItemsPais(username);
-            System.out.println("user " + username);
-            System.out.println("contra " + contrasena);
             if (listUsuario == null) {
 
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("UsuarioNoExiste"));
@@ -126,7 +128,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             String estadoUsuario = String.valueOf(usuarioSistema.getEstado());
 
             // Colocando el tiempo de inactividad que tiene el sistema
-            Sesion.tiempoInactividad(1000);
+            Sesion.tiempoInactividad(5000);
 
             if (usuarioSistema.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
             //if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
@@ -141,19 +143,19 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
                     ActivacionUsuario.setCodigoPeriodo(String.valueOf(new Date().getYear() + 1900));
 
                     // Inserta  el Acceso al Sistema
-                    this.usuarioAccesoSistema = new SistemaAcceso();
-                    this.usuarioAccesoSistema.setIdUsuario(usuarioSistema);
-                    this.usuarioAccesoSistema.setDireccionIp(ObtieneInformacionCliente.obtenerDireccionIP());
-                    this.usuarioAccesoSistema.setFechaAcceso(new Date());
+                    //this.usuarioAccesoSistema = new SistemaAcceso();
+                    //this.usuarioAccesoSistema.setIdUsuario(usuarioSistema);
+                    //this.usuarioAccesoSistema.setDireccionIp(ObtieneInformacionCliente.obtenerDireccionIP());
+                    //this.usuarioAccesoSistema.setFechaAcceso(new Date());
 
                     // Registrando el acceso al sistema
-                    ejbFacadeUsuAcc.create(getUsuarioAccesoSistema());
+                   // ejbFacadeUsuAcc.create(getUsuarioAccesoSistema());
 
                     // coloca la fecha de Acceso al Sistema
-                    this.setFecha(this.getUsuarioAccesoSistema().getFechaAcceso());
+                    //this.setFecha(this.getUsuarioAccesoSistema().getFechaAcceso());
 
                     //Colocando el codigo del acceso al sistema
-                    ActivacionUsuario.setCodigoAccesoSistema(this.getUsuarioAccesoSistema().getIdSistemaAcceso());
+                   // ActivacionUsuario.setCodigoAccesoSistema(this.getUsuarioAccesoSistema().getIdSistemaAcceso());
                     //Accediendo al Menu
                     String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principal");
                     Sesion.redireccionaPagina(url);
@@ -370,19 +372,19 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         this.fecha = fecha;
     }
 
-    /**
-     * @return the usuarioAccesoSistema
-     */
-    public SistemaAcceso getUsuarioAccesoSistema() {
-        return usuarioAccesoSistema;
-    }
-
-    /**
-     * @param usuarioAccesoSistema the usuarioAccesoSistema to set
-     */
-    public void setUsuarioAccesoSistema(SistemaAcceso usuarioAccesoSistema) {
-        this.usuarioAccesoSistema = usuarioAccesoSistema;
-    }
+//    /**
+//     * @return the usuarioAccesoSistema
+//     */
+//    public SistemaAcceso getUsuarioAccesoSistema() {
+//        return usuarioAccesoSistema;
+//    }
+//
+//    /**
+//     * @param usuarioAccesoSistema the usuarioAccesoSistema to set
+//     */
+//    public void setUsuarioAccesoSistema(SistemaAcceso usuarioAccesoSistema) {
+//        this.usuarioAccesoSistema = usuarioAccesoSistema;
+//    }
 
     /**
      * @return the contrasenaActual
