@@ -34,9 +34,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Meritos.findByIdMeritos", query = "SELECT m FROM Meritos m WHERE m.idMeritos = :idMeritos"),
     @NamedQuery(name = "Meritos.findByNombre", query = "SELECT m FROM Meritos m WHERE m.nombre = :nombre"),
     @NamedQuery(name = "Meritos.findByUrl", query = "SELECT m FROM Meritos m WHERE m.url = :url"),
-    @NamedQuery(name = "Meritos.findByEliminado", query = "SELECT m FROM Meritos m WHERE m.eliminado = :eliminado")})
+    @NamedQuery(name = "Meritos.findByEliminado", query = "SELECT m FROM Meritos m WHERE m.eliminado = :eliminado"),
+///Personalizados
+    @NamedQuery(name = "Meritos.findByUsuarioEliminado", query = "SELECT m FROM Meritos m WHERE m.idUsuario.idUsuario = :idUsuario AND m.eliminado = :eliminado")
+
+})
 public class Meritos implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String findByUsuarioEliminado ="Meritos.findByUsuarioEliminado"; 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

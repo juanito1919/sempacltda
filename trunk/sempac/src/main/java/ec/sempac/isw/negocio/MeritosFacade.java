@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Meritos;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,10 @@ public class MeritosFacade extends AbstractFacade<Meritos> {
         super(Meritos.class);
     }
     
+    public List<Meritos> getItemsMeritoEliminadoUsuario(Long idUsuario, boolean eliminado) {
+        Query query = this.em.createNamedQuery(Meritos.findByUsuarioEliminado);
+        query.setParameter("eliminado", eliminado);
+        query.setParameter("idUsuario", idUsuario);
+        return query.getResultList();
+    }
 }
