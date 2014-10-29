@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.TipoEvento;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,9 @@ public class TipoEventoFacade extends AbstractFacade<TipoEvento> {
         super(TipoEvento.class);
     }
     
+    public List<TipoEvento> getItemsTipoEventoEliminado(boolean eliminado) {
+        Query query = this.em.createNamedQuery(TipoEvento.findByEliminado);
+        query.setParameter("eliminado", eliminado);
+        return query.getResultList();
+    }
 }

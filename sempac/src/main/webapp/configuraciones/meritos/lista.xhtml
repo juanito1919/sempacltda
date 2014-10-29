@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="meritoListForm">
+        <p:panel header="Lista de Meritos" style="border: none; width: 100%; margin: 0 auto;">
+            <p:dataTable id="datalist" value="#{meritosController.itemsMeritos}" 
+                         var="item"
+                         selectionMode="single" 
+                         selection="#{meritosController.seleccion}"
+                         paginator="true"
+                         rowKey="#{item}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,20,30"
+                         >
+                <p:ajax
+                    event="rowSelect"
+                    listener="#{meritosController.mostrar()}"
+                    />
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.Nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.TipoMerito}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTipoMerito.nombre}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.TipoEvento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTipoEvento.nombre}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.TipoCertificado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTipoCertificado.nombre}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</ui:composition>

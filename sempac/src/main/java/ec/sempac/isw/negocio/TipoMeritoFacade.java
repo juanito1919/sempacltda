@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.TipoMerito;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,10 @@ public class TipoMeritoFacade extends AbstractFacade<TipoMerito> {
     public TipoMeritoFacade() {
         super(TipoMerito.class);
     }
-    
+ 
+    public List<TipoMerito> getItemsTipoMeritoEliminado(boolean eliminado) {
+        Query query = this.em.createNamedQuery(TipoMerito.findByEliminado);
+        query.setParameter("eliminado", eliminado);
+        return query.getResultList();
+    }
 }

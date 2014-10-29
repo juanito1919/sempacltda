@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <div class="panelTitulo">
+        #{bundleEtiquetasES.Meritos}
+    </div> 
+
+    <p:panel header="Merito" 
+             style="border: none; width: 75%; margin: 5px auto;">
+        <h:form id="meritoCreateForm">
+            <h:panelGroup id="display">
+                #{meritosController.iniciaSelected()}
+                <h:panelGrid 
+                    columns="4" 
+                    border="0"
+                    columnClasses="column1Class, column2Class,column3Class,column4Class" 
+                    >
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Nombre}" 
+                                   for="nombre" />
+                    <p:inputText id="nombre" 
+                                 onkeyup="value = value.toUpperCase()"
+                                 value="#{meritosController.selected.nombre}" 
+                                 title="#{bundleEtiquetasES.Nombre}" >
+                     <p:ajax
+                        event="blur"
+                        listener="#{meritosController.iniciaNombre()}"
+                    />
+                    </p:inputText>
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.TipoMerito}" 
+                                   for="merito" />
+                    <p:selectOneMenu id="merito" 
+                                     value="#{meritosController.selected.idTipoMerito}"
+                                     >
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                        <f:selectItems value="#{meritosController.itemsTipoMerito}"
+                                       var="tipoMeritoItem"
+                                       itemValue="#{tipoMeritoItem}"
+                                       itemLabel="#{tipoMeritoItem.nombre}"
+                                       />
+                        <f:converter binding="#{tipoMeritoConverter}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.TipoEvento}" 
+                                   for="evento" />
+                    <p:selectOneMenu id="evento" 
+                                     value="#{meritosController.selected.idTipoEvento}"
+                                     >
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                        <f:selectItems value="#{meritosController.itemsTipoEvento}"
+                                       var="tipoEventoItem"
+                                       itemValue="#{tipoEventoItem}"
+                                       itemLabel="#{tipoEventoItem.nombre}"
+                                       />
+                        <f:converter binding="#{tipoEventoConverter}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.TipoCertificado}" 
+                                   for="certificado" />
+                    <p:selectOneMenu id="certificado" 
+                                     value="#{meritosController.selected.idTipoCertificado}"
+                                     >
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                        <f:selectItems value="#{meritosController.itemsTipoCertificado}"
+                                       var="tipoCertificadoItem"
+                                       itemValue="#{tipoCertificadoItem}"
+                                       itemLabel="#{tipoCertificadoItem.nombre}"
+                                       />
+                        <f:converter binding="#{tipoCertificadoConverter}"/>
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+                <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
+                    <p:commandButton actionListener="#{meritosController.guardaNuevo(event)}" 
+                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" 
+                                     update=":meritoListForm,:meritoCreateForm:nombre,:meritoCreateForm:merito,:meritoCreateForm:evento,:meritoCreateForm:certificado"/>
+
+                    <p:commandButton actionListener="#{meritosController.eliminar}"
+                                     value="#{bundleEtiquetasES.Quitar}" 
+                                     icon="ui-icon-circle-close"
+                                     update=":meritoListForm"/>
+                </div>
+            </h:panelGroup>
+        </h:form>
+    </p:panel>
+    <p:separator style="border-style: dotted; width: 75%; margin-bottom: 10px;"/>
+    <ui:include src="lista.xhtml"/>
+</ui:composition>
+

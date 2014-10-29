@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoMerito.findByEliminado", query = "SELECT t FROM TipoMerito t WHERE t.eliminado = :eliminado")})
 public class TipoMerito implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String findByEliminado ="TipoMerito.findByEliminado"; 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

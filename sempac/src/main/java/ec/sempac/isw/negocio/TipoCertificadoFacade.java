@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.TipoCertificado;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,9 @@ public class TipoCertificadoFacade extends AbstractFacade<TipoCertificado> {
         super(TipoCertificado.class);
     }
     
+    public List<TipoCertificado> getItemsTipoCertificadoEliminado(boolean eliminado) {
+        Query query = this.em.createNamedQuery(TipoCertificado.findByEliminado);
+        query.setParameter("eliminado", eliminado);
+        return query.getResultList();
+    }
 }
