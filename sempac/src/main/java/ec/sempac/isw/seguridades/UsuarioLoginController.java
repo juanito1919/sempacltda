@@ -104,7 +104,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         try {
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
-            Usuario listUsuario = this.ejbFacade.getItemsPais(username);
+            Usuario listUsuario = this.ejbFacade.getUsuario(username);
             if (listUsuario == null) {
 
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("UsuarioNoExiste"));
@@ -134,7 +134,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             //if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
 
                 // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
-                if (estadoUsuario.equals("V")) {
+                if (estadoUsuario.equals("V")||estadoUsuario.equals("P")) {
                     System.out.println("entrossss");
                     // Iniciando la variable de session con los datos del usuario mediante la entidad.                      
                     ActivacionUsuario.setUsuario(this.getUsuario());
