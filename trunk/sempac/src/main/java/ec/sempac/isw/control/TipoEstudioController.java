@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.context.RequestContext;
 
 @ManagedBean(name = "tipoEstudioController")
 @SessionScoped
@@ -15,7 +16,7 @@ public class TipoEstudioController extends AbstractController<TipoEstudio> imple
 
     @EJB
     private TipoEstudioFacade ejbFacade;
-
+    private String tipoNivel;
     public TipoEstudioController() {
         super(TipoEstudio.class);
     }
@@ -33,4 +34,19 @@ public class TipoEstudioController extends AbstractController<TipoEstudio> imple
     protected void initializeEmbeddableKey() {
     }
 
+    public String getTipoNivel() {
+        return tipoNivel;
+    }
+
+    public void setTipoNivel(String tipoNivel) {
+        this.tipoNivel = tipoNivel;
+    }
+    
+    public void escojerVentana(){
+       RequestContext context = RequestContext.getCurrentInstance();
+        if(getTipoNivel().equals("S")){
+          context.execute("EspecialidadSecundariaCreateDialog.show()");
+        }
+    }
+   
 }

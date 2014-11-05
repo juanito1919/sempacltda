@@ -1,35 +1,38 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Sempac - Olvidaste tu contraseña</title>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="../resources/plantilla/VentanaPrincipalPlantilla.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define  name="formulario">
        
-    </h:head>
-    <h:body>
-        <div style="margin-left: 10%">
-            <img src="http://1buenaidea.com/wp-content/uploads/2011/11/Logotipo-famoso-300x300.jpg" alt="" width="100" height="100"/>
-        </div>
-        <hr width="80%"/>
+        
         <h:form id="formCorreoOlvidado">
-            <p:growl id="growl" life="3000" />
-            <p:panel header="¿Olvidaste tu contraseña?" style="width: 40%; top: 500px; border: none; margin: 0 auto;">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <p:panel header="¿Olvidaste tu contraseña?" style="width: 40%; border: none; margin: 0 auto; margin-top: 0px;">
                 <h:panelGrid columns="1">
-                    Ingresa tu dirección de correo para recuperar tu contraseña.
-                    <p:inputText value="#{contrasenaController.correoElectronico}" id="textCorreo" required="true" size="43">
-                        <p:watermark for="textCorreo" value="Ingrese el correo"/>
+                    <div style="font-size: 1.1em;">
+                        Ingresa tu dirección de correo para recuperar tu contraseña.
+                    </div>
+                    <div style="font-size: 1.1em; margin-bottom: 10px;">
+                        El sistema enviará tu contraseña a tu buzón de correo.
+                    </div>
+                    <p:inputText value="#{contrasenaController.correoElectronico}" id="textCorreo" required="true" size="60">
+                        <p:watermark for="textCorreo" value="Ingrese el correo Electronico"/>
                     </p:inputText>
+                    <p:message for="textCorreo" display="textCorreo" />
                     <f:facet name="footer">
-                    <p:commandButton value="Enviar" 
-                                     actionListener="#{contrasenaController.contrasenaOlvidada}" 
-                                     update="growl"
-                                     />   
+                        <p:commandButton value="Recordar Contrasena" 
+                                         actionListener="#{contrasenaController.contrasenaOlvidada}" 
+                                         update="growl"
+                                         ajax="false"
+                                         />   
                     </f:facet>
                 </h:panelGrid>
             </p:panel>
         </h:form>
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
 

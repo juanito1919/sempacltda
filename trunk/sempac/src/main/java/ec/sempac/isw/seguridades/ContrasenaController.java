@@ -103,12 +103,10 @@ public class ContrasenaController extends AbstractController<Usuario> implements
             sendMail.enviarMail(getCorreoElectronico(), "empresaSempac@info.com", "Recuperacion Clave",
                     "La clave es: " + clave);
             this.setUsuario(user);
-            try {
-                ctx.redirect(ctxPath + "/faces/index.xhtml");
-            } catch (IOException ex) {
-                Logger.getLogger(ContrasenaController.class.getName()).log(Level.SEVERE, null, ex);
-                
-            }
+         
+                //ctx.redirect(ctxPath + "/faces/index.xhtml");
+                MuestraMensaje.addSatisfactorio(ResourceBundle.getBundle("/BundleMensajesES").getString("CorreoEnviado"));
+          
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(ContrasenaController.class.getName()).log(Level.SEVERE, null, ex);
             

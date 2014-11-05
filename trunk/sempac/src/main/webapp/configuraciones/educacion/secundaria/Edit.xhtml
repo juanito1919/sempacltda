@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EspecialidadSecundariaEditDlg" widgetVar="EspecialidadSecundariaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditEspecialidadSecundariaTitle}">
+            <h:form id="EspecialidadSecundariaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{especialidadSecundariaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditEspecialidadSecundariaLabel_especialidad}" for="especialidad" />
+                        <p:inputText id="especialidad" value="#{especialidadSecundariaController.selected.especialidad}" title="#{bundle.EditEspecialidadSecundariaTitle_especialidad}" />
+                        <p:outputLabel value="#{bundle.EditEspecialidadSecundariaLabel_aniosEstudios}" for="aniosEstudios" />
+                        <p:inputText id="aniosEstudios" value="#{especialidadSecundariaController.selected.aniosEstudios}" title="#{bundle.EditEspecialidadSecundariaTitle_aniosEstudios}" />
+                        <p:outputLabel value="#{bundle.EditEspecialidadSecundariaLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{especialidadSecundariaController.selected.url}" title="#{bundle.EditEspecialidadSecundariaTitle_url}" />
+                        <p:outputLabel value="#{bundle.EditEspecialidadSecundariaLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{especialidadSecundariaController.selected.usuario}" required="true" requiredMessage="#{bundle.EditEspecialidadSecundariaRequiredMessage_usuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditEspecialidadSecundariaLabel_colegio}" for="colegio" />
+                        <p:selectOneMenu id="colegio" value="#{especialidadSecundariaController.selected.colegio}" required="true" requiredMessage="#{bundle.EditEspecialidadSecundariaRequiredMessage_colegio}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{colegioController.itemsAvailableSelectOne}"
+                                           var="colegioItem"
+                                           itemValue="#{colegioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{especialidadSecundariaController.update}" value="#{bundle.Save}" update="display,:EspecialidadSecundariaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EspecialidadSecundariaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EspecialidadSecundariaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
