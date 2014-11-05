@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.control;
 
 import ec.sempac.isw.control.util.ErrorException;
@@ -26,12 +25,14 @@ public abstract class AbstractController<T> {
     private Class<T> itemClass;
     private T selected;
     private List<T> items;
+
     private enum PersistAction {
 
         CREATE,
         DELETE,
         UPDATE
     }
+
     public AbstractController() {
     }
 
@@ -76,15 +77,21 @@ public abstract class AbstractController<T> {
         }
         return items;
     }
-        public void save(ActionEvent event) {
+
+    public void save(ActionEvent event) {
         String msg = "";// = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
-        persist(PersistAction.UPDATE, msg);    
+        persist(PersistAction.UPDATE, msg);
+    }
+
+    public void create(ActionEvent event) {
+        String msg = "";// = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
+        persist(PersistAction.UPDATE, msg);
     }
 
     public void saveNew(ActionEvent event) {
-        
+
         String msg = "";
-        persist(PersistAction.CREATE, msg);        
+        persist(PersistAction.CREATE, msg);
         if (!isValidationFailed()) {
             items = null; // Invalidate list of items to trigger re-query.
         }
@@ -102,12 +109,13 @@ public abstract class AbstractController<T> {
     public void destroy() {
         //persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PaisDeleted"));
         String msg = "";
-        persist(PersistAction.DELETE,msg);
+        persist(PersistAction.DELETE, msg);
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             this.setEmbeddableKeys();
@@ -115,10 +123,10 @@ public abstract class AbstractController<T> {
                 String msg = "";
                 if (persistAction != PersistAction.DELETE) {
                     this.ejbFacade.edit(selected);
-                    MuestraMensaje.addSatisfactorioPersistencia(1);                   
+                    MuestraMensaje.addSatisfactorioPersistencia(1);
                 } else {
                     this.ejbFacade.remove(selected);
-                    MuestraMensaje.addSatisfactorioPersistencia(2);                   
+                    MuestraMensaje.addSatisfactorioPersistencia(2);
                 }
 
             } catch (EJBException ex) {
@@ -171,6 +179,7 @@ public abstract class AbstractController<T> {
         }
         return null;
     }
+
     public boolean isValidationFailed() {
         return JsfUtil.isValidationFailed();
     }
@@ -178,7 +187,15 @@ public abstract class AbstractController<T> {
     public String getComponentMessages(String clientComponent, String defaultMessage) {
         return JsfUtil.getComponentMessages(clientComponent, defaultMessage);
     }
-    public void prepareEdit(ActionEvent event){
+
+    public void prepareEdit(ActionEvent event) {
         // Nothing to do if entity does not have any embeddable key.
-    } 
+    }
+        public List<T> getItemsAvailableSelectMany() {
+        return getFacade().findAll();
+    }
+
+    public List<T> getItemsAvailableSelectOne() {
+        return getFacade().findAll();
+    }
 }
