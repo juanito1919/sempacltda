@@ -41,8 +41,9 @@ a:hover {
     
 }
 .main {
-   
-	
+    margin-left: 0%;
+        width: 89%;
+	background: #DF7401;
 	min-height: 0em;
 }
 

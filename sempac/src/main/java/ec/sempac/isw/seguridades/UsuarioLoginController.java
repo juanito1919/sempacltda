@@ -128,7 +128,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             String estadoUsuario = String.valueOf(usuarioSistema.getEstado());
 
             // Colocando el tiempo de inactividad que tiene el sistema
-            Sesion.tiempoInactividad(5000);
+            Sesion.tiempoInactividad(10000);
 
             if (usuarioSistema.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
             //if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
@@ -215,7 +215,6 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
     public void muestraDialogoCambioContrasena() {
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("CambioContrasenaDialogo.show()");
-
     }
 
     public void cambiaContrasena() throws IOException {
@@ -226,7 +225,6 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         ActivacionUsuario.setCambiarContrasena(true);
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("CambioContrasenaDialogo.hide()");
- 
         String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlCambiaContrasena");
         FacesContext.getCurrentInstance().getExternalContext().redirect(url);
     }

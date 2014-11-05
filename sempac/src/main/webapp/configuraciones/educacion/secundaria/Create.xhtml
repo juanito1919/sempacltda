@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EspecialidadSecundariaCreateDlg" 
+                  widgetVar="EspecialidadSecundariaCreateDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                
+                  
+                  >
+             <f:facet name="header">
+                <h:outputLabel value="Educacion Secundaria"
+                               styleClass="encabezadosDialog"/>
+            </f:facet>
+            <h:form id="EspecialidadSecundariaCreateForm">
+                <h:panelGroup id="display" style="width: 500px; height: 800px;">
+                    <h:panelGrid columns="2" 
+                                 border="0" 
+                                 cellpadding="5"
+                                 columnClasses="column1Class, column2Class">
+                        <p:outputLabel for="colegio" value="#{bundleEtiquetasES.Institucion}"  />
+                        <p:selectOneMenu id="colegio" 
+                                         value="#{especialidadSecundariaController.colegio}"
+                                         converter="colegioConverter"
+                                         required="true"
+                                         effect="fade" 
+                                         var="t" 
+                                         style="width:160px" 
+                                         filter="true" 
+                                         filterMatchMode="contains">
+
+                            <f:selectItems value="#{especialidadSecundariaController.itemColegio}" 
+                                           var="colegioItem"
+                                           itemValue="#{colegioItem}" 
+                                           itemLabel="#{colegioItem.nombre}"/>
+                            <p:column>
+                                <h:outputText value="#{t.nombre}" />
+                            </p:column>
+                            <f:converter binding="#{colegioConverter}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{bundleEtiquetasES.Especialidad}" 
+                                       for="especialidad" />
+                        <p:inputText id="especialidad" 
+                                     value="#{especialidadSecundariaController.selected.especialidad}"
+                                     title="#{bundleEtiquetasES.Especialidad}"
+                                     required="true" 
+                                     onkeyup="value=value.toUpperCase()"
+                                     size="32"/>
+                        
+                        <p:outputLabel value="#{bundleEtiquetasES.AniosEstudio}" 
+                                       for="aniosEstudios" />
+                        <p:inputText id="aniosEstudios" 
+                                     value="#{especialidadSecundariaController.selected.aniosEstudios}" 
+                                     title="#{bundleEtiquetasES.AniosEstudio}" 
+                                     required="true"
+                                     onkeyup="value=value.toUpperCase()"/>
+                    </h:panelGrid>
+                    <p:commandButton actionListener="#{especialidadSecundariaController.create}" value="#{bundle.Save}"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EspecialidadSecundariaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

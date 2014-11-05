@@ -13,7 +13,6 @@
             <title></title>
         </h:head>
 
-        #{usuarioController.validaSession()}
         <h:form id="formUsuarioLogeado">
             <p:panel styleClass="panelLogin" style="border: none; border-radius: 0px">
                 <h:panelGrid columns="2"  width="100%">
@@ -40,7 +39,7 @@
         <h:form>
             <p:growl id="messages" showDetail="true" sticky="true" />
 
-            <p:idleMonitor timeout="#{session.maxInactiveInterval}">
+            <p:idleMonitor timeout="18000">
                 <p:ajax event="idle" listener="#{usuarioController.close()}" update="messages" />
                 <p:ajax event="active" listener="#{usuarioController.close()}" update="messages" />
             </p:idleMonitor>

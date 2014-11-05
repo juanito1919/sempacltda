@@ -38,9 +38,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Colegio.findAll", query = "SELECT c FROM Colegio c"),
     @NamedQuery(name = "Colegio.findByIdColegio", query = "SELECT c FROM Colegio c WHERE c.idColegio = :idColegio"),
     @NamedQuery(name = "Colegio.findByNombre", query = "SELECT c FROM Colegio c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Colegio.findByEliminado", query = "SELECT c FROM Colegio c WHERE c.eliminado = :eliminado")})
+    @NamedQuery(name = "Colegio.findByEliminado", query = "SELECT c FROM Colegio c WHERE c.eliminado = :eliminado"),
+    @NamedQuery(name = "Colegio.findByAutoCompletado", query = "SELECT c FROM Colegio c WHERE c.nombre like :nombre and c.eliminado = :eliminado ORDER BY c.nombre")
+
+})
+    
 public class Colegio implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String findByEliminado ="Colegio.findByEliminado";
+    public static final String findByAutoCompletado ="Colegio.findByAutoCompletado";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
