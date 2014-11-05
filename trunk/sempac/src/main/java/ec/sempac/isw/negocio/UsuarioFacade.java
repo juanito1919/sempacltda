@@ -31,10 +31,10 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
-    public Usuario getItemsPais(String username) {
+    public Usuario getUsuario(String username) {
         Query query = this.em.createNamedQuery(Usuario.findByUsernameEmail);
         query.setParameter("username", username);
-        //query.setParameter("eliminado", false);
+        query.setParameter("eliminado", false);
         try{
             return (Usuario)query.getSingleResult();
         }catch(NoResultException e){
