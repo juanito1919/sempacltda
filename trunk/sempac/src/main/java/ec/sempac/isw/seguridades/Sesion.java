@@ -5,11 +5,17 @@
  */
 package ec.sempac.isw.seguridades;
 
+import ec.sempac.isw.modelo.Usuario;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,4 +118,13 @@ public class Sesion {
 
     }
 
+    public static Date obtieneFechaCaducidad(Date fecha, int meses,int dias) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha); // Configuramos la fecha que se recibe	
+        calendar.add(Calendar.MONTH, meses);  // numero de días a añadir, o restar en caso de días<0
+        calendar.add(Calendar.DATE, dias);
+        return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
+
+    }
 }
