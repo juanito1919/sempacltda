@@ -8,7 +8,9 @@ package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +20,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -48,8 +52,8 @@ public class PersonalRequerido implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_PERSONAL_REQUERIDO", nullable = false)
     private Long idPersonalRequerido;
-    @Size(max = 64)
-    @Column(length = 64)
+    @Size(max = 256)
+    @Column(length = 256)
     private String descripcion;
     @Basic(optional = false)
     @NotNull
@@ -68,21 +72,20 @@ public class PersonalRequerido implements Serializable {
     @NotNull
     @Column(nullable = false)
     private boolean eliminado;
-    @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA", nullable = false)
-    @ManyToOne(optional = false)
-    private Empresa idEmpresa;
-    @JoinColumn(name = "ID_EMPLEO_REQUERIDO", referencedColumnName = "ID_EMPLEO_REQUERIDO")
-    @ManyToOne
-    private EmpleoRequerido idEmpleoRequerido;
     @JoinColumn(name = "ID_CIUDAD", referencedColumnName = "ID_CIUDAD")
     @ManyToOne
     private Ciudad idCiudad;
+    @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA", nullable = false)
+    @ManyToOne(optional = false)
+    private Empresa idEmpresa;
+    @JoinColumn(name = "ID_HABILIDADES", referencedColumnName = "ID_HABILIDADES", nullable = false)
+    @ManyToOne(optional = false)
+    private Habilidades idHabilidades;
     @JoinColumn(name = "ID_ADMINISTRADOR", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuario idAdministrador;
-    @JoinColumn(name = "ID_HABILIDADES", referencedColumnName = "ID_HABILIDADES")
-    @ManyToOne
-    private Habilidades idHabilidades;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersonalRequerido")
+    private List<EmpleoRequerido> empleoRequeridoList;
 
     public PersonalRequerido() {
     }
@@ -154,6 +157,14 @@ public class PersonalRequerido implements Serializable {
         this.eliminado = eliminado;
     }
 
+    public Ciudad getIdCiudad() {
+        return idCiudad;
+    }
+
+    public void setIdCiudad(Ciudad idCiudad) {
+        this.idCiudad = idCiudad;
+    }
+
     public Empresa getIdEmpresa() {
         return idEmpresa;
     }
@@ -162,20 +173,12 @@ public class PersonalRequerido implements Serializable {
         this.idEmpresa = idEmpresa;
     }
 
-    public EmpleoRequerido getIdEmpleoRequerido() {
-        return idEmpleoRequerido;
+    public Habilidades getIdHabilidades() {
+        return idHabilidades;
     }
 
-    public void setIdEmpleoRequerido(EmpleoRequerido idEmpleoRequerido) {
-        this.idEmpleoRequerido = idEmpleoRequerido;
-    }
-
-    public Ciudad getIdCiudad() {
-        return idCiudad;
-    }
-
-    public void setIdCiudad(Ciudad idCiudad) {
-        this.idCiudad = idCiudad;
+    public void setIdHabilidades(Habilidades idHabilidades) {
+        this.idHabilidades = idHabilidades;
     }
 
     public Usuario getIdAdministrador() {
@@ -186,12 +189,13 @@ public class PersonalRequerido implements Serializable {
         this.idAdministrador = idAdministrador;
     }
 
-    public Habilidades getIdHabilidades() {
-        return idHabilidades;
+    @XmlTransient
+    public List<EmpleoRequerido> getEmpleoRequeridoList() {
+        return empleoRequeridoList;
     }
 
-    public void setIdHabilidades(Habilidades idHabilidades) {
-        this.idHabilidades = idHabilidades;
+    public void setEmpleoRequeridoList(List<EmpleoRequerido> empleoRequeridoList) {
+        this.empleoRequeridoList = empleoRequeridoList;
     }
 
     @Override

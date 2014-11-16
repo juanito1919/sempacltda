@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PagosCreateDlg" widgetVar="PagosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePagosTitle}">
+            <h:form id="PagosCreateForm">
+                <p:growl id="growl" showDetail="true" sticky="true" />
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{pagosController.selected != null}">
+                        <p:outputLabel value="Correo Electronico" 
+                                       for="email" />
+                        <p:inputText id="email" 
+                                     value="#{pagosController.correoElectronico}" 
+                                     title="Correo Electronico" 
+                                     required="true">
+                            <p:ajax event="change"                    
+                                    listener="#{pagosController.buscarUsuario()}"
+                                    update="idUsuario">
+                            </p:ajax> 
+                        </p:inputText>
+                        <p:outputLabel value="Usuario" 
+                                       for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" 
+                                         value="#{pagosController.selected.idUsuario}" 
+                                         required="true" 
+                                         requiredMessage="Usuario de registro"
+                                         disabled="true">
+                            <f:selectItem  itemValue="#{pagosController.usuario}"
+                                           itemLabel="#{pagosController.usuario.nombres} #{pagosController.usuario.apellidos}"
+                                           />
+                            <f:converter binding="#{usuarioConverter}"/> 
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Fecha de Registro" 
+                                       for="fechaRegistro" />
+                        <p:calendar id="fechaRegistro" 
+                                    pattern="MM/dd/yyyy HH:mm:ss" 
+                                    value="#{pagosController.selected.fechaRegistro}" 
+                                    title="Fecha de Registro" 
+                                    required="true" 
+                                    requiredMessage="Campo Requerido" 
+                                    showOn="button"
+                                    disabled="true"/>
+                        <p:outputLabel value="Fecha de Caducidad" 
+                                       for="fechaCaducidad" />
+                        <p:calendar id="fechaCaducidad" pattern="MM/dd/yyyy" 
+                                    value="#{pagosController.selected.fechaCaducidad}" 
+                                    title="Fecha de Caducidad"  
+                                    required="true"
+                                    showOn="button"
+                                    disabled="true"/>
+                        <p:outputLabel value="Numero de Deposito" 
+                                       for="numeroDeposito" />
+                        <p:inputText id="numeroDeposito" 
+                                     value="#{pagosController.selected.numeroDeposito}" 
+                                     title="Numero de Deposito" 
+                                     required="true" 
+                                     requiredMessage="Ingrese el numero de deposito" />
+                        <p:outputLabel value="#{bundle.CreatePagosLabel_fechaDeposito}"
+                                       for="fechaDeposito" />
+                        <p:calendar id="fechaDeposito" 
+                                    pattern="MM/dd/yyyy" 
+                                    value="#{pagosController.selected.fechaDeposito}" 
+                                    title="Fecha de deposito"  
+                                    showOn="button"
+                                    required="true" 
+                                    requiredMessage="Ingrese el numero de deposito"/>
+                        <p:outputLabel value="Valor de pago" 
+                                       for="valor" />
+                        <p:inputText id="valor" 
+                                     value="#{pagosController.selected.valor}" 
+                                     title="Valor de pago" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pagosController.modificarSistemaUsuario}" 
+                                     value="#{bundle.Save}" 
+                                     update="display,:PagosListForm:datalist,:growl" 
+                                     oncomplete="handleSubmit(args,'PagosCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PagosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

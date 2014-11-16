@@ -184,11 +184,11 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "ID_CIUDAD", referencedColumnName = "ID_CIUDAD", nullable = false)
     @ManyToOne(optional = false)
     private Ciudad idCiudad;
-    @OneToMany(mappedBy = "idUsuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<EmpleoRequerido> empleoRequeridoList;
     @OneToMany(mappedBy = "idAdministrador")
     private List<EmpleoRequerido> empleoRequeridoList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<ExperienciaLaboral> experienciaLaboralList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<EstudiosUniversitarios> estudiosUniversitariosList;

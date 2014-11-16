@@ -24,6 +24,8 @@
                         <p:calendar id="fechaDeposito" pattern="MM/dd/yyyy" value="#{pagosController.selected.fechaDeposito}" title="#{bundle.EditPagosTitle_fechaDeposito}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditPagosLabel_valor}" for="valor" />
                         <p:inputText id="valor" value="#{pagosController.selected.valor}" title="#{bundle.EditPagosTitle_valor}" />
+                        <p:outputLabel value="#{bundle.EditPagosLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{pagosController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditPagosRequiredMessage_eliminado}"/>
                         <p:outputLabel value="#{bundle.EditPagosLabel_idUsuario}" for="idUsuario" />
                         <p:selectOneMenu id="idUsuario" value="#{pagosController.selected.idUsuario}" required="true" requiredMessage="#{bundle.EditPagosRequiredMessage_idUsuario}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
