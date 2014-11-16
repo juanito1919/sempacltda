@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ColegioEditDlg" widgetVar="ColegioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditColegioTitle}">
+            <h:form id="ColegioEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{colegioController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditColegioLabel_idColegio}" for="idColegio" />
+                        <p:inputText id="idColegio" value="#{colegioController.selected.idColegio}" title="#{bundle.EditColegioTitle_idColegio}" required="true" requiredMessage="#{bundle.EditColegioRequiredMessage_idColegio}"/>
+                        <p:outputLabel value="#{bundle.EditColegioLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{colegioController.selected.nombre}" title="#{bundle.EditColegioTitle_nombre}" required="true" requiredMessage="#{bundle.EditColegioRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.EditColegioLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{colegioController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditColegioRequiredMessage_eliminado}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{colegioController.update}" value="#{bundle.Save}" update="display,:ColegioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ColegioEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ColegioEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

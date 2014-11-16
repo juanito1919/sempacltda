@@ -10,8 +10,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ExperienciaLaboral.findAll", query = "SELECT e FROM ExperienciaLaboral e"),
-    @NamedQuery(name = "ExperienciaLaboral.findByIdEmpresa", query = "SELECT e FROM ExperienciaLaboral e WHERE e.experienciaLaboralPK.idEmpresa = :idEmpresa"),
-    @NamedQuery(name = "ExperienciaLaboral.findByIdUsuario", query = "SELECT e FROM ExperienciaLaboral e WHERE e.experienciaLaboralPK.idUsuario = :idUsuario"),
+    @NamedQuery(name = "ExperienciaLaboral.findByIdExperienciaLaboral", query = "SELECT e FROM ExperienciaLaboral e WHERE e.idExperienciaLaboral = :idExperienciaLaboral"),
+    @NamedQuery(name = "ExperienciaLaboral.findByEmpresa", query = "SELECT e FROM ExperienciaLaboral e WHERE e.empresa = :empresa"),
     @NamedQuery(name = "ExperienciaLaboral.findByCargo", query = "SELECT e FROM ExperienciaLaboral e WHERE e.cargo = :cargo"),
     @NamedQuery(name = "ExperienciaLaboral.findByFechaInicio", query = "SELECT e FROM ExperienciaLaboral e WHERE e.fechaInicio = :fechaInicio"),
     @NamedQuery(name = "ExperienciaLaboral.findByFechaFin", query = "SELECT e FROM ExperienciaLaboral e WHERE e.fechaFin = :fechaFin"),
@@ -43,8 +43,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ExperienciaLaboral.findByEliminado", query = "SELECT e FROM ExperienciaLaboral e WHERE e.eliminado = :eliminado")})
 public class ExperienciaLaboral implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ExperienciaLaboralPK experienciaLaboralPK;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_EXPERIENCIA_LABORAL", nullable = false)
+    private Long idExperienciaLaboral;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 64)
+    @Column(nullable = false, length = 64)
+    private String empresa;
     @Size(max = 64)
     @Column(length = 64)
     private String cargo;
@@ -70,37 +78,39 @@ public class ExperienciaLaboral implements Serializable {
     @NotNull
     @Column(nullable = false)
     private boolean eliminado;
-    @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", nullable = false)
     @ManyToOne(optional = false)
-    private Empresa empresa;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Usuario usuario;
+    private Usuario idUsuario;
 
     public ExperienciaLaboral() {
     }
 
-    public ExperienciaLaboral(ExperienciaLaboralPK experienciaLaboralPK) {
-        this.experienciaLaboralPK = experienciaLaboralPK;
+    public ExperienciaLaboral(Long idExperienciaLaboral) {
+        this.idExperienciaLaboral = idExperienciaLaboral;
     }
 
-    public ExperienciaLaboral(ExperienciaLaboralPK experienciaLaboralPK, Date fechaInicio, int tiempo, boolean eliminado) {
-        this.experienciaLaboralPK = experienciaLaboralPK;
+    public ExperienciaLaboral(Long idExperienciaLaboral, String empresa, Date fechaInicio, int tiempo, boolean eliminado) {
+        this.idExperienciaLaboral = idExperienciaLaboral;
+        this.empresa = empresa;
         this.fechaInicio = fechaInicio;
         this.tiempo = tiempo;
         this.eliminado = eliminado;
     }
 
-    public ExperienciaLaboral(int idEmpresa, long idUsuario) {
-        this.experienciaLaboralPK = new ExperienciaLaboralPK(idEmpresa, idUsuario);
+    public Long getIdExperienciaLaboral() {
+        return idExperienciaLaboral;
     }
 
-    public ExperienciaLaboralPK getExperienciaLaboralPK() {
-        return experienciaLaboralPK;
+    public void setIdExperienciaLaboral(Long idExperienciaLaboral) {
+        this.idExperienciaLaboral = idExperienciaLaboral;
     }
 
-    public void setExperienciaLaboralPK(ExperienciaLaboralPK experienciaLaboralPK) {
-        this.experienciaLaboralPK = experienciaLaboralPK;
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
 
     public String getCargo() {
@@ -159,26 +169,18 @@ public class ExperienciaLaboral implements Serializable {
         this.eliminado = eliminado;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public Usuario getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (experienciaLaboralPK != null ? experienciaLaboralPK.hashCode() : 0);
+        hash += (idExperienciaLaboral != null ? idExperienciaLaboral.hashCode() : 0);
         return hash;
     }
 
@@ -189,7 +191,7 @@ public class ExperienciaLaboral implements Serializable {
             return false;
         }
         ExperienciaLaboral other = (ExperienciaLaboral) object;
-        if ((this.experienciaLaboralPK == null && other.experienciaLaboralPK != null) || (this.experienciaLaboralPK != null && !this.experienciaLaboralPK.equals(other.experienciaLaboralPK))) {
+        if ((this.idExperienciaLaboral == null && other.idExperienciaLaboral != null) || (this.idExperienciaLaboral != null && !this.idExperienciaLaboral.equals(other.idExperienciaLaboral))) {
             return false;
         }
         return true;
@@ -197,7 +199,7 @@ public class ExperienciaLaboral implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.sempac.isw.modelo.ExperienciaLaboral[ experienciaLaboralPK=" + experienciaLaboralPK + " ]";
+        return "ec.sempac.isw.modelo.ExperienciaLaboral[ idExperienciaLaboral=" + idExperienciaLaboral + " ]";
     }
     
 }

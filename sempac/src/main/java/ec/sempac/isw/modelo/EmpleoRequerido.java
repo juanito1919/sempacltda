@@ -66,10 +66,11 @@ public class EmpleoRequerido implements Serializable {
     @NotNull
     @Column(nullable = false)
     private boolean eliminado;
-    @OneToMany(mappedBy = "idEmpleoRequerido")
-    private List<PersonalRequerido> personalRequeridoList;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
-    @ManyToOne
+    @JoinColumn(name = "ID_PERSONAL_REQUERIDO", referencedColumnName = "ID_PERSONAL_REQUERIDO", nullable = false)
+    @ManyToOne(optional = false)
+    private PersonalRequerido idPersonalRequerido;
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", nullable = false)
+    @ManyToOne(optional = false)
     private Usuario idUsuario;
     @JoinColumn(name = "ID_ADMINISTRADOR", referencedColumnName = "ID_USUARIO")
     @ManyToOne
@@ -131,13 +132,12 @@ public class EmpleoRequerido implements Serializable {
         this.eliminado = eliminado;
     }
 
-    @XmlTransient
-    public List<PersonalRequerido> getPersonalRequeridoList() {
-        return personalRequeridoList;
+    public PersonalRequerido getIdPersonalRequerido() {
+        return idPersonalRequerido;
     }
 
-    public void setPersonalRequeridoList(List<PersonalRequerido> personalRequeridoList) {
-        this.personalRequeridoList = personalRequeridoList;
+    public void setIdPersonalRequerido(PersonalRequerido idPersonalRequerido) {
+        this.idPersonalRequerido = idPersonalRequerido;
     }
 
     public Usuario getIdUsuario() {

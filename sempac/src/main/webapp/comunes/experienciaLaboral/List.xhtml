@@ -19,7 +19,7 @@
                     <p:dataTable id="datalist" value="#{experienciaLaboralController.items}" var="item"
                                  selectionMode="single" selection="#{experienciaLaboralController.selected}"
                                  paginator="true"
-                                 rowKey="#{item.experienciaLaboralPK}"
+                                 rowKey="#{item.idExperienciaLaboral}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
@@ -27,6 +27,18 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExperienciaLaboralTitle_idExperienciaLaboral}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idExperienciaLaboral}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExperienciaLaboralTitle_empresa}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.empresa}"/>
+                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListExperienciaLaboralTitle_cargo}"/>
@@ -69,15 +81,15 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListExperienciaLaboralTitle_empresa}"/>
+                                <h:outputText value="#{bundle.ListExperienciaLaboralTitle_eliminado}"/>
                             </f:facet>
-                            <h:outputText value="#{item.empresa}"/>
+                            <p:selectBooleanCheckbox value="#{item.eliminado}" disabled="true"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListExperienciaLaboralTitle_usuario}"/>
+                                <h:outputText value="#{bundle.ListExperienciaLaboralTitle_idUsuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{item.idUsuario}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{experienciaLaboralController.prepareCreate}" update=":ExperienciaLaboralCreateForm" oncomplete="PF('ExperienciaLaboralCreateDialog').show()"/>

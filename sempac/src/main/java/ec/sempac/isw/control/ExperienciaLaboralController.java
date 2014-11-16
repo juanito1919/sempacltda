@@ -26,13 +26,10 @@ public class ExperienciaLaboralController extends AbstractController<Experiencia
 
     @Override
     protected void setEmbeddableKeys() {
-        getSelected().getExperienciaLaboralPK().setIdEmpresa(getSelected().getEmpresa().getIdEmpresa());
-        getSelected().getExperienciaLaboralPK().setIdUsuario(getSelected().getUsuario().getIdUsuario());
     }
 
     @Override
     protected void initializeEmbeddableKey() {
-        getSelected().setExperienciaLaboralPK(new ec.sempac.isw.modelo.ExperienciaLaboralPK());
     }
 
 }

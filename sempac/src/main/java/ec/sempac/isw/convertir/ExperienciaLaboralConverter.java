@@ -25,8 +25,6 @@ public class ExperienciaLaboralConverter implements Converter {
 
     @EJB
     private ExperienciaLaboralFacade ejbFacade;
-    private static final String SEPARATOR = "#";
-    private static final String SEPARATOR_ESCAPED = "\\#";
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -36,34 +34,29 @@ public class ExperienciaLaboralConverter implements Converter {
         return this.ejbFacade.find(getKey(value));
     }
 
-    ec.sempac.isw.modelo.ExperienciaLaboralPK getKey(String value) {
-        ec.sempac.isw.modelo.ExperienciaLaboralPK key;
-        String values[] = value.split(SEPARATOR_ESCAPED);
-        key = new ec.sempac.isw.modelo.ExperienciaLaboralPK();
-        key.setIdEmpresa(Integer.parseInt(values[0]));
-        key.setIdUsuario(Long.parseLong(values[1]));
-        return key;
-    }
-
-    String getStringKey(ec.sempac.isw.modelo.ExperienciaLaboralPK value) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(value.getIdEmpresa());
-        sb.append(SEPARATOR);
-        sb.append(value.getIdUsuario());
-        return sb.toString();
-    }
-
-    @Override
-    public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-        if (object == null) {
-            return null;
+    java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
+            return key;
         }
-        if (object instanceof ExperienciaLaboral) {
-            ExperienciaLaboral o = (ExperienciaLaboral) object;
-            return getStringKey(o.getExperienciaLaboralPK());
-        } else {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), ExperienciaLaboral.class.getName()});
-            return null;
+
+    String getStringKey(java.lang.Long value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
         }
-    }
+
+   @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof ExperienciaLaboral) {
+                ExperienciaLaboral o = (ExperienciaLaboral) object;
+                return getStringKey(o.getIdExperienciaLaboral());
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), ExperienciaLaboral.class.getName()});
+                return null;
+            }
+        }
 }

@@ -12,6 +12,10 @@
             <h:form id="ExperienciaLaboralCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{experienciaLaboralController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_idExperienciaLaboral}" for="idExperienciaLaboral" />
+                        <p:inputText id="idExperienciaLaboral" value="#{experienciaLaboralController.selected.idExperienciaLaboral}" title="#{bundle.CreateExperienciaLaboralTitle_idExperienciaLaboral}" required="true" requiredMessage="#{bundle.CreateExperienciaLaboralRequiredMessage_idExperienciaLaboral}"/>
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_empresa}" for="empresa" />
+                        <p:inputText id="empresa" value="#{experienciaLaboralController.selected.empresa}" title="#{bundle.CreateExperienciaLaboralTitle_empresa}" required="true" requiredMessage="#{bundle.CreateExperienciaLaboralRequiredMessage_empresa}"/>
                         <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_cargo}" for="cargo" />
                         <p:inputText id="cargo" value="#{experienciaLaboralController.selected.cargo}" title="#{bundle.CreateExperienciaLaboralTitle_cargo}" />
                         <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_fechaInicio}" for="fechaInicio" />
@@ -24,17 +28,14 @@
                         <p:inputText id="url" value="#{experienciaLaboralController.selected.url}" title="#{bundle.CreateExperienciaLaboralTitle_url}" />
                         <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_tiempo}" for="tiempo" />
                         <p:inputText id="tiempo" value="#{experienciaLaboralController.selected.tiempo}" title="#{bundle.CreateExperienciaLaboralTitle_tiempo}" required="true" requiredMessage="#{bundle.CreateExperienciaLaboralRequiredMessage_tiempo}"/>
-                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_empresa}" for="empresa" />
-                        <p:selectOneMenu id="empresa" value="#{experienciaLaboralController.selected.empresa}" required="true" requiredMessage="#{bundle.EditExperienciaLaboralRequiredMessage_empresa}">
-                            <f:selectItems value="#{empresaController.itemsAvailableSelectOne}"
-                                           var="empresaItem"
-                                           itemValue="#{empresaItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_usuario}" for="usuario" />
-                        <p:selectOneMenu id="usuario" value="#{experienciaLaboralController.selected.usuario}" required="true" requiredMessage="#{bundle.EditExperienciaLaboralRequiredMessage_usuario}">
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{experienciaLaboralController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditExperienciaLaboralRequiredMessage_eliminado}"/>
+                        <p:outputLabel value="#{bundle.CreateExperienciaLaboralLabel_idUsuario}" for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{experienciaLaboralController.selected.idUsuario}" required="true" requiredMessage="#{bundle.EditExperienciaLaboralRequiredMessage_idUsuario}">
                             <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
-                                           var="usuarioItem"
-                                           itemValue="#{usuarioItem}"/>
+                                           var="idUsuarioItem"
+                                           itemValue="#{idUsuarioItem}"
+                                           itemLabel="#{idUsuarioItem.nombres}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{experienciaLaboralController.create}" value="#{bundle.Save}" update="display,:ExperienciaLaboralListForm:datalist,:growl" oncomplete="handleSubmit(args,'ExperienciaLaboralCreateDialog');"/>

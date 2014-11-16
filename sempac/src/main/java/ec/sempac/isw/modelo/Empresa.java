@@ -93,15 +93,13 @@ public class Empresa implements Serializable {
     @Column(nullable = false)
     private boolean eliminado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpresa")
-    private Collection<PersonalRequerido> personalRequeridoCollection;
+    private List<PersonalRequerido> personalRequeridoList;
     @JoinColumn(name = "ID_CLASE_EMPRESA", referencedColumnName = "ID_CLASE_EMPRESA")
     @ManyToOne
     private ClaseEmpresa idClaseEmpresa;
     @JoinColumn(name = "ID_CIUDAD", referencedColumnName = "ID_CIUDAD", nullable = false)
     @ManyToOne(optional = false)
     private Ciudad idCiudad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresa")
-    private Collection<ExperienciaLaboral> experienciaLaboralCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "empresa")
     private SistemaEmpresa sistemaEmpresa;
 
@@ -186,12 +184,12 @@ public class Empresa implements Serializable {
     }
 
     @XmlTransient
-    public Collection<PersonalRequerido> getPersonalRequeridoCollection() {
-        return personalRequeridoCollection;
+    public List<PersonalRequerido> getPersonalRequeridoList() {
+        return personalRequeridoList;
     }
 
-    public void setPersonalRequeridoCollection(Collection<PersonalRequerido> personalRequeridoCollection) {
-        this.personalRequeridoCollection = personalRequeridoCollection;
+    public void setPersonalRequeridoList(List<PersonalRequerido> personalRequeridoList) {
+        this.personalRequeridoList = personalRequeridoList;
     }
 
     public ClaseEmpresa getIdClaseEmpresa() {
@@ -210,14 +208,6 @@ public class Empresa implements Serializable {
         this.idCiudad = idCiudad;
     }
 
-    @XmlTransient
-    public Collection<ExperienciaLaboral> getExperienciaLaboralCollection() {
-        return experienciaLaboralCollection;
-    }
-
-    public void setExperienciaLaboralCollection(Collection<ExperienciaLaboral> experienciaLaboralCollection) {
-        this.experienciaLaboralCollection = experienciaLaboralCollection;
-    }
 
     public SistemaEmpresa getSistemaEmpresa() {
         return sistemaEmpresa;
