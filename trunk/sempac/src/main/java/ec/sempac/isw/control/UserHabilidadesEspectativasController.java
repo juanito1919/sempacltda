@@ -64,7 +64,7 @@ public class UserHabilidadesEspectativasController extends AbstractController<Us
         }
         //CAMBIAR estar liena por 
         //this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
-        this.getSelected().setUsuario(new Usuario(Long.parseLong("9")));
+        this.getSelected().setUsuario(new Usuario(Long.parseLong("3")));
         this.save(event);
         this.getItemsHabExp().add(this.getSelected());
         this.setSelected(new UserHabilidadesEspectativas());
