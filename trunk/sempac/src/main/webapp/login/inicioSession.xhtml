@@ -84,23 +84,17 @@
                         <p:watermark for="password" value="Contrasena"/>
                     </p:password>
                     <h:panelGrid columns="2" >
-                        <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidada" style="color: #0066ff; font-size:0.8em; " value="¿Olvidastes tu Contrasena?" target="_blank"/>
+                        <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidada" style="color: #0066ff; font-size:0.8em; " value="¿Olvidastes tu Contrasena?"/>
                         <p:commandButton value="Entrar" 
                                       
                                          action="#{usuarioLoginController.validaUsuario()}"
-                                         style="margin-left: 55px; width: 130px;"
+                                         style="margin-left: 35px; width: 130px;"
                                          update="growl" 
                                          styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"                                              
                                          oncomplete="handleLoginRequest(xhr, status, args)" />
                     </h:panelGrid>
 
-                    <f:facet name="footer">
-                        <p:outputLabel value="Iniciar sesión con" style="margin: 0px auto;"/>
-                        <h:panelGrid columns="2" style="margin: 0 auto;" >
-                            <p:graphicImage value="/resources/images/face.png" style="width: 64px; height: 64px;"/>
-                            <p:graphicImage value="/resources/images/Twitter.png" style="width: 64px; height: 64px;"/>
-                        </h:panelGrid>
-                    </f:facet> 
+                   
                 </h:panelGrid>
             </h:form>
         </p:dialog>
@@ -136,22 +130,16 @@
                                 label="password">
                         <p:watermark for="password" value="Contrasena"/>
                     </p:password>
-                    <h:panelGrid columns="3" >
-                        <p:commandButton value="Iniciar sesion" 
+                    <h:panelGrid columns="2" >
+                        <h:link id="linkOlvidaContrasenaBot" style="color: #0066ff; font-size:0.8em;" outcome="/login/ContrasenaOlvidadaEmpresa" value="¿Olvidastes tu Contrasena?" />
+                        <p:commandButton value="Entrar" 
                                          action="#{empresaLoginController.validaUsuario()}"
                                          style="margin-left: 67px;"
                                          update="growl" 
                                          styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"                                              
                                          oncomplete="handleLoginRequest(xhr, status, args)" />
                     </h:panelGrid>
-                    <p:outputLabel value="Iniciar sesión con" style="margin: 0px auto;"/>
-                    <h:panelGrid columns="2" >
-                        <p:commandButton value="Facebook"/>
-                        <p:commandButton value="Twiter"/>
-                    </h:panelGrid>
-                    <f:facet name="footer">
-                        <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidadaEmpresa" value="¿Olvidastes tu Contrasena?" target="_blank"/>
-                    </f:facet> 
+                  
                 </h:panelGrid>
             </h:form>
         </p:dialog>

@@ -7,32 +7,35 @@
                 template="../resources/plantilla/VentanaPrincipalPlantilla.xhtml"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define  name="formulario">
-       
-        
-        <h:form id="formCorreoOlvidado">
-            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-            <p:panel header="¿Olvidaste tu contraseña?" style="width: 40%; border: none; margin: 0 auto; margin-top: 0px;">
-                <h:panelGrid columns="1">
-                    <div style="font-size: 1.1em;">
-                        Ingresa tu dirección de correo para recuperar tu contraseña.
-                    </div>
-                    <div style="font-size: 1.1em; margin-bottom: 10px;">
-                        El sistema enviará tu contraseña a tu buzón de correo.
-                    </div>
-                    <p:inputText value="#{contrasenaController.correoElectronico}" id="textCorreo" required="true" size="60">
-                        <p:watermark for="textCorreo" value="Ingrese el correo Electronico"/>
-                    </p:inputText>
-                    <p:message for="textCorreo" display="textCorreo" />
-                    <f:facet name="footer">
-                        <p:commandButton value="Recordar Contrasena" 
-                                         actionListener="#{contrasenaController.contrasenaOlvidada}" 
-                                         update="growl"
-                                         ajax="false"
-                                         />   
-                    </f:facet>
-                </h:panelGrid>
-            </p:panel>
-        </h:form>
+
+        <div class="panelTitulo">
+            RECORDAR CONTRASENA
+        </div> 
+        <div style="margin-top: 50px;">
+            <h:form id="formCorreoOlvidado">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <p:panel header="¿Olvidaste tu contraseña?" style="width: 40%; border: none; margin: 0 auto; margin-top: 0px;">
+                    <h:panelGrid columns="1">
+                        <div style="font-size: 1.1em;">
+                            Ingresa tu dirección de correo para recuperar tu contraseña.
+                        </div>
+                        <div style="font-size: 1.1em; margin-bottom: 10px;">
+                            El sistema enviará tu contraseña a tu buzón de correo.
+                        </div>
+                        <p:inputText value="#{contrasenaController.correoElectronico}" id="textCorreo" required="true" size="60">
+                            <p:watermark for="textCorreo" value="Ingrese el correo Electronico"/>
+                        </p:inputText>
+                        <p:message for="textCorreo" display="textCorreo" />
+                        <f:facet name="footer">
+                            <p:commandButton value="Recordar Contrasena" 
+                                             actionListener="#{contrasenaController.contrasenaOlvidada}" 
+                                             update="growl"
+                                             ajax="false"/>   
+                        </f:facet>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>
 

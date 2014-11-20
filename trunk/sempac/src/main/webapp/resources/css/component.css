@@ -209,11 +209,11 @@ a, button {
 	/* Placing the icon */
 	
 	.icon {
-		padding-top: 1.0em;
+		padding-top: 0.1em;
 	}
 
 	.icon + span {
-		margin-top: 0.8em;
+		margin-top: 0.0em;
 		-webkit-transition: margin .5s;
 		-moz-transition: margin .5s;
 		-o-transition: margin .5s;
@@ -223,18 +223,18 @@ a, button {
 
 	/* Animating the height of the element*/
 	.nav a {
-		height: 7em;
+		height: 5em;
 	}
 
 	.no-touch .nav a:hover ,
 	.nav a:active ,
 	.nav a:focus {
-		height: 12em;
+		height: 4em;
 	}	
 
 	/* Making the text follow the height animation */
 	.no-touch .nav a:hover .icon + span {
-		margin-top: 3.2em;
+		margin-top: 1.2em;
 		-webkit-transition: margin .5s;
 		-moz-transition: margin .5s;
 		-o-transition: margin .5s;
@@ -282,7 +282,7 @@ a, button {
 
 	/* Size and font adjustments to make it fit into the screen*/
 	.nav ul {
-		font-size: 2.2em;
+		font-size: 1.0em;
 	}
 
 }
@@ -350,7 +350,7 @@ a, button {
 	
 	/* Adding some padding to make the elements look nicer*/
 	.nav a {
-		padding: 0.8em;		
+		padding: 0.4em;		
 	}
 
 	/* Displaying the icons on the left, and the text on the right side using inlin-block*/
@@ -400,7 +400,7 @@ a, button {
 @media (min-width: 32.5em) and (max-width: 38.688em) {
 	
 	.nav li span.icon {
-		width: 50%;
+		width: 40%;
 	}
 
 	.nav li .icon + span {
@@ -430,7 +430,7 @@ a, button {
 
 .icon-menu {
 	position: relative;
-	top: 3px;
+	top: 2px;
 	line-height: 0;
 	font-size: 1.6em;
 }

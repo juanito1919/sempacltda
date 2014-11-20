@@ -38,7 +38,7 @@
         <h:form>
             <p:growl id="messages" showDetail="true" sticky="true" />
 
-            <p:idleMonitor timeout="#{session.maxInactiveInterval}">
+            <p:idleMonitor timeout="18000">
                 <p:ajax event="idle" listener="#{usuarioController.close()}" update="messages" />
                 <p:ajax event="active" listener="#{usuarioController.close()}" update="messages" />
             </p:idleMonitor>

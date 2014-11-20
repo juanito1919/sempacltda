@@ -8,39 +8,52 @@
     <h:form id="barraMenu">
         <p:toolbar styleClass="panelBarra">                  
             <p:toolbarGroup align="left">
-                <p:commandButton id="paguinaPrincipalBot" styleClass="butonBarra" value="Paguina Principal"
-                                 title="Paguina Principal" 
+                <p:commandButton id="paguinaPrincipalBot" styleClass="butonBarra" value="Paguinagggg Principal"
+                                 title="Paguina Principal"
+                                 actionListener="#{controlUrlControler.openPaginaPrincipalEmpleado()}"
+                                 ajax="false"
                                  icon="ui-icon-home" 
                                  /> 
                 <p:separator/>
                 <p:commandButton id="infoPersonalBot" styleClass="butonBarra" value="Informacion Personal"
-                                 title="Informacion Personal" 
+                                 title="Informacion Personal"
+                                 actionListener="#{controlUrlControler.openPaginadDatosPeronales()}"
+                                 ajax="false"
                                  icon="ui-icon-person" 
                                  />  
-               
-                
+
+
                 <p:commandButton id="prefeLaboralesBot" styleClass="butonBarra" value="Preferencias Laborales"
                                  title="Preferencias Laborales" 
-                                 icon="ui-icon-check"
-                                 
-                                /> 
-                
-                <p:commandButton id="instrucionFormalBot" styleClass="butonBarra" value="Instrucción formal"
+                                 actionListener="#{controlUrlControler.openPaginaReferenciasLaborales()}"
+                                 ajax="false"
+                                 icon="ui-icon-suitcase"
+                                 />
+
+                <p:commandButton id="instrucionFormalBot" styleClass="butonBarra" value="Instrucciónhhh formal"
                                  title="Instrucción formal" 
-                                 icon=""  
+                                 actionListener="#{controlUrlControler.openPaginaInstruccionFormal()}"
+                                 ajax="false"
+                                 icon="ui-icon-note"  
+                                 />
+                <p:commandButton id="idiomasDominados" styleClass="butonBarra" value="Idiomas Dominados"
+                                 title="Idiomas Dominados" 
+                                 actionListener="#{controlUrlControler.openPaginaIdiomasDominados()}"
+                                 ajax="false"
+                                 icon="ui-icon-flag"
                                  />
                 <p:commandButton id="logrosPersonalesBot" styleClass="butonBarra" value="Logros Personales"
                                  title="Logros Personales" 
-                                 icon=""
-                                /> 
-                <p:commandButton id="ReferenciasPersonalesBot" 
-                                 styleClass="butonBarra" 
-                                 actionListener="#{referenciaPersonalController.prepareCreate}"
-                                 value="Referencias Personales"
+                                 actionListener="#{controlUrlControler.openPaginaLogrosPersonales()}"
+                                 ajax="false"
+                                 icon="ui-icon-star"
+                                 /> 
+                <p:commandButton id="ReferenciasPersonalesBot" styleClass="butonBarra" value="Referencias Personales"
                                  title="Referencias Personales" 
-                                  
-                                 icon=""
-                                /> 
+                                 actionListener="#{controlUrlControler.openPaginaReferenciasPersonales()}"
+                                 ajax="false"
+                                 icon="ui-icon-check"
+                                 /> 
             </p:toolbarGroup>
         </p:toolbar>
     </h:form>
