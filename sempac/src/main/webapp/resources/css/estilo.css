@@ -10,12 +10,12 @@ and open the template in the editor.
 
 body {
     top: 0px;
-    font-size:0.7em;
+    font-size:0.6em;
   
     font-weight:normal;
     margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px ;
+    font-family: Verdana, Geneva, sans-serif;
     
-    font-family: 'Lato', sans-serif;
 }
 .panelRedSocial{
     background-color: #ff1721;
@@ -127,7 +127,7 @@ body {
 }
 .panelFormulario{
     width: 80%;
-    margin-left: 10%; margin-top: 5px; 
+    margin-left: 10%; margin-top: 0px; 
     border: 1px;
     border-style: dotted;
     border-top-width: 0px; border-top-left-radius: 5px; border-top-right-radius: 5px;
@@ -175,5 +175,14 @@ body {
 }
 .link{
     color: #6666ff;
+    font-size: 1.0em;
+}
+.linkBuscaTrabajo{
+    display: block;
+    background-color: #ffffff!important;;
+}
+.linkBuscaTrabajo:hover{
+    display: block;
+   background-color:#ececec!important;; 
 }
 

@@ -208,7 +208,7 @@
                         </p:selectOneMenu>
 
                     </h:panelGrid>
-                    <p:commandButton actionListener="#{usuarioController.registraCuenta}" value="#{bundleEtiquetasES.Registrar}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');"/>
+                    <p:commandButton actionListener="#{usuarioController.registraCuenta}" value="#{bundleEtiquetasES.Registrar}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
                     <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="UsuarioCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

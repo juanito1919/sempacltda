@@ -6,6 +6,7 @@ import ec.sempac.isw.modelo.IdiomaDominadoPK;
 import ec.sempac.isw.modelo.Usuario;
 import ec.sempac.isw.negocio.IdiomaDominadoFacade;
 import ec.sempac.isw.negocio.IdiomaFacade;
+import ec.sempac.isw.seguridades.ActivacionUsuario;
 
 import java.io.Serializable;
 import java.util.List;
@@ -39,7 +40,7 @@ public class IdiomaDominadoController extends AbstractController<IdiomaDominado>
         super.setFacade(ejbFacade);
         this.setItemIdiomas(this.ejbFacadeIdioma.getItemsIdiomasEliminado(false));
         //cambiar id
-        this.setItemsIdiomasDominados(this.ejbFacade.getItemsIdiDomEliminadoUsuario(Long.parseLong("9"), false));
+        this.setItemsIdiomasDominados(this.ejbFacade.getItemsIdiDomEliminadoUsuario(ActivacionUsuario.getUsuario().getIdUsuario(), false));
     }
 
     public void iniciaSelected(){
@@ -56,8 +57,7 @@ public class IdiomaDominadoController extends AbstractController<IdiomaDominado>
                 return;
         }
         //CAMBIAR estar liena por 
-        //this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
-        this.getSelected().setUsuario(new Usuario(Long.parseLong("9")));
+        this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
         this.getSelected().setEliminado(false);
         this.save(event);
         this.getItemsIdiomasDominados().add(this.getSelected());

@@ -1,10 +1,40 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="resources/plantilla/VentanaPrincipalPlantilla.xhtml">
+                template="resources/plantilla/VentanaPrincipalPlantilla.xhtml"
+                >
     <ui:define  name="formulario">
-        
+        <h:outputStylesheet library="css" name="styleSlider.css"/>
+        <div class="sp-slideshow">
+            <input id="button-1" type="radio" name="radio-set" class="sp-selector-1" checked="checked" />
+            <label for="button-1" class="button-label-1"></label>
+            <input id="button-2" type="radio" name="radio-set" class="sp-selector-2" />
+            <label for="button-2" class="button-label-2"></label>
+            <input id="button-3" type="radio" name="radio-set" class="sp-selector-3" />
+            <label for="button-3" class="button-label-3"></label>
+            <input id="button-4" type="radio" name="radio-set" class="sp-selector-4" />
+            <label for="button-4" class="button-label-4"></label>
+            <input id="button-5" type="radio" name="radio-set" class="sp-selector-5" />
+            <label for="button-5" class="button-label-5"></label>
+            <label for="button-1" class="sp-arrow sp-a1"></label>
+            <label for="button-2" class="sp-arrow sp-a2"></label>
+            <label for="button-3" class="sp-arrow sp-a3"></label>
+            <label for="button-4" class="sp-arrow sp-a4"></label>
+            <label for="button-5" class="sp-arrow sp-a5"></label>
+            <div class="sp-content">
+                <ul class="sp-slider clearfix">
+                    <li><img src="http://www.ucuenca.edu.ec/cache/lofthumbs/960x400-banner_webingenieria.png" alt="image01" /></li>
+                    <li><img src="http://www.ucuenca.edu.ec/cache/lofthumbs/960x400-MAESTR%C3%8Da.png" alt="image02" /></li>
+                    <li><img src="http://www.ucuenca.edu.ec/cache/lofthumbs/960x400-Vanguardia-29.png" alt="image03" /></li>
+                    <li><img src="http://www.ucuenca.edu.ec/cache/lofthumbs/960x400-gigantografia_22_sept__FINAL__final.jpg" alt="image04" /></li>
+                    <li><img src="http://www.ucuenca.edu.ec/cache/lofthumbs/960x400-banner_webingenieria.png" alt="image05" /></li>
+                </ul>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>
 

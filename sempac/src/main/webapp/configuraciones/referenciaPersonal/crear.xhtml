@@ -15,12 +15,13 @@
              style="border: none; width: 75%; margin: 5px auto;">
         <h:form id="ReferenciaPersonalCreateForm">
             <h:panelGroup id="display">
+                 #{referenciaPersonalController.iniciaSelected()}
                 <h:panelGrid 
                     columns="4" 
                     border="0"
                     columnClasses="column1Class, column2Class,column3Class,column4Class" 
                     >
-                    #{referenciaPersonalController.iniciaSelected()}
+                   
                     <p:outputLabel rendered="true" value="#{bundle.CreateReferenciaPersonalLabel_referenciaPersonalPK_idReferenciaPersonal}" 
                                    for="referenciaPersonalPK_idReferenciaPersonal" />
                     <p:inputText rendered="true" id="referenciaPersonalPK_idReferenciaPersonal" 
@@ -59,24 +60,13 @@
                     <p:inputText id="url" 
                                  value="#{referenciaPersonalController.selected.url}" 
                                  title="#{bundle.CreateReferenciaPersonalTitle_url}" />
-                    <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_usuario}" 
-                                   for="usuario" />
-                    <p:selectOneMenu id="usuario" 
-                                     value="#{referenciaPersonalController.selected.usuario}" 
-                                     required="true" 
-                                     requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_usuario}">
-                        <f:selectItems value="#{referenciaPersonalController.listaUsuario}"
-                                       var="usuarioItem"
-                                       itemValue="#{usuarioItem}"
-                                       itemLabel="#{usuarioItem.nombres}" />
-                        <f:converter binding="#{usuarioConverter}"/>
-                    </p:selectOneMenu>
+                    
                 </h:panelGrid>
                 <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
-                    <p:commandButton actionListener="#{referenciaPersonalController.saveNew}" 
-                                     value="#{bundle.Save}" icon="ui-icon-disk" update=":ReferenciaPersonalListForm"/>
+                    <p:commandButton actionListener="#{referenciaPersonalController.guardaNuevo(event)}" 
+                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" update=":ReferenciaPersonalListForm"/>
 
-                    <p:commandButton value="#{bundle.Cancel}" 
+                    <p:commandButton value="#{bundleEtiquetasES.Cancelar}" 
                                      onclick="ReferenciaPersonalCreateDialog.hide()" 
                                      icon="ui-icon-circle-close"/>
                 </div>

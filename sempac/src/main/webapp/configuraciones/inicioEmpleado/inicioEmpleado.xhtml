@@ -1,13 +1,22 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      template="../../resources/plantilla/ventanaInicioEmpleadoPlantilla.xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="../../resources/plantilla/ventanaInicioEmpleadoPlantilla.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:define  name="formulario">
-        <!-- ̣̣̣̣**************************************************************************
-             PANEL PRINCIPAL                                                     -->                                                   
+
+        <style type="text/css">
+            .negro{
+                font-weight: bold;
+            }
+            .titulo{
+                font-size: 1.0em;
+            }
+        </style>
+
         <div class="panelTitulo">
 
         </div> 
@@ -15,12 +24,12 @@
             <p:panel id="panelPerfil" header="Datos Personales" style="border: none; width: 100%;" >
                 <div style="width: 20%; float:left;">
                     <h:graphicImage  id="fotoPerfil" value="/usuario/null.jpg" height="150" width="150" />
-                    <div>
-                        <h:link value="Editar información personal" styleClass="link"/>
+                    <div style="margin: 0px auto; width: 150px;">
+                        <h:link value="Editar Perfil" styleClass="link"/>
                     </div>
                 </div>
                 <div style=" width: 50%; float:left; margin-left: 10px; border-left-width: 10px;">
-                    <div style="font-size: 1.8em; color: #0066ff;">#{usuarioController.selected.nombres.toUpperCase()} #{usuarioController.selected.apellidos.toUpperCase()}</div>
+                    <div style="font-size: 1.5em; color: #0066ff;">#{usuarioController.selected.nombres.toUpperCase()} #{usuarioController.selected.apellidos.toUpperCase()}</div>
                     <div style="font-size: 1.2em;">Genero: #{usuarioController.selected.genero}</div>
                     <div style="font-size: 1.2em;">Cedula/Pasaporte: #{usuarioController.selected.identidad}</div>
                     <div style="font-size: 1.2em;">Edad: #{usuarioController.selected.edad}</div>
@@ -32,17 +41,37 @@
             </p:panel>
         </div>
         <div style="width: 30%; float:left;">
-            <p:panel id="panelCV" header="Actualizar CV" style="border: none; width: 99%;" >
+            <p:panel id="panelCV" header="Actualizar CV" style="border: none; width: 98%; margin: 0px auto; " >
 
-                <div><img src="../../resources/images/cv_1.png" alt="" width="150" height="150"/></div>
-                <h:link outcome="/configuraciones/usuario/inicio"  styleClass="link" value="Actualizar Hoja de vida"/>
+                <h:link outcome="/configuraciones/usuario/inicio"  styleClass="link">
+                    <p:graphicImage url="../../resources/images/hojadevida.gif" width="150" height="150" style="margin-left: 50px;" />
+                </h:link>
 
+            </p:panel>
+            <p:panel id="panelNotificaciones" header="Ofertas de Empleo"  style="border: none; width: 98%; height: 200px;" >
+                <p:scrollPanel  style="border: none; width: 104%; height: 200px;"  mode="native">
+                    <h:form>
+                        <c:forEach var="i" begin="1" end="10">
+
+                            <p:separator style="border-color:#ececec; border-width: 0.1em; box-shadow: none;"/> 
+                            <p:commandLink styleClass="linkBuscaTrabajo">
+                                <div style="float: left;">
+                                    <img src="http://www.frikipedia.es/images/7/7a/1_Empresa.png" alt="" width="50px" height="50px"/>
+                                </div>
+                                <div style="float: left;">
+                                    <div class="negro titulo">Adobe Systems Incorporated </div>
+                                    <div>Cargo: Ingeniero Sistemas</div>
+                                    <div>Ciudad: Cuenca</div>
+                                </div>
+                                <div style="clear:both;"/>
+                            </p:commandLink>
+                        </c:forEach>
+                    </h:form>
+                </p:scrollPanel>
             </p:panel>
         </div>
         <div style=" clear:both; width: 70%; float:left;">
-            <p:panel id="panelnoti" header="Notificaciones" style="border: none; width: 99%;" >
 
-            </p:panel> 
         </div>
     </ui:define>
 </ui:composition>

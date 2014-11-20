@@ -18,16 +18,16 @@
                 <h:panelGrid columns="2"  width="100%">
                     <p:graphicImage styleClass="imagenLogin" value="/usuario/null.jpg"/> 
                     <h:panelGrid columns="1" width="100%">
-                        <p:outputLabel value="Bienvenido/a" style="color:#ff6600; font-size: 1.1em; "/>
+                        <p:outputLabel value="Bienvenido/a" style="color:#ff6600; font-size: 1.0em; "/>
                         <h:panelGrid columns="2" width="100%">
-                            <p:outputLabel value="#{usuarioLoginController.usuario.nombres} #{usuarioLoginController.usuario.apellidos}" style="color:#3366ff; font-size: 1.2em; font-weight: bold;"/>
+                            <p:outputLabel value="#{usuarioLoginController.usuario.nombres} #{usuarioLoginController.usuario.apellidos}" style="color:#3366ff; font-size: 1.0em; font-weight: bold;"/>
                             #{usuarioController.asignarUsuario()}
-                            <p:growl id="messages" showDetail="true"/>
+                           
                             <p:menuButton value="" style="height: 30px; width: 30px;" >
-                                <p:menuitem value="Modificar Perfil"  update="messages" icon="ui-icon-disk"/>
-                                <p:menuitem value="Cambiar Foto" onclick="PF('dlg2').show();"   update="messages" icon="ui-icon-disk"/>
-                                <p:menuitem value="Cambiar Contrasena" url="../../configuraciones/usuario/cambioClave/inicio.xhtml"  update="messages" icon="ui-icon-arrowrefresh-1-w"/>
-                                <p:menuitem value="Cuenta"  update="messages" icon="ui-icon-arrowrefresh-1-w"/>
+                                <p:menuitem value="Modificar Perfil"   icon="ui-icon-disk"/>
+                                <p:menuitem value="Cambiar Foto" onclick="PF('dlg2').show();"    icon="ui-icon-disk"/>
+                                <p:menuitem value="Cambiar Contrasena" url="../../configuraciones/usuario/cambioClave/inicio.xhtml"   icon="ui-icon-arrowrefresh-1-w"/>
+                                <p:menuitem value="Cuenta"   icon="ui-icon-arrowrefresh-1-w"/>
                                 <p:separator />
                                 <p:menuitem value="Cerrar Session" action="#{usuarioController.close()}" icon="ui-icon-extlink" ajax="false"/>
                             </p:menuButton>
@@ -39,7 +39,7 @@
         <h:form>
             <p:growl id="messages" showDetail="true" sticky="true" />
 
-            <p:idleMonitor timeout="18000">
+            <p:idleMonitor timeout="28000">
                 <p:ajax event="idle" listener="#{usuarioController.close()}" update="messages" />
                 <p:ajax event="active" listener="#{usuarioController.close()}" update="messages" />
             </p:idleMonitor>
