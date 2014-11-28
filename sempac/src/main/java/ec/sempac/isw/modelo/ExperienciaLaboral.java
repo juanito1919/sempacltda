@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -40,12 +42,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ExperienciaLaboral.findByActividades", query = "SELECT e FROM ExperienciaLaboral e WHERE e.actividades = :actividades"),
     @NamedQuery(name = "ExperienciaLaboral.findByUrl", query = "SELECT e FROM ExperienciaLaboral e WHERE e.url = :url"),
     @NamedQuery(name = "ExperienciaLaboral.findByTiempo", query = "SELECT e FROM ExperienciaLaboral e WHERE e.tiempo = :tiempo"),
-    @NamedQuery(name = "ExperienciaLaboral.findByEliminado", query = "SELECT e FROM ExperienciaLaboral e WHERE e.eliminado = :eliminado")})
+    @NamedQuery(name = "ExperienciaLaboral.findByEliminado", query = "SELECT e FROM ExperienciaLaboral e WHERE e.eliminado = :eliminado"),
+//personalizadas
+    @NamedQuery(name = "ExperienciaLaboral.findByUsuarioEliminado", query = "SELECT e FROM ExperienciaLaboral e WHERE e.idUsuario.idUsuario = :idUsuario AND e.eliminado = :eliminado")
+})
 public class ExperienciaLaboral implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String findByUsuarioEliminado ="ExperienciaLaboral.findByUsuarioEliminado"; 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_EXPERIENCIA_LABORAL", nullable = false)
     private Long idExperienciaLaboral;
     @Basic(optional = false)

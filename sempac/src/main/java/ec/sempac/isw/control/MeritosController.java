@@ -94,8 +94,6 @@ public class MeritosController extends AbstractController<Meritos> implements Se
             this.itemsMeritos.remove(seleccion);
             seleccion=null;
         }
-        
-        
     }
     
     @Override
