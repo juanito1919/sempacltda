@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <div class="panelTitulo">
+        #{bundleEtiquetasES.ExperienciaLaboral}
+    </div> 
+
+    <p:panel header="#{bundleEtiquetasES.ExperienciaLaboral}" 
+             style="border: none; width: 75%; margin: 5px auto;">
+        <h:form id="experienciaLaboralCreateForm">
+            <h:panelGroup id="display">
+                #{experienciaLaboralController.iniciaSelected()}
+                <h:panelGrid 
+                    columns="4" 
+                    border="0"
+                    columnClasses="column1Class, column2Class,column3Class,column4Class" 
+                    >
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Empresa}" 
+                                   for="empresa" />
+                    <p:inputText id="empresa" 
+                                 onkeyup="value = value.toUpperCase()"
+                                 value="#{experienciaLaboralController.selected.empresa}" 
+                                 title="#{bundleEtiquetasES.Empresa}" >
+                    </p:inputText>
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Cargo}" 
+                                   for="cargo" />
+                    <p:inputText id="cargo" 
+                                 onkeyup="value = value.toUpperCase()"
+                                 value="#{experienciaLaboralController.selected.cargo}" 
+                                 title="#{bundleEtiquetasES.Cargo}" >
+                    </p:inputText>
+                    
+                    <p:outputLabel value="#{bundleEtiquetasES.InicioActividades}" 
+                                   for="fechaInicio" />
+                        <p:calendar id="fechaInicio" 
+                                    pattern="dd/MM/yyyy" 
+                                    value="#{experienciaLaboralController.selected.fechaInicio}" 
+                                    title="#{bundleEtiquetasES.InicioActividades}" 
+                                    required="true" 
+                                    requiredMessage="#{bundleEtiquetasES.InicioActividades} #{bundleEtiquetasES.CampoRequerido}" 
+                                    showOn="button"/>
+                        <p:outputLabel value="#{bundleEtiquetasES.FinActividades}" 
+                                   for="fechaFin" />
+                        <p:calendar id="fechaFin" 
+                                    pattern="dd/MM/yyyy" 
+                                    value="#{experienciaLaboralController.selected.fechaFin}" 
+                                    title="#{bundleEtiquetasES.FinActividades}" 
+                                    showOn="button"/>    
+                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Actividades}" 
+                                   for="actividades" />
+                        <p:inputTextarea id="actividades" 
+                                 onkeyup="value = value.toUpperCase()"
+                                 value="#{experienciaLaboralController.selected.actividades}" 
+                                 title="#{bundleEtiquetasES.Actividades}" >
+                        </p:inputTextarea>
+                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Tiempo}" 
+                                   for="tiempo" />
+                    <p:inputText id="tiempo" 
+                                 onkeyup="value = value.toUpperCase()"
+                                 value="#{experienciaLaboralController.selected.tiempo}" 
+                                 title="#{bundleEtiquetasES.Tiempo}" >
+                    </p:inputText>
+
+
+                </h:panelGrid>
+                <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
+                    <p:commandButton actionListener="#{experienciaLaboralController.guardaNuevo(event)}" 
+                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" 
+                                     update=":experienciaLaboralListForm,:experienciaLaboralCreateForm:empresa,:experienciaLaboralCreateForm:cargo,:experienciaLaboralCreateForm:fechaInicio,:experienciaLaboralCreateForm:fechaFin,:experienciaLaboralCreateForm:actividades,:experienciaLaboralCreateForm:tiempo"/>
+
+                    <p:commandButton actionListener="#{experienciaLaboralController.eliminar}"
+                                     value="#{bundleEtiquetasES.Quitar}" 
+                                     icon="ui-icon-circle-close"
+                                     update=":experienciaLaboralListForm"/>
+                </div>
+            </h:panelGroup>
+        </h:form>
+    </p:panel>
+    <p:separator style="border-style: dotted; width: 75%; margin-bottom: 10px;"/>
+    <ui:include src="lista.xhtml"/>
+</ui:composition>
+
