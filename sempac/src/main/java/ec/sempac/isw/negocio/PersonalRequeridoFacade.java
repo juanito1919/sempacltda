@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.PersonalRequerido;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,10 @@ public class PersonalRequeridoFacade extends AbstractFacade<PersonalRequerido> {
     public PersonalRequeridoFacade() {
         super(PersonalRequerido.class);
     }
-    
+    public List<PersonalRequerido> getItemsPersonalRequerido(boolean eliminado) {
+        Query query = this.em.createNamedQuery(PersonalRequerido.findByEliminado);
+        query.setParameter("eliminado", eliminado);
+         return query.getResultList();  
+    }
+     
 }
