@@ -15,9 +15,9 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
 
     @EJB
     private ec.sempac.isw.negocio.PersonalRequeridoFacade ejbFacade;
-    private List<PersonalRequerido> items = null;
-    private PersonalRequerido selected;
-
+    
+    private List<PersonalRequerido> itemPersonalRequerido;
+    
     public PersonalRequeridoController() {
         super(PersonalRequerido.class);
     }
@@ -25,6 +25,7 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
     @PostConstruct
     public void init() {
         super.setFacade(ejbFacade);
+        setItemPersonalRequerido(ejbFacade.getItemsPersonalRequerido(false));// todas las notifiaciones q no esten eliminadas
     }
 
     @Override
@@ -33,5 +34,19 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
 
     @Override
     protected void initializeEmbeddableKey() {
+    }
+
+    /**
+     * @return the itemPersonalRequerido
+     */
+    public List<PersonalRequerido> getItemPersonalRequerido() {
+        return itemPersonalRequerido;
+    }
+
+    /**
+     * @param itemPersonalRequerido the itemPersonalRequerido to set
+     */
+    public void setItemPersonalRequerido(List<PersonalRequerido> itemPersonalRequerido) {
+        this.itemPersonalRequerido = itemPersonalRequerido;
     }
 }
