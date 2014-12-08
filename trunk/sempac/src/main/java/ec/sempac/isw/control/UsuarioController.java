@@ -1,6 +1,7 @@
 package ec.sempac.isw.control;
 
 import ec.sempac.isw.control.util.MuestraMensaje;
+import ec.sempac.isw.control.util.Validaciones;
 import ec.sempac.isw.modelo.Ciudad;
 import ec.sempac.isw.modelo.Espectativas;
 import ec.sempac.isw.modelo.Habilidades;
@@ -58,15 +59,15 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     @EJB
     private SistemaUsuarioFacade ejbFacadeSistemaUsuario;
 
-      @EJB
+    @EJB
     private SistemaAccesoFacade ejbFacadeSistemaAcceso;
-      
+
     @EJB
     private HabilidadesFacade ejbFacadeHabilidades;
-    
+
     @EJB
     private EspectativasFacade ejbFacadeEspectativas;
-      
+
     private List<Pais> itemPaises;
     private Pais pais;
     private List<Region> itemProvincias;
@@ -79,15 +80,15 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     private Usuario seleccionado;
     private Habilidades habilidadBusqueda;
     private Espectativas espectativaBusqueda;
-    
-    private List <UserHabilidadesEspectativas> itemsHabilidadesEspectativas;
+
+    private List<UserHabilidadesEspectativas> itemsHabilidadesEspectativas;
     private UserHabilidadesEspectativas HabilidadesEspectativaSeleccionado;
-    
 
     private List<Usuario> listaUsuariosBusqueda;
     private List<Usuario> itemsUsuariosSeleccionados;
-    private List <Habilidades> itemsHabilidades;
-    private List <Espectativas> itemsEspectativas;
+    private List<Habilidades> itemsHabilidades;
+    private List<Espectativas> itemsEspectativas;
+
     public UsuarioController() {
         super(Usuario.class);
     }
@@ -98,61 +99,63 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
         this.setSelected(new Usuario());
     }
-    
-    public void iniciarBusqueda(){
-        this.listaUsuariosBusqueda=this.ejbFacade.getItemsUsuarioEliminado(false);
+
+    public void iniciarBusqueda() {
+        this.listaUsuariosBusqueda = this.ejbFacade.getItemsUsuarioEliminado(false);
         this.setItemsHabilidades(this.ejbFacadeHabilidades.getItemsHabilidadesEliminado(false));
         this.setItemsEspectativas(this.ejbFacadeEspectativas.getItemsEspectativasEliminado(false));
-        this.itemsHabilidadesEspectativas=new ArrayList<UserHabilidadesEspectativas> ();
+        this.itemsHabilidadesEspectativas = new ArrayList<UserHabilidadesEspectativas>();
         prepareNuevo();
     }
-    
-    public void cargarUsuariosBusqueda(){
-        this.itemsUsuariosSeleccionados=new ArrayList<Usuario>();
-        boolean agregar=false;
-        if (!(itemsHabilidadesEspectativas.isEmpty() && pais==null && provincia==null && ciudad==null)){
-            for (int i=0;i<listaUsuariosBusqueda.size();i++){
-                Usuario us=listaUsuariosBusqueda.get(i);
-                for (int j=0;j<itemsHabilidadesEspectativas.size();j++){
-                    List<UserHabilidadesEspectativas> habEsp=us.getUserHabilidadesEspectativasList();
-                    for(int k=0;k<habEsp.size();k++){
+
+    public void cargarUsuariosBusqueda() {
+        this.itemsUsuariosSeleccionados = new ArrayList<Usuario>();
+        boolean agregar = false;
+        if (!(itemsHabilidadesEspectativas.isEmpty() && pais == null && provincia == null && ciudad == null)) {
+            for (int i = 0; i < listaUsuariosBusqueda.size(); i++) {
+                Usuario us = listaUsuariosBusqueda.get(i);
+                for (int j = 0; j < itemsHabilidadesEspectativas.size(); j++) {
+                    List<UserHabilidadesEspectativas> habEsp = us.getUserHabilidadesEspectativasList();
+                    for (int k = 0; k < habEsp.size(); k++) {
                         if (itemsHabilidadesEspectativas.get(j).getHabilidades().equals(habEsp.get(k).getHabilidades())
-                           && itemsHabilidadesEspectativas.get(j).getEspectativas().equals(habEsp.get(k).getEspectativas())){
-                            agregar=true;
+                                && itemsHabilidadesEspectativas.get(j).getEspectativas().equals(habEsp.get(k).getEspectativas())) {
+                            agregar = true;
                             break;
                         }
                     }
-                    if (agregar)break;
+                    if (agregar) {
+                        break;
+                    }
                 }
                 /// Ubicacion
-                if (pais!=null && agregar){
-                    if (!us.getIdCiudad().getIdRegion().getIdPais().equals(pais)){
-                        agregar=false;
+                if (pais != null && agregar) {
+                    if (!us.getIdCiudad().getIdRegion().getIdPais().equals(pais)) {
+                        agregar = false;
                     }
                 }
-                if (provincia!=null && agregar){
-                    if (!us.getIdCiudad().getIdRegion().equals(provincia)){
-                        agregar=false;
+                if (provincia != null && agregar) {
+                    if (!us.getIdCiudad().getIdRegion().equals(provincia)) {
+                        agregar = false;
                     }
                 }
-                if (ciudad!=null && agregar){
-                    if (!us.getIdCiudad().equals(ciudad)){
-                        agregar=false;
+                if (ciudad != null && agregar) {
+                    if (!us.getIdCiudad().equals(ciudad)) {
+                        agregar = false;
                     }
                 }
-                if (agregar){
+                if (agregar) {
                     itemsUsuariosSeleccionados.add(us);
-                    agregar=false;
+                    agregar = false;
                 }
             }
         }
     }
-    
-    public void AgragarHabEspBusqueda(ActionEvent event){
+
+    public void AgragarHabEspBusqueda(ActionEvent event) {
         System.out.println("Entrooooo");
         System.out.println(habilidadBusqueda);
         System.out.println(espectativaBusqueda);
-        UserHabilidadesEspectativas nuevo=new UserHabilidadesEspectativas();
+        UserHabilidadesEspectativas nuevo = new UserHabilidadesEspectativas();
         nuevo.setEspectativas(espectativaBusqueda);
         nuevo.setHabilidades(habilidadBusqueda);
         nuevo.setUserHabilidadesEspectativasPK(new UserHabilidadesEspectativasPK(0, espectativaBusqueda.getIdEspectativas(), habilidadBusqueda.getIdHabilidades()));
@@ -164,26 +167,26 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
 //        this.itemsHabilidadesEspectativas.add(HabilidadesEspectativaSeleccionado);
         //this.HabilidadesEspectativaSeleccionado=new UserHabilidadesEspectativas();
     }
-    
-    public void QuitarHabEspBusqueda(ActionEvent event){
+
+    public void QuitarHabEspBusqueda(ActionEvent event) {
         this.itemsHabilidadesEspectativas.remove(HabilidadesEspectativaSeleccionado);
         cargarUsuariosBusqueda();
     }
 
-    public void cambiaPaisBusqueda(){
+    public void cambiaPaisBusqueda() {
         cambiaPais();
         cargarUsuariosBusqueda();
     }
-    
-    public void cambiaProvinciaBusqueda(){
+
+    public void cambiaProvinciaBusqueda() {
         cambiaProvincia();
         cargarUsuariosBusqueda();
     }
-    
-    public  void cambiaCiudadBusqueda(){
+
+    public void cambiaCiudadBusqueda() {
         cargarUsuariosBusqueda();
     }
-    
+
     public void cambiaPais() {
         if (pais != null) {
             this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
@@ -214,9 +217,9 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
 
     public void close() throws ServletException {
         Sesion.cerrarSesion();
-       // ejbFacadeSistemaAcceso.remove(null);
+        // ejbFacadeSistemaAcceso.remove(null);
         this.init();
-        
+
     }
 
     public void validaSession() throws IOException {
@@ -260,7 +263,15 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         this.setConfirmaContrasena("");
     }
 
+
     public void registraCuenta(ActionEvent event) {
+        if (this.getSelected().getTipoIdentidad() == 'C') {
+            if (!Validaciones.validaCedula(this.getSelected().getIdentidad())) {
+                System.out.println("cedula error");
+                MuestraMensaje.addError("Cedula incorrecta");
+                return;
+            }
+        }
         System.out.println("Entro guardar");
         this.setMsj("");
         boolean ok = true;
@@ -486,36 +497,34 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     /**
      * @return the itemsHabilidades
      */
-    public List <Habilidades> getItemsHabilidades() {
+    public List<Habilidades> getItemsHabilidades() {
         return itemsHabilidades;
     }
 
     /**
      * @param itemsHabilidades the itemsHabilidades to set
      */
-    public void setItemsHabilidades(List <Habilidades> itemsHabilidades) {
+    public void setItemsHabilidades(List<Habilidades> itemsHabilidades) {
         this.itemsHabilidades = itemsHabilidades;
     }
 
     /**
      * @return the itemsEspectativas
      */
-    public List <Espectativas> getItemsEspectativas() {
+    public List<Espectativas> getItemsEspectativas() {
         return itemsEspectativas;
     }
 
     /**
      * @param itemsEspectativas the itemsEspectativas to set
      */
-    public void setItemsEspectativas(List <Espectativas> itemsEspectativas) {
+    public void setItemsEspectativas(List<Espectativas> itemsEspectativas) {
         this.itemsEspectativas = itemsEspectativas;
     }
 
     /**
      * @return the itemsHabilidadesEspectativas
      */
-    
-
     /**
      * @return the HabilidadesEspectativaSeleccionado
      */
@@ -524,7 +533,8 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     }
 
     /**
-     * @param HabilidadesEspectativaSeleccionado the HabilidadesEspectativaSeleccionado to set
+     * @param HabilidadesEspectativaSeleccionado the
+     * HabilidadesEspectativaSeleccionado to set
      */
     public void setHabilidadesEspectativaSeleccionado(UserHabilidadesEspectativas HabilidadesEspectativaSeleccionado) {
         this.HabilidadesEspectativaSeleccionado = HabilidadesEspectativaSeleccionado;
@@ -533,14 +543,15 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     /**
      * @return the itemsHabilidadesEspectativas
      */
-    public List <UserHabilidadesEspectativas> getItemsHabilidadesEspectativas() {
+    public List<UserHabilidadesEspectativas> getItemsHabilidadesEspectativas() {
         return itemsHabilidadesEspectativas;
     }
 
     /**
-     * @param itemsHabilidadesEspectativas the itemsHabilidadesEspectativas to set
+     * @param itemsHabilidadesEspectativas the itemsHabilidadesEspectativas to
+     * set
      */
-    public void setItemsHabilidadesEspectativas(List <UserHabilidadesEspectativas> itemsHabilidadesEspectativas) {
+    public void setItemsHabilidadesEspectativas(List<UserHabilidadesEspectativas> itemsHabilidadesEspectativas) {
         this.itemsHabilidadesEspectativas = itemsHabilidadesEspectativas;
     }
 

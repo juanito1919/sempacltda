@@ -20,22 +20,7 @@
                                styleClass="encabezadosDialog"/>
             </f:facet>
             <h:form id="UsuarioCreateForm">
-                <p:messages id="mensaje" showDetail="true" autoUpdate="true" closable="true" />
-                <p:message id="mensajeTipoIdentidad" for="tipoIdentidad" />
-                <p:message id="mensajeIdentidad" for="identidad" />
-                <p:message id="mensajeNombres" for="nombres" />
-                <p:message id="mensajeApellidos" for="apellidos" />
-                <p:message id="mensajeUserName" for="username" />
-                <p:message id="mensajeConfirmar" for="contrasena" />
-                <p:message id="mensajeConfirmarContrasena" for="confirmarContrasena" />
-                <p:message id="mensajeFechaNacimiento" for="fechaNacimiento" />
-                <p:message id="mensajePais" for="pais" />
-                <p:message id="mensajeProvincia" for="provincia" />
-                <p:message id="mensajeCiudad" for="ciudad" />
-                <p:message id="mensajeDireccion" for="direccion" />
-                <p:message for="correoElectronico" />
-                <p:message id="mensajeEstadoCivil" for="estadoCivil" />
-                <p:message id="mensajeDisponibilidad" for="disponibilidad" />
+                <p:growl id="mensaje" showDetail="true" life="500"/> 
                 <h:panelGroup id="display">
                     <h:panelGrid columns="4" 
                                  columnClasses="column1Class, column2Class,column3Class,column4Class" 
