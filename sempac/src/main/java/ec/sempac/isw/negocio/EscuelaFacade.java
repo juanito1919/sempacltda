@@ -6,10 +6,13 @@
 
 package ec.sempac.isw.negocio;
 
+import ec.sempac.isw.modelo.Colegio;
 import ec.sempac.isw.modelo.Escuela;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +31,16 @@ public class EscuelaFacade extends AbstractFacade<Escuela> {
     public EscuelaFacade() {
         super(Escuela.class);
     }
-    
+    public List<Escuela> getItemsEscuela(String nombre) {
+        Query query = this.em.createNamedQuery(Escuela.findByAutoCompletado);
+        query.setParameter("nombre", "'" + nombre + "%'");
+        query.setParameter("eliminado", false);
+        return query.getResultList();
+    }
+
+    public List<Escuela> getItemsEscuela(boolean  estado) {
+        Query query = this.em.createNamedQuery(Escuela.findByEliminado);
+        query.setParameter("eliminado",estado);
+        return query.getResultList();
+    }
 }

@@ -114,9 +114,7 @@ public abstract class AbstractController<T> {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
+    }private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             this.setEmbeddableKeys();
             try {

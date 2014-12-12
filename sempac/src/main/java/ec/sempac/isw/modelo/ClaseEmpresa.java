@@ -49,7 +49,7 @@ public class ClaseEmpresa implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
-    @Column(nullable = false, length = 16)
+    @Column(nullable = false, length = 32)
     private String nombre;
     @Basic(optional = false)
     @NotNull

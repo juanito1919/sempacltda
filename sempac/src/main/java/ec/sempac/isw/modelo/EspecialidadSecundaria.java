@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EspecialidadSecundaria.findByEliminado", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.eliminado = :eliminado")})
 public class EspecialidadSecundaria implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String findByIdUsuario="EspecialidadSecundaria.findByIdUsuario";
     @EmbeddedId
     protected EspecialidadSecundariaPK especialidadSecundariaPK;
     @Basic(optional = false)

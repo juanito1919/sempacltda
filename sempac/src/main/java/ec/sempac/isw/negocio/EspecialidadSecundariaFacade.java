@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.EspecialidadSecundaria;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,9 @@ public class EspecialidadSecundariaFacade extends AbstractFacade<EspecialidadSec
         super(EspecialidadSecundaria.class);
     }
     
+    public List<EspecialidadSecundaria> getItemsByIdUsuario(long idUsuario) {
+        Query query = this.em.createNamedQuery(EspecialidadSecundaria.findByIdUsuario);
+        query.setParameter("idUsuario",idUsuario);
+        return query.getResultList();
+    }
 }
