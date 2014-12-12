@@ -49,7 +49,7 @@ public class IdiomaDominadoController extends AbstractController<IdiomaDominado>
     }
     
     public void guardaNuevo(ActionEvent event){
-        System.out.println("guarda "+this.getSelected());
+        
         if (this.getSelected().getIdioma()==null ||this.getSelected().getNivelEscrito()=="-" || this.getSelected().getNivelHablado()=="-")
             return;
         for (int i=0;i<this.itemsIdiomasDominados.size();i++){
