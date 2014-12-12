@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+
+        <h:form id="EspecialidadPrimariaCreateForm">
+          
+            <p:panel header="Estudios Primarios" style="border: none; margin-top: -10px;" >
+                <h:panelGroup id="display" style="width: 500px; height: 800px;">
+                    #{estudiosPrimariaController.iniciaSelected()}
+                    <h:panelGrid columns="2" 
+                                 border="0" 
+                                 cellpadding="5"
+                                 columnClasses="column1Class, column2Class">
+                          <p:outputLabel for="colegio" value="#{bundleEtiquetasES.Institucion}"  />
+                        <p:selectOneMenu id="colegio" 
+                                         value="#{estudiosPrimariaController.selected.escuela}"
+                                        
+                                         required="true"
+                                         effect="fade" 
+                                         var="t" 
+                                         style="width:200px" 
+                                         filter="true" 
+                                         filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+                            <f:selectItems value="#{estudiosPrimariaController.itemEscuela}" 
+                                           var="escuelaItem"
+                                           itemValue="#{escuelaItem}" 
+                                           itemLabel="#{escuelaItem.nombre}"/>
+                            <p:column>
+                                <h:outputText value="#{t.nombre}" />
+                            </p:column>
+                           
+                        </p:selectOneMenu>  
+                          <p:outputLabel value="TIEMPO DE ESTUDIO:" for="anio"/>
+                          <p:inputText id="anio" value="#{estudiosPrimariaController.selected.duracion}"/>
+                          <p:commandButton id="buttonSubir" value="Cargar Certificado"/>
+                          <p:inputText id="ruta" value="" size="35" disabled="true"/>
+                    </h:panelGrid>
+                    <div style="margin-left: 30%; margin-bottom: 20px; margin-top: 30px;">
+                        <p:commandButton actionListener="#{estudiosPrimariaController.guardarColegio}" icon="ui-icon-disk"  value="GUARDAR"/>
+                         <p:commandButton value="ELIMINAR"  icon="ui-icon-closethick"/>
+                        <p:commandButton value="CALCELAR"  icon="ui-icon-closethick" onclick="EspecialidadSecundariaCreateDialog.hide()"/>
+                    </div>
+                </h:panelGroup>
+            </p:panel>
+        </h:form>
+
+    </ui:composition>
+</html>

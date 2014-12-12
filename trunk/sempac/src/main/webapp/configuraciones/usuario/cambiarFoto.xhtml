@@ -12,8 +12,8 @@
                     <p:panel>
                         <h:panelGrid columns="2" width="50%">
                             <p:commandButton value="Establecer como foto de perfil"
-                                             disabled="#{editorUsuarioFoto.imageTemp==null}"
-                                             action="#{editorUsuarioFoto.actionGuardarFoto}"
+                                             disabled="#{usuarioController.imageTemp==null}"
+                                             action="#{usuarioController.actionGuardarFoto}"
                                              process="@form"
                                              oncomplete="dlg2.hide();"/>
                             <p:commandButton value="Cancelar"
@@ -23,15 +23,15 @@
                     </p:panel>
 
                     <p:panel styleClass="editorFoto">
-                        <p:imageCropper value="#{editorUsuarioFoto.croppeFoto}"
-                                        image="/usuario/temp/#{editorUsuarioFoto.imageTemp}"
-                                        rendered="#{editorUsuarioFoto.imageTemp!=null}"
+                        <p:imageCropper value="#{usuarioController.croppeFoto}"
+                                        image="/usuario/temp/#{usuarioController.imageTemp}"
+                                        rendered="#{usuarioController.imageTemp!=null}"
                                         initialCoords="225,75,300,125"
                                         minSize="100,150"
                                         maxSize="300,350"
                                         aspectRatio="0.9"/>
-                        <p:fileUpload fileUploadListener="#{editorUsuarioFoto.uploadFile}"
-                                      rendered="#{editorUsuarioFoto.imageTemp==null}"
+                        <p:fileUpload fileUploadListener="#{usuarioController.uploadFile}"
+                                      rendered="#{usuarioController.imageTemp==null}"
                                       mode="advanced"
                                       label="Seleccione Foto (max.500Kb)"
                                       auto="true"

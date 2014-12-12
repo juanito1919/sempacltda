@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/plantilla/ventanaPlantilla.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define  name="formulario">
+        <div class="panelTitulo">
+            INSTRUCION FORMAL
+        </div> 
+        <div style="height: 100px; margin: 0 auto;">
+            <p:panel header="NIVEL DE INSTRUCION" style="border: none; margin: 0 auto;" >
+                <h:form id="formEscojerNivel">
+                    <h:panelGrid columns="2" 
+                                 border="0" >
+
+                        <p:outputLabel value="NIVEL DE INSTRUCION" for="nivelInstrucion"/>
+                        <p:selectOneMenu id="nivelInstrucion" 
+                                         value="#{tipoEstudioController.tipoNivel}"
+                                         required="true">
+                            <f:selectItem itemLabel="Selecione..." noSelectionOption="true"/>
+                            <f:selectItem itemLabel="PRIMARIA" itemValue="P"/>
+                            <f:selectItem itemLabel="SECUNDARIA" itemValue="S" />  
+                            <f:selectItem itemLabel="UNIVERSITARIO" itemValue="U" /> 
+                            <p:ajax event="change"  resetValues="true"
+                                    listener="#{tipoEstudioController.escojerVentana()}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </h:form>
+            </p:panel>
+        </div>
+        <p:panel header="LISTA DE EDUCACION" style="border: none;" >
+            <h:form id="EspecialidadSecundariaListForm">
+
+                <p:dataTable id="datalist" value="#{especialidadSecundariaController.items}" var="item"
+                             selectionMode="single" selection="#{especialidadSecundariaController.selected}"
+                             paginator="true"
+                             rowKey="#{item.especialidadSecundariaPK}"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             >
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListEspecialidadSecundariaTitle_especialidad}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.especialidad}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListEspecialidadSecundariaTitle_aniosEstudios}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.aniosEstudios}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListEspecialidadSecundariaTitle_url}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.url}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListEspecialidadSecundariaTitle_usuario}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usuario}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListEspecialidadSecundariaTitle_colegio}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.colegio}"/>
+                    </p:column>
+                    <f:facet name="footer">
+
+                    </f:facet>
+                </p:dataTable>
+
+            </h:form>
+        </p:panel>
+        <ui:include src="secundaria/Create.xhtml"/>
+    <ui:include src="primaria/Create.xhtml"/>
+    </ui:define>
+    
+</ui:composition>
