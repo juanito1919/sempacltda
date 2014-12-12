@@ -1,12 +1,58 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="../resources/plantilla/VentanaPrincipalPlantilla.xhtml">
+    <ui:define  name="formulario">
+        
+        <div class="panelTitulo">
+            CONTACTOS
+        </div> 
+        <div style="width: 75%; float: left;">
+            <p:tabView orientation="left" dynamic="true" effect="blind">
+                <p:tab title="Escribenos">
+                    Nos interesa saber de Ud. Escribanos y gustosos le responderemos
+                    <h:form>
+                        <h:panelGrid columns="2" 
+                                     cellpadding="5"
+                                     columnClasses="column1Class, column2Class" style="margin-left: -175px; margin-top: 10px;">
+                            <p:outputLabel value="SU NOMBRE:" for="nombre"/>
+                            <p:inputText id="nombre" value="" size="50"/>
+                            <p:outputLabel value="CIUDAD:" for="ciudad"/>
+                            <p:inputText id="ciudad" value="" size="50"/>
+                            <p:outputLabel value="TELEFONO:" for="telefono"/>
+                            <p:inputText id="telefono" value="" size="50"/>
+                            <p:outputLabel value="EMAIL:" for="email"/>
+                            <p:inputText id="email" value="" size="50"/>
+                            <p:outputLabel value="COMENTARIO:" for="comentario"/>
+                            <p:inputTextarea id="comentario" value="" cols="50" rows="6"/>
+                        </h:panelGrid>
+                        <div style="margin-left: 25%;">
+                            <p:commandButton id="enviar" value="ENVIAR CORREO"/>
+                        </div>
+
+                    </h:form>
+                </p:tab>
+                <p:tab title="Mapa de Ubicacion">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                        <h:outputText value="Francis Ford Coppola's legendary..." />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Telefonos">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                        <h:outputText value="After a break of more than 15 years..." />
+                    </h:panelGrid>
+                </p:tab>
+            </p:tabView>
+        </div>
+        <div style="width: 24%; float: left;">
+            <p:panel header="Informacion" style="width: 265px; border: none;">
+            </p:panel>   
+        </div>
+    </ui:define>                
+</ui:composition>
 
