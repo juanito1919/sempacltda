@@ -11,11 +11,11 @@ and open the template in the editor.
 body {
     top: 0px;
     font-size:0.6em;
-  
+
     font-weight:normal;
     margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px ;
     font-family: Verdana, Geneva, sans-serif;
-    
+
 }
 .panelRedSocial{
     background-color: #ff1721;
@@ -76,7 +76,7 @@ body {
 
 }
 .panelLogin.ui-panel, .panelLogin.ui-panel-content {
-   
+
     border-color:#d4d4fc;
     border-style: dotted;
 }
@@ -96,7 +96,7 @@ body {
 .panelBarra{
     margin-top: 5px;
     height: 50px;
-    
+
 }
 .butonBarra{
     margin-top: 0;
@@ -148,6 +148,7 @@ body {
 
 }
 .column1Class,.column3Class{
+    font-family: Verdana, Geneva, sans-serif;
     text-align: right;
     font-weight: bold;
     color: #cc0000;
@@ -179,10 +180,20 @@ body {
 }
 .linkBuscaTrabajo{
     display: block;
-    background-color: #ffffff!important;;
+    background-color: #ffffff!important;
 }
 .linkBuscaTrabajo:hover{
     display: block;
-   background-color:#ececec!important;; 
+    background-color:#ececec!important; 
+}
+.dialogo .ui-dialog{
+    font-size: 3.0em;   
+    font-family: serif!important; 
+}
+.dialogo .ui-dialog-titlebar{
+
+}
+.dialogo .ui-dialog-content{
+    background-color: #ffffff!important; 
 }
 
