@@ -47,6 +47,10 @@ public class TipoEstudioController extends AbstractController<TipoEstudio> imple
         if(getTipoNivel().equals("S")){
           context.execute("EspecialidadSecundariaCreateDialog.show()");
         }
+         if(getTipoNivel().equals("P")){
+          context.execute("EstudiosPrimariaCreateDialog.show()");
+        }
+       
     }
    
 }
