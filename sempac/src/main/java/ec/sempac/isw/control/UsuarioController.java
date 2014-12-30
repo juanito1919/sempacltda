@@ -22,7 +22,11 @@ import ec.sempac.isw.negocio.UsuarioFacade;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
 import ec.sempac.isw.seguridades.Sesion;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -35,10 +39,16 @@ import java.util.logging.Logger;
 import javafx.event.Event;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.CroppedImage;
 
 @ManagedBean(name = "usuarioController")
 @SessionScoped
@@ -68,6 +78,8 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     @EJB
     private EspectativasFacade ejbFacadeEspectativas;
 
+    private String DIRECTORIO_DOCUMENTOS = "c:\\documentos";
+    private String DIRECTORIO_TEMP = "c://temp";
     private List<Pais> itemPaises;
     private Pais pais;
     private List<Region> itemProvincias;
@@ -80,6 +92,8 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     private Usuario seleccionado;
     private Habilidades habilidadBusqueda;
     private Espectativas espectativaBusqueda;
+    private CroppedImage croppeFoto;
+    private String imageTemp;
 
     private List<UserHabilidadesEspectativas> itemsHabilidadesEspectativas;
     private UserHabilidadesEspectativas HabilidadesEspectativaSeleccionado;
@@ -152,7 +166,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     }
 
     public void AgragarHabEspBusqueda(ActionEvent event) {
-        System.out.println("Entrooooo");
+
         System.out.println(habilidadBusqueda);
         System.out.println(espectativaBusqueda);
         UserHabilidadesEspectativas nuevo = new UserHabilidadesEspectativas();
@@ -263,7 +277,6 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         this.setConfirmaContrasena("");
     }
 
-
     public void registraCuenta(ActionEvent event) {
         if (this.getSelected().getTipoIdentidad() == 'C') {
             if (!Validaciones.validaCedula(this.getSelected().getIdentidad())) {
@@ -298,6 +311,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
             this.getSelected().setTipo('U');
             this.getSelected().setEliminado(false);
             this.saveNew(event);
+
             SistemaUsuario sisUser = new SistemaUsuario();
             this.setSelected(this.ejbFacade.getItemsUserName(this.getSelected().getUsername()));
             sisUser.setIdUsuario(this.getSelected().getIdUsuario());
@@ -315,6 +329,84 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
             }
         } else {
             MuestraMensaje.addError(msj);
+        }
+    }
+
+    public void actionFoto() {
+        this.setCroppeFoto(null);
+        this.setImageTemp(null);
+    }
+
+    public void guardarFoto() {
+        System.out.println("como estassssss");
+    }
+
+    public void actionGuardarFoto() {
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        DIRECTORIO_DOCUMENTOS = servletContext.getRealPath("")+ File.separatorChar + "Documntos" + File.separatorChar;
+
+        String archivo = DIRECTORIO_DOCUMENTOS + this.getSelected().getUsername() + ".jpg";
+        System.out.println("comoooooooo: " + archivo);
+       // getSelected().setUrl(archivo);
+        try {
+
+            if (getCroppeFoto() != null) {
+                FileImageOutputStream imageOutput = new FileImageOutputStream(new File(archivo));
+                imageOutput.write(getCroppeFoto().getBytes(), 0, getCroppeFoto().getBytes().length);
+                imageOutput.close();
+            } else {
+                OutputStream outStream = new FileOutputStream(new File(archivo));
+                InputStream inputStream = new FileInputStream(DIRECTORIO_DOCUMENTOS + "temp/" + this.getImageTemp());
+                byte[] buffer = new byte[6124];
+                int bulk;
+                while (true) {
+                    bulk = inputStream.read(buffer);
+                    if (bulk < 0) {
+                        break;
+                    }
+                    outStream.write(buffer, 0, bulk);
+                    outStream.flush();
+                }
+                outStream.close();
+                inputStream.close();
+            }
+
+            actionFoto();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       
+    }
+
+    public void uploadFile(FileUploadEvent event) {
+        try {
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            DIRECTORIO_DOCUMENTOS = servletContext.getRealPath("")
+                    + File.separatorChar + "Documentos" + File.separatorChar;
+
+           
+            String archivo = DIRECTORIO_DOCUMENTOS + "temp" + File.separatorChar + event.getFile().getFileName();
+            FileOutputStream fileOutputStream = new FileOutputStream(archivo);
+            byte[] buffer = new byte[6124];
+            int bulk;
+            InputStream inputStream = event.getFile().getInputstream();
+            while (true) {
+                bulk = inputStream.read(buffer);
+                if (bulk < 0) {
+                    break;
+                }
+                fileOutputStream.write(buffer, 0, bulk);
+                fileOutputStream.flush();
+            }
+            fileOutputStream.close();
+            inputStream.close();
+
+            this.setImageTemp(event.getFile().getFileName());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Error al subir el archivo"));
         }
     }
 
@@ -581,6 +673,34 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
      */
     public void setEspectativaBusqueda(Espectativas espectativaBusqueda) {
         this.espectativaBusqueda = espectativaBusqueda;
+    }
+
+    /**
+     * @return the croppeFoto
+     */
+    public CroppedImage getCroppeFoto() {
+        return croppeFoto;
+    }
+
+    /**
+     * @param croppeFoto the croppeFoto to set
+     */
+    public void setCroppeFoto(CroppedImage croppeFoto) {
+        this.croppeFoto = croppeFoto;
+    }
+
+    /**
+     * @return the imageTemp
+     */
+    public String getImageTemp() {
+        return imageTemp;
+    }
+
+    /**
+     * @param imageTemp the imageTemp to set
+     */
+    public void setImageTemp(String imageTemp) {
+        this.imageTemp = imageTemp;
     }
 
 }
