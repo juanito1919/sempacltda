@@ -2,7 +2,6 @@ package ec.sempac.isw.control;
 
 import ec.sempac.isw.modelo.Colegio;
 import ec.sempac.isw.modelo.EspecialidadSecundaria;
-import ec.sempac.isw.modelo.EspecialidadSecundariaPK;
 import ec.sempac.isw.negocio.ColegioFacade;
 import ec.sempac.isw.negocio.EspecialidadSecundariaFacade;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
@@ -41,35 +40,36 @@ public class EspecialidadSecundariaController extends AbstractController<Especia
 
     public void iniciaSelected() {
         if (ActivacionUsuario.getUsuario() != null) {
-            List<EspecialidadSecundaria> espSec = ejbFacadeEspecialidaSec.getItemsByIdUsuario(ActivacionUsuario.getUsuario().getIdUsuario());
+            List<EspecialidadSecundaria> espSec = ejbFacadeEspecialidaSec.getItemsByIdUsuario(ActivacionUsuario.getUsuario().getIdUsuario(), false);
             if (!espSec.isEmpty()) {
                 this.setSelected(espSec.get(0));
             } else {
                 this.setSelected(new EspecialidadSecundaria());
-                this.getSelected().setEspecialidadSecundariaPK(new EspecialidadSecundariaPK());
             }
         }
     }
 
     public void guardarColegio(ActionEvent event) {
-
         this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
         this.getSelected().setEliminado(false);
-        this.saveNew(event);
+        this.save(event);
 
+    }
+    
+    public void eliminarColegio(ActionEvent event) {
+        this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
+        this.getSelected().setEliminado(true);
+        this.save(event);
+        this.setSelected(new EspecialidadSecundaria());
     }
 
     @Override
     protected void setEmbeddableKeys() {
 
-        getSelected().getEspecialidadSecundariaPK().setIdColegio(getSelected().getColegio().getIdColegio());
-        getSelected().getEspecialidadSecundariaPK().setIdUsuario(getSelected().getUsuario().getIdUsuario());
+        getSelected().setIdUsuario(getSelected().getUsuario().getIdUsuario());
     }
 
-    @Override
-    protected void initializeEmbeddableKey() {
-        getSelected().setEspecialidadSecundariaPK(new ec.sempac.isw.modelo.EspecialidadSecundariaPK());
-    }
+    
 
     /**
      * @return the itemColegio

@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Universidad;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,9 @@ public class UniversidadFacade extends AbstractFacade<Universidad> {
         super(Universidad.class);
     }
     
+    public List<Universidad> getItemsUniversidad(boolean  eliminado) {
+        Query query = this.em.createNamedQuery(Universidad.findByEliminado);
+        query.setParameter("eliminado",eliminado);
+        return query.getResultList();
+    }
 }

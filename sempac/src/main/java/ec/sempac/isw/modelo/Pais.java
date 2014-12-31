@@ -7,6 +7,7 @@
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -137,5 +138,5 @@ public class Pais implements Serializable {
     public String toString() {
         return "ec.sempac.isw.modelo.Pais[ idPais=" + idPais + " ]";
     }
-    
+
 }
