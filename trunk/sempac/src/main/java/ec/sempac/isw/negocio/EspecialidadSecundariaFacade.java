@@ -31,9 +31,10 @@ public class EspecialidadSecundariaFacade extends AbstractFacade<EspecialidadSec
         super(EspecialidadSecundaria.class);
     }
     
-    public List<EspecialidadSecundaria> getItemsByIdUsuario(long idUsuario) {
-        Query query = this.em.createNamedQuery(EspecialidadSecundaria.findByIdUsuario);
+    public List<EspecialidadSecundaria> getItemsByIdUsuario(long idUsuario, boolean eliminado) {
+        Query query = this.em.createNamedQuery(EspecialidadSecundaria.findByIdUsuarioEliminado);
         query.setParameter("idUsuario",idUsuario);
+        query.setParameter("eliminado",eliminado);
         return query.getResultList();
     }
 }

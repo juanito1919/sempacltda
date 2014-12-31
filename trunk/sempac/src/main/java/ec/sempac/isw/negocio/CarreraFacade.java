@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Carrera;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,9 @@ public class CarreraFacade extends AbstractFacade<Carrera> {
         super(Carrera.class);
     }
     
+    public List<Carrera> getItemsCarrera(boolean  eliminado) {
+        Query query = this.em.createNamedQuery(Carrera.findByEliminado);
+        query.setParameter("eliminado",eliminado);
+        return query.getResultList();
+    }
 }

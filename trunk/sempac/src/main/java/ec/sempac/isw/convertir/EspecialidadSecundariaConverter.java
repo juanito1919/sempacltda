@@ -36,20 +36,15 @@ public class EspecialidadSecundariaConverter implements Converter {
         return this.ejbFacade.find(getKey(value));
     }
 
-    ec.sempac.isw.modelo.EspecialidadSecundariaPK getKey(String value) {
-        ec.sempac.isw.modelo.EspecialidadSecundariaPK key;
-        String values[] = value.split(SEPARATOR_ESCAPED);
-        key = new ec.sempac.isw.modelo.EspecialidadSecundariaPK();
-        key.setIdUsuario(Long.parseLong(values[0]));
-        key.setIdColegio(Integer.parseInt(values[1]));
+    java.lang.Long getKey(String value) {
+        java.lang.Long key;
+        key = Long.parseLong(value);
         return key;
     }
 
-    String getStringKey(ec.sempac.isw.modelo.EspecialidadSecundariaPK value) {
+    String getStringKey(java.lang.Long value) {
         StringBuilder sb = new StringBuilder();
-        sb.append(value.getIdUsuario());
-        sb.append(SEPARATOR);
-        sb.append(value.getIdColegio());
+        sb.append(value);
         return sb.toString();
     }
 
@@ -60,7 +55,7 @@ public class EspecialidadSecundariaConverter implements Converter {
         }
         if (object instanceof EspecialidadSecundaria) {
             EspecialidadSecundaria o = (EspecialidadSecundaria) object;
-            return getStringKey(o.getEspecialidadSecundariaPK());
+            return getStringKey(o.getIdUsuario());
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), EspecialidadSecundaria.class.getName()});
             return null;

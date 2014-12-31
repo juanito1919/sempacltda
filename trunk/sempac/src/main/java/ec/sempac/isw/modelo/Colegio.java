@@ -61,8 +61,6 @@ public class Colegio implements Serializable {
     @NotNull
     @Column(nullable = false)
     private boolean eliminado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "colegio")
-    private List<EspecialidadSecundaria> especialidadSecundariaList;
 
     public Colegio() {
     }
@@ -101,14 +99,6 @@ public class Colegio implements Serializable {
         this.eliminado = eliminado;
     }
 
-    @XmlTransient
-    public List<EspecialidadSecundaria> getEspecialidadSecundariaList() {
-        return especialidadSecundariaList;
-    }
-
-    public void setEspecialidadSecundariaList(List<EspecialidadSecundaria> especialidadSecundariaList) {
-        this.especialidadSecundariaList = especialidadSecundariaList;
-    }
 
     @Override
     public int hashCode() {

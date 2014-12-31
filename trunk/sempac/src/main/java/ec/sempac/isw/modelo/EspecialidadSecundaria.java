@@ -9,12 +9,13 @@ package ec.sempac.isw.modelo;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,68 +23,69 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author miguesaca
+ * @author Farfan
  */
 @Entity
-@Table(name = "ESPECIALIDAD_SECUNDARIA", catalog = "jmj", schema = "")
+@Table(name = "especialidad_secundaria")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EspecialidadSecundaria.findAll", query = "SELECT e FROM EspecialidadSecundaria e"),
-    @NamedQuery(name = "EspecialidadSecundaria.findByIdUsuario", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.especialidadSecundariaPK.idUsuario = :idUsuario"),
-    @NamedQuery(name = "EspecialidadSecundaria.findByIdColegio", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.especialidadSecundariaPK.idColegio = :idColegio"),
+    @NamedQuery(name = "EspecialidadSecundaria.findByIdUsuario", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.idUsuario = :idUsuario"),
     @NamedQuery(name = "EspecialidadSecundaria.findByEspecialidad", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.especialidad = :especialidad"),
     @NamedQuery(name = "EspecialidadSecundaria.findByAniosEstudios", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.aniosEstudios = :aniosEstudios"),
     @NamedQuery(name = "EspecialidadSecundaria.findByUrl", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.url = :url"),
-    @NamedQuery(name = "EspecialidadSecundaria.findByEliminado", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.eliminado = :eliminado")})
+    @NamedQuery(name = "EspecialidadSecundaria.findByEliminado", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.eliminado = :eliminado"),
+//Personalizados
+    @NamedQuery(name = "EspecialidadSecundaria.findByIdUsuarioEliminado", query = "SELECT e FROM EspecialidadSecundaria e WHERE e.idUsuario = :idUsuario AND e.eliminado = :eliminado")
+})
 public class EspecialidadSecundaria implements Serializable {
     private static final long serialVersionUID = 1L;
-    public static final String findByIdUsuario="EspecialidadSecundaria.findByIdUsuario";
-    @EmbeddedId
-    protected EspecialidadSecundariaPK especialidadSecundariaPK;
+    public static final String findByIdUsuarioEliminado="EspecialidadSecundaria.findByIdUsuarioEliminado";
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_USUARIO")
+    private Long idUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
-    @Column(nullable = false, length = 64)
+    @Column(name = "ESPECIALIDAD")
     private String especialidad;
     @Column(name = "ANIOS_ESTUDIOS")
     private Integer aniosEstudios;
     @Size(max = 128)
-    @Column(length = 128)
+    @Column(name = "URL")
     private String url;
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "ELIMINADO")
     private boolean eliminado;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Usuario usuario;
-    @JoinColumn(name = "ID_COLEGIO", referencedColumnName = "ID_COLEGIO", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "ID_COLEGIO", referencedColumnName = "ID_COLEGIO")
     @ManyToOne(optional = false)
     private Colegio colegio;
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Usuario usuario;
 
     public EspecialidadSecundaria() {
     }
 
-    public EspecialidadSecundaria(EspecialidadSecundariaPK especialidadSecundariaPK) {
-        this.especialidadSecundariaPK = especialidadSecundariaPK;
+    public EspecialidadSecundaria(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public EspecialidadSecundaria(EspecialidadSecundariaPK especialidadSecundariaPK, String especialidad, boolean eliminado) {
-        this.especialidadSecundariaPK = especialidadSecundariaPK;
+    public EspecialidadSecundaria(Long idUsuario, String especialidad, boolean eliminado) {
+        this.idUsuario = idUsuario;
         this.especialidad = especialidad;
         this.eliminado = eliminado;
     }
 
-    public EspecialidadSecundaria(long idUsuario, int idColegio) {
-        this.especialidadSecundariaPK = new EspecialidadSecundariaPK(idUsuario, idColegio);
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
-    public EspecialidadSecundariaPK getEspecialidadSecundariaPK() {
-        return especialidadSecundariaPK;
-    }
-
-    public void setEspecialidadSecundariaPK(EspecialidadSecundariaPK especialidadSecundariaPK) {
-        this.especialidadSecundariaPK = especialidadSecundariaPK;
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getEspecialidad() {
@@ -118,6 +120,14 @@ public class EspecialidadSecundaria implements Serializable {
         this.eliminado = eliminado;
     }
 
+    public Colegio getColegio() {
+        return colegio;
+    }
+
+    public void setColegio(Colegio idColegio) {
+        this.colegio = idColegio;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -126,18 +136,10 @@ public class EspecialidadSecundaria implements Serializable {
         this.usuario = usuario;
     }
 
-    public Colegio getColegio() {
-        return colegio;
-    }
-
-    public void setColegio(Colegio colegio) {
-        this.colegio = colegio;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (especialidadSecundariaPK != null ? especialidadSecundariaPK.hashCode() : 0);
+        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
         return hash;
     }
 
@@ -148,7 +150,7 @@ public class EspecialidadSecundaria implements Serializable {
             return false;
         }
         EspecialidadSecundaria other = (EspecialidadSecundaria) object;
-        if ((this.especialidadSecundariaPK == null && other.especialidadSecundariaPK != null) || (this.especialidadSecundariaPK != null && !this.especialidadSecundariaPK.equals(other.especialidadSecundariaPK))) {
+        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
             return false;
         }
         return true;
@@ -156,7 +158,7 @@ public class EspecialidadSecundaria implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.sempac.isw.modelo.EspecialidadSecundaria[ especialidadSecundariaPK=" + especialidadSecundariaPK + " ]";
+        return "ec.sempac.isw.modelo.prueba.EspecialidadSecundaria[ idUsuario=" + idUsuario + " ]";
     }
     
 }

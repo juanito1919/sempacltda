@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="estudiosSuperioresListForm">
+        <p:panel header="Lista de Estudios Superiores" style="border: none; width: 100%; margin: 0 auto;">
+            <p:dataTable id="datalist" value="#{estudiosUniversitariosController.itemsEstudiosUniversitarios}" 
+                         var="item"
+                         selectionMode="single" 
+                         selection="#{estudiosUniversitariosController.seleccion}"
+                         paginator="true"
+                         rowKey="#{item.estudiosUniversitariosPK}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,20,30"
+                         >
+                <p:ajax
+                    event="rowSelect"
+                    listener="#{estudiosUniversitariosController.mostrar()}"
+                    />
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="UNIVERSIDAD"/>
+                    </f:facet>
+                    <h:outputText value="#{item.universidad.nombre}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="CARRERA"/>
+                    </f:facet>
+                    <h:outputText value="#{item.carrera.nombre}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="TITULO"/>
+                    </f:facet>
+                    <h:outputText value="#{item.titulo}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="AÑOS ESTUDIO"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tiempoEstudios}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="AÑO EGRESO"/>
+                    </f:facet>
+                    <h:outputText value="#{item.anioEgresado}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</ui:composition>

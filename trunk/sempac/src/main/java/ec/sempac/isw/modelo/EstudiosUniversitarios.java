@@ -36,9 +36,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EstudiosUniversitarios.findByTiempoEstudios", query = "SELECT e FROM EstudiosUniversitarios e WHERE e.tiempoEstudios = :tiempoEstudios"),
     @NamedQuery(name = "EstudiosUniversitarios.findByAnioEgresado", query = "SELECT e FROM EstudiosUniversitarios e WHERE e.anioEgresado = :anioEgresado"),
     @NamedQuery(name = "EstudiosUniversitarios.findByUrl", query = "SELECT e FROM EstudiosUniversitarios e WHERE e.url = :url"),
-    @NamedQuery(name = "EstudiosUniversitarios.findByEliminado", query = "SELECT e FROM EstudiosUniversitarios e WHERE e.eliminado = :eliminado")})
+    @NamedQuery(name = "EstudiosUniversitarios.findByEliminado", query = "SELECT e FROM EstudiosUniversitarios e WHERE e.eliminado = :eliminado"),
+//Personalizados
+    @NamedQuery(name = "EstudiosUniversitarios.findByUsuarioEliminado", query = "SELECT e FROM EstudiosUniversitarios e WHERE e.estudiosUniversitariosPK.idUsuario = :idUsuario AND e.eliminado = :eliminado")
+})
 public class EstudiosUniversitarios implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;    
+    public static final String findByUsuarioEliminado ="EstudiosUniversitarios.findByUsuarioEliminado"; 
     @EmbeddedId
     protected EstudiosUniversitariosPK estudiosUniversitariosPK;
     @Basic(optional = false)

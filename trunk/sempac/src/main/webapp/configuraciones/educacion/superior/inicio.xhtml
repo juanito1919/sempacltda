@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="estudiosSuperioresCreateForm">
+            <p:panel header="Estudios Superiores" style="border: none; margin-top: -10px;" >
+                <h:panelGroup id="display">
+                    #{estudiosUniversitariosController.iniciaSelected()}
+                    <h:panelGrid 
+                        columns="4" 
+                        border="0"
+                        columnClasses="column1Class, column2Class,column3Class,column4Class,column1Class,column6Class" 
+                        >
+                        <p:outputLabel rendered="true" value="UNIVERSIDAD: " 
+                                       for="universidad" />
+                        <p:selectOneMenu id="universidad" 
+                                         value="#{estudiosUniversitariosController.selected.universidad}"
+                                         >
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{estudiosUniversitariosController.itemsUniversidad}"
+                                           var="UniversidadItem"
+                                           itemValue="#{UniversidadItem}"
+                                           itemLabel="#{UniversidadItem.nombre}"
+                                           />
+                            <f:converter binding="#{universidadConverter}"/>
+                        </p:selectOneMenu>
+
+
+                        <p:outputLabel rendered="true" value="CARRERA: " 
+                                       for="carrera" />
+                        <p:selectOneMenu id="carrera" 
+                                         value="#{estudiosUniversitariosController.selected.carrera}"
+                                         >
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{estudiosUniversitariosController.itemsCarrera}"
+                                           var="CarreraItem"
+                                           itemValue="#{CarreraItem}"
+                                           itemLabel="#{CarreraItem.nombre}"
+                                           />
+                            <f:converter binding="#{carreraConverter}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="TITULO: " 
+                                       for="titulo" />
+                        <p:inputText id="titulo" 
+                                     value="#{estudiosUniversitariosController.titulo}"
+                                     title="TITULO"
+                                     onkeyup="value = value.toUpperCase()"
+                                     required="false"
+                                     size="50"/>
+
+                        <p:outputLabel value="#{bundleEtiquetasES.AniosEstudio}" 
+                                       for="aniosEstudios" />
+                        <p:inputText id="aniosEstudios" 
+                                     value="#{estudiosUniversitariosController.selected.tiempoEstudios}" 
+                                     title="#{bundleEtiquetasES.AniosEstudio}" 
+                                     validatorMessage=""
+                                     onkeyup="value = value.toUpperCase()"/>
+
+                        <p:outputLabel value="AÑO DE EGRESO: " 
+                                       for="aniosEstudios" />
+                        <p:inputText id="anioEgreso" 
+                                     value="#{estudiosUniversitariosController.selected.anioEgresado}" 
+                                     title="AÑO DE EGRESO" 
+                                     validatorMessage=""
+                                     onkeyup="value = value.toUpperCase()"/>
+
+                    </h:panelGrid>
+                    <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
+                        <p:commandButton actionListener="#{estudiosUniversitariosController.guardaNuevo(event)}" 
+                                         value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" 
+                                         update="estudiosSuperioresCreateForm,universidad,carrera,titulo,aniosEstudios,anioEgreso"/>
+
+                        <p:commandButton actionListener="#{estudiosUniversitariosController.eliminar}"
+                                         value="#{bundleEtiquetasES.Quitar}" 
+                                         icon="ui-icon-circle-close"
+                                         update="estudiosSuperioresCreateForm"/>
+                    </div>
+
+                    <p:separator style="border-style: dotted; width: 75%; margin-bottom: 10px;"/>
+                    <ui:include src="lista.xhtml"/>
+                </h:panelGroup>
+            </p:panel>
+        </h:form>
+    </ui:composition>
+</html>
