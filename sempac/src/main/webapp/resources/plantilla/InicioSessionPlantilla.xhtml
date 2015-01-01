@@ -27,7 +27,7 @@
         <h:form>
             <p:panel styleClass="panelLogin" style="border: none;">
                 <h:panelGrid columns="2" cellspacing="5" cellpadding="5" style="margin: 0px auto 0px auto;">
-                    <h:commandButton value="Registrarse" style="height: 70px; width: 100px; 
+                    <h:commandButton value="Registrarse1" style="height: 70px; width: 100px; 
                                      background-color:#33cc00; border: none;
                                      border-radius: 10px; color: #ffffff;" 
                                      onclick="PF('UsuarioCreateDialog').show();">
@@ -41,8 +41,9 @@
                 </h:panelGrid>
             </p:panel>
         </h:form>
-        <ui:include src="../../configuraciones/registro/registroUsuario.xhtml"/>
+        <ui:include src="../../comunes/usuario/Create.xhtml"/>
         <!-- dialog para iniciar session --> 
+      
         <h:form> 
             <p:growl id="growl" sticky="true" showDetail="true"  life="3000" />
             <p:dialog   widgetVar="dlIniciarSession" 
