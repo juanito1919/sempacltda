@@ -12,23 +12,16 @@
     </div> 
 
     <p:panel header="Referencia Personal" 
-             style="border: none; width: 75%; margin: 5px auto;">
+             style="border: none; width: 80%; margin: 5px auto;">
         <h:form id="ReferenciaPersonalCreateForm">
             <h:panelGroup id="display">
-                 #{referenciaPersonalController.iniciaSelected()}
+                #{referenciaPersonalController.iniciaSelected()}
                 <h:panelGrid 
                     columns="4" 
                     border="0"
                     columnClasses="column1Class, column2Class,column3Class,column4Class" 
                     >
-                   
-                    <p:outputLabel rendered="true" value="#{bundle.CreateReferenciaPersonalLabel_referenciaPersonalPK_idReferenciaPersonal}" 
-                                   for="referenciaPersonalPK_idReferenciaPersonal" />
-                    <p:inputText rendered="true" id="referenciaPersonalPK_idReferenciaPersonal" 
-                                 value="#{referenciaPersonalController.selected.referenciaPersonalPK.idReferenciaPersonal}" 
-                                 title="#{bundle.CreateReferenciaPersonalTitle_referenciaPersonalPK_idReferenciaPersonal}" 
-                                 required="true" 
-                                 requiredMessage="#{bundle.CreateReferenciaPersonalRequiredMessage_referenciaPersonalPK_idReferenciaPersonal}"/>
+
                     <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_nombres}" 
                                    for="nombres" />
                     <p:inputText id="nombres" 
@@ -55,16 +48,17 @@
                     <p:inputText id="correo" 
                                  value="#{referenciaPersonalController.selected.correo}" 
                                  title="#{bundle.CreateReferenciaPersonalTitle_correo}" />
-                    <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_url}" 
-                                   for="url" />
+                    <p:commandButton id="botonSubir" value="Subir Documento" onclick="dialogSubida.show();
+                            return false;"/>
                     <p:inputText id="url" 
+                                 disabled="true"
                                  value="#{referenciaPersonalController.selected.url}" 
                                  title="#{bundle.CreateReferenciaPersonalTitle_url}" />
-                    
+
                 </h:panelGrid>
                 <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
-                    <p:commandButton actionListener="#{referenciaPersonalController.guardaNuevo(event)}" 
-                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" update=":ReferenciaPersonalListForm"/>
+                    <p:commandButton actionListener="#{referenciaPersonalController.guardaNuevo}" 
+                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" update="display,:ReferenciaPersonalListForm:datalist"/>
 
                     <p:commandButton value="#{bundleEtiquetasES.Cancelar}" 
                                      onclick="ReferenciaPersonalCreateDialog.hide()" 
@@ -75,5 +69,22 @@
     </p:panel>
     <p:separator style="border-style: dotted; width: 75%; margin-bottom: 10px;"/>
     <ui:include src="lista.xhtml"/>
+
+    <p:dialog widgetVar="dialogSubida" width="600" height="200" modal="true">
+        <h:form id="SubirArchivoReferenciaPersonal" enctype="multipart/form-data">
+            <p:fileUpload fileUploadListener="#{referenciaPersonalController.subirArchivos}" 
+                          mode="advanced" 
+                          dragDropSupport="false"
+                          label="Buscar Archivo"
+                          update="messages,SubirArchivoReferenciaPersonal :ReferenciaPersonalCreateForm:url" 
+                          sizeLimit="900000" 
+                          cancelLabel="Cancelar"
+                          uploadLabel="Subir"
+                          fileLimit="1" 
+                          allowTypes="/(\.|\/)(pdf|doc|docx)$/" 
+                          oncomplete="PF('dialogSubida').hide();"/>
+            <p:growl id="messages" showDetail="true" />
+        </h:form>
+    </p:dialog>
 </ui:composition>
 

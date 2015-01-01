@@ -36,12 +36,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.Event;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.imageio.stream.FileImageOutputStream;
@@ -49,6 +49,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.CroppedImage;
+import org.primefaces.model.UploadedFile;
 
 @ManagedBean(name = "usuarioController")
 @SessionScoped
@@ -112,6 +113,10 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         super.setFacade(ejbFacade);
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
         this.setSelected(new Usuario());
+    }
+    
+    public void actualizarUsuario(ActionEvent evet){
+        this.save(evet);
     }
 
     public void iniciarBusqueda() {
@@ -336,7 +341,9 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         this.setCroppeFoto(null);
         this.setImageTemp(null);
     }
-
+    public void hola(ActionEvent evet){
+        System.out.println("holaaAA");
+    }
     public void guardarFoto() {
         System.out.println("como estassssss");
     }
@@ -408,6 +415,41 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Error al subir el archivo"));
         }
+    }
+    
+    public void subirFoto(FileUploadEvent event) {
+        UploadedFile file = event.getFile();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        String filePath = ec.getRealPath(String.format("/Documentos/%s", file.getFileName()));
+       //TODO
+        //AGRAGAR LA CARPETA DEL USUARIO
+        String rutaRelativa="../../Documentos/"+file.getFileName();
+        try {
+            this.getSelected().setUrl(rutaRelativa);
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+            byte[] buffer = new byte[6124];
+            int bulk;
+            InputStream inputStream = file.getInputstream();
+            while (true) {
+                bulk = inputStream.read(buffer);
+                if (bulk < 0) {
+                    break;
+                }
+                fileOutputStream.write(buffer, 0, bulk);
+                fileOutputStream.flush();
+            }
+            fileOutputStream.close();
+            inputStream.close();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ReferenciaPersonalController.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        
+        FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Archivo Subido"));
+        
+       
+        return;
     }
 
     @Override

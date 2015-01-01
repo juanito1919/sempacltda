@@ -15,25 +15,30 @@
                                              disabled="#{usuarioController.imageTemp==null}"
                                              action="#{usuarioController.actionGuardarFoto}"
                                              process="@form"
-                                             oncomplete="dlg2.hide();"/>
+                                          
+                                             update="formFoto"/>
+                            
+                            <p:commandButton id="buttonFoto" value="Establecer Foto" actionListener="#{usuarioController.guardarFoto}"/>
+                           
                             <p:commandButton value="Cancelar"
                                              type="button"
-                                             onclick="dlg2.hide();"/>
+                                             onclick="PF('dlg2').hide();"/>
                         </h:panelGrid>
                     </p:panel>
 
                     <p:panel styleClass="editorFoto">
                         <p:imageCropper value="#{usuarioController.croppeFoto}"
-                                        image="/usuario/temp/#{usuarioController.imageTemp}"
+                                        image="../../Documentos/temp/#{usuarioController.imageTemp}"
                                         rendered="#{usuarioController.imageTemp!=null}"
-                                        initialCoords="225,75,300,125"
-                                        minSize="100,150"
-                                        maxSize="300,350"
+                                        initialCoords="0,0,140,150"
+                                        minSize="70,75"
+                                        maxSize="280,300"
                                         aspectRatio="0.9"/>
+
                         <p:fileUpload fileUploadListener="#{usuarioController.uploadFile}"
                                       rendered="#{usuarioController.imageTemp==null}"
                                       mode="advanced"
-                                      label="Seleccione Foto (max.500Kb)"
+                                      label="Seleccione Foto"
                                       auto="true"
                                       update="formFoto"
                                       sizeLimit="500000"

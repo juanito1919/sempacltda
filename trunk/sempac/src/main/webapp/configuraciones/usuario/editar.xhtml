@@ -13,15 +13,15 @@
         <h:form id="UsuarioEditForm">
             <div style="width: 70%; float: left;">
                 <p:panel header="Información personal" style="border: none;" >
-                   
-                    
+
+
                     <h:panelGroup id="display">
                         <h:panelGrid columns="4" 
                                      border="0" 
                                      cellspacing="4" 
                                      cellpadding="0" 
                                      columnClasses="column1Class, column2Class,column3Class,column4Class" >
-                            
+
                             <p:inputText id="idUsuario" value="#{usuarioController.selected.idUsuario}" title="#{bundle.EditUsuarioTitle_idUsuario}" required="true" rendered="false" />
                             <p:outputLabel value="#{bundle.EditUsuarioLabel_tipoDocumento}" for="numDocumento" />
                             <p:inputText id="numDocumento" styleClass="inputText" value="#{usuarioController.selected.identidad}" title="#{bundle.EditUsuarioLabel_tipoDocumento}" requiredMessage="#{bundleEtiquetasES.Identidad} #{bundleEtiquetasES.CampoRequerido}"  disabled="false"/>
@@ -74,8 +74,10 @@
             </div>
             <div style="width: 30%; float:left;">
                 <p:panel id="panelFoto" header="Foto" style="border: none;">
-                    <h:graphicImage  id="fotoPerfil" value="/usuario/null.jpg" height="140" width="160" />
+                    <h:graphicImage  id="fotoPerfil" value="#{usuarioController.selected.url}"  height="140" width="160" />
                     <p:commandButton value="Cambiar Foto" icon="ui-icon-refresh" type="button" onclick="PF('dlg2').show();" />
+
+
                 </p:panel>
             </div>
             <div style="clear:both; width: 70%;">
@@ -156,6 +158,24 @@
             </div>
 
         </h:form>
-       <ui:include src="../../configuraciones/usuario/cambiarFoto.xhtml"/>
+        <p:dialog header="Selecionar foto de Perfil" widgetVar="dlg2" modal="true" height="500" width="800" resizable="false">
+
+             <h:form id="SubirFotoUsuario" enctype="multipart/form-data">
+                 <p:fileUpload fileUploadListener="#{usuarioController.subirFoto}" 
+                          mode="advanced" 
+                          dragDropSupport="false"
+                          label="Buscar Archivo"
+                          
+                          update="messages,SubirFotoUsuario :UsuarioEditForm:fotoPerfil,SubirFotoUsuario :formUsuarioLogeado:fotoUsuarioLogueo" 
+                          sizeLimit="900000" 
+                          cancelLabel="Cancelar"
+                          uploadLabel="Subir"
+                          fileLimit="1" 
+                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                          oncomplete="PF('dlg2').hide();"/>
+            <p:growl id="messages" showDetail="true" />
+        </h:form>
+        </p:dialog>
     </ui:composition>
+
 </html>

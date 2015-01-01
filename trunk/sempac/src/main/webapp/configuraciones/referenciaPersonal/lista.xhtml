@@ -4,16 +4,28 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:x="http://xpert.com/faces"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <script type="text/javascript">
+        function start() {
+            PF('statusDialog').show();
+        }
+
+        function stop() {
+            PF('statusDialog').hide();
+        }
+    </script>
 
     <h:form id="ReferenciaPersonalListForm">
         <p:panel header="Lista de Referencias" style="border: none; width: 100%; margin: 0 auto;">
             <p:dataTable id="datalist" value="#{referenciaPersonalController.items}" var="item"
                          selectionMode="single" selection="#{referenciaPersonalController.selected}"
-                         paginator="true"
+                         paginator="false"
+                         style="height: 200px;"
                          rowKey="#{item.referenciaPersonalPK}"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,20,30"
+                         rows="4"
+                        
                          >
                 <p:ajax event="rowSelect"   update="editButton deleteButton"/>
                 <p:ajax event="rowUnselect" update="editButton deleteButton"/>
@@ -45,7 +57,7 @@
                     <f:facet name="header">
                         <h:outputText value="Archivo"/>
                     </f:facet>
-                    <p:commandLink value="Descargar" />
+                    <h:link outcome="#{referenciaPersonalController.selected.url}" value="Descargar"></h:link>
                 </p:column>
                 <p:column width="20%">
                     <f:facet name="header">
@@ -60,12 +72,17 @@
                     </p:commandButton>
                     <p:commandButton id="deleteButton"
                                      value="#{bundle.Delete}"
+                                     actionListener="#{referenciaPersonalController.destroy()}"
+                                     update=":ReferenciaPersonalListForm:datalist"
                                      icon="ui-icon-close">
-                        
+
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
         </p:panel>
     </h:form>
+    <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+        <p:graphicImage name="http://www.giraecuestre.infitec.es/imagenes/BarraProgreso2.gif" />
+    </p:dialog>
     <ui:include src="editar.xhtml"/>
 </ui:composition>

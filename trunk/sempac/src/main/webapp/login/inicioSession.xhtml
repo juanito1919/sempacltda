@@ -41,22 +41,20 @@
                                      border-radius: 10px; color: #ffffff;" 
                                      onclick="dlIniciarSessionEmpleados.show();
                                                return false;"/>
-                    
-                    <h:commandButton value="Registrarse" style="height: 70px; width: 100px; 
+                    <h:commandButton value="Registrarse2" style="height: 70px; width: 100px; 
                                      background-color:#33cc00; border: none;
                                      border-radius: 10px; color: #ffffff;" 
-                                     action="#{usuarioController.prepareNuevo()}"
+                                     actionListener="#{usuarioController.prepareCreate}"
                                      onclick="UsuarioCreateDialog.show();
                                              return false;">
 
                     </h:commandButton>
-                </h:panelGrid>
-                
+                </h:panelGrid>   
             </p:panel>
         </h:form>
         <ui:include src="../configuraciones/registro/registroUsuario.xhtml"/>
         <!-- dialog para iniciar session -->
-
+       
         <p:dialog   widgetVar="dlIniciarSessionEmpleados" 
                     header="Acceso a Usuarios"
                     minHeight="40" 
