@@ -74,7 +74,11 @@
             </div>
             <div style="width: 30%; float:left;">
                 <p:panel id="panelFoto" header="Foto" style="border: none;">
-                    <h:graphicImage  id="fotoPerfil" value="#{usuarioController.selected.url}"  height="140" width="160" />
+                    <p:lightBox styleClass="imagebox" id="lighbox1"> 
+                        <h:outputLink value="#{usuarioController.selected.url}" title="Nature 1">
+                            <h:graphicImage  id="fotoPerfil" value="#{usuarioController.selected.url}"  height="140" width="160" />
+                        </h:outputLink>
+                    </p:lightBox>
                     <p:commandButton value="Cambiar Foto" icon="ui-icon-refresh" type="button" onclick="PF('dlg2').show();" />
 
 
@@ -160,21 +164,21 @@
         </h:form>
         <p:dialog header="Selecionar foto de Perfil" widgetVar="dlg2" modal="true" height="500" width="800" resizable="false">
 
-             <h:form id="SubirFotoUsuario" enctype="multipart/form-data">
-                 <p:fileUpload fileUploadListener="#{usuarioController.subirFoto}" 
-                          mode="advanced" 
-                          dragDropSupport="false"
-                          label="Buscar Archivo"
-                          
-                          update="messages,SubirFotoUsuario :UsuarioEditForm:fotoPerfil,SubirFotoUsuario :formUsuarioLogeado:fotoUsuarioLogueo" 
-                          sizeLimit="900000" 
-                          cancelLabel="Cancelar"
-                          uploadLabel="Subir"
-                          fileLimit="1" 
-                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
-                          oncomplete="PF('dlg2').hide();"/>
-            <p:growl id="messages" showDetail="true" />
-        </h:form>
+            <h:form id="SubirFotoUsuario" enctype="multipart/form-data">
+                <p:fileUpload fileUploadListener="#{usuarioController.subirFoto}" 
+                              mode="advanced" 
+                              dragDropSupport="false"
+                              label="Buscar Archivo"
+
+                              update="messages,SubirFotoUsuario :UsuarioEditForm:fotoPerfil,SubirFotoUsuario :formUsuarioLogeado:fotoUsuarioLogueo" 
+                              sizeLimit="900000" 
+                              cancelLabel="Cancelar"
+                              uploadLabel="Subir"
+                              fileLimit="1" 
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                              oncomplete="PF('dlg2').hide();"/>
+                <p:growl id="messages" showDetail="true" />
+            </h:form>
         </p:dialog>
     </ui:composition>
 

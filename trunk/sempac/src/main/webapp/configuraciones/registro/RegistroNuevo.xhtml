@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="../../resources/plantilla/VentanaPrincipalPlantilla.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define  name="formulario">
+        <h:form id="UsuarioRegistro">
+            <h:panelGroup id="display">
+                <h:panelGrid columns="4" 
+                             border="0" 
+
+                             cellspacing="4" 
+                             cellpadding="0" 
+                             columnClasses="column1Class, column2Class,column3Class,column4Class" 
+                             rendered="#{userController.selected != null}">
+
+                    <p:outputLabel value="#{bundleEtiquetasES.TipoIdientidad}" for="tipoIdentidad" />
+                    <p:selectOneMenu id="tipoIdentidad" 
+                                     value="#{userController.selected.tipoIdentidad}"
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.TipoIdientidad}  #{bundleEtiquetasES.CampoRequerido}">                          
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Cedula}" itemValue="C" />  
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Ruc}" itemValue="R" />
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Pasaporte}" itemValue="P" />
+
+                        <p:ajax event="change" 
+                                update="#{userController.selected.identidad = null},identidad"/>
+                    </p:selectOneMenu>  
+
+                    <p:outputLabel value="#{bundleEtiquetasES.Identidad}" for="identidad" />
+                    <p:inputText id="identidad" 
+                                 disabled="#{userController.selected.tipoIdentidad!=null}"
+                                 onkeyup="value = value.toUpperCase()"
+                                 value="#{userController.selected.identidad}" 
+                                 title="#{bundleEtiquetasES.Identidad}"
+                                 required="true" 
+                                 requiredMessage="#{bundleEtiquetasES.Identidad} #{bundleEtiquetasES.CampoRequerido}" >
+                        <p:ajax event="change" 
+                                listener="#{userController.validadIdentidad()}"/>
+                    </p:inputText>
+
+                    <p:outputLabel value="#{bundleEtiquetasES.Nombres}" for="nombres" />
+                    <p:inputText id="nombres" 
+                                 onkeyup="value = value.toUpperCase()"
+                                 value="#{userController.selected.nombres}" 
+                                 title="#{bundleEtiquetasES.Nombres}"
+                                 required="true" 
+                                 requiredMessage="#{bundleEtiquetasES.Nombres} #{bundleEtiquetasES.CampoRequerido}" />
+
+                    <p:outputLabel value="#{bundleEtiquetasES.Apellidos}" for="apellidos" />
+                    <p:inputText id="apellidos" 
+                                 onkeyup="value = value.toUpperCase()"
+                                 value="#{userController.selected.apellidos}" 
+                                 title="#{bundleEtiquetasES.Apellidos}" />
+                    <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
+                    <p:inputText id="username" 
+                                 value="#{userController.selected.username}" 
+                                 title="Nombre De usuario" 
+                                 required="true" 
+                                 requiredMessage="#{bundleEtiquetasES.UserName} #{bundleEtiquetasES.CampoRequerido}">
+                        <p:ajax event="blur" 
+                                listener="#{userController.validarUsername()}"/>
+                    </p:inputText>
+
+                    <p:outputLabel value="#{bundleEtiquetasES.Contrasena}" for="contrasena" />
+                    <p:password id="contrasena" 
+                                value="#{userController.contrasena}" 
+                                title="#{bundleEtiquetasES.Contrasena}" 
+                                required="true" 
+                                requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
+                        <p:ajax event="blur" 
+                                listener="#{userController.validarContrasena()}"/>
+                    </p:password>
+                    <p:outputLabel value="#{bundleEtiquetasES.ConfirmeContrasena}" for="confirmarContrasena" />
+                    <p:password id="confirmarContrasena" 
+                                value="#{userController.confirmaContrasena}" 
+                                title="#{bundleEtiquetasES.Contrasena}" 
+                                required="true" 
+                                requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
+                        <p:ajax event="blur" 
+                                listener="#{userController.validarConfirmacionContrasena()}" 
+                                update="contrasena"/>
+                    </p:password>
+                </h:panelGrid>
+                <p:commandButton actionListener="#{userController.create}" value="REGISTRAR"/>
+                <p:commandButton value="CANCELAR"/>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

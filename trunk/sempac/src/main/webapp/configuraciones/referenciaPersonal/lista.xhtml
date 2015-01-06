@@ -57,7 +57,8 @@
                     <f:facet name="header">
                         <h:outputText value="Archivo"/>
                     </f:facet>
-                    <h:link outcome="#{referenciaPersonalController.selected.url}" value="Descargar"></h:link>
+                    <h:outputLink id="link1"  value="#{item.url}" target="_blank">Descargar</h:outputLink>
+                  
                 </p:column>
                 <p:column width="20%">
                     <f:facet name="header">
