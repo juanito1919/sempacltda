@@ -181,7 +181,22 @@ public class UserController implements Serializable {
         }
 
     }
+    public String getContrasena() {
+        return contrasena;
+    }
 
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getConfirmaContrasena() {
+        return confirmaContrasena;
+    }
+
+    public void setConfirmaContrasena(String confirmaContrasena) {
+        this.confirmaContrasena = confirmaContrasena;
+    }
+    
     //////////////Metodos Auto-generados
     public Usuario getSelected() {
         return selected;
