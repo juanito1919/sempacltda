@@ -51,6 +51,36 @@
                                      onkeyup="value = value.toUpperCase()"
                                      value="#{userController.selected.apellidos}" 
                                      title="#{bundleEtiquetasES.Apellidos}" />
+                        <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
+                        <p:inputText id="username" 
+                                     value="#{userController.selected.username}" 
+                                     title="Nombre De usuario" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.UserName} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{userController.validarUsername()}"/>
+                        </p:inputText>
+                        
+                        <p:outputLabel value="#{bundleEtiquetasES.Contrasena}" for="contrasena" />
+                        <p:password id="contrasena" 
+                                    value="#{userController.contrasena}" 
+                                    title="#{bundleEtiquetasES.Contrasena}" 
+                                    required="true" 
+                                    requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{userController.validarContrasena()}"/>
+                        </p:password>
+                        <p:outputLabel value="#{bundleEtiquetasES.ConfirmeContrasena}" for="confirmarContrasena" />
+                        <p:password id="confirmarContrasena" 
+                                    value="#{userController.confirmaContrasena}" 
+                                    title="#{bundleEtiquetasES.Contrasena}" 
+                                    required="true" 
+                                    requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{userController.validarConfirmacionContrasena()}" 
+                                    update="contrasena"/>
+                        </p:password>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{userController.create}" value="#{bundles.Save}"/>
                     <p:commandButton value="#{bundles.Cancel}"/>
