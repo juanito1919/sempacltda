@@ -39,14 +39,15 @@
                       <h:commandButton value="Iniciar Session" style="height: 70px; width: 100px; 
                                      background-color:#0066ff; border: none;
                                      border-radius: 10px; color: #ffffff;" 
+                                     
                                      onclick="dlIniciarSessionEmpleados.show();
                                                return false;"/>
+                      
                     <h:commandButton value="Registrarse2" style="height: 70px; width: 100px; 
                                      background-color:#33cc00; border: none;
                                      border-radius: 10px; color: #ffffff;" 
-                                     actionListener="#{usuarioController.prepareCreate}"
-                                     onclick="UsuarioCreateDialog.show();
-                                             return false;">
+                                     action="#{controlUrlControler.openRegistroUsuario()}"
+                                     actionListener="#{usuarioController.prepareCreate}">
 
                     </h:commandButton>
                 </h:panelGrid>   

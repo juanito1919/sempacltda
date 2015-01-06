@@ -24,7 +24,12 @@
         <div style="width: 70%; float:left;">
             <p:panel id="panelPerfil" header="Datos Personales" style="border: none; width: 100%;" >
                 <div style="width: 20%; float:left;">
-                    <h:graphicImage  id="fotoPerfil" value="#{usuarioController.selected.url}" height="150" width="150" />
+                      <p:lightBox styleClass="imagebox" id="lighbox1"> 
+                        <h:outputLink value="#{usuarioController.selected.url}" title="Foto de Perfil">
+                            <h:graphicImage  id="fotoPerfil" value="#{usuarioController.selected.url}" height="150" width="150" />
+                        </h:outputLink>
+                    </p:lightBox>
+                    
                     <div style="margin: 0px auto; width: 150px;">
                         <h:link value="Editar Perfil" styleClass="link"/>
                     </div>
@@ -53,7 +58,7 @@
                 <p:panel id="panelNotificaciones" header="Ofertas de Empleo"  style="border: none; width: 98%; height: 200px;" >
                     <p:scrollPanel  style="border: none; width: 104%; height: 200px;"  mode="native">
 
-                        <c:forEach items="#{personalRequeridoController.itemPersonalRequerido}" var="item">
+                        <c:forEach items="#{personalRequeridoController.items}" var="item">
                             <p:separator style="border-color:#ececec; border-width: 0.1em; box-shadow: none;"/> 
                             <p:commandLink styleClass="linkBuscaTrabajo" 
                                            update="carDetail" 
