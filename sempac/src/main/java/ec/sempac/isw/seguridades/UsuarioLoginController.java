@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -100,14 +101,18 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         this.repiteContrasena = false;
     }
 
+    public void prepareNuevo() {
+        System.err.println("prepara login");
+    }
     public void validaUsuario() {
+        System.out.println("Login");
         try {
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
             Usuario listUsuario = this.ejbFacade.getUsuario(username);
             if (listUsuario == null) {
 
-                MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("UsuarioNoExiste"));
+                MuestraMensaje.addAdvertencia("ERROR USUARIO");
                 return;
             }
             SistemaUsuario usuarioSistema;

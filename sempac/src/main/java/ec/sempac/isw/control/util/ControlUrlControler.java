@@ -57,4 +57,8 @@ public class ControlUrlControler {
     public void openRegistroUsuario() throws IOException {
         Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("registro"));
     }
+    
+    public void openLoginUsuario() throws IOException {
+        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("loginUsuario"));
+    }
 }
