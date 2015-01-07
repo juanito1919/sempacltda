@@ -43,11 +43,11 @@
                                      onclick="dlIniciarSessionEmpleados.show();
                                                return false;"/>
                       
-                    <h:commandButton value="Registrarse2" style="height: 70px; width: 100px; 
+                    <h:commandButton value="Registrarse" style="height: 70px; width: 100px; 
                                      background-color:#33cc00; border: none;
                                      border-radius: 10px; color: #ffffff;" 
+                                     action="#{controlUrlControler.openRegistroUsuario()}"
                                      actionListener="#{usuarioController.prepareCreate}"
-                                     onclick="UsuarioCreateDialog.show(); return false;"
                                      >
 
                     </h:commandButton>
