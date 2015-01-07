@@ -68,7 +68,7 @@ public class UserController implements Serializable {
     private String confirmaContrasena;
     private String contrasena;
     private Usuario seleccionado;
-
+    private Date fMaxima;
     public UserController() {//solo al inicio del ciclo del bean
 
     }
@@ -77,12 +77,14 @@ public class UserController implements Serializable {
     public void init() { // cada vez q se abra la pagina
         itemPaises = ejbFacadePais.getItemsPais(false);
         selected = new Usuario();
+        fMaxima = new Date(new Date().getYear()-12,new Date().getMonth(),new Date().getDate());//fecha actual menos 12 anios
     }
 
     public void selectPais() {
         selected.setIdCiudad(null);
-        itemCiudades = null;
+        setItemCiudades(null);
         provincia = null;
+        itemProvincias = null;
         if (pais != null) {
             itemProvincias = ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais());
 
@@ -94,9 +96,9 @@ public class UserController implements Serializable {
     public void selectProvincia() {
         selected.setIdCiudad(null);
         if (pais != null && provincia != null) {
-            itemCiudades = ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion());
+            setItemCiudades(ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
         } else {
-            itemCiudades = null;
+            setItemCiudades(null);
         }
     }
 
@@ -104,8 +106,10 @@ public class UserController implements Serializable {
         if (selected.getUsername() != null) {
             if (ejbFacade.getItemsUserName(selected.getUsername()) != null) {
                 MuestraMensaje.addError("Ya existe, usuario con username: " + selected.getUsername() + "\' Ingrese Otro\'");
+                System.out.println("Ya existe");
                 selected.setUsername(null);
             } else {
+                System.out.println(" User correcto");
                 MuestraMensaje.addSatisfactorio("Correcto");
             }
         }
@@ -115,22 +119,28 @@ public class UserController implements Serializable {
         if (contrasena != null) {
             if (contrasena.length() < 6 || contrasena.length() > 15) {
                 MuestraMensaje.addError("La contrasena debe tener minimo 6 caracteres y maximo 16");
+                System.out.println("La contrasena debe tener minimo 6 caracteres y maximo 16");
                 selected.setContrasena(null);
                 contrasena = null;
             } else {
                 MuestraMensaje.addSatisfactorio("Correcto");
+                System.out.println("Pass correcto");
             }
+            confirmaContrasena = null;
         }
     }
 
     public void validarConfirmacionContrasena() {
         if (contrasena != null) {
             if (confirmaContrasena != null) {
-                if (!selected.getContrasena().equals(confirmaContrasena)) {
+                if (!contrasena.equals(confirmaContrasena)) {
                     MuestraMensaje.addError("No coinciden las contrasenas");
+                    System.out.println("no coinciden las pass");
                     confirmaContrasena = null;
                 } else {
-                    MuestraMensaje.addSatisfactorio("Correcto");
+                    cifrarContrasena();
+                    MuestraMensaje.addSatisfactorio("Verificacion Correcta");
+                    System.out.println("verificacion correcta");
                 }
             } else {
                 MuestraMensaje.addError("Ingrese la confirmacion de contrasena");
@@ -155,18 +165,35 @@ public class UserController implements Serializable {
     }
 
     public void validadIdentidad() {
-        if (selected.getTipoIdentidad() == 'C') {
-            if (!Validaciones.validaCedula(selected.getIdentidad())) {
-                MuestraMensaje.addError("Cedula incorrecta");
-            } else {
-                MuestraMensaje.addSatisfactorio("Correcta");
+        if (selected.getTipoIdentidad() != null) {
+            if (selected.getTipoIdentidad() == 'C') {
+                
+                if (!Validaciones.validaCedula(selected.getIdentidad())) {
+                    MuestraMensaje.addError("Cedula incorrecta");
+                    System.out.println("tipo incorrecto");
+                } else {
+                    MuestraMensaje.addSatisfactorio("Correcta");
+                    System.out.println("tipo correcto");
+                }
             }
         }
     }
 
+    public void validaTipoIdentidad() {
+        System.out.println("esto es TI: " + selected.getTipoIdentidad());
+        selected.setIdentidad(null);
+        if (selected.getTipoIdentidad() == null) {
+            return ;
+        }
+        if (selected.getTipoIdentidad() == '-') {
+            selected.setTipoIdentidad(null);
+            return ;
+        }
+        return ;
+    }
     private void crearSistemaUsuario() {
         SistemaUsuario sistemaUsuario = new SistemaUsuario();
-        sistemaUsuario.setIdUsuario(selected.getIdUsuario());
+        sistemaUsuario.setIdUsuario((ejbFacade.getItemsUserName(selected.getUsername())).getIdUsuario());
         sistemaUsuario.setFechaAsignacion(new Date());
         sistemaUsuario.setEstado('V');//V = valido, P = Pago
         sistemaUsuario.setTiempoBloqueo(0);
@@ -181,6 +208,15 @@ public class UserController implements Serializable {
         }
 
     }
+    public void revisaMail() {
+        System.out.println("Mail " + this.getSelected().getCorreoElectronico());
+        Usuario user = this.ejbFacade.getItemsCorreo(this.getSelected().getCorreoElectronico());
+        if (user != null) {
+            selected.setCorreoElectronico(null);
+            MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
+        }
+    }
+
     public String getContrasena() {
         return contrasena;
     }
@@ -196,7 +232,34 @@ public class UserController implements Serializable {
     public void setConfirmaContrasena(String confirmaContrasena) {
         this.confirmaContrasena = confirmaContrasena;
     }
-    
+
+    public Date getFMaxima() {
+        return fMaxima;
+    }
+
+    public void setFMaxima(Date fMaxima) {
+        this.fMaxima = fMaxima;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
+
+    public Region getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Region provincia) {
+        this.provincia = provincia;
+    }
+
+
+
+   
     //////////////Metodos Auto-generados
     public Usuario getSelected() {
         return selected;
@@ -224,7 +287,7 @@ public class UserController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundles").getString("UsuarioCreated"));
+        persist(PersistAction.CREATE, "UsuarioCreated");
         crearSistemaUsuario();
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -285,6 +348,50 @@ public class UserController implements Serializable {
     public List<Usuario> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+
+    /**
+     * @return the itemPaises
+     */
+    public List<Pais> getItemPaises() {
+        return itemPaises;
+    }
+
+    /**
+     * @param itemPaises the itemPaises to set
+     */
+    public void setItemPaises(List<Pais> itemPaises) {
+        this.itemPaises = itemPaises;
+    }
+
+    /**
+     * @return the itemProvincias
+     */
+    public List<Region> getItemProvincias() {
+        return itemProvincias;
+    }
+
+    /**
+     * @param itemProvincias the itemProvincias to set
+     */
+    public void setItemProvincias(List<Region> itemProvincias) {
+        this.itemProvincias = itemProvincias;
+    }
+
+    /**
+     * @return the itemCiudades
+     */
+    public List<Ciudad> getItemCiudades() {
+        return itemCiudades;
+    }
+
+    /**
+     * @param itemCiudades the itemCiudades to set
+     */
+    public void setItemCiudades(List<Ciudad> itemCiudades) {
+        this.itemCiudades = itemCiudades;
+    }
+
+ 
 
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
