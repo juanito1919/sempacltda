@@ -9,7 +9,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-@ManagedBean(name = "usuarioController")
+@ManagedBean(name = "usuarioControllers")
 @SessionScoped
 public class UsuarioController extends AbstractController<Usuario> implements Serializable {
 
