@@ -101,7 +101,7 @@ body {
 .butonBarra{
     margin-top: 0;
     height: 50px;
-    width: 120px;
+    width: 150px!important;
 }
 .butonBarra .ui-icon{
     width: 20px;

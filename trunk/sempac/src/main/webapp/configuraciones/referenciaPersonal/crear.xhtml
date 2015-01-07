@@ -58,7 +58,7 @@
                 </h:panelGrid>
                 <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
                     <p:commandButton actionListener="#{referenciaPersonalController.guardaNuevo}" 
-                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" update="display,:ReferenciaPersonalListForm:datalist"/>
+                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" ajax="false" update="display,:ReferenciaPersonalListForm:datalist"/>
 
                     <p:commandButton value="#{bundleEtiquetasES.Cancelar}" 
                                      onclick="ReferenciaPersonalCreateDialog.hide()" 

@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.ReferenciaPersonal;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,10 @@ public class ReferenciaPersonalFacade extends AbstractFacade<ReferenciaPersonal>
     public ReferenciaPersonalFacade() {
         super(ReferenciaPersonal.class);
     }
-    
+      public List<ReferenciaPersonal> getItemsReferenciasEliminadoUsuario(Long idUsuario, boolean eliminado) {
+        Query query = this.em.createNamedQuery(ReferenciaPersonal.findByIdUsuarioEliminado);
+        query.setParameter("idUsuario", idUsuario);
+        query.setParameter("eliminado", eliminado);
+        return query.getResultList();
+    }
 }

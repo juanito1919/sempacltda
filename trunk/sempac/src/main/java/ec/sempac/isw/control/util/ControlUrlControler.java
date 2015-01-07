@@ -39,7 +39,7 @@ public class ControlUrlControler {
     }
 
     public void openPaginaReferenciasLaborales() throws IOException {
-        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("referenciasPersonales"));
+        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("referenciasLaborales"));
     }
 
     public void openPaginaReferenciasPersonales() throws IOException {

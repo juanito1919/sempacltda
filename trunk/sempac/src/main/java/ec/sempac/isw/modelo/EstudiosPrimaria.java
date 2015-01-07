@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
@@ -32,9 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EstudiosPrimaria.findByIdUsuario", query = "SELECT e FROM EstudiosPrimaria e WHERE e.estudiosPrimariaPK.idUsuario = :idUsuario"),
     @NamedQuery(name = "EstudiosPrimaria.findByIdEscuela", query = "SELECT e FROM EstudiosPrimaria e WHERE e.estudiosPrimariaPK.idEscuela = :idEscuela"),
     @NamedQuery(name = "EstudiosPrimaria.findByDuracion", query = "SELECT e FROM EstudiosPrimaria e WHERE e.duracion = :duracion"),
-    @NamedQuery(name = "EstudiosPrimaria.findByEliminado", query = "SELECT e FROM EstudiosPrimaria e WHERE e.eliminado = :eliminado")})
+    @NamedQuery(name = "EstudiosPrimaria.findByEliminado", query = "SELECT e FROM EstudiosPrimaria e WHERE e.eliminado = :eliminado"),
+    @NamedQuery(name = "EstudiosPrimaria.findByIdUsuarioEliminado", query = "SELECT e FROM EstudiosPrimaria e WHERE e.estudiosPrimariaPK.idUsuario = :idUsuario AND e.eliminado = :eliminado")
+})
 public class EstudiosPrimaria implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    public static final String findByIdUsuarioEliminado = "EstudiosPrimaria.findByIdUsuarioEliminado";
     @EmbeddedId
     protected EstudiosPrimariaPK estudiosPrimariaPK;
     @Size(max = 32)
@@ -131,5 +134,5 @@ public class EstudiosPrimaria implements Serializable {
     public String toString() {
         return "ec.sempac.isw.modelo.EstudiosPrimaria[ estudiosPrimariaPK=" + estudiosPrimariaPK + " ]";
     }
-    
+
 }

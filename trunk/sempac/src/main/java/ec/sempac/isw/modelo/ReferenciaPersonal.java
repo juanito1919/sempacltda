@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
@@ -38,9 +37,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReferenciaPersonal.findByTelefono", query = "SELECT r FROM ReferenciaPersonal r WHERE r.telefono = :telefono"),
     @NamedQuery(name = "ReferenciaPersonal.findByCorreo", query = "SELECT r FROM ReferenciaPersonal r WHERE r.correo = :correo"),
     @NamedQuery(name = "ReferenciaPersonal.findByUrl", query = "SELECT r FROM ReferenciaPersonal r WHERE r.url = :url"),
-    @NamedQuery(name = "ReferenciaPersonal.findByEliminado", query = "SELECT r FROM ReferenciaPersonal r WHERE r.eliminado = :eliminado")})
+    @NamedQuery(name = "ReferenciaPersonal.findByEliminado", query = "SELECT r FROM ReferenciaPersonal r WHERE r.eliminado = :eliminado"),
+    @NamedQuery(name = "ReferenciaPersonal.findByUsuarioEliminado", query = "SELECT r FROM ReferenciaPersonal r WHERE r.referenciaPersonalPK.idUsuario = :idUsuario AND r.eliminado = :eliminado")
+})
 public class ReferenciaPersonal implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    public static final String findByIdUsuarioEliminado = "ReferenciaPersonal.findByUsuarioEliminado";
     @EmbeddedId
     protected ReferenciaPersonalPK referenciaPersonalPK;
     @Basic(optional = false)
@@ -180,5 +183,5 @@ public class ReferenciaPersonal implements Serializable {
     public String toString() {
         return "ec.sempac.isw.modelo.ReferenciaPersonal[ referenciaPersonalPK=" + referenciaPersonalPK + " ]";
     }
-    
+
 }
