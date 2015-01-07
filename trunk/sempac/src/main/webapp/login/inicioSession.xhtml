@@ -39,7 +39,7 @@
                       <h:commandButton value="Iniciar Session" style="height: 70px; width: 100px; 
                                      background-color:#0066ff; border: none;
                                      border-radius: 10px; color: #ffffff;" 
-                                     
+                                     action="#{usuarioLoginController.prepareNuevo()}"                                     
                                      onclick="dlIniciarSessionEmpleados.show();
                                                return false;"/>
                       
@@ -64,7 +64,7 @@
                     styleClass="ui-widget-content ui-helper-clearfix:after ui-widget-header ui-shadow .ui-dialog .ui-dialog-content"
                     modal="true">
             <h:form id="formInicioSessionEmpleados"> 
-                <p:growl id="growl"  life="3000" />
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                 <h:panelGrid columns="1" 
                              cellpadding="10">
                     <p:inputText id="username" 
@@ -88,9 +88,8 @@
                                       
                                          action="#{usuarioLoginController.validaUsuario()}"
                                          style="margin-left: 35px; width: 130px;"
-                                         update="growl" 
-                                         styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"                                              
-                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                                         update="password,username"
+                                         styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"/>
                     </h:panelGrid>
 
                    
@@ -111,7 +110,7 @@
                     styleClass="ui-widget-content ui-helper-clearfix:after ui-widget-header ui-shadow .ui-dialog .ui-dialog-content"
                     modal="true">
             <h:form id="formInicioSessionEmpresas"> 
-                <p:growl id="growl"  life="3000" />
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                 <h:panelGrid columns="1" 
                              cellpadding="10">
                     <p:inputText id="username" 
@@ -134,9 +133,8 @@
                         <p:commandButton value="Entrar" 
                                          action="#{empresaLoginController.validaUsuario()}"
                                          style="margin-left: 67px;"
-                                         update="growl" 
-                                         styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"                                              
-                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                                         update="password,username"
+                                         styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"/>
                     </h:panelGrid>
                   
                 </h:panelGrid>
