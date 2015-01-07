@@ -19,8 +19,8 @@
 
     <h:form id="ReferenciaPersonalListForm">
         <p:panel header="Lista de Referencias" style="border: none; width: 100%; margin: 0 auto;">
-            <p:dataTable id="datalist" value="#{referenciaPersonalController.items}" var="item"
-                         selectionMode="single" selection="#{referenciaPersonalController.selected}"
+            <p:dataTable id="datalist" value="#{referenciaPersonalController.itemsReferenciaPersonal}" var="item"
+                         selectionMode="single" selection="#{referenciaPersonalController.seleccion}"
                          paginator="false"
                          style="height: 200px;"
                          rowKey="#{item.referenciaPersonalPK}"

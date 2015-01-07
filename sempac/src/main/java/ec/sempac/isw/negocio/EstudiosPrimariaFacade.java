@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.EstudiosPrimaria;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,10 @@ public class EstudiosPrimariaFacade extends AbstractFacade<EstudiosPrimaria> {
     public EstudiosPrimariaFacade() {
         super(EstudiosPrimaria.class);
     }
-    
+     public List<EstudiosPrimaria> getItemsByIdUsuario(long idUsuario, boolean eliminado) {
+        Query query = this.em.createNamedQuery(EstudiosPrimaria.findByIdUsuarioEliminado);
+        query.setParameter("idUsuario",idUsuario);
+        query.setParameter("eliminado",eliminado);
+        return query.getResultList();
+    }
 }

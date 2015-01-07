@@ -36,7 +36,7 @@
                             <p:column>
                                 <h:outputText value="#{t.nombre}" />
                             </p:column>
-                           
+                            <f:converter binding="#{escuelaConverter}"/>
                         </p:selectOneMenu>  
                           <p:outputLabel value="TIEMPO DE ESTUDIO:" for="anio"/>
                           <p:inputText id="anio" value="#{estudiosPrimariaController.selected.duracion}"/>
@@ -44,7 +44,7 @@
                           <p:inputText id="ruta" value="" size="35" disabled="true"/>
                     </h:panelGrid>
                     <div style="margin-left: 30%; margin-bottom: 20px; margin-top: 30px;">
-                        <p:commandButton actionListener="#{estudiosPrimariaController.guardarEscuela}" icon="ui-icon-disk"  value="GUARDAR"/>
+                        <p:commandButton actionListener="#{estudiosPrimariaController.guardarEscuela}" icon="ui-icon-disk" ajax="false"  value="GUARDAR"/>
                          <p:commandButton value="ELIMINAR"  icon="ui-icon-closethick"/><p:commandButton value="CALCELAR"  icon="ui-icon-closethick" onclick="EspecialidadSecundariaCreateDialog.hide()"/>
                     </div>
                 </h:panelGroup>

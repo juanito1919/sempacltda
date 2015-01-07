@@ -4,6 +4,7 @@ import ec.sempac.isw.modelo.Escuela;
 import ec.sempac.isw.modelo.EstudiosPrimaria;
 import ec.sempac.isw.modelo.EstudiosPrimariaPK;
 import ec.sempac.isw.negocio.EscuelaFacade;
+import ec.sempac.isw.negocio.EstudiosPrimariaFacade;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
 
 import java.io.Serializable;
@@ -22,6 +23,8 @@ public class EstudiosPrimariaController extends AbstractController<EstudiosPrima
     private ec.sempac.isw.negocio.EstudiosPrimariaFacade ejbFacade;
     @EJB
     private EscuelaFacade ejbFacadeEscuela;
+    @EJB
+    private EstudiosPrimariaFacade ejbFacadeEstudiosPrimario;
     private List<Escuela> itemEscuela;
     private String nombre = "";
     
@@ -36,8 +39,15 @@ public class EstudiosPrimariaController extends AbstractController<EstudiosPrima
     }
 
     public void iniciaSelected() {
-        this.setSelected(new EstudiosPrimaria());
-        this.getSelected().setEstudiosPrimariaPK(new EstudiosPrimariaPK());
+
+        if (ActivacionUsuario.getUsuario() != null) {
+            List<EstudiosPrimaria> espSec = ejbFacadeEstudiosPrimario.getItemsByIdUsuario(ActivacionUsuario.getUsuario().getIdUsuario(), false);
+            if (!espSec.isEmpty()) {
+                this.setSelected(espSec.get(0));
+            } else {
+                this.setSelected(new EstudiosPrimaria());
+            }
+        }
     }
     public void guardarEscuela(ActionEvent event) {
         System.out.println("Guardar Escuela");

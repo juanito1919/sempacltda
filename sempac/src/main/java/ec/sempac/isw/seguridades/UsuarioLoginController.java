@@ -105,7 +105,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         System.err.println("prepara login");
     }
     public void validaUsuario() {
-        System.out.println("Login");
+        System.out.println("entro carajo");
         try {
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
@@ -134,8 +134,10 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
 
             // Colocando el tiempo de inactividad que tiene el sistema
             Sesion.tiempoInactividad(10000);
-
-            if (usuarioSistema.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
+            System.out.println("Contrasena :"+this.contrasena);
+         
+            System.out.println("ContrasenaDesemcritada :"+Sesion.MD5(this.contrasena));
+            if (this.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
             //if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
 
                 // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
