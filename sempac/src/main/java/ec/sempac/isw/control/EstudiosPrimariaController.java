@@ -39,11 +39,11 @@ public class EstudiosPrimariaController extends AbstractController<EstudiosPrima
         this.setSelected(new EstudiosPrimaria());
         this.getSelected().setEstudiosPrimariaPK(new EstudiosPrimariaPK());
     }
-      public void guardarColegio(ActionEvent event) {
-
+    public void guardarEscuela(ActionEvent event) {
+        System.out.println("Guardar Escuela");
         this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
         this.getSelected().setEliminado(false);
-        this.saveNew(event);
+        this.save(event);
         
     }
     @Override

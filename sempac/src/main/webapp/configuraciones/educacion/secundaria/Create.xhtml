@@ -64,8 +64,7 @@
                     </h:panelGrid>
                     <div style="margin-left: 30%; margin-bottom: 20px; margin-top: 30px;">
                         <p:commandButton actionListener="#{especialidadSecundariaController.guardarColegio}" icon="ui-icon-disk"  value="GUARDAR"/>
-                         <p:commandButton actionListener="#{especialidadSecundariaController.guardarColegio}" value="ELIMINAR"  icon="ui-icon-closethick"/>
-                        <p:commandButton value="CALCELAR"  icon="ui-icon-closethick" onclick="EspecialidadSecundariaCreateDialog.hide()"/>
+                        <p:commandButton actionListener="#{especialidadSecundariaController.eliminarColegio}" value="ELIMINAR"  icon="ui-icon-closethick" update="colegio, especialidad, aniosEstudios"/>
                     </div>
                 </h:panelGroup>
             </p:panel>
