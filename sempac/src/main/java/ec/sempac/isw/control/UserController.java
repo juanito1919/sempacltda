@@ -14,6 +14,7 @@ import ec.sempac.isw.negocio.PaisFacade;
 import ec.sempac.isw.negocio.RegionFacade;
 import ec.sempac.isw.negocio.SistemaUsuarioFacade;
 import ec.sempac.isw.negocio.UsuarioFacade;
+import ec.sempac.isw.seguridades.ActivacionUsuario;
 import ec.sempac.isw.seguridades.Sesion;
 import java.io.File;
 import java.io.IOException;
@@ -69,6 +70,7 @@ public class UserController implements Serializable {
     private String contrasena;
     private Usuario seleccionado;
     private Date fMaxima;
+
     public UserController() {//solo al inicio del ciclo del bean
 
     }
@@ -77,7 +79,8 @@ public class UserController implements Serializable {
     public void init() { // cada vez q se abra la pagina
         itemPaises = ejbFacadePais.getItemsPais(false);
         selected = new Usuario();
-        fMaxima = new Date(new Date().getYear()-12,new Date().getMonth(),new Date().getDate());//fecha actual menos 12 anios
+        fMaxima = new Date(new Date().getYear() - 12, new Date().getMonth(), new Date().getDate());//fecha actual menos 12 anios
+        
     }
 
     public void selectPais() {
@@ -167,7 +170,7 @@ public class UserController implements Serializable {
     public void validadIdentidad() {
         if (selected.getTipoIdentidad() != null) {
             if (selected.getTipoIdentidad() == 'C') {
-                
+
                 if (!Validaciones.validaCedula(selected.getIdentidad())) {
                     MuestraMensaje.addError("Cedula incorrecta");
                     System.out.println("tipo incorrecto");
@@ -183,14 +186,15 @@ public class UserController implements Serializable {
         System.out.println("esto es TI: " + selected.getTipoIdentidad());
         selected.setIdentidad(null);
         if (selected.getTipoIdentidad() == null) {
-            return ;
+            return;
         }
         if (selected.getTipoIdentidad() == '-') {
             selected.setTipoIdentidad(null);
-            return ;
+            return;
         }
-        return ;
+        return;
     }
+
     private void crearSistemaUsuario() {
         SistemaUsuario sistemaUsuario = new SistemaUsuario();
         sistemaUsuario.setIdUsuario((ejbFacade.getItemsUserName(selected.getUsername())).getIdUsuario());
@@ -206,8 +210,15 @@ public class UserController implements Serializable {
         } catch (IOException ex) {
             MuestraMensaje.addError("No se pudo crear el directorio de archivos");
         }
-
+        ActivacionUsuario.setUsuario(ejbFacade.getItemsUserName(selected.getUsername()));
+        try {
+            System.out.println("p0ndras la direccion");
+            //Sesion.redireccionaPagina("n");
+        } catch (Exception ex) {
+            MuestraMensaje.addError("No se pudo iniciar la session");
+        }
     }
+
     public void revisaMail() {
         System.out.println("Mail " + this.getSelected().getCorreoElectronico());
         Usuario user = this.ejbFacade.getItemsCorreo(this.getSelected().getCorreoElectronico());
@@ -257,9 +268,6 @@ public class UserController implements Serializable {
         this.provincia = provincia;
     }
 
-
-
-   
     //////////////Metodos Auto-generados
     public Usuario getSelected() {
         return selected;
@@ -270,7 +278,52 @@ public class UserController implements Serializable {
     }
 
     protected void setEmbeddableKeys() {
-        selected.setTipo('U');
+
+        if (selected != null) {
+            if (selected.getTipoIdentidad() != null && selected.getTipoIdentidad() != '-') {
+                if (selected.getIdentidad() != null) {
+                    if (selected.getNombres() != null) {
+                        if (selected.getFechaNacimiento() != null) {
+                            if (selected.getContrasena() != null) {
+                                if (selected.getIdCiudad() != null) {
+                                    if (selected.getDireccion() != null) {
+                                        if (selected.getEstadoCivil() != null) {
+                                            if (selected.getCorreoElectronico() != null) {
+                                                if (selected.getDisponibilidad() != null) {
+                                                    selected.setTipo('U');
+                                                } else {
+                                                    MuestraMensaje.addError("Seleccione su disponibilidad");
+                                                }
+                                            } else {
+                                                MuestraMensaje.addError("Ingrese su correo electronico");
+                                            }
+                                        } else {
+                                            MuestraMensaje.addError("Ingrese su estado civil");
+                                        }
+                                    } else {
+                                        MuestraMensaje.addError("Ingrese la direccion");
+                                    }
+                                } else {
+                                    MuestraMensaje.addError("Ingrese el Pais, Provincia/region, ciudad correctamente");
+                                }
+                            } else {
+                                MuestraMensaje.addError("Ingrese la contrasena");
+                            }
+                        } else {
+                            MuestraMensaje.addError("Ingrese la fecha de su nacimiento");
+                        }
+                    } else {
+                        MuestraMensaje.addError("Ingrese los nombres");
+                    }
+                } else {
+                    MuestraMensaje.addError("Ingrese la identidad identidad");
+                }
+            } else {
+                MuestraMensaje.addError("Ingrese tipo de identidad");
+            }
+        } else {
+            MuestraMensaje.addError("Ingrese datos");
+        }
     }
 
     protected void initializeEmbeddableKey() {
@@ -287,7 +340,7 @@ public class UserController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE, "UsuarioCreated");
+        persist(PersistAction.CREATE, "Usuario Creado correctamente");
         crearSistemaUsuario();
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -390,8 +443,6 @@ public class UserController implements Serializable {
     public void setItemCiudades(List<Ciudad> itemCiudades) {
         this.itemCiudades = itemCiudades;
     }
-
- 
 
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
