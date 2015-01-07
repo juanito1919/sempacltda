@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UniversidadEditDlg" widgetVar="UniversidadEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUniversidadTitle}">
+            <h:form id="UniversidadEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{universidadController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditUniversidadLabel_idUniversidad}" for="idUniversidad" />
+                        <p:inputText id="idUniversidad" value="#{universidadController.selected.idUniversidad}" title="#{bundle.EditUniversidadTitle_idUniversidad}" required="true" requiredMessage="#{bundle.EditUniversidadRequiredMessage_idUniversidad}"/>
+                        <p:outputLabel value="#{bundle.EditUniversidadLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{universidadController.selected.nombre}" title="#{bundle.EditUniversidadTitle_nombre}" required="true" requiredMessage="#{bundle.EditUniversidadRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.EditUniversidadLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{universidadController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditUniversidadRequiredMessage_eliminado}"/>
+                        <p:outputLabel value="#{bundle.EditUniversidadLabel_idPais}" for="idPais" />
+                        <p:selectOneMenu id="idPais" value="#{universidadController.selected.idPais}" required="true" requiredMessage="#{bundle.EditUniversidadRequiredMessage_idPais}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{paisController.itemsAvailableSelectOne}"
+                                           var="idPaisItem"
+                                           itemValue="#{idPaisItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{universidadController.update}" value="#{bundle.Save}" update="display,:UniversidadListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UniversidadEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UniversidadEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

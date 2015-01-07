@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EspecialidadSecundariaCreateDlg" widgetVar="EspecialidadSecundariaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEspecialidadSecundariaTitle}">
+            <h:form id="EspecialidadSecundariaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{especialidadSecundariaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateEspecialidadSecundariaLabel_idUsuario}" for="idUsuario" />
+                        <p:inputText id="idUsuario" value="#{especialidadSecundariaController.selected.idUsuario}" title="#{bundle.CreateEspecialidadSecundariaTitle_idUsuario}" required="true" requiredMessage="#{bundle.CreateEspecialidadSecundariaRequiredMessage_idUsuario}"/>
+                        <p:outputLabel value="#{bundle.CreateEspecialidadSecundariaLabel_especialidad}" for="especialidad" />
+                        <p:inputText id="especialidad" value="#{especialidadSecundariaController.selected.especialidad}" title="#{bundle.CreateEspecialidadSecundariaTitle_especialidad}" required="true" requiredMessage="#{bundle.CreateEspecialidadSecundariaRequiredMessage_especialidad}"/>
+                        <p:outputLabel value="#{bundle.CreateEspecialidadSecundariaLabel_aniosEstudios}" for="aniosEstudios" />
+                        <p:inputText id="aniosEstudios" value="#{especialidadSecundariaController.selected.aniosEstudios}" title="#{bundle.CreateEspecialidadSecundariaTitle_aniosEstudios}" />
+                        <p:outputLabel value="#{bundle.CreateEspecialidadSecundariaLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{especialidadSecundariaController.selected.url}" title="#{bundle.CreateEspecialidadSecundariaTitle_url}" />
+                        <p:outputLabel value="#{bundle.CreateEspecialidadSecundariaLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{especialidadSecundariaController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditEspecialidadSecundariaRequiredMessage_eliminado}"/>
+                        <p:outputLabel value="#{bundle.CreateEspecialidadSecundariaLabel_idColegio}" for="idColegio" />
+                        <p:selectOneMenu id="idColegio" value="#{especialidadSecundariaController.selected.idColegio}" required="true" requiredMessage="#{bundle.EditEspecialidadSecundariaRequiredMessage_idColegio}">
+                            <f:selectItems value="#{colegioController.itemsAvailableSelectOne}"
+                                           var="idColegioItem"
+                                           itemValue="#{idColegioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateEspecialidadSecundariaLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{especialidadSecundariaController.selected.usuario}" required="true" requiredMessage="#{bundle.EditEspecialidadSecundariaRequiredMessage_usuario}">
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{especialidadSecundariaController.create}" value="#{bundle.Save}" update="display,:EspecialidadSecundariaListForm:datalist,:growl" oncomplete="handleSubmit(args,'EspecialidadSecundariaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EspecialidadSecundariaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

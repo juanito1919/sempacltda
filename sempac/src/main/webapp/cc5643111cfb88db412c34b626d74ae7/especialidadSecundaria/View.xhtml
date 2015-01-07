@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EspecialidadSecundariaViewDlg" widgetVar="EspecialidadSecundariaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEspecialidadSecundariaTitle}">
+            <h:form id="EspecialidadSecundariaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{especialidadSecundariaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEspecialidadSecundariaLabel_idUsuario}"/>
+                        <h:outputText value="#{especialidadSecundariaController.selected.idUsuario}" title="#{bundle.ViewEspecialidadSecundariaTitle_idUsuario}"/>
+                        <h:outputText value="#{bundle.ViewEspecialidadSecundariaLabel_especialidad}"/>
+                        <h:outputText value="#{especialidadSecundariaController.selected.especialidad}" title="#{bundle.ViewEspecialidadSecundariaTitle_especialidad}"/>
+                        <h:outputText value="#{bundle.ViewEspecialidadSecundariaLabel_aniosEstudios}"/>
+                        <h:outputText value="#{especialidadSecundariaController.selected.aniosEstudios}" title="#{bundle.ViewEspecialidadSecundariaTitle_aniosEstudios}"/>
+                        <h:outputText value="#{bundle.ViewEspecialidadSecundariaLabel_url}"/>
+                        <h:outputText value="#{especialidadSecundariaController.selected.url}" title="#{bundle.ViewEspecialidadSecundariaTitle_url}"/>
+                        <h:outputText value="#{bundle.ViewEspecialidadSecundariaLabel_eliminado}"/>
+                        <p:selectBooleanCheckbox value="#{especialidadSecundariaController.selected.eliminado}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewEspecialidadSecundariaLabel_idColegio}"/>
+                        <h:outputText value="#{especialidadSecundariaController.selected.idColegio}" title="#{bundle.ViewEspecialidadSecundariaTitle_idColegio}"/>
+                        <h:outputText value="#{bundle.ViewEspecialidadSecundariaLabel_usuario}"/>
+                        <h:outputText value="#{especialidadSecundariaController.selected.usuario}" title="#{bundle.ViewEspecialidadSecundariaTitle_usuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EspecialidadSecundariaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

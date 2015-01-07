@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoEventoCreateDlg" widgetVar="TipoEventoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTipoEventoTitle}">
+            <h:form id="TipoEventoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoEventoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateTipoEventoLabel_idTipoEvento}" for="idTipoEvento" />
+                        <p:inputText id="idTipoEvento" value="#{tipoEventoController.selected.idTipoEvento}" title="#{bundle.CreateTipoEventoTitle_idTipoEvento}" required="true" requiredMessage="#{bundle.CreateTipoEventoRequiredMessage_idTipoEvento}"/>
+                        <p:outputLabel value="#{bundle.CreateTipoEventoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoEventoController.selected.nombre}" title="#{bundle.CreateTipoEventoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateTipoEventoRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreateTipoEventoLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{tipoEventoController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditTipoEventoRequiredMessage_eliminado}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoEventoController.create}" value="#{bundle.Save}" update="display,:TipoEventoListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipoEventoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoEventoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

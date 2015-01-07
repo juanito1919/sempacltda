@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReferenciaPersonalCreateDlg" widgetVar="ReferenciaPersonalCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateReferenciaPersonalTitle}">
+            <h:form id="ReferenciaPersonalCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{referenciaPersonalController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_referenciaPersonalPK_idReferenciaPersonal}" for="referenciaPersonalPK_idReferenciaPersonal" />
+                        <p:inputText id="referenciaPersonalPK_idReferenciaPersonal" value="#{referenciaPersonalController.selected.referenciaPersonalPK.idReferenciaPersonal}" title="#{bundle.CreateReferenciaPersonalTitle_referenciaPersonalPK_idReferenciaPersonal}" required="true" requiredMessage="#{bundle.CreateReferenciaPersonalRequiredMessage_referenciaPersonalPK_idReferenciaPersonal}"/>
+                        <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{referenciaPersonalController.selected.nombres}" title="#{bundle.CreateReferenciaPersonalTitle_nombres}" required="true" requiredMessage="#{bundle.CreateReferenciaPersonalRequiredMessage_nombres}"/>
+                        <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{referenciaPersonalController.selected.apellidos}" title="#{bundle.CreateReferenciaPersonalTitle_apellidos}" required="true" requiredMessage="#{bundle.CreateReferenciaPersonalRequiredMessage_apellidos}"/>
+                        <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{referenciaPersonalController.selected.telefono}" title="#{bundle.CreateReferenciaPersonalTitle_telefono}" required="true" requiredMessage="#{bundle.CreateReferenciaPersonalRequiredMessage_telefono}"/>
+                        <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_correo}" for="correo" />
+                        <p:inputText id="correo" value="#{referenciaPersonalController.selected.correo}" title="#{bundle.CreateReferenciaPersonalTitle_correo}" />
+                        <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{referenciaPersonalController.selected.url}" title="#{bundle.CreateReferenciaPersonalTitle_url}" />
+                        <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{referenciaPersonalController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_eliminado}"/>
+                        <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{referenciaPersonalController.selected.usuario}" required="true" requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_usuario}">
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{referenciaPersonalController.create}" value="#{bundle.Save}" update="display,:ReferenciaPersonalListForm:datalist,:growl" oncomplete="handleSubmit(args,'ReferenciaPersonalCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ReferenciaPersonalCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

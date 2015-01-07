@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleoRequeridoViewDlg" widgetVar="EmpleoRequeridoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEmpleoRequeridoTitle}">
+            <h:form id="EmpleoRequeridoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empleoRequeridoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEmpleoRequeridoLabel_idEmpleoRequerido}"/>
+                        <h:outputText value="#{empleoRequeridoController.selected.idEmpleoRequerido}" title="#{bundle.ViewEmpleoRequeridoTitle_idEmpleoRequerido}"/>
+                        <h:outputText value="#{bundle.ViewEmpleoRequeridoLabel_nombreEmpleoRequerido}"/>
+                        <h:outputText value="#{empleoRequeridoController.selected.nombreEmpleoRequerido}" title="#{bundle.ViewEmpleoRequeridoTitle_nombreEmpleoRequerido}"/>
+                        <h:outputText value="#{bundle.ViewEmpleoRequeridoLabel_activo}"/>
+                        <p:selectBooleanCheckbox value="#{empleoRequeridoController.selected.activo}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewEmpleoRequeridoLabel_fechaModificacion}"/>
+                        <h:outputText value="#{empleoRequeridoController.selected.fechaModificacion}" title="#{bundle.ViewEmpleoRequeridoTitle_fechaModificacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewEmpleoRequeridoLabel_eliminado}"/>
+                        <p:selectBooleanCheckbox value="#{empleoRequeridoController.selected.eliminado}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewEmpleoRequeridoLabel_idPersonalRequerido}"/>
+                        <h:outputText value="#{empleoRequeridoController.selected.idPersonalRequerido}" title="#{bundle.ViewEmpleoRequeridoTitle_idPersonalRequerido}"/>
+                        <h:outputText value="#{bundle.ViewEmpleoRequeridoLabel_idUsuario}"/>
+                        <h:outputText value="#{empleoRequeridoController.selected.idUsuario}" title="#{bundle.ViewEmpleoRequeridoTitle_idUsuario}"/>
+                        <h:outputText value="#{bundle.ViewEmpleoRequeridoLabel_idAdministrador}"/>
+                        <h:outputText value="#{empleoRequeridoController.selected.idAdministrador}" title="#{bundle.ViewEmpleoRequeridoTitle_idAdministrador}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EmpleoRequeridoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
