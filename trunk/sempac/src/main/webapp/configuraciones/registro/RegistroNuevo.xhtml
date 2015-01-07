@@ -65,81 +65,6 @@
                                          value="#{userController.selected.apellidos}" 
                                          title="#{bundleEtiquetasES.Apellidos}" />
 
-                    <p:outputLabel value="#{bundleEtiquetasES.FechaNacimiento}" for="fechaNacimiento" />
-                        <p:calendar id="fechaNacimiento" 
-                                    value="#{userController.selected.fechaNacimiento}" 
-                                    locale="de"
-                                    navigator="true"
-                                    pattern="dd/MM/yyyy" 
-                                    title="#{bundleEtiquetasES.FechaNacimiento}" 
-                                    required="true" 
-                                    requiredMessage="#{bundleEtiquetasES.FechaNacimiento} #{bundleEtiquetasES.CampoRequerido}" 
-                                    maxdate="#{userController.FMaxima}"
-                                    showOn="button"/>
-                        
-                    <p:outputLabel value="#{bundleEtiquetasES.Contrasena}" for="contrasena" />
-                    <p:password id="contrasena" 
-                                value="#{userController.contrasena}" 
-                                title="#{bundleEtiquetasES.Contrasena}" 
-                                required="true" 
-                                requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
-                        <p:ajax event="blur" 
-                                listener="#{userController.validarContrasena()}"
-                                update=":UsuarioRegistro:mensaje, confirmarContrasena"/>
-                    </p:password>
-                    
-                    <p:outputLabel value="#{bundleEtiquetasES.ConfirmeContrasena}" for="confirmarContrasena" />
-                    <p:password id="confirmarContrasena" 
-                                value="#{userController.confirmaContrasena}" 
-                                title="#{bundleEtiquetasES.Contrasena}" 
-                                required="true" 
-                                requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
-                        <p:ajax event="blur" 
-                                listener="#{userController.validarConfirmacionContrasena()}" 
-                                update=":UsuarioRegistro:mensaje"
-                                />
-                    </p:password>
-                    
-                    <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
-                        <p:selectOneMenu id="pais" 
-                                         value="#{userController.pais}"
-                                         required="true" 
-                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
-                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                            <f:selectItems value="#{userController.itemPaises}"
-                                           var="PaisItem"
-                                           itemValue="#{PaisItem}"
-                                           itemLabel="#{PaisItem.nombre}"
-                                           />
-                            <f:converter binding="#{paisConverter}"/>
-                            <p:ajax event="change" 
-                                    listener="#{userController.selectPais()}" 
-                                    update=":UsuarioRegistro:mensaje, provincia,ciudad"/>
-                        </p:selectOneMenu>
-                    
-                        <p:outputLabel value="#{bundleEtiquetasES.Provincia}" for="provincia" />
-                        <p:selectOneMenu id="provincia" 
-                                         value="#{userController.provincia}"
-                                         required="true" 
-
-                                         requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
-                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                            <f:selectItems value="#{userController.itemProvincias}"
-                                           var="ProvinciaItem"
-                                           itemValue="#{ProvinciaItem}"
-                                           itemLabel="#{ProvinciaItem.nombre}"
-                                           />
-                            <f:converter binding="#{regionConverter}"/>
-                            <p:ajax event="change" 
-                                    listener="#{userController.selectProvincia()}" 
-                                    update=":UsuarioRegistro:mensaje, ciudad"/>
-                        </p:selectOneMenu>
-
-                                         requiredMessage="#{bundleEtiquetasES.UserName} #{bundleEtiquetasES.CampoRequerido}">
-                                <p:ajax event="blur" 
-                                        listener="#{userController.validarUsername()}"/>
-                            </p:inputText>
-
                             <p:outputLabel value="#{bundleEtiquetasES.FechaNacimiento}" for="fechaNacimiento" />
                             <p:calendar id="fechaNacimiento" 
                                         value="#{userController.selected.fechaNacimiento}" 
@@ -160,7 +85,7 @@
                                         requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
                                 <p:ajax event="blur" 
                                         listener="#{userController.validarContrasena()}"
-                                        update="confirmarContrasena"/>
+                                        update=":UsuarioRegistro:mensaje, confirmarContrasena"/>
                             </p:password>
 
                             <p:outputLabel value="#{bundleEtiquetasES.ConfirmeContrasena}" for="confirmarContrasena" />
@@ -171,6 +96,7 @@
                                         requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
                                 <p:ajax event="blur" 
                                         listener="#{userController.validarConfirmacionContrasena()}" 
+                                        update=":UsuarioRegistro:mensaje"
                                         />
                             </p:password>
 
@@ -188,13 +114,14 @@
                                 <f:converter binding="#{paisConverter}"/>
                                 <p:ajax event="change" 
                                         listener="#{userController.selectPais()}" 
-                                        update="provincia,ciudad"/>
+                                        update=":UsuarioRegistro:mensaje, provincia,ciudad"/>
                             </p:selectOneMenu>
 
                             <p:outputLabel value="#{bundleEtiquetasES.Provincia}" for="provincia" />
                             <p:selectOneMenu id="provincia" 
                                              value="#{userController.provincia}"
                                              required="true" 
+
                                              requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
                                 <f:selectItems value="#{userController.itemProvincias}"
@@ -205,8 +132,10 @@
                                 <f:converter binding="#{regionConverter}"/>
                                 <p:ajax event="change" 
                                         listener="#{userController.selectProvincia()}" 
-                                        update="ciudad"/>
+                                        update=":UsuarioRegistro:mensaje, ciudad"/>
                             </p:selectOneMenu>
+
+
 
                             <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
                             <p:selectOneMenu id="ciudad" 
@@ -222,8 +151,7 @@
                                 <f:converter binding="#{ciudadConverter}"/>
                             </p:selectOneMenu>
 
-                            <p:outputLabel value="#{bundleEtiquetasES.Direccion}" 
-                                           for="direccion" />
+                            <p:outputLabel value="#{bundleEtiquetasES.Direccion}" for="direccion" />
                             <p:inputText id="direccion" 
                                          onkeyup="value = value.toUpperCase()"
                                          value="#{userController.selected.direccion}" 
@@ -236,17 +164,27 @@
                                          value="#{userController.selected.correoElectronico}" 
                                          title="#{bundleEtiquetasES.CorreoElectronico}" 
                                          required="true" 
-        </h:form>
-    </ui:define>
-</ui:composition>
+                                         requiredMessage="#{bundleEtiquetasES.CorreoElectronico} #{bundleEtiquetasES.CampoRequerido}">
+                                <p:ajax event="blur" 
+                                        listener="#{usuarioController.revisaMail()}" 
+                                        update=":UsuarioCreateForm:mensaje"/>
+                            </p:inputText>
 
-                                         requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
-                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                            <f:selectItem itemLabel="#{bundleEtiquetasES.TiempoCompleto}" itemValue="C" />  
-                            <f:selectItem itemLabel="#{bundleEtiquetasES.MedioTiempo}" itemValue="M" />
-                            <f:selectItem itemLabel="#{bundleEtiquetasES.Otro}" itemValue="O" />  
-                        </p:selectOneMenu>
-                </h:panelGrid>
-                <p:commandButton actionListener="#{userController.create}" value="REGISTRAR" update=":UsuarioRegistro:mensaje"/>
-                <p:commandButton value="CANCELAR"/>
-            </h:panelGroup>
+                            <p:outputLabel value="#{bundleEtiquetasES.Disponibilidad}" for="disponibilidad" />
+                            <p:selectOneMenu id="disponibilidad" 
+                                             value="#{userController.selected.disponibilidad}"
+                                             required="true" 
+                                             requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
+                                <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                                <f:selectItem itemLabel="#{bundleEtiquetasES.TiempoCompleto}" itemValue="C" />  
+                                <f:selectItem itemLabel="#{bundleEtiquetasES.MedioTiempo}" itemValue="M" />
+                                <f:selectItem itemLabel="#{bundleEtiquetasES.Otro}" itemValue="O" />  
+                            </p:selectOneMenu>
+                            </h:panelGrid>
+                        <p:commandButton actionListener="#{userController.create}" value="REGISTRAR" update=":UsuarioRegistro:mensaje"/>
+                        <p:commandButton value="CANCELAR"/>
+                   </h:panelGroup>
+                </p:panel>
+            </h:form>
+
+    </ui:composition>
