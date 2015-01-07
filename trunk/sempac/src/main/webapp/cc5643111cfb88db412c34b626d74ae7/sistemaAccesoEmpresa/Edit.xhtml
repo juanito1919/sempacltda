@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SistemaAccesoEmpresaEditDlg" widgetVar="SistemaAccesoEmpresaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSistemaAccesoEmpresaTitle}">
+            <h:form id="SistemaAccesoEmpresaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sistemaAccesoEmpresaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditSistemaAccesoEmpresaLabel_idSistemaAccesoEmpresa}" for="idSistemaAccesoEmpresa" />
+                        <p:inputText id="idSistemaAccesoEmpresa" value="#{sistemaAccesoEmpresaController.selected.idSistemaAccesoEmpresa}" title="#{bundle.EditSistemaAccesoEmpresaTitle_idSistemaAccesoEmpresa}" required="true" requiredMessage="#{bundle.EditSistemaAccesoEmpresaRequiredMessage_idSistemaAccesoEmpresa}"/>
+                        <p:outputLabel value="#{bundle.EditSistemaAccesoEmpresaLabel_fechaAcceso}" for="fechaAcceso" />
+                        <p:calendar id="fechaAcceso" pattern="MM/dd/yyyy HH:mm:ss" value="#{sistemaAccesoEmpresaController.selected.fechaAcceso}" title="#{bundle.EditSistemaAccesoEmpresaTitle_fechaAcceso}" required="true" requiredMessage="#{bundle.EditSistemaAccesoEmpresaRequiredMessage_fechaAcceso}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditSistemaAccesoEmpresaLabel_direccionIp}" for="direccionIp" />
+                        <p:inputText id="direccionIp" value="#{sistemaAccesoEmpresaController.selected.direccionIp}" title="#{bundle.EditSistemaAccesoEmpresaTitle_direccionIp}" required="true" requiredMessage="#{bundle.EditSistemaAccesoEmpresaRequiredMessage_direccionIp}"/>
+                        <p:outputLabel value="#{bundle.EditSistemaAccesoEmpresaLabel_idEmpresa}" for="idEmpresa" />
+                        <p:selectOneMenu id="idEmpresa" value="#{sistemaAccesoEmpresaController.selected.idEmpresa}" required="true" requiredMessage="#{bundle.EditSistemaAccesoEmpresaRequiredMessage_idEmpresa}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{sistemaEmpresaController.itemsAvailableSelectOne}"
+                                           var="idEmpresaItem"
+                                           itemValue="#{idEmpresaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sistemaAccesoEmpresaController.update}" value="#{bundle.Save}" update="display,:SistemaAccesoEmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SistemaAccesoEmpresaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SistemaAccesoEmpresaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

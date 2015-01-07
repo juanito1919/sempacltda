@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegionViewDlg" widgetVar="RegionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRegionTitle}">
+            <h:form id="RegionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{regionController.selected != null}">
+                        <h:outputText value="#{bundle.ViewRegionLabel_idRegion}"/>
+                        <h:outputText value="#{regionController.selected.idRegion}" title="#{bundle.ViewRegionTitle_idRegion}"/>
+                        <h:outputText value="#{bundle.ViewRegionLabel_nombre}"/>
+                        <h:outputText value="#{regionController.selected.nombre}" title="#{bundle.ViewRegionTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewRegionLabel_eliminado}"/>
+                        <p:selectBooleanCheckbox value="#{regionController.selected.eliminado}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewRegionLabel_idPais}"/>
+                        <h:outputText value="#{regionController.selected.idPais}" title="#{bundle.ViewRegionTitle_idPais}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="RegionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

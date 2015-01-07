@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserHabilidadesEspectativasCreateDlg" widgetVar="UserHabilidadesEspectativasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateUserHabilidadesEspectativasTitle}">
+            <h:form id="UserHabilidadesEspectativasCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{userHabilidadesEspectativasController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateUserHabilidadesEspectativasLabel_espectativas}" for="espectativas" />
+                        <p:selectOneMenu id="espectativas" value="#{userHabilidadesEspectativasController.selected.espectativas}" required="true" requiredMessage="#{bundle.EditUserHabilidadesEspectativasRequiredMessage_espectativas}">
+                            <f:selectItems value="#{espectativasController.itemsAvailableSelectOne}"
+                                           var="espectativasItem"
+                                           itemValue="#{espectativasItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateUserHabilidadesEspectativasLabel_habilidades}" for="habilidades" />
+                        <p:selectOneMenu id="habilidades" value="#{userHabilidadesEspectativasController.selected.habilidades}" required="true" requiredMessage="#{bundle.EditUserHabilidadesEspectativasRequiredMessage_habilidades}">
+                            <f:selectItems value="#{habilidadesController.itemsAvailableSelectOne}"
+                                           var="habilidadesItem"
+                                           itemValue="#{habilidadesItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateUserHabilidadesEspectativasLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{userHabilidadesEspectativasController.selected.usuario}" required="true" requiredMessage="#{bundle.EditUserHabilidadesEspectativasRequiredMessage_usuario}">
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userHabilidadesEspectativasController.create}" value="#{bundle.Save}" update="display,:UserHabilidadesEspectativasListForm:datalist,:growl" oncomplete="handleSubmit(args,'UserHabilidadesEspectativasCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UserHabilidadesEspectativasCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

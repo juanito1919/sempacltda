@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClaseEmpresaEditDlg" widgetVar="ClaseEmpresaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditClaseEmpresaTitle}">
+            <h:form id="ClaseEmpresaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{claseEmpresaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditClaseEmpresaLabel_idClaseEmpresa}" for="idClaseEmpresa" />
+                        <p:inputText id="idClaseEmpresa" value="#{claseEmpresaController.selected.idClaseEmpresa}" title="#{bundle.EditClaseEmpresaTitle_idClaseEmpresa}" required="true" requiredMessage="#{bundle.EditClaseEmpresaRequiredMessage_idClaseEmpresa}"/>
+                        <p:outputLabel value="#{bundle.EditClaseEmpresaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{claseEmpresaController.selected.nombre}" title="#{bundle.EditClaseEmpresaTitle_nombre}" required="true" requiredMessage="#{bundle.EditClaseEmpresaRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.EditClaseEmpresaLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{claseEmpresaController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditClaseEmpresaRequiredMessage_eliminado}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{claseEmpresaController.update}" value="#{bundle.Save}" update="display,:ClaseEmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ClaseEmpresaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ClaseEmpresaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SistemaEmpresaViewDlg" widgetVar="SistemaEmpresaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSistemaEmpresaTitle}">
+            <h:form id="SistemaEmpresaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sistemaEmpresaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_idEmpresa}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.idEmpresa}" title="#{bundle.ViewSistemaEmpresaTitle_idEmpresa}"/>
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_fechaAsignacion}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.fechaAsignacion}" title="#{bundle.ViewSistemaEmpresaTitle_fechaAsignacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_fechaCaducidad}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.fechaCaducidad}" title="#{bundle.ViewSistemaEmpresaTitle_fechaCaducidad}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_fechaCambioContrasena}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.fechaCambioContrasena}" title="#{bundle.ViewSistemaEmpresaTitle_fechaCambioContrasena}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_fechaBloqueo}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.fechaBloqueo}" title="#{bundle.ViewSistemaEmpresaTitle_fechaBloqueo}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_estado}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.estado}" title="#{bundle.ViewSistemaEmpresaTitle_estado}"/>
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_tiempoBloqueo}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.tiempoBloqueo}" title="#{bundle.ViewSistemaEmpresaTitle_tiempoBloqueo}"/>
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_intentosFallidos}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.intentosFallidos}" title="#{bundle.ViewSistemaEmpresaTitle_intentosFallidos}"/>
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_fechaUltimoIntentoFallido}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.fechaUltimoIntentoFallido}" title="#{bundle.ViewSistemaEmpresaTitle_fechaUltimoIntentoFallido}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSistemaEmpresaLabel_empresa}"/>
+                        <h:outputText value="#{sistemaEmpresaController.selected.empresa}" title="#{bundle.ViewSistemaEmpresaTitle_empresa}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SistemaEmpresaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

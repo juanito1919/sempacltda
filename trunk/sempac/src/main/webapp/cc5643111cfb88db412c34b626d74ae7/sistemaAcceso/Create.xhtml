@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SistemaAccesoCreateDlg" widgetVar="SistemaAccesoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSistemaAccesoTitle}">
+            <h:form id="SistemaAccesoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sistemaAccesoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSistemaAccesoLabel_idSistemaAcceso}" for="idSistemaAcceso" />
+                        <p:inputText id="idSistemaAcceso" value="#{sistemaAccesoController.selected.idSistemaAcceso}" title="#{bundle.CreateSistemaAccesoTitle_idSistemaAcceso}" required="true" requiredMessage="#{bundle.CreateSistemaAccesoRequiredMessage_idSistemaAcceso}"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaAccesoLabel_fechaAcceso}" for="fechaAcceso" />
+                        <p:calendar id="fechaAcceso" pattern="MM/dd/yyyy HH:mm:ss" value="#{sistemaAccesoController.selected.fechaAcceso}" title="#{bundle.EditSistemaAccesoTitle_fechaAcceso}" required="true" requiredMessage="#{bundle.EditSistemaAccesoRequiredMessage_fechaAcceso}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaAccesoLabel_direccionIp}" for="direccionIp" />
+                        <p:inputText id="direccionIp" value="#{sistemaAccesoController.selected.direccionIp}" title="#{bundle.CreateSistemaAccesoTitle_direccionIp}" required="true" requiredMessage="#{bundle.CreateSistemaAccesoRequiredMessage_direccionIp}"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaAccesoLabel_idUsuario}" for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{sistemaAccesoController.selected.idUsuario}" required="true" requiredMessage="#{bundle.EditSistemaAccesoRequiredMessage_idUsuario}">
+                            <f:selectItems value="#{sistemaUsuarioController.itemsAvailableSelectOne}"
+                                           var="idUsuarioItem"
+                                           itemValue="#{idUsuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sistemaAccesoController.create}" value="#{bundle.Save}" update="display,:SistemaAccesoListForm:datalist,:growl" oncomplete="handleSubmit(args,'SistemaAccesoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SistemaAccesoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

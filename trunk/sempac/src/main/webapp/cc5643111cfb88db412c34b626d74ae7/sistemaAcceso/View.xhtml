@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SistemaAccesoViewDlg" widgetVar="SistemaAccesoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSistemaAccesoTitle}">
+            <h:form id="SistemaAccesoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sistemaAccesoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSistemaAccesoLabel_idSistemaAcceso}"/>
+                        <h:outputText value="#{sistemaAccesoController.selected.idSistemaAcceso}" title="#{bundle.ViewSistemaAccesoTitle_idSistemaAcceso}"/>
+                        <h:outputText value="#{bundle.ViewSistemaAccesoLabel_fechaAcceso}"/>
+                        <h:outputText value="#{sistemaAccesoController.selected.fechaAcceso}" title="#{bundle.ViewSistemaAccesoTitle_fechaAcceso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSistemaAccesoLabel_direccionIp}"/>
+                        <h:outputText value="#{sistemaAccesoController.selected.direccionIp}" title="#{bundle.ViewSistemaAccesoTitle_direccionIp}"/>
+                        <h:outputText value="#{bundle.ViewSistemaAccesoLabel_idUsuario}"/>
+                        <h:outputText value="#{sistemaAccesoController.selected.idUsuario}" title="#{bundle.ViewSistemaAccesoTitle_idUsuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SistemaAccesoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

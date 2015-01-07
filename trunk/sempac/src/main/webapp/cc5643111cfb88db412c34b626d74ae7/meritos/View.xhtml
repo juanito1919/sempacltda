@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MeritosViewDlg" widgetVar="MeritosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMeritosTitle}">
+            <h:form id="MeritosViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{meritosController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMeritosLabel_idMeritos}"/>
+                        <h:outputText value="#{meritosController.selected.idMeritos}" title="#{bundle.ViewMeritosTitle_idMeritos}"/>
+                        <h:outputText value="#{bundle.ViewMeritosLabel_nombre}"/>
+                        <h:outputText value="#{meritosController.selected.nombre}" title="#{bundle.ViewMeritosTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewMeritosLabel_url}"/>
+                        <h:outputText value="#{meritosController.selected.url}" title="#{bundle.ViewMeritosTitle_url}"/>
+                        <h:outputText value="#{bundle.ViewMeritosLabel_eliminado}"/>
+                        <p:selectBooleanCheckbox value="#{meritosController.selected.eliminado}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewMeritosLabel_idTipoCertificado}"/>
+                        <h:outputText value="#{meritosController.selected.idTipoCertificado}" title="#{bundle.ViewMeritosTitle_idTipoCertificado}"/>
+                        <h:outputText value="#{bundle.ViewMeritosLabel_idTipoEvento}"/>
+                        <h:outputText value="#{meritosController.selected.idTipoEvento}" title="#{bundle.ViewMeritosTitle_idTipoEvento}"/>
+                        <h:outputText value="#{bundle.ViewMeritosLabel_idTipoMerito}"/>
+                        <h:outputText value="#{meritosController.selected.idTipoMerito}" title="#{bundle.ViewMeritosTitle_idTipoMerito}"/>
+                        <h:outputText value="#{bundle.ViewMeritosLabel_idUsuario}"/>
+                        <h:outputText value="#{meritosController.selected.idUsuario}" title="#{bundle.ViewMeritosTitle_idUsuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MeritosViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

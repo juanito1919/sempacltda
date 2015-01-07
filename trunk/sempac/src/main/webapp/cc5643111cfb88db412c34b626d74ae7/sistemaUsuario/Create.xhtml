@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SistemaUsuarioCreateDlg" widgetVar="SistemaUsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSistemaUsuarioTitle}">
+            <h:form id="SistemaUsuarioCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sistemaUsuarioController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_idUsuario}" for="idUsuario" />
+                        <p:inputText id="idUsuario" value="#{sistemaUsuarioController.selected.idUsuario}" title="#{bundle.CreateSistemaUsuarioTitle_idUsuario}" required="true" requiredMessage="#{bundle.CreateSistemaUsuarioRequiredMessage_idUsuario}"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_fechaAsignacion}" for="fechaAsignacion" />
+                        <p:calendar id="fechaAsignacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{sistemaUsuarioController.selected.fechaAsignacion}" title="#{bundle.EditSistemaUsuarioTitle_fechaAsignacion}" required="true" requiredMessage="#{bundle.EditSistemaUsuarioRequiredMessage_fechaAsignacion}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_fechaCaducidad}" for="fechaCaducidad" />
+                        <p:calendar id="fechaCaducidad" pattern="MM/dd/yyyy HH:mm:ss" value="#{sistemaUsuarioController.selected.fechaCaducidad}" title="#{bundle.EditSistemaUsuarioTitle_fechaCaducidad}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_fechaCambioContrasena}" for="fechaCambioContrasena" />
+                        <p:calendar id="fechaCambioContrasena" pattern="MM/dd/yyyy HH:mm:ss" value="#{sistemaUsuarioController.selected.fechaCambioContrasena}" title="#{bundle.EditSistemaUsuarioTitle_fechaCambioContrasena}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_fechaBloqueo}" for="fechaBloqueo" />
+                        <p:calendar id="fechaBloqueo" pattern="MM/dd/yyyy HH:mm:ss" value="#{sistemaUsuarioController.selected.fechaBloqueo}" title="#{bundle.EditSistemaUsuarioTitle_fechaBloqueo}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{sistemaUsuarioController.selected.estado}" title="#{bundle.CreateSistemaUsuarioTitle_estado}" required="true" requiredMessage="#{bundle.CreateSistemaUsuarioRequiredMessage_estado}"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_tiempoBloqueo}" for="tiempoBloqueo" />
+                        <p:inputText id="tiempoBloqueo" value="#{sistemaUsuarioController.selected.tiempoBloqueo}" title="#{bundle.CreateSistemaUsuarioTitle_tiempoBloqueo}" required="true" requiredMessage="#{bundle.CreateSistemaUsuarioRequiredMessage_tiempoBloqueo}"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_intentosFallidos}" for="intentosFallidos" />
+                        <p:inputText id="intentosFallidos" value="#{sistemaUsuarioController.selected.intentosFallidos}" title="#{bundle.CreateSistemaUsuarioTitle_intentosFallidos}" />
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_fechaUltimoIntentoFallido}" for="fechaUltimoIntentoFallido" />
+                        <p:calendar id="fechaUltimoIntentoFallido" pattern="MM/dd/yyyy HH:mm:ss" value="#{sistemaUsuarioController.selected.fechaUltimoIntentoFallido}" title="#{bundle.EditSistemaUsuarioTitle_fechaUltimoIntentoFallido}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSistemaUsuarioLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{sistemaUsuarioController.selected.usuario}" required="true" requiredMessage="#{bundle.EditSistemaUsuarioRequiredMessage_usuario}">
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sistemaUsuarioController.create}" value="#{bundle.Save}" update="display,:SistemaUsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args,'SistemaUsuarioCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SistemaUsuarioCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

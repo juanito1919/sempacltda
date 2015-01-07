@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SistemaAccesoEmpresaViewDlg" widgetVar="SistemaAccesoEmpresaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSistemaAccesoEmpresaTitle}">
+            <h:form id="SistemaAccesoEmpresaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sistemaAccesoEmpresaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSistemaAccesoEmpresaLabel_idSistemaAccesoEmpresa}"/>
+                        <h:outputText value="#{sistemaAccesoEmpresaController.selected.idSistemaAccesoEmpresa}" title="#{bundle.ViewSistemaAccesoEmpresaTitle_idSistemaAccesoEmpresa}"/>
+                        <h:outputText value="#{bundle.ViewSistemaAccesoEmpresaLabel_fechaAcceso}"/>
+                        <h:outputText value="#{sistemaAccesoEmpresaController.selected.fechaAcceso}" title="#{bundle.ViewSistemaAccesoEmpresaTitle_fechaAcceso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSistemaAccesoEmpresaLabel_direccionIp}"/>
+                        <h:outputText value="#{sistemaAccesoEmpresaController.selected.direccionIp}" title="#{bundle.ViewSistemaAccesoEmpresaTitle_direccionIp}"/>
+                        <h:outputText value="#{bundle.ViewSistemaAccesoEmpresaLabel_idEmpresa}"/>
+                        <h:outputText value="#{sistemaAccesoEmpresaController.selected.idEmpresa}" title="#{bundle.ViewSistemaAccesoEmpresaTitle_idEmpresa}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SistemaAccesoEmpresaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

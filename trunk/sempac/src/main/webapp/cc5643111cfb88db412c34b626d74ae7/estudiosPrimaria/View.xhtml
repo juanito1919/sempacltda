@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstudiosPrimariaViewDlg" widgetVar="EstudiosPrimariaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEstudiosPrimariaTitle}">
+            <h:form id="EstudiosPrimariaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{estudiosPrimariaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEstudiosPrimariaLabel_duracion}"/>
+                        <h:outputText value="#{estudiosPrimariaController.selected.duracion}" title="#{bundle.ViewEstudiosPrimariaTitle_duracion}"/>
+                        <h:outputText value="#{bundle.ViewEstudiosPrimariaLabel_eliminado}"/>
+                        <p:selectBooleanCheckbox value="#{estudiosPrimariaController.selected.eliminado}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewEstudiosPrimariaLabel_escuela}"/>
+                        <h:outputText value="#{estudiosPrimariaController.selected.escuela}" title="#{bundle.ViewEstudiosPrimariaTitle_escuela}"/>
+                        <h:outputText value="#{bundle.ViewEstudiosPrimariaLabel_usuario}"/>
+                        <h:outputText value="#{estudiosPrimariaController.selected.usuario}" title="#{bundle.ViewEstudiosPrimariaTitle_usuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EstudiosPrimariaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

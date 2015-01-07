@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoCertificadoCreateDlg" widgetVar="TipoCertificadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTipoCertificadoTitle}">
+            <h:form id="TipoCertificadoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoCertificadoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateTipoCertificadoLabel_idTipoCertificado}" for="idTipoCertificado" />
+                        <p:inputText id="idTipoCertificado" value="#{tipoCertificadoController.selected.idTipoCertificado}" title="#{bundle.CreateTipoCertificadoTitle_idTipoCertificado}" required="true" requiredMessage="#{bundle.CreateTipoCertificadoRequiredMessage_idTipoCertificado}"/>
+                        <p:outputLabel value="#{bundle.CreateTipoCertificadoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoCertificadoController.selected.nombre}" title="#{bundle.CreateTipoCertificadoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateTipoCertificadoRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreateTipoCertificadoLabel_eliminado}" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{tipoCertificadoController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditTipoCertificadoRequiredMessage_eliminado}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoCertificadoController.create}" value="#{bundle.Save}" update="display,:TipoCertificadoListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipoCertificadoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoCertificadoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
