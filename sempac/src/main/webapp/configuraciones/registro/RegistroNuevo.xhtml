@@ -14,7 +14,7 @@
         <h:form id="UsuarioRegistro">
             <div style="width: 70%; float: left; margin-left: 15%;">
                 <p:panel header="Información personal" style="border: none;" >
-                    <p:growl id="mensaje" showDetail="true" life="500"/> 
+                    <p:growl id="mensaje" showDetail="true" life="1500"/> 
                     <h:panelGroup id="display">
                         <h:panelGrid columns="4" 
                                      border="0" 
@@ -64,7 +64,16 @@
                                          onkeyup="value = value.toUpperCase()"
                                          value="#{userController.selected.apellidos}" 
                                          title="#{bundleEtiquetasES.Apellidos}" />
-
+                            <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
+                        <p:inputText id="username" 
+                                     value="#{userController.selected.username}" 
+                                     title="#{bundleEtiquetasES.UserName}" 
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.UserName} #{bundleEtiquetasES.CampoRequerido}">
+                            <p:ajax event="blur" 
+                                    listener="#{userController.validarUsername()}" 
+                                    update=":UsuarioCreateForm:mensaje"/>
+                        </p:inputText>
                             <p:outputLabel value="#{bundleEtiquetasES.FechaNacimiento}" for="fechaNacimiento" />
                             <p:calendar id="fechaNacimiento" 
                                         value="#{userController.selected.fechaNacimiento}" 
@@ -150,7 +159,18 @@
                                                />
                                 <f:converter binding="#{ciudadConverter}"/>
                             </p:selectOneMenu>
-
+                                <p:outputLabel value="#{bundleEtiquetasES.EstadoCivil}"   for="estadoCivil" />
+                        <p:selectOneMenu id="estadoCivil" 
+                                         value="#{userController.selected.estadoCivil}"
+                                         required="true" 
+                                         requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Soltero}" itemValue="S" />  
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Casado}" itemValue="C" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Divorciado}" itemValue="D" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.UnionLibre}" itemValue="U" />
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Viudo}" itemValue="V" />  
+                        </p:selectOneMenu>
                             <p:outputLabel value="#{bundleEtiquetasES.Direccion}" for="direccion" />
                             <p:inputText id="direccion" 
                                          onkeyup="value = value.toUpperCase()"
@@ -185,6 +205,7 @@
                         <p:commandButton value="CANCELAR"/>
                    </h:panelGroup>
                 </p:panel>
+            </div>
             </h:form>
-
+    </ui:define>
     </ui:composition>
