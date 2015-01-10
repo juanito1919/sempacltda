@@ -72,11 +72,12 @@ public class UserController implements Serializable {
     private Date fMaxima;
 
     public UserController() {//solo al inicio del ciclo del bean
-
+        System.out.println("Recarga control");
     }
 
     @PostConstruct
     public void init() { // cada vez q se abra la pagina
+        System.out.println("Recarga");
         itemPaises = ejbFacadePais.getItemsPais(false);
         selected = new Usuario();
         fMaxima = new Date(new Date().getYear() - 12, new Date().getMonth(), new Date().getDate());//fecha actual menos 12 anios
@@ -157,7 +158,7 @@ public class UserController implements Serializable {
         if (contrasena != null) {
             try {
                 selected.setContrasena(Sesion.MD5(contrasena));
-                System.out.println("contra:"+selected.getContrasena());
+                System.out.println("contra:" + selected.getContrasena());
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (UnsupportedEncodingException ex) {
@@ -216,7 +217,7 @@ public class UserController implements Serializable {
         ActivacionUsuario.setCodigoUsuario(user.getIdUsuario());
         ActivacionUsuario.setCodigoPeriodo(String.valueOf(new Date().getYear() + 1900));
         ActivacionUsuario.setCambiarContrasena(false);
-        
+
         try {
             System.out.println("p0ndras la direccion");
             Sesion.redireccionaPagina("http://localhost:8080/sempac/faces/configuraciones/inicioEmpleado/inicioEmpleado.xhtml");
@@ -283,7 +284,7 @@ public class UserController implements Serializable {
         this.selected = selected;
     }
 
-    protected void setEmbeddableKeys() {
+    protected boolean setEmbeddableKeys() {
 
         if (selected != null) {
             if (selected.getTipoIdentidad() != null && selected.getTipoIdentidad() != '-') {
@@ -297,50 +298,62 @@ public class UserController implements Serializable {
                                             if (selected.getCorreoElectronico() != null) {
                                                 if (selected.getDisponibilidad() != null) {
                                                     selected.setTipo('U');
-                                                    
-                                                    System.out.println("11: "+selected.getTipo());
+
+                                                    System.out.println("11: " + selected.getTipo());
+                                                    return true;
                                                 } else {
-                                                    System.out.println("10: "+selected.getDisponibilidad());
+                                                    System.out.println("10: " + selected.getDisponibilidad());
                                                     MuestraMensaje.addError("Seleccione su disponibilidad");
+                                                    return false;
                                                 }
                                             } else {
-                                                System.out.println("9: "+selected.getCorreoElectronico());
+                                                System.out.println("9: " + selected.getCorreoElectronico());
                                                 MuestraMensaje.addError("Ingrese su correo electronico");
+                                                return false;
                                             }
                                         } else {
-                                            System.out.println("8: "+selected.getEstadoCivil());
+                                            System.out.println("8: " + selected.getEstadoCivil());
                                             MuestraMensaje.addError("Ingrese su estado civil");
+                                            return false;
                                         }
                                     } else {
-                                        System.out.println("7: "+selected.getDireccion());
+                                        System.out.println("7: " + selected.getDireccion());
                                         MuestraMensaje.addError("Ingrese la direccion");
+                                        return false;
                                     }
                                 } else {
-                                    System.out.println("6: "+selected.getIdCiudad().getNombre());
+                                    System.out.println("6: " + selected.getIdCiudad().getNombre());
                                     MuestraMensaje.addError("Ingrese el Pais, Provincia/region, ciudad correctamente");
+                                    return false;
                                 }
                             } else {
-                                System.out.println("5: "+selected.getContrasena());
+                                System.out.println("5: " + selected.getContrasena());
                                 MuestraMensaje.addError("Ingrese la contrasena");
+                                return false;
                             }
                         } else {
-                            System.out.println("4: "+selected.getFechaNacimiento());
+                            System.out.println("4: " + selected.getFechaNacimiento());
                             MuestraMensaje.addError("Ingrese la fecha de su nacimiento");
+                            return false;
                         }
                     } else {
-                        System.out.println("3: "+selected.getNombres());
+                        System.out.println("3: " + selected.getNombres());
                         MuestraMensaje.addError("Ingrese los nombres");
+                        return false;
                     }
                 } else {
-                    System.out.println("2: "+selected.getIdentidad());
+                    System.out.println("2: " + selected.getIdentidad());
                     MuestraMensaje.addError("Ingrese la identidad identidad");
+                    return false;
                 }
             } else {
-                System.out.println("1: "+selected.getTipoIdentidad());
+                System.out.println("1: " + selected.getTipoIdentidad());
                 MuestraMensaje.addError("Ingrese tipo de identidad");
+                return false;
             }
         } else {
             MuestraMensaje.addError("Ingrese datos");
+            return false;
         }
     }
 
@@ -387,29 +400,33 @@ public class UserController implements Serializable {
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             System.out.println("entroo...");
-            setEmbeddableKeys();
-            System.out.println("saliooo.;;");
-            try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
+            if (setEmbeddableKeys()) {
+                System.out.println("saliooo.;;");
+                try {
+                    if (persistAction != PersistAction.DELETE) {
+                        getFacade().edit(selected);
+                    } else {
+                        getFacade().remove(selected);
+                    }
+                    JsfUtil.addSuccessMessage(successMessage);
+
+                } catch (EJBException ex) {
+                    String msg = "";
+                    Throwable cause = ex.getCause();
+                    if (cause != null) {
+                        msg = cause.getLocalizedMessage();
+                    }
+                    if (msg.length() > 0) {
+                        JsfUtil.addErrorMessage(msg);
+                    } else {
+                        JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundles").getString("PersistenceErrorOccured"));
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                     JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundles").getString("PersistenceErrorOccured"));
                 }
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundles").getString("PersistenceErrorOccured"));
+            } else {
+                JsfUtil.addErrorMessage("No se pudo registar al usuario... intentelo de nuevo");
             }
         }
     }
