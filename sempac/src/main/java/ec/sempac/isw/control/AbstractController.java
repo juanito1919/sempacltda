@@ -48,7 +48,7 @@ public abstract class AbstractController<T> {
         this.ejbFacade = ejbFacade;
     }
 
-    public T getSelected() {
+public T getSelected() {
         return selected;
     }
 
