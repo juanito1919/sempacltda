@@ -80,7 +80,7 @@ public class UserController implements Serializable {
         itemPaises = ejbFacadePais.getItemsPais(false);
         selected = new Usuario();
         fMaxima = new Date(new Date().getYear() - 12, new Date().getMonth(), new Date().getDate());//fecha actual menos 12 anios
-        
+
     }
 
     public void selectPais() {
@@ -157,6 +157,7 @@ public class UserController implements Serializable {
         if (contrasena != null) {
             try {
                 selected.setContrasena(Sesion.MD5(contrasena));
+                System.out.println("contra:"+selected.getContrasena());
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (UnsupportedEncodingException ex) {
@@ -210,10 +211,15 @@ public class UserController implements Serializable {
         } catch (IOException ex) {
             MuestraMensaje.addError("No se pudo crear el directorio de archivos");
         }
-        ActivacionUsuario.setUsuario(ejbFacade.getItemsUserName(selected.getUsername()));
+        Usuario user = ejbFacade.getItemsUserName(selected.getUsername());
+        ActivacionUsuario.setUsuario(user);
+        ActivacionUsuario.setCodigoUsuario(user.getIdUsuario());
+        ActivacionUsuario.setCodigoPeriodo(String.valueOf(new Date().getYear() + 1900));
+        ActivacionUsuario.setCambiarContrasena(false);
+        
         try {
             System.out.println("p0ndras la direccion");
-            //Sesion.redireccionaPagina("n");
+            Sesion.redireccionaPagina("http://localhost:8080/sempac/faces/configuraciones/inicioEmpleado/inicioEmpleado.xhtml");
         } catch (Exception ex) {
             MuestraMensaje.addError("No se pudo iniciar la session");
         }
@@ -291,34 +297,46 @@ public class UserController implements Serializable {
                                             if (selected.getCorreoElectronico() != null) {
                                                 if (selected.getDisponibilidad() != null) {
                                                     selected.setTipo('U');
+                                                    
+                                                    System.out.println("11: "+selected.getTipo());
                                                 } else {
+                                                    System.out.println("10: "+selected.getDisponibilidad());
                                                     MuestraMensaje.addError("Seleccione su disponibilidad");
                                                 }
                                             } else {
+                                                System.out.println("9: "+selected.getCorreoElectronico());
                                                 MuestraMensaje.addError("Ingrese su correo electronico");
                                             }
                                         } else {
+                                            System.out.println("8: "+selected.getEstadoCivil());
                                             MuestraMensaje.addError("Ingrese su estado civil");
                                         }
                                     } else {
+                                        System.out.println("7: "+selected.getDireccion());
                                         MuestraMensaje.addError("Ingrese la direccion");
                                     }
                                 } else {
+                                    System.out.println("6: "+selected.getIdCiudad().getNombre());
                                     MuestraMensaje.addError("Ingrese el Pais, Provincia/region, ciudad correctamente");
                                 }
                             } else {
+                                System.out.println("5: "+selected.getContrasena());
                                 MuestraMensaje.addError("Ingrese la contrasena");
                             }
                         } else {
+                            System.out.println("4: "+selected.getFechaNacimiento());
                             MuestraMensaje.addError("Ingrese la fecha de su nacimiento");
                         }
                     } else {
+                        System.out.println("3: "+selected.getNombres());
                         MuestraMensaje.addError("Ingrese los nombres");
                     }
                 } else {
+                    System.out.println("2: "+selected.getIdentidad());
                     MuestraMensaje.addError("Ingrese la identidad identidad");
                 }
             } else {
+                System.out.println("1: "+selected.getTipoIdentidad());
                 MuestraMensaje.addError("Ingrese tipo de identidad");
             }
         } else {
@@ -368,7 +386,9 @@ public class UserController implements Serializable {
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
+            System.out.println("entroo...");
             setEmbeddableKeys();
+            System.out.println("saliooo.;;");
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
