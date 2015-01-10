@@ -21,15 +21,26 @@
         <div class="panelTitulo">
 
         </div> 
-        <div style="width: 70%; float:left;">
+        <div style="width: 20%; float:left;">
+            <p:panel id="pago" header="Estado de Cuenta" style="border: none; width: 100%;" >
+                Estado de la cuanta de pago es: 
+                Pagado
+                <h:graphicImage  id="fotoestado" value="" height="150" width="150" />
+                <h:form>
+                    <p:commandButton value="Realizar Pago" oncomplete="PF('displayPago').show()"/>
+                </h:form>
+            </p:panel>
+
+        </div>
+        <div style="width: 60%; float:left;">
             <p:panel id="panelPerfil" header="Datos Personales" style="border: none; width: 100%;" >
                 <div style="width: 20%; float:left;">
-                      <p:lightBox styleClass="imagebox" id="lighbox1"> 
+                    <p:lightBox styleClass="imagebox" id="lighbox1"> 
                         <h:outputLink value="#{usuarioController.selected.url}" title="Foto de Perfil">
                             <h:graphicImage  id="fotoPerfil" value="#{usuarioController.selected.url}" height="150" width="150" />
                         </h:outputLink>
                     </p:lightBox>
-                    
+
                     <div style="margin: 0px auto; width: 150px;">
                         <h:link value="Editar Perfil" styleClass="link"/>
                     </div>
@@ -46,7 +57,7 @@
                 </div>
             </p:panel>
         </div>
-        <div style="width: 30%; float:left;">
+        <div style="width: 20%; float:left;">
             <p:panel id="panelCV" header="Actualizar CV" style="border: none; width: 98%; margin: 0px auto; " >
 
                 <h:link outcome="/configuraciones/usuario/inicio"  styleClass="link">
@@ -79,24 +90,24 @@
                     </p:scrollPanel>
                 </p:panel>
                 <p:dialog id="dialogAplicarEmpleo" header="Aplicar Trabajo" modal="true" widgetVar="display" style="width: 300px;">
-                  
+
                     <h:panelGrid id="carDetail" columns="2" border="0" style="border: none;">
-                            <p:outputLabel value="Empresa:" for="empresa"/>
-                            <p:inputText id="empresa" value="#{personalRequeridoController.selected.idEmpresa.nombre}" size="35" readonly="true"/>
-                            
-                            <p:outputLabel value="Cargo:" for="cargo"/>
-                            <p:inputText id="cargo" value="#{personalRequeridoController.selected.idHabilidades.nombre}" size="35" readonly="true"/>
-                            
-                            <p:outputLabel value="Fecha:" for="fecha"/>
-                            <p:inputText id="fecha" value="#{personalRequeridoController.selected.fechaModificacion}" size="35" readonly="true"/>
-                            
-                            <p:outputLabel value="Ciudad:" for="ciudad"/>
-                            <p:inputText id="ciudad" value="#{personalRequeridoController.selected.idCiudad.nombre}" size="35" readonly="true"/>
-                             
-                            <p:outputLabel value="Descripcion:" for="descripcion"/>
-                            <p:inputTextarea id="descripcion" value="#{personalRequeridoController.selected.descripcion}" rows="6" cols="37"  readonly="true"/>
-                            
-                        </h:panelGrid>
+                        <p:outputLabel value="Empresa:" for="empresa"/>
+                        <p:inputText id="empresa" value="#{personalRequeridoController.selected.idEmpresa.nombre}" size="35" readonly="true"/>
+
+                        <p:outputLabel value="Cargo:" for="cargo"/>
+                        <p:inputText id="cargo" value="#{personalRequeridoController.selected.idHabilidades.nombre}" size="35" readonly="true"/>
+
+                        <p:outputLabel value="Fecha:" for="fecha"/>
+                        <p:inputText id="fecha" value="#{personalRequeridoController.selected.fechaModificacion}" size="35" readonly="true"/>
+
+                        <p:outputLabel value="Ciudad:" for="ciudad"/>
+                        <p:inputText id="ciudad" value="#{personalRequeridoController.selected.idCiudad.nombre}" size="35" readonly="true"/>
+
+                        <p:outputLabel value="Descripcion:" for="descripcion"/>
+                        <p:inputTextarea id="descripcion" value="#{personalRequeridoController.selected.descripcion}" rows="6" cols="37"  readonly="true"/>
+
+                    </h:panelGrid>
                     <div>
                         <p:commandButton id="butonAplicarTrabajo" value="APLICAR"/>
                         <p:commandButton id="cancelar" value="CANCELAR"/>
@@ -107,6 +118,22 @@
         <div style=" clear:both; width: 70%; float:left;">
 
         </div>
+        <p:dialog id="dialogRealizarPago" header="Realizar Pago" modal="true" widgetVar="displayPago" style="width: 300px;">
+            <form id="formPago">
+                <h:panelGrid id="detalles" columns="2" border="0" style="border: none;">
+                    <p:graphicImage value="../../resources/images/Financial_Transactions-128.png"/>
+                  
+                    <h:panelGrid id="carDetail" columns="2" border="0" style="border: none;">
+                        <p:outputLabel value="Nro: CUENTA:"/>
+                        <p:inputText value=""/>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <div style="width: 200px; margin: 0 auto;">
+                    <p:commandButton id="butonPago" value="APLICAR"/>
+                    <p:commandButton id="cancelar" value="CANCELAR"/>
+                </div>
+            </form>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>
