@@ -22,11 +22,11 @@
                                      cellspacing="4" 
                                      cellpadding="0" 
                                      columnClasses="column1Class, column2Class,column3Class,column4Class" 
-                                     rendered="#{UsuarioController.selected != null}">
+                                     rendered="#{usuarioController.selected != null}">
 
                             <p:outputLabel value="#{bundleEtiquetasES.TipoIdientidad}" for="tipoIdentidad" />
                             <p:selectOneMenu id="tipoIdentidad" 
-                                             value="#{UsuarioController.selected.tipoIdentidad}"
+                                             value="#{usuarioController.selected.tipoIdentidad}"
                                              required="true" 
                                              requiredMessage="#{bundleEtiquetasES.TipoIdientidad}  #{bundleEtiquetasES.CampoRequerido}">                          
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}" itemValue="-"/>
@@ -35,26 +35,26 @@
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Pasaporte}" itemValue="P" />
 
                                 <p:ajax event="change" 
-                                        listener="#{UsuarioController.validaTipoIdentidad()}"
+                                        listener="#{usuarioController.validaTipoIdentidad()}"
                                         update="identidad"/>
                             </p:selectOneMenu>  
 
                             <p:outputLabel value="#{bundleEtiquetasES.Identidad}" for="identidad" />
                             <p:inputText id="identidad" 
-                                         disabled="#{UsuarioController.selected.tipoIdentidad==null}"
+                                         disabled="#{usuarioController.selected.tipoIdentidad==null}"
                                          onkeyup="value = value.toUpperCase()"
-                                         value="#{UsuarioController.selected.identidad}" 
+                                         value="#{usuarioController.selected.identidad}" 
                                          title="#{bundleEtiquetasES.Identidad}"
                                          required="true" 
                                          requiredMessage="#{bundleEtiquetasES.Identidad} #{bundleEtiquetasES.CampoRequerido}" >
                                 <p:ajax event="blur" 
-                                        listener="#{UsuarioController.validadIdentidad()}"/>
+                                        listener="#{usuarioController.validadIdentidad()}"/>
                             </p:inputText>
 
                             <p:outputLabel value="#{bundleEtiquetasES.Nombres}" for="nombres" />
                             <p:inputText id="nombres" 
                                          onkeyup="value = value.toUpperCase()"
-                                         value="#{UsuarioController.selected.nombres}" 
+                                         value="#{usuarioController.selected.nombres}" 
                                          title="#{bundleEtiquetasES.Nombres}"
                                          required="true" 
                                          requiredMessage="#{bundleEtiquetasES.Nombres} #{bundleEtiquetasES.CampoRequerido}" />
@@ -62,85 +62,85 @@
                             <p:outputLabel value="#{bundleEtiquetasES.Apellidos}" for="apellidos" />
                             <p:inputText id="apellidos" 
                                          onkeyup="value = value.toUpperCase()"
-                                         value="#{UsuarioController.selected.apellidos}" 
+                                         value="#{usuarioController.selected.apellidos}" 
                                          title="#{bundleEtiquetasES.Apellidos}" />
                             <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
                         <p:inputText id="username" 
-                                     value="#{UsuarioController.selected.username}" 
+                                     value="#{usuarioController.selected.username}" 
                                      title="#{bundleEtiquetasES.UserName}" 
                                      required="true" 
                                      requiredMessage="#{bundleEtiquetasES.UserName} #{bundleEtiquetasES.CampoRequerido}">
                             <p:ajax event="blur" 
-                                    listener="#{UsuarioController.validarUsername()}" 
+                                    listener="#{usuarioController.validarUsername()}" 
                                     update=":UsuarioCreateForm:mensaje"/>
                         </p:inputText>
                             <p:outputLabel value="#{bundleEtiquetasES.FechaNacimiento}" for="fechaNacimiento" />
                             <p:calendar id="fechaNacimiento" 
-                                        value="#{UsuarioController.selected.fechaNacimiento}" 
+                                        value="#{usuarioController.selected.fechaNacimiento}" 
                                         locale="de"
                                         navigator="true"
                                         pattern="dd/MM/yyyy" 
                                         title="#{bundleEtiquetasES.FechaNacimiento}" 
                                         required="true" 
                                         requiredMessage="#{bundleEtiquetasES.FechaNacimiento} #{bundleEtiquetasES.CampoRequerido}" 
-                                        maxdate="#{UsuarioController.FMaxima}"
+                                        maxdate="#{usuarioController.FMaxima}"
                                         showOn="button"/>
 
                             <p:outputLabel value="#{bundleEtiquetasES.Contrasena}" for="contrasena" />
                             <p:password id="contrasena" 
-                                        value="#{UsuarioController.contrasena}" 
+                                        value="#{usuarioController.contrasena}" 
                                         title="#{bundleEtiquetasES.Contrasena}" 
                                         required="true" 
                                         requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
                                 <p:ajax event="blur" 
-                                        listener="#{UsuarioController.validarContrasena()}"
+                                        listener="#{usuarioController.validarContrasena()}"
                                         update=":UsuarioRegistro:mensaje, confirmarContrasena"/>
                             </p:password>
 
                             <p:outputLabel value="#{bundleEtiquetasES.ConfirmeContrasena}" for="confirmarContrasena" />
                             <p:password id="confirmarContrasena" 
-                                        value="#{UsuarioController.confirmaContrasena}" 
+                                        value="#{usuarioController.confirmaContrasena}" 
                                         title="#{bundleEtiquetasES.Contrasena}" 
                                         required="true" 
                                         requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
                                 <p:ajax event="blur" 
-                                        listener="#{UsuarioController.validarConfirmacionContrasena()}" 
+                                        listener="#{usuarioController.validarConfirmacionContrasena()}" 
                                         update=":UsuarioRegistro:mensaje"
                                         />
                             </p:password>
 
                             <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
                             <p:selectOneMenu id="pais" 
-                                             value="#{UsuarioController.pais}"
+                                             value="#{usuarioController.pais}"
                                              required="true" 
                                              requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                                <f:selectItems value="#{UsuarioController.itemPaises}"
+                                <f:selectItems value="#{usuarioController.itemPaises}"
                                                var="PaisItem"
                                                itemValue="#{PaisItem}"
                                                itemLabel="#{PaisItem.nombre}"
                                                />
                                 <f:converter binding="#{paisConverter}"/>
                                 <p:ajax event="change" 
-                                        listener="#{UsuarioController.selectPais()}" 
+                                        listener="#{usuarioController.selectPais()}" 
                                         update=":UsuarioRegistro:mensaje, provincia,ciudad"/>
                             </p:selectOneMenu>
 
                             <p:outputLabel value="#{bundleEtiquetasES.Provincia}" for="provincia" />
                             <p:selectOneMenu id="provincia" 
-                                             value="#{UsuarioController.provincia}"
+                                             value="#{usuarioController.provincia}"
                                              required="true" 
 
                                              requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                                <f:selectItems value="#{UsuarioController.itemProvincias}"
+                                <f:selectItems value="#{usuarioController.itemProvincias}"
                                                var="ProvinciaItem"
                                                itemValue="#{ProvinciaItem}"
                                                itemLabel="#{ProvinciaItem.nombre}"
                                                />
                                 <f:converter binding="#{regionConverter}"/>
                                 <p:ajax event="change" 
-                                        listener="#{UsuarioController.selectProvincia()}" 
+                                        listener="#{usuarioController.selectProvincia()}" 
                                         update=":UsuarioRegistro:mensaje, ciudad"/>
                             </p:selectOneMenu>
 
@@ -148,11 +148,11 @@
 
                             <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
                             <p:selectOneMenu id="ciudad" 
-                                             value="#{UsuarioController.selected.idCiudad}"
+                                             value="#{usuarioController.selected.idCiudad}"
                                              required="true" 
                                              requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                                <f:selectItems value="#{UsuarioController.itemCiudades}"
+                                <f:selectItems value="#{usuarioController.itemCiudades}"
                                                var="CiudadItem"
                                                itemValue="#{CiudadItem}"
                                                itemLabel="#{CiudadItem.nombre}"
@@ -161,7 +161,7 @@
                             </p:selectOneMenu>
                                 <p:outputLabel value="#{bundleEtiquetasES.EstadoCivil}"   for="estadoCivil" />
                         <p:selectOneMenu id="estadoCivil" 
-                                         value="#{UsuarioController.selected.estadoCivil}"
+                                         value="#{usuarioController.selected.estadoCivil}"
                                          required="true" 
                                          requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
                             <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
@@ -174,14 +174,14 @@
                             <p:outputLabel value="#{bundleEtiquetasES.Direccion}" for="direccion" />
                             <p:inputText id="direccion" 
                                          onkeyup="value = value.toUpperCase()"
-                                         value="#{UsuarioController.selected.direccion}" 
+                                         value="#{usuarioController.selected.direccion}" 
                                          title="#{bundleEtiquetasES.Direccion}" 
                                          required="true" 
                                          requiredMessage="#{bundleEtiquetasES.Direccion} #{bundleEtiquetasES.CampoRequerido}"/>
 
                             <p:outputLabel value="#{bundleEtiquetasES.CorreoElectronico}" for="correoElectronico" />
                             <p:inputText id="correoElectronico" 
-                                         value="#{UsuarioController.selected.correoElectronico}" 
+                                         value="#{usuarioController.selected.correoElectronico}" 
                                          title="#{bundleEtiquetasES.CorreoElectronico}" 
                                          required="true" 
                                          requiredMessage="#{bundleEtiquetasES.CorreoElectronico} #{bundleEtiquetasES.CampoRequerido}">
@@ -192,7 +192,7 @@
 
                             <p:outputLabel value="#{bundleEtiquetasES.Disponibilidad}" for="disponibilidad" />
                             <p:selectOneMenu id="disponibilidad" 
-                                             value="#{UsuarioController.selected.disponibilidad}"
+                                             value="#{usuarioController.selected.disponibilidad}"
                                              required="true" 
                                              requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
@@ -201,7 +201,7 @@
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Otro}" itemValue="O" />  
                             </p:selectOneMenu>
                             </h:panelGrid>
-                        <p:commandButton actionListener="#{UsuarioController.create}" value="REGISTRAR" update=":UsuarioRegistro:mensaje"/>
+                        <p:commandButton actionListener="#{usuarioController.create}" value="REGISTRAR" update=":UsuarioRegistro:mensaje"/>
                         <p:commandButton value="CANCELAR"/>
                    </h:panelGroup>
                 </p:panel>
