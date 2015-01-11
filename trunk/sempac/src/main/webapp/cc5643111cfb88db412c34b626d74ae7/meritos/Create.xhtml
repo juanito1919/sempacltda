@@ -42,7 +42,8 @@
                         <p:selectOneMenu id="idUsuario" value="#{meritosController.selected.idUsuario}" >
                             <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
                                            var="idUsuarioItem"
-                                           itemValue="#{idUsuarioItem}"/>
+                                           itemValue="#{idUsuarioItem}"
+                                           itemLabel="#{idUsuarioItem.identidad} #{idUsuarioItem.nombres}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{meritosController.create}" value="#{bundle.Save}" update="display,:MeritosListForm:datalist,:growl" oncomplete="handleSubmit(args,'MeritosCreateDialog');"/>
