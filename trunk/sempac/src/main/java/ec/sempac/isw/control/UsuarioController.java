@@ -6,6 +6,7 @@ import ec.sempac.isw.control.util.Validaciones;
 import ec.sempac.isw.modelo.Ciudad;
 import ec.sempac.isw.modelo.Espectativas;
 import ec.sempac.isw.modelo.Habilidades;
+import ec.sempac.isw.modelo.Pagos;
 import ec.sempac.isw.modelo.Pais;
 import ec.sempac.isw.modelo.Region;
 import ec.sempac.isw.modelo.SistemaUsuario;
@@ -15,6 +16,7 @@ import ec.sempac.isw.modelo.Usuario;
 import ec.sempac.isw.negocio.CiudadFacade;
 import ec.sempac.isw.negocio.EspectativasFacade;
 import ec.sempac.isw.negocio.HabilidadesFacade;
+import ec.sempac.isw.negocio.PagosFacade;
 import ec.sempac.isw.negocio.PaisFacade;
 import ec.sempac.isw.negocio.RegionFacade;
 import ec.sempac.isw.negocio.SistemaAccesoFacade;
@@ -30,6 +32,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -114,7 +117,9 @@ public class UsuarioController implements Serializable {
     private Usuario selected;
 
     private Date fMaxima;
-
+    private Pagos pagos;
+    @EJB
+    private PagosFacade ejbFacadePagos;
     ///
 
     public UsuarioController() {
@@ -124,6 +129,7 @@ public class UsuarioController implements Serializable {
     public void init() {
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
         this.setSelected(new Usuario());
+        pagos = new Pagos();
         //mio
         itemPaises = ejbFacadePais.getItemsPais(false);
         selected = new Usuario();
@@ -1136,5 +1142,33 @@ public class UsuarioController implements Serializable {
 
     public void setFMaxima(Date fMaxima) {
         this.fMaxima = fMaxima;
+    }
+
+    public Pagos getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(Pagos pagos) {
+        this.pagos = pagos;
+    }
+    
+    public void pagosDeposito(ActionEvent event){
+        
+        Usuario user = ActivacionUsuario.getUsuario();
+        SistemaUsuario su = ejbFacadeSistemaUsuario.getUsuarioActivacion(user.getIdUsuario());
+        
+        pagos.setIdUsuario(user);
+        pagos.setFechaRegistro(new Date());
+        pagos.setFechaCaducidad(new Date()); ////  fecha de registro mas 3 meses
+        pagos.setValor(new BigDecimal(0.0));
+        
+        ejbFacadePagos.create(pagos);
+        
+        su.setEstado('P');
+        su.setFechaCaducidad(new Date());////  fecha de registro mas 3 meses
+        
+        ejbFacadeSistemaUsuario.edit(su);
+        
+        System.out.println("Stisfactorio....");
     }
 }
