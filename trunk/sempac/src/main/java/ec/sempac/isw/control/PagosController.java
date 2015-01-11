@@ -7,6 +7,7 @@ import ec.sempac.isw.modelo.Usuario;
 import ec.sempac.isw.negocio.PagosFacade;
 import ec.sempac.isw.negocio.SistemaUsuarioFacade;
 import ec.sempac.isw.negocio.UsuarioFacade;
+import ec.sempac.isw.seguridades.ActivacionUsuario;
 import ec.sempac.isw.seguridades.Sesion;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -40,8 +41,9 @@ public class PagosController extends AbstractController<Pagos> implements Serial
     @PostConstruct
     public void init() {
         super.setFacade(ejbFacade);
-        setUsuario(null);
-        setSistemaUsuario(null);
+        setSelected(new Pagos());
+        setUsuario(ActivacionUsuario.getUsuario());
+        setSistemaUsuario(ejbFacadeSistemaUsuario.getUsuarioActivacion(getUsuario().getIdUsuario()));
     }
 
     public void buscarUsuario() {
@@ -60,7 +62,7 @@ public class PagosController extends AbstractController<Pagos> implements Serial
             System.out.println("si va a guardar");
             this.create(event);
             getSistemaUsuario().setEstado('P');
-            getSistemaUsuario().setFechaCaducidad(this.getSelected().getFechaCaducidad());
+            getSistemaUsuario().setFechaCaducidad(new Date());/// esto mas 12
             ejbFacadeSistemaUsuario.edit(getSistemaUsuario());
         } else {
             System.out.println("no va a guardar");
@@ -71,18 +73,20 @@ public class PagosController extends AbstractController<Pagos> implements Serial
 
     @Override
     protected void setEmbeddableKeys() {
-        this.getSelected().setIdUsuario(usuario);
+        this.getSelected().setIdUsuario(getUsuario());
+        this.getSelected().setFechaRegistro(new Date());
+        this.getSelected().setValor(new BigDecimal(0.0));
         //System.out.println("Usuario:  "+ this.getSelected().getIdUsuario());
     }
 
     @Override
     protected void initializeEmbeddableKey() {
-        this.setUsuario(new Usuario());
-        this.setCorreoElectronico("");
-        this.getSelected().setIdUsuario(getUsuario());
-        this.getSelected().setFechaRegistro(new Date());
-        this.getSelected().setFechaCaducidad(Sesion.obtieneFechaCaducidad(new Date(), 3, 0));
-        this.getSelected().setValor(new BigDecimal(0.0));
+//        this.setUsuario(new Usuario());
+//        this.setCorreoElectronico("");
+//        this.getSelected().setIdUsuario(getUsuario());
+//        this.getSelected().setFechaRegistro(new Date());
+//        this.getSelected().setFechaCaducidad(Sesion.obtieneFechaCaducidad(new Date(), 3, 0));
+//        this.getSelected().setValor(new BigDecimal(0.0));
     }
 
     /**
