@@ -64,6 +64,10 @@ public class PagosController extends AbstractController<Pagos> implements Serial
             getSistemaUsuario().setEstado('P');
             getSistemaUsuario().setFechaCaducidad(new Date());/// esto mas 12
             ejbFacadeSistemaUsuario.edit(getSistemaUsuario());
+            this.getSelected().setIdUsuario(getUsuario());
+            this.getSelected().setFechaRegistro(new Date());
+            this.getSelected().setValor(new BigDecimal(0.0));
+            ejbFacade.create(getSelected());
         } else {
             System.out.println("no va a guardar");
             MuestraMensaje.addError("Seleccione primero un usuario");
