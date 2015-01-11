@@ -41,9 +41,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pagos.findByNumeroDeposito", query = "SELECT p FROM Pagos p WHERE p.numeroDeposito = :numeroDeposito"),
     @NamedQuery(name = "Pagos.findByFechaDeposito", query = "SELECT p FROM Pagos p WHERE p.fechaDeposito = :fechaDeposito"),
     @NamedQuery(name = "Pagos.findByValor", query = "SELECT p FROM Pagos p WHERE p.valor = :valor"),
-    @NamedQuery(name = "Pagos.findByEliminado", query = "SELECT p FROM Pagos p WHERE p.eliminado = :eliminado")})
+    @NamedQuery(name = "Pagos.findByEliminado", query = "SELECT p FROM Pagos p WHERE p.eliminado = :eliminado"),
+    //Usuario
+    @NamedQuery(name = "Pagos.findByIdUsuario", query = "SELECT p FROM Pagos p WHERE p.idUsuario.idUsuario = :idUsuario AND p.eliminado = :eliminado")})
 public class Pagos implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String findByIdUsuario ="SistemaUsuario.findByIdUsuario";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

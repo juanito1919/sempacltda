@@ -70,7 +70,7 @@ public class Sesion {
            // String url = ResourceBundle.getBundle("/propiedadesObjetosEC").getString("UrlLoginMKS");
            // FacesContext.getCurrentInstance().getExternalContext().redirect(url);
         }
-
+        
     
       
 
