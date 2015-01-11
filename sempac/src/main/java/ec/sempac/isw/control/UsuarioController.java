@@ -306,7 +306,7 @@ public class UsuarioController implements Serializable {
         this.setPais(null);
         this.setContrasena("");
         this.setConfirmaContrasena("");
-        this.direccion = "";
+        this.setDireccion("");
     }
 
     public void registraCuenta(ActionEvent event) {
@@ -1092,6 +1092,20 @@ public class UsuarioController implements Serializable {
 
     public List<Usuario> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    /**
+     * @return the direccion
+     */
+    public String getDireccion() {
+        return direccion;
+    }
+
+    /**
+     * @param direccion the direccion to set
+     */
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     @FacesConverter(forClass = Usuario.class)
