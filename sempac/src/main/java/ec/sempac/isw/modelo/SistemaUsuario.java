@@ -51,6 +51,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class SistemaUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByEstadoPago ="SistemaUsuario.findByEstadoPago";
+    public static final String findByIdUsuario ="SistemaUsuario.findByIdUsuario";
     @Id
     @Basic(optional = false)
     @NotNull
