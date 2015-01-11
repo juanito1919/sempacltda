@@ -42,4 +42,13 @@ public class SistemaUsuarioFacade extends AbstractFacade<SistemaUsuario> {
             return null;
         }
     }
+    public SistemaUsuario getUsuarioActivacion(long idUsuario) {
+        Query query = this.em.createNamedQuery(SistemaUsuario.findByEstadoPago);
+        query.setParameter("idUsuario", idUsuario);
+        try {
+            return (SistemaUsuario) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }
