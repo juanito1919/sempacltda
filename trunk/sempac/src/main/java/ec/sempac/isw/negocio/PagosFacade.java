@@ -9,7 +9,9 @@ package ec.sempac.isw.negocio;
 import ec.sempac.isw.modelo.Pagos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,18 @@ public class PagosFacade extends AbstractFacade<Pagos> {
         super(Pagos.class);
     }
     
+    public Pagos getPago(long idUsuario) {
+        Query query = this.em.createNamedQuery(Pagos.findByIdUsuario);
+        query.setParameter("idUsuario", idUsuario);
+        query.setParameter("eliminado", false);
+        try {
+            //if(query.getResultList().size()>1){
+                
+           // }else{
+            return (Pagos) query.getSingleResult();
+           // }
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }
