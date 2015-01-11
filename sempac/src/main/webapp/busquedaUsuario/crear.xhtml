@@ -21,7 +21,7 @@
                     border="0"
                     columnClasses="column1Class, column2Class,column3Class,column4Class" 
                     >
-                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Habilidad}-#{bundleEtiquetasES.Espectativa}" 
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Habilidad}" 
                                    for="habilidad" />
                     <p:selectOneMenu id="habilidad" 
                                      value="#{usuarioController.habilidadBusqueda}"
@@ -86,53 +86,64 @@
                     </p:dataTable>
                 </p:panel>
                 <h:panelGrid 
-                    columns="6" 
+                    columns="4" 
                     border="0"
                     columnClasses="column1Class, column2Class,column3Class,column4Class,column3Class,column4Class" 
                     >
-                         <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
-                        <p:selectOneMenu id="pais" 
-                                         value="#{usuarioController.pais}">
-                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                            <f:selectItems value="#{usuarioController.itemPaises}"
-                                           var="PaisItem"
-                                           itemValue="#{PaisItem}"
-                                           itemLabel="#{PaisItem.nombre}"
-                                           />
-                            <f:converter binding="#{paisConverter}"/>
-                            <p:ajax event="change" 
-                                    listener="#{usuarioController.cambiaPaisBusqueda()}" 
-                                    update=":BusquedaUsuarioCreateForm:provincia,:BusquedaUsuarioCreateForm:ciudad,:BusquedaUsuarioListForm"/>
-                        </p:selectOneMenu>
+                    <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
+                    <p:selectOneMenu id="pais" 
+                                     value="#{usuarioController.pais}">
+                        <f:selectItem itemLabel="Cualquiera"/>
+                        <f:selectItems value="#{usuarioController.itemPaises}"
+                                       var="PaisItem"
+                                       itemValue="#{PaisItem}"
+                                       itemLabel="#{PaisItem.nombre}"
+                                       />
+                        <f:converter binding="#{paisConverter}"/>
+                        <p:ajax event="change" 
+                                listener="#{usuarioController.cambiaPaisBusqueda()}" 
+                                update=":BusquedaUsuarioCreateForm:provincia,:BusquedaUsuarioCreateForm:ciudad,:BusquedaUsuarioListForm"/>
+                    </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundleEtiquetasES.Provincia}" for="provincia" />
-                        <p:selectOneMenu id="provincia" 
-                                         value="#{usuarioController.provincia}">
-                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                            <f:selectItems value="#{usuarioController.itemProvincias}"
-                                           var="ProvinciaItem"
-                                           itemValue="#{ProvinciaItem}"
-                                           itemLabel="#{ProvinciaItem.nombre}"
-                                           />
-                            <f:converter binding="#{regionConverter}"/>
-                            <p:ajax event="change" 
-                                    listener="#{usuarioController.cambiaProvinciaBusqueda()}" 
-                                    update=":BusquedaUsuarioCreateForm:ciudad,:BusquedaUsuarioListForm"/>
-                        </p:selectOneMenu>
+                    <p:outputLabel value="#{bundleEtiquetasES.Provincia}" for="provincia" />
+                    <p:selectOneMenu id="provincia" 
+                                     value="#{usuarioController.provincia}">
+                        <f:selectItem itemLabel="Cualquiera"/>
+                        <f:selectItems value="#{usuarioController.itemProvincias}"
+                                       var="ProvinciaItem"
+                                       itemValue="#{ProvinciaItem}"
+                                       itemLabel="#{ProvinciaItem.nombre}"
+                                       />
+                        <f:converter binding="#{regionConverter}"/>
+                        <p:ajax event="change" 
+                                listener="#{usuarioController.cambiaProvinciaBusqueda()}" 
+                                update=":BusquedaUsuarioCreateForm:ciudad,:BusquedaUsuarioListForm"/>
+                    </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
-                        <p:selectOneMenu id="ciudad" 
-                                         value="#{usuarioController.ciudad}">
-                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                            <f:selectItems value="#{usuarioController.itemCiudades}"
-                                           var="CiudadItem"
-                                           itemValue="#{CiudadItem}"
-                                           itemLabel="#{CiudadItem.nombre}"
-                                           />
-                            <f:converter binding="#{ciudadConverter}"/>
-                        </p:selectOneMenu>
+                    <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
+                    <p:selectOneMenu id="ciudad" 
+                                     value="#{usuarioController.ciudad}">
+                        <f:selectItem itemLabel="Cualquiera"/>
+                        <f:selectItems value="#{usuarioController.itemCiudades}"
+                                       var="CiudadItem"
+                                       itemValue="#{CiudadItem}"
+                                       itemLabel="#{CiudadItem.nombre}"
+                                       />
+                        <f:converter binding="#{ciudadConverter}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="BARRIO" for="barrio" />
+                    <p:inputText id="barrio" 
+                                 onkeyup="value = value.toUpperCase()"
+                                 value="#{usuarioController.direccion}"/>
 
                 </h:panelGrid>
+                <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
+                    <p:commandButton action="#{usuarioController.cargarUsuariosBusqueda}" 
+                                     value="BUSCAR" icon="ui-icon-search" 
+                                     update=":BusquedaUsuarioCreateForm:datalistHabEsp,:BusquedaUsuarioListForm"/>
+
+
+                </div>
             </h:panelGroup>
         </h:form>
     </p:panel>
