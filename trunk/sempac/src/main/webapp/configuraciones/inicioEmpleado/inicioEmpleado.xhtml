@@ -124,12 +124,14 @@
                     <p:graphicImage value="../../resources/images/Financial_Transactions-128.png"/>
                   
                     <h:panelGrid id="carDetail" columns="2" border="0" style="border: none;">
-                        <p:outputLabel value="Nro: CUENTA:"/>
-                        <p:inputText value=""/>
+                        <p:outputLabel value="Numero de Deposito" for="deposito" />
+                        <p:inputText id="deposito" 
+                                     value="#{pagosController.selected.numeroDeposito}" 
+                                     title="Numero de deposito en la Cuenta bancaria" />
                     </h:panelGrid>
                 </h:panelGrid>
                 <div style="width: 200px; margin: 0 auto;">
-                    <p:commandButton id="butonPago" value="APLICAR"/>
+                    <p:commandButton actionListener="#{pagosController.saveNew} #{pagosController.modificarSistemaUsuario}" value="#{bundleEtiquetasES.Registrar}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
                     <p:commandButton id="cancelar" value="CANCELAR"/>
                 </div>
             </form>
