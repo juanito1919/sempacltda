@@ -42,6 +42,7 @@ public class SistemaUsuarioFacade extends AbstractFacade<SistemaUsuario> {
             return null;
         }
     }
+   
     public SistemaUsuario getUsuarioActivacion(long idUsuario) {
         Query query = this.em.createNamedQuery(SistemaUsuario.findByIdUsuario);
         query.setParameter("idUsuario", idUsuario);

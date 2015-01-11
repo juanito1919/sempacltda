@@ -142,7 +142,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
 
                 // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
                 if (estadoUsuario.equals("V")||estadoUsuario.equals("P")) {
-                    System.out.println("entrossss");
+                    
                     // Iniciando la variable de session con los datos del usuario mediante la entidad.                      
                     ActivacionUsuario.setUsuario(this.getUsuario());
                     // ActivacionUsuario.setCodigoIfip(this.getUsuario().getCodigoIfip().getCodigo());

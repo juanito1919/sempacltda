@@ -71,9 +71,6 @@ public class Sesion {
            // FacesContext.getCurrentInstance().getExternalContext().redirect(url);
         }
         
-    
-      
-
     }
     public static void cerrarSesion() throws ServletException {
         try {
