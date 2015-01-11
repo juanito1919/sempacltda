@@ -93,6 +93,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     private Usuario seleccionado;
     private Habilidades habilidadBusqueda;
     private Espectativas espectativaBusqueda;
+    private String direccion; 
     private CroppedImage croppeFoto;
     private String imageTemp;
 
@@ -159,6 +160,11 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
                 }
                 if (ciudad != null && agregar) {
                     if (!us.getIdCiudad().equals(ciudad)) {
+                        agregar = false;
+                    }
+                }
+                if (!direccion.equals("") && agregar) {
+                    if (!us.getDireccion().contains(direccion)) {
                         agregar = false;
                     }
                 }
@@ -280,6 +286,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         this.setPais(null);
         this.setContrasena("");
         this.setConfirmaContrasena("");
+        this.direccion="";
     }
 
     public void registraCuenta(ActionEvent event) {
@@ -743,6 +750,20 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
      */
     public void setImageTemp(String imageTemp) {
         this.imageTemp = imageTemp;
+    }
+
+    /**
+     * @return the direccion
+     */
+    public String getDireccion() {
+        return direccion;
+    }
+
+    /**
+     * @param direccion the direccion to set
+     */
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
 }
