@@ -1184,7 +1184,7 @@ public class UsuarioController implements Serializable {
 
         ejbFacadePagos.create(pagos);
         su.setFechaCaducidad(caducidad);////  fecha de registro mas 3 meses
-
+        su.setEstado('P');
         ejbFacadeSistemaUsuario.edit(su);
 
         System.out.println("Stisfactorio....");
