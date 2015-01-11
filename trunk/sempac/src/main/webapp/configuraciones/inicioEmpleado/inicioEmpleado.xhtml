@@ -22,15 +22,21 @@
 
         </div> 
         <div style="width: 20%; float:left;">
-            <p:panel id="pago" header="Estado de Cuenta" style="border: none; width: 100%;" >
-                Estado de la cuanta de pago es: 
-                Pagado
-                <h:graphicImage  id="fotoestado" value="" height="150" width="150" />
-                <h:form>
+            <h:form id="butonRealizarPago">
+                <p:panel id="pago" header="Estado de Cuenta" style="border: none; width: 100%;" >
+                    <span style="font-size: 1.0em;">Estado de la Cuenta:</span>
+                    <c:if test="#{usuarioController.estadoPago == true}">
+                        <span style="font-size: 1.0em; font-weight: bold; color: #0066ff">Pagado</span> 
+                    </c:if>
+                    <c:if test="#{usuarioController.verificarEstadoPago == false}">
+                        <span style="font-size: 1.0em; font-weight: bold; color:#cc0000; ">No Pagado</span> 
+                    </c:if>
+                    <h:graphicImage  id="fotoEstado" value="" height="150" width="150" />
+                    <br/>
                     <p:commandButton value="Realizar Pago" oncomplete="PF('displayPago').show()"/>
-                </h:form>
-            </p:panel>
 
+                </p:panel>
+            </h:form>
         </div>
         <div style="width: 60%; float:left;">
             <p:panel id="panelPerfil" header="Datos Personales" style="border: none; width: 100%;" >
@@ -45,7 +51,7 @@
                         <h:link value="Editar Perfil" styleClass="link"/>
                     </div>
                 </div>
-                <div style=" width: 50%; float:left; margin-left: 10px; border-left-width: 10px;">
+                <div style=" width: 50%; float:left; margin-left: 30px; border-left-width: 10px;">
                     <div style="font-size: 1.5em; color: #0066ff;">#{usuarioController.selected.nombres.toUpperCase()} #{usuarioController.selected.apellidos.toUpperCase()}</div>
                     <div style="font-size: 1.2em;">Genero: #{usuarioController.selected.genero}</div>
                     <div style="font-size: 1.2em;">Cedula/Pasaporte: #{usuarioController.selected.identidad}</div>
@@ -68,7 +74,7 @@
             <h:form>
                 <p:panel id="panelNotificaciones" header="Ofertas de Empleo"  style="border: none; width: 98%; height: 200px;" >
                     <p:scrollPanel  style="border: none; width: 104%; height: 200px;"  mode="native">
-
+                       
                         <c:forEach items="#{personalRequeridoController.items}" var="item">
                             <p:separator style="border-color:#ececec; border-width: 0.1em; box-shadow: none;"/> 
                             <p:commandLink styleClass="linkBuscaTrabajo" 

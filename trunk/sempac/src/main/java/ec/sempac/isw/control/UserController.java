@@ -33,6 +33,7 @@ import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -82,6 +83,11 @@ public class UserController implements Serializable {
         selected = new Usuario();
         fMaxima = new Date(new Date().getYear() - 12, new Date().getMonth(), new Date().getDate());//fecha actual menos 12 anios
 
+    }
+
+    public void asignarUsuario() {
+        System.out.println("uruario " + ActivacionUsuario.getUsuario());
+        this.setSelected(ActivacionUsuario.getUsuario());
     }
 
     public void selectPais() {
@@ -207,9 +213,12 @@ public class UserController implements Serializable {
         File miDir = new File(".");
         File folder;
         try {
-            folder = new File(miDir.getCanonicalPath() + File.separator + "Documentos" + File.separator + getSelected().getUsername());
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            String filePath = ec.getRealPath("Documentos");
+            System.out.println("hola como vas " + filePath);
+            folder = new File(filePath + File.separator + getSelected().getUsername());
             folder.mkdirs();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             MuestraMensaje.addError("No se pudo crear el directorio de archivos");
         }
         Usuario user = ejbFacade.getItemsUserName(selected.getUsername());

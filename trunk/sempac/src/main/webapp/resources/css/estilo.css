@@ -154,7 +154,14 @@ body {
     color: #cc0000;
     width: 250px;
 }
-
+.column1ClassAzquierda{
+   font-family: Verdana, Geneva, sans-serif;
+ 
+    font-weight: bold;
+    color: #cc0000;
+    width: 250px; 
+    
+}
 .column2Class,.column4Class{
     width: 230px;
 }

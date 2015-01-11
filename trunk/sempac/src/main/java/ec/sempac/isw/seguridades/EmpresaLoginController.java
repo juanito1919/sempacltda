@@ -127,12 +127,14 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
 
             // Colocando el tiempo de inactividad que tiene el sistema
             Sesion.tiempoInactividad(10000);
-           if (empresaSistema.getEmpresa().getContrasena().equals(Sesion.MD5(this.contrasena))) {
+
+            if (this.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
+
             //if (empresaSistema.getEmpresa().getContrasena().equals(this.contrasena)) {
-
-               if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {
-                //if (estadoUsuario.equals("V")) {
-
+                
+                //if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {
+                if (estadoUsuario.equals("V")) {
+                    System.out.println("hollaaa");
                     // Iniciando la variable de session con los datos del usuario mediante la entidad.                      
                     ActivacionUsuario.setEmpresa(this.getUsuario());
                     // ActivacionUsuario.setCodigoIfip(this.getUsuario().getCodigoIfip().getCodigo());
@@ -140,20 +142,20 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
                     ActivacionUsuario.setCodigoPeriodo(String.valueOf(new Date().getYear() + 1900));
 
                     // Inserta  el Acceso al Sistema
-                    this.sistemaAccesoEmpresa = new SistemaAccesoEmpresa();
-
-                    this.sistemaAccesoEmpresa.setIdEmpresa(empresaSistema);
-                    this.sistemaAccesoEmpresa.setDireccionIp(ObtieneInformacionCliente.obtenerDireccionIP());
-                    this.sistemaAccesoEmpresa.setFechaAcceso(new Date());
-                    // Registrando el acceso al sistema
-                    ejbFacadeEmpAcc.create(sistemaAccesoEmpresa);
-
-                    // coloca la fecha de Acceso al Sistema
-                    this.setFecha(this.getSistemaAccesoEmpresa().getFechaAcceso());
-
-                    //Colocando el codigo del acceso al sistema
-                    ActivacionUsuario.setCodigoAccesoSistema(this.getSistemaAccesoEmpresa().getIdSistemaAccesoEmpresa());
-                    //Accediendo al Menu
+//                    this.sistemaAccesoEmpresa = new SistemaAccesoEmpresa();
+//
+//                    this.sistemaAccesoEmpresa.setIdEmpresa(empresaSistema);
+//                    this.sistemaAccesoEmpresa.setDireccionIp(ObtieneInformacionCliente.obtenerDireccionIP());
+//                    this.sistemaAccesoEmpresa.setFechaAcceso(new Date());
+//                    // Registrando el acceso al sistema
+//                    ejbFacadeEmpAcc.create(sistemaAccesoEmpresa);
+//
+//                    // coloca la fecha de Acceso al Sistema
+//                    this.setFecha(this.getSistemaAccesoEmpresa().getFechaAcceso());
+//
+//                    //Colocando el codigo del acceso al sistema
+//                    ActivacionUsuario.setCodigoAccesoSistema(this.getSistemaAccesoEmpresa().getIdSistemaAccesoEmpresa());
+//                    //Accediendo al Menu
                     String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principalEmpresa");
                     Sesion.redireccionaPagina(url);
                     // Si la contraseña ha caducado

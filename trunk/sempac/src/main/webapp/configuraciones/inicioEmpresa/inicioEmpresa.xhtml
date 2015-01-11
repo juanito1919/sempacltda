@@ -1,18 +1,141 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      template="../../resources/plantilla/ventanaInicioEmpresaPlantilla.xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="../../resources/plantilla/ventanaInicioEmpresaPlantilla.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
     <ui:define  name="formulario">
         <!-- ̣̣̣̣**************************************************************************
              PANEL PRINCIPAL                                                     -->                                                   
         <div class="panelTitulo">
-           
+            Anuncios Destacados
         </div> 
         <div id="panelBusquedaEmpleados">
- <h:link id="linkOlvidaContrasenaBot" outcome="/configuraciones/inicioEmpresa/registroEmpleos" style="color: #0066ff; font-size:0.8em; " value="¿Olvidastes tu Contrasena?"/>       
+            <div style="float: left; border-radius: 1px;">
+                <p:panel header="Parametros de Busqueda" style="width: 250px; border: none; margin-bottom: 5px;">
+                    <h:form id="BusquedaUsuarioCreateForm">
+                        <h:panelGroup id="display">
+                            #{usuarioController.iniciarBusqueda()}
+
+                            <h:panelGrid 
+                                columns="2" 
+                                border="0"
+                                columnClasses="column1ClassAzquierda"
+                               
+                                >
+                                <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
+                                <p:selectOneMenu id="pais" 
+
+                                                 value="#{usuarioController.pais}">
+                                    <f:selectItem itemLabel="Cualquiera"/>
+                                    <f:selectItems value="#{usuarioController.itemPaises}"
+                                                   var="PaisItem"
+                                                   itemValue="#{PaisItem}"
+                                                   itemLabel="#{PaisItem.nombre}"
+                                                   />
+                                    <f:converter binding="#{paisConverter}"/>
+                                    <p:ajax event="change" 
+                                            listener="#{usuarioController.cambiaPaisBusqueda()}" 
+                                            update=":BusquedaUsuarioCreateForm:provincia,:BusquedaUsuarioCreateForm:ciudad,:BusquedaUsuarioListForm"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{bundleEtiquetasES.Provincia}" for="provincia" />
+                                <p:selectOneMenu id="provincia" 
+                                                 value="#{usuarioController.provincia}">
+                                    <f:selectItem itemLabel="Cualquiera"/>
+                                    <f:selectItems value="#{usuarioController.itemProvincias}"
+                                                   var="ProvinciaItem"
+                                                   itemValue="#{ProvinciaItem}"
+                                                   itemLabel="#{ProvinciaItem.nombre}"
+                                                   />
+                                    <f:converter binding="#{regionConverter}"/>
+                                    <p:ajax event="change" 
+                                            listener="#{usuarioController.cambiaProvinciaBusqueda()}" 
+                                            update=":BusquedaUsuarioCreateForm:ciudad,:BusquedaUsuarioListForm"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
+                                <p:selectOneMenu id="ciudad" 
+                                                 value="#{usuarioController.ciudad}">
+                                    <f:selectItem itemLabel="Cualquiera"/>
+                                    <f:selectItems value="#{usuarioController.itemCiudades}"
+                                                   var="CiudadItem"
+                                                   itemValue="#{CiudadItem}"
+                                                   itemLabel="#{CiudadItem.nombre}"
+                                                   />
+                                    <f:converter binding="#{ciudadConverter}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="BARRIO" for="barrio" />
+                                <p:inputText id="barrio" 
+                                             onkeyup="value = value.toUpperCase()"
+                                             value="#{usuarioController.selected.direccion}"/>
+
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
+                            <p:commandButton action="#{usuarioController.cargarUsuariosBusqueda}" 
+                                             update=":BusquedaUsuarioListForm"
+                                             value="BUSCAR" icon="ui-icon-search"/>
+                        </div>
+                         <h:link outcome="../../busquedaUsuario/inicio" value="Busqueda Avanzada">
+                        
+                        </h:link>
+                    </h:form>
+                </p:panel>
+            </div>
+            <div style="float: left; border-radius: 1px;">
+                <p:panel header="Resultado" style="width: 675px; border: none; margin-bottom: 5px;">
+                    <h:form id="BusquedaUsuarioListForm">
+
+                        <p:dataTable id="datalist" value="#{usuarioController.itemsUsuariosSeleccionados}" var="item"
+                                     selectionMode="single" 
+                                     selection="#{usuarioController.seleccionado}"
+                                     paginator="true"
+                                     rowKey="#{item.idUsuario}"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30,40,20,30"
+                                     >
+
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundleEtiquetasES.Identidad}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.identidad}"/>
+                            </p:column>
+
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundleEtiquetasES.Nombre}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nombres}"/>
+                            </p:column>
+
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundleEtiquetasES.Apellidos}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.apellidos}"/>
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:form>
+                </p:panel>
+            </div>
+            <div style="float: left; border-radius: 1px;">
+                <p:panel header="Publicar Empleo" style="width: 140px; border: none; margin-bottom: 5px;">
+
+                    <p:graphicImage value="../../resources/images/icon-empleo.png" width="150" height="150" alt=""/>
+
+                    <div style="margin-top: -10px;">
+                      
+                        <h:link outcome="registroEmpleos" value="Publicar Empleo">
+
+                        </h:link>
+                    </div>
+                </p:panel>
+            </div>
         </div>
     </ui:define>
 </ui:composition>

@@ -104,6 +104,7 @@ public class UsuarioController implements Serializable {
     private String direccion;
     private CroppedImage croppeFoto;
     private String imageTemp;
+    private boolean estadoPago;
 
     private List<UserHabilidadesEspectativas> itemsHabilidadesEspectativas;
     private UserHabilidadesEspectativas HabilidadesEspectativaSeleccionado;
@@ -138,6 +139,17 @@ public class UsuarioController implements Serializable {
 
     public void actualizarUsuario(ActionEvent evet) {
         this.save(evet);
+    }
+
+    public void verificarEstadoPago() {
+
+        Usuario user = this.ejbFacadeSistemaUsuario.getUsuario(ActivacionUsuario.getCodigoUsuario(), 'P');
+        if (user != null) {
+            estadoPago=true;
+        } else {
+            estadoPago=false;
+        }
+
     }
 
     public void iniciarBusqueda() {
@@ -448,10 +460,10 @@ public class UsuarioController implements Serializable {
     public void subirFoto(FileUploadEvent event) {
         UploadedFile file = event.getFile();
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        String filePath = ec.getRealPath(String.format("/Documentos/%s", file.getFileName()));
+        String filePath = ec.getRealPath(String.format("/Documentos/" + this.getSelected().getUsername() + "/%s", file.getFileName()));
         //TODO
         //AGRAGAR LA CARPETA DEL USUARIO
-        String rutaRelativa = "../../Documentos/" + file.getFileName();
+        String rutaRelativa = "../../Documentos/" + File.separator + this.getSelected().getUsername() + File.separator + file.getFileName();
         try {
             this.getSelected().setUrl(rutaRelativa);
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
@@ -1185,12 +1197,12 @@ public class UsuarioController implements Serializable {
             mes += 3;
         }
         Date caducidad = new Date(anio, mes, new Date().getDate());//fecha actual mas 3 meses
-        
-         Pagos aux = ejbFacadePagos.getPago(user.getIdUsuario());
-         if(aux!=null){
-             aux.setEliminado(true);
-             ejbFacadePagos.edit(aux);
-         }
+
+        Pagos aux = ejbFacadePagos.getPago(user.getIdUsuario());
+        if (aux != null) {
+            aux.setEliminado(true);
+            ejbFacadePagos.edit(aux);
+        }
         pagos.setIdUsuario(user);
         pagos.setFechaRegistro(new Date());
         pagos.setFechaCaducidad(caducidad); ////  fecha de registro mas 3 meses

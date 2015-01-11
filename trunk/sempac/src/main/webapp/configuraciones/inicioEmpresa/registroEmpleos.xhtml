@@ -20,20 +20,26 @@
                                      cellspacing="4" 
                                      cellpadding="0" 
                                      columnClasses="column1Class, column2Class,column3Class, column4Class" >
-                            <p:outputLabel value="Cargo" for="cargo" />
-                            <p:selectOneMenu id="cargo" value="">
-                                <f:selectItem itemLabel="Selecione.." itemValue="" />
-                                <f:selectItem itemLabel="Ingenierio Sistemas" itemValue="Xbox One" />
-                                <f:selectItem itemLabel="Economista" itemValue="PS4" />
-                                <f:selectItem itemLabel="Ama de Casa" itemValue="Wii U" />
+                            <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Habilidad}" 
+                                           for="habilidad" />
+                            <p:selectOneMenu id="espectativa" 
+                                             value="#{usuarioController.habilidadBusqueda}"
+                                             >
+                                <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                                <f:selectItems value="#{usuarioController.itemsHabilidades}"
+                                               var="HabilidadItem"
+                                               itemValue="#{HabilidadItem}"
+                                               itemLabel="#{HabilidadItem.nombre}"
+                                               />
+                                <f:converter binding="#{habilidadesConverter}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Fecha:" for="fecha" />
-                            <p:inputText id="fecha" value=""/>
+                            <p:inputText id="fecha" value="#{personalRequeridoController.fechaActual}"/>
                             <p:outputLabel value="Descripcion" for="desc"/>
-                            <h:inputTextarea id="desc" cols="40" rows="5" />
+                            <h:inputTextarea id="desc" cols="40" rows="5" value="#{personalRequeridoController.selected.descripcion}" />
                         </h:panelGrid>
-                        <p:commandButton  value="#{bundleEtiquetasES.Registrar}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
-                    <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="UsuarioCreateDialog.hide()"/>
+                        <p:commandButton  value="#{bundleEtiquetasES.Registrar}" actionListener="#{referenciaPersonalController.saveNew}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
+                        <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="UsuarioCreateDialog.hide()"/>
                     </h:panelGroup>
                 </h:form>
             </p:panel>
