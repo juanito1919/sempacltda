@@ -101,7 +101,7 @@ public class UsuarioController implements Serializable {
     private Usuario seleccionado;
     private Habilidades habilidadBusqueda;
     private Espectativas espectativaBusqueda;
-    private String direccion; 
+    private String direccion;
     private CroppedImage croppeFoto;
     private String imageTemp;
 
@@ -306,7 +306,7 @@ public class UsuarioController implements Serializable {
         this.setPais(null);
         this.setContrasena("");
         this.setConfirmaContrasena("");
-        this.direccion="";
+        this.direccion = "";
     }
 
     public void registraCuenta(ActionEvent event) {
@@ -632,7 +632,6 @@ public class UsuarioController implements Serializable {
     }
 
     //
-
     /**
      * @return the itemPaises
      */
@@ -1151,24 +1150,43 @@ public class UsuarioController implements Serializable {
     public void setPagos(Pagos pagos) {
         this.pagos = pagos;
     }
-    
-    public void pagosDeposito(ActionEvent event){
-        
+
+    public void pagosDeposito(ActionEvent event) {
+
         Usuario user = ActivacionUsuario.getUsuario();
+        System.out.println("codigo user.." + user.getIdUsuario());
         SistemaUsuario su = ejbFacadeSistemaUsuario.getUsuarioActivacion(user.getIdUsuario());
+        int mes = 0;
+        int anio = new Date().getYear();
+        if (new Date().getMonth() == 10) {
+            mes = 1;
+            anio += 1;
+        } else if (new Date().getMonth() == 11) {
+            mes = 2;
+            anio += 1;
+        } else if (new Date().getMonth() == 12) {
+            mes = 3;
+            anio += 1;
+        } else {
+            mes += 3;
+        }
+        Date caducidad = new Date(anio, mes, new Date().getDate());//fecha actual mas 3 meses
         
+         Pagos aux = ejbFacadePagos.getPago(user.getIdUsuario());
+         if(aux!=null){
+             aux.setEliminado(true);
+             ejbFacadePagos.edit(aux);
+         }
         pagos.setIdUsuario(user);
         pagos.setFechaRegistro(new Date());
-        pagos.setFechaCaducidad(new Date()); ////  fecha de registro mas 3 meses
+        pagos.setFechaCaducidad(caducidad); ////  fecha de registro mas 3 meses
         pagos.setValor(new BigDecimal(0.0));
-        
+
         ejbFacadePagos.create(pagos);
-        
-        su.setEstado('P');
-        su.setFechaCaducidad(new Date());////  fecha de registro mas 3 meses
-        
+        su.setFechaCaducidad(caducidad);////  fecha de registro mas 3 meses
+
         ejbFacadeSistemaUsuario.edit(su);
-        
+
         System.out.println("Stisfactorio....");
     }
 }
