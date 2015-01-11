@@ -7,6 +7,7 @@ package ec.sempac.isw.control.util;
 
 import ec.sempac.isw.seguridades.Sesion;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,7 +18,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class ControlUrlControler {
+public class ControlUrlControler implements Serializable{
 
     /**
      * Creates a new instance of ControlUrlControler
