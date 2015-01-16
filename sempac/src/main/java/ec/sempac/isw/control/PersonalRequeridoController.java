@@ -4,6 +4,7 @@ import ec.sempac.isw.modelo.Habilidades;
 import ec.sempac.isw.modelo.PersonalRequerido;
 import ec.sempac.isw.modelo.UserHabilidadesEspectativas;
 import ec.sempac.isw.negocio.HabilidadesFacade;
+import ec.sempac.isw.seguridades.Empleos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,6 +50,9 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
      */
     public List<PersonalRequerido> getItemsPersonalRequerido() {
         return itemsPersonalRequerido;
+    }
+    public void empleo(){
+        Empleos.setPersonalRequerido(null);/////
     }
     public void iniciarBusqueda() {
       
