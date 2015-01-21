@@ -12,39 +12,56 @@
             <h:form id="EmpresaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{empresaController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_idEmpresa}" for="idEmpresa" />
-                        <p:inputText id="idEmpresa" value="#{empresaController.selected.idEmpresa}" title="#{bundle.CreateEmpresaTitle_idEmpresa}" required="true" requiredMessage="#{bundle.CreateEmpresaRequiredMessage_idEmpresa}"/>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{empresaController.selected.nombre}" title="#{bundle.CreateEmpresaTitle_nombre}" required="true" requiredMessage="#{bundle.CreateEmpresaRequiredMessage_nombre}"/>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_username}" for="username" />
-                        <p:inputText id="username" value="#{empresaController.selected.username}" title="#{bundle.CreateEmpresaTitle_username}" required="true" requiredMessage="#{bundle.CreateEmpresaRequiredMessage_username}"/>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_correoElectronico}" for="correoElectronico" />
-                        <p:inputText id="correoElectronico" value="#{empresaController.selected.correoElectronico}" title="#{bundle.CreateEmpresaTitle_correoElectronico}" required="true" requiredMessage="#{bundle.CreateEmpresaRequiredMessage_correoElectronico}"/>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_contrasena}" for="contrasena" />
-                        <p:inputText id="contrasena" value="#{empresaController.selected.contrasena}" title="#{bundle.CreateEmpresaTitle_contrasena}" required="true" requiredMessage="#{bundle.CreateEmpresaRequiredMessage_contrasena}"/>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_ruc}" for="ruc" />
-                        <p:inputText id="ruc" value="#{empresaController.selected.ruc}" title="#{bundle.CreateEmpresaTitle_ruc}" />
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_direccion}" for="direccion" />
-                        <p:inputText id="direccion" value="#{empresaController.selected.direccion}" title="#{bundle.CreateEmpresaTitle_direccion}" />
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_eliminado}" for="eliminado" />
-                        <p:selectBooleanCheckbox id="eliminado" value="#{empresaController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditEmpresaRequiredMessage_eliminado}"/>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_sistemaEmpresa}" for="sistemaEmpresa" />
-                        <p:selectOneMenu id="sistemaEmpresa" value="#{empresaController.selected.sistemaEmpresa}" >
-                            <f:selectItems value="#{sistemaEmpresaController.itemsAvailableSelectOne}"
-                                           var="sistemaEmpresaItem"
-                                           itemValue="#{sistemaEmpresaItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_idClaseEmpresa}" for="idClaseEmpresa" />
+                        <p:outputLabel value="Nombre de la Empresa" for="nombre" />
+                        <p:inputText id="nombre" value="#{empresaController.selected.nombre}" 
+                                     title="Nombre" 
+                                     required="true" 
+                                     requiredMessage="nombre de la empresa requerida"/>
+                        
+                        <p:outputLabel value="USERNAME" for="username" />
+                        <p:inputText id="username" value="#{empresaController.selected.username}" 
+                                     title="username" 
+                                     required="true" 
+                                     requiredMessage="username requerido"/>
+                        
+                        <p:outputLabel value="Email" for="correoElectronico" />
+                        <p:inputText id="correoElectronico" value="#{empresaController.selected.correoElectronico}" 
+                                     title="#{bundle.CreateEmpresaTitle_correoElectronico}" 
+                                     required="true" 
+                                     requiredMessage="correo electronico requerido"/>
+                        
+                        <p:outputLabel value="contrasena" for="contrasena" />
+                        <p:inputText id="contrasena" value="#{empresaController.selected.contrasena}" 
+                                     title="contrasena" 
+                                     required="true" 
+                                     requiredMessage="contrasena requerida"/>
+                        
+                        <p:outputLabel value="RUC" for="ruc" />
+                        <p:inputText id="ruc" value="#{empresaController.selected.ruc}" 
+                                     title="R.U.C" />
+                        
+                        <p:outputLabel value="Direccion" for="direccion" />
+                        <p:inputText id="direccion" value="#{empresaController.selected.direccion}" 
+                                     title="Direccion especifica" />
+                        
+                        <p:outputLabel value="Clase De Empresa" for="idClaseEmpresa" />
                         <p:selectOneMenu id="idClaseEmpresa" value="#{empresaController.selected.idClaseEmpresa}" >
                             <f:selectItems value="#{claseEmpresaController.itemsAvailableSelectOne}"
                                            var="idClaseEmpresaItem"
-                                           itemValue="#{idClaseEmpresaItem}"/>
+                                           itemValue="#{idClaseEmpresaItem}"
+                                           itemLabel="#{idClaseEmpresaItem.nombre}"/>
+                            <f:converter binding="#{claseEmpresaConverter}"/>
                         </p:selectOneMenu>
+                        
                         <p:outputLabel value="#{bundle.CreateEmpresaLabel_idCiudad}" for="idCiudad" />
-                        <p:selectOneMenu id="idCiudad" value="#{empresaController.selected.idCiudad}" required="true" requiredMessage="#{bundle.EditEmpresaRequiredMessage_idCiudad}">
+                        <p:selectOneMenu id="idCiudad" value="#{empresaController.selected.idCiudad}" 
+                                         required="true" 
+                                         requiredMessage="Ciudad requerida">
                             <f:selectItems value="#{ciudadController.itemsAvailableSelectOne}"
                                            var="idCiudadItem"
-                                           itemValue="#{idCiudadItem}"/>
+                                           itemValue="#{idCiudadItem}"
+                                           itemLabel="#{idCiudadItem.nombre} - #{idCiudadItem.idRegion.nombre} - #{idCiudadItem.idRegion.idPais.nombre}"/>
+                            <f:converter binding="#{ciudadConverter}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{empresaController.create}" value="#{bundle.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args,'EmpresaCreateDialog');"/>
