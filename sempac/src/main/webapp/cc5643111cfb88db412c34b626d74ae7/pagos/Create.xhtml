@@ -31,7 +31,7 @@
                             <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
                                            var="idUsuarioItem"
                                            itemValue="#{idUsuarioItem}"
-                                           itemLabel="#{idUsuarioItem.identidad}"/>
+                                           itemLabel="#{idUsuarioItem.identidad} #{idUsuarioItem.nombres}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{pagosController.create}" value="#{bundle.Save}" update="display,:PagosListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagosCreateDialog');"/>
@@ -41,4 +41,4 @@
         </p:dialog>
 
     </ui:composition>
-</html>
+</html>`   
