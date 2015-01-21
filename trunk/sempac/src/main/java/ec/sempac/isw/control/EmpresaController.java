@@ -79,56 +79,71 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
         this.setItemClaseEmpresa(this.ejbFacadeClaseEmpresa.getItemsClaseEmpresa(false));
     }
 
+    @Override
     protected void setEmbeddableKeys() {
     }
 
+    @Override
     protected void initializeEmbeddableKey() {
     }
-
+    public void crearSistema(){
+            SistemaEmpresa sisEmpresa = new SistemaEmpresa();
+            Empresa e = this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
+            sisEmpresa.setIdEmpresa(e.getIdEmpresa());
+            sisEmpresa.setFechaAsignacion(new Date());
+            sisEmpresa.setEstado('G');
+            sisEmpresa.setTiempoBloqueo(0);
+            this.ejbFacadeSistEmpresa.create(sisEmpresa);
+    }
+    @Override
+    public void postCreate(){
+        System.out.println("si llegooooo");
+        crearSistema();
+    }
     public void asignarEmpresa() {
         this.setSelected(ActivacionUsuario.getEmpresa());
     }
 
-    public void cambiaPais() {
-        if (pais != null) {
-            this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
-        } else {
-            this.setItemProvincias(null);
-        }
-        this.itemCiudades = null;
-        if (this.getSelected().getIdCiudad() != null) {
-            this.getSelected().setIdCiudad(null);
-        }
-    }
-
-    public void cambiaProvincia() {
-        if (provincia != null) {
-            this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
-        } else {
-            this.setItemCiudades(null);
-        }
-        if (this.getSelected().getIdCiudad() != null) {
-            this.getSelected().setIdCiudad(null);
-        }
-    }
-
-    public void preparaEditar() {
-        this.pais = this.getSelected().getIdCiudad().getIdRegion().getIdPais();
-        this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
-        this.provincia = this.getSelected().getIdCiudad().getIdRegion();
-        this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
-        this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
-    }
-
-    public void preparaCrear() {
-        this.setSelected(new Empresa());
-        this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
-        this.setItemProvincias(null);
-        this.setItemCiudades(null);
-        this.pais = null;
-        this.provincia = null;
-        this.ciudad = null;
-    }
+//    public void cambiaPais() {
+//        if (pais != null) {
+//            this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
+//        } else {
+//            this.setItemProvincias(null);
+//        }
+//        this.itemCiudades = null;
+//        if (this.getSelected().getIdCiudad() != null) {
+//            this.getSelected().setIdCiudad(null);
+//        }
+//    }
+//
+//    public void cambiaProvincia() {
+//        if (provincia != null) {
+//            this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
+//        } else {
+//            this.setItemCiudades(null);
+//        }
+//        if (this.getSelected().getIdCiudad() != null) {
+//            this.getSelected().setIdCiudad(null);
+//        }
+//    }
+//
+//    public void preparaEditar() {
+//        this.pais = this.getSelected().getIdCiudad().getIdRegion().getIdPais();
+//        this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
+//        this.provincia = this.getSelected().getIdCiudad().getIdRegion();
+//        this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
+//        this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
+//    }
+//
+//    public void preparaCrear() {
+//        this.setSelected(new Empresa());
+//        this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
+//        this.setItemProvincias(null);
+//        this.setItemCiudades(null);
+//        this.pais = null;
+//        this.provincia = null;
+//        this.ciudad = null;
+//    }
 
     public void closeEmpresa() throws ServletException {
         Sesion.cerrarSesion();

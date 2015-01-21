@@ -86,8 +86,11 @@ public T getSelected() {
     public void create(ActionEvent event) {
         String msg = "";// = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
         persist(PersistAction.UPDATE, msg);
+        this.postCreate();
     }
-
+    protected void postCreate() {
+        // Nothing to do if entity does not have any embeddable key.
+    }
     public void saveNew(ActionEvent event) {
 
         String msg = "";
