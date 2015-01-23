@@ -15,7 +15,8 @@
 
         <ui:define name="body">
             <h:form id="EmpresaListForm">
-                <p:panel header="LISTA DE EMPRESAS">
+                    <p:growl id="mensaje" showDetail="true" life="1500"/> 
+                <p:panel header="Lista de Empresas">
                     <p:dataTable id="datalist" value="#{empresaController.items}" var="item"
                                  selectionMode="single" selection="#{empresaController.selected}"
                                  paginator="true"
@@ -26,24 +27,30 @@
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-                      
+
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="NOMBRE"/>
+                                <h:outputText value="#{bundle.ListEmpresaTitle_nombre}"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="USERNAME"/>
+                                <h:outputText value="Username"/>
                             </f:facet>
                             <h:outputText value="#{item.username}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="EMAIL"/>
+                                <h:outputText value="Email"/>
                             </f:facet>
                             <h:outputText value="#{item.correoElectronico}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Contrasena"/>
+                            </f:facet>
+                            <h:outputText value="#{item.contrasena}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -53,27 +60,27 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="DIRECCION"/>
+                                <h:outputText value="Direccion"/>
                             </f:facet>
                             <h:outputText value="#{item.direccion}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="ELIMINADO"/>
+                                <h:outputText value="Tipo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idClaseEmpresa.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ubicacion"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idCiudad.idRegion.idPais.nombre} - #{item.idCiudad.idRegion.nombre} - #{item.idCiudad.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Eliminado"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.eliminado}" disabled="true"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="CLASE DE EMPRESA"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idClaseEmpresa}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="CIUDAD"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idCiudad}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{empresaController.prepareCreate}" update=":EmpresaCreateForm" oncomplete="PF('EmpresaCreateDialog').show()"/>
