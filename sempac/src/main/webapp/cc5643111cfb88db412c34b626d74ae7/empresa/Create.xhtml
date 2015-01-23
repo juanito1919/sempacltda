@@ -12,40 +12,74 @@
             <h:form id="EmpresaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{empresaController.selected != null}">
-                        <p:outputLabel value="Nombre de la Empresa" for="nombre" />
-                        <p:inputText id="nombre" value="#{empresaController.selected.nombre}" 
-                                     title="Nombre" 
+                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" 
+                                     onkeyup="value = value.toUpperCase()"
+                                     value="#{empresaController.selected.nombre}" 
+                                     title="#{bundle.CreateEmpresaTitle_nombre}" 
                                      required="true" 
-                                     requiredMessage="nombre de la empresa requerida"/>
+                                     requiredMessage="#{bundle.CreateEmpresaRequiredMessage_nombre}"/>
                         
-                        <p:outputLabel value="USERNAME" for="username" />
-                        <p:inputText id="username" value="#{empresaController.selected.username}" 
-                                     title="username" 
+                        <p:outputLabel value="Username" for="username" />
+                        <p:inputText id="username" 
+                                     onkeyup="value = value.toUpperCase()"
+                                     value="#{empresaController.selected.username}" 
+                                     title="USERNAME" 
                                      required="true" 
-                                     requiredMessage="username requerido"/>
+                                     requiredMessage="username unico requerido">
+                        <p:ajax event="blur" 
+                                    listener="#{empresaController.validarUsername()}" 
+                                    update=":EmpresaListForm:mensaje"/>
+                        </p:inputText>
                         
                         <p:outputLabel value="Email" for="correoElectronico" />
-                        <p:inputText id="correoElectronico" value="#{empresaController.selected.correoElectronico}" 
-                                     title="#{bundle.CreateEmpresaTitle_correoElectronico}" 
+                        <p:inputText id="correoElectronico" 
+                                     value="#{empresaController.selected.correoElectronico}" 
+                                     title="EMAIL" 
                                      required="true" 
-                                     requiredMessage="correo electronico requerido"/>
+                                     requiredMessage="Correo electronico requerido">
+                        <p:ajax event="blur" 
+                                listener="#{empresaController.validarEmail()}" 
+                                    update=":EmpresaListForm:mensaje"/>
+                        </p:inputText>
                         
-                        <p:outputLabel value="contrasena" for="contrasena" />
-                        <p:inputText id="contrasena" value="#{empresaController.selected.contrasena}" 
-                                     title="contrasena" 
-                                     required="true" 
-                                     requiredMessage="contrasena requerida"/>
+                        <p:outputLabel value="Contrasena" for="contrasena" />
+                            <p:password id="contrasena" 
+                                        value="#{empresaController.contrasena}" 
+                                        title="CONTRASENA" 
+                                        required="true" 
+                                        requiredMessage="Se requiere la contrasena">
+                                <p:ajax event="blur" 
+                                        listener="#{empresaController.validarContrasena()}"
+                                        update=":EmpresaListForm:mensaje, confirmarContrasena"/>
+                            </p:password>
                         
-                        <p:outputLabel value="RUC" for="ruc" />
-                        <p:inputText id="ruc" value="#{empresaController.selected.ruc}" 
-                                     title="R.U.C" />
+                        <p:outputLabel value="Confimar Contrasena" for="confirmarContrasena" />
+                            <p:password id="confirmarContrasena" 
+                                        value="#{empresaController.confirmaContrasena}" 
+                                        title="CONFIRMAR CONTRASENA" 
+                                        required="true" 
+                                        requiredMessage="Se requiere q confirme la contrasena">
+                                <p:ajax event="blur" 
+                                        listener="#{empresaController.validarConfirmacionContrasena()}" 
+                                        update=":EmpresaListForm:mensaje"
+                                        />
+                            </p:password>
                         
-                        <p:outputLabel value="Direccion" for="direccion" />
-                        <p:inputText id="direccion" value="#{empresaController.selected.direccion}" 
-                                     title="Direccion especifica" />
+                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_ruc}" for="ruc" />
+                        <p:inputText id="ruc" 
+                                     value="#{empresaController.selected.ruc}" 
+                                     title="#{bundle.CreateEmpresaTitle_ruc}" />
                         
-                        <p:outputLabel value="Clase De Empresa" for="idClaseEmpresa" />
-                        <p:selectOneMenu id="idClaseEmpresa" value="#{empresaController.selected.idClaseEmpresa}" >
+                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" 
+                                     onkeyup="value = value.toUpperCase()"
+                                     value="#{empresaController.selected.direccion}" 
+                                     title="#{bundle.CreateEmpresaTitle_direccion}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateEmpresaLabel_idClaseEmpresa}" for="idClaseEmpresa" />
+                        <p:selectOneMenu id="idClaseEmpresa" 
+                                         value="#{empresaController.selected.idClaseEmpresa}" >
                             <f:selectItems value="#{claseEmpresaController.itemsAvailableSelectOne}"
                                            var="idClaseEmpresaItem"
                                            itemValue="#{idClaseEmpresaItem}"
@@ -54,17 +88,17 @@
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="#{bundle.CreateEmpresaLabel_idCiudad}" for="idCiudad" />
-                        <p:selectOneMenu id="idCiudad" value="#{empresaController.selected.idCiudad}" 
-                                         required="true" 
-                                         requiredMessage="Ciudad requerida">
+                        <p:selectOneMenu id="idCiudad" 
+                                         value="#{empresaController.selected.idCiudad}" required="true" requiredMessage="#{bundle.EditEmpresaRequiredMessage_idCiudad}">
                             <f:selectItems value="#{ciudadController.itemsAvailableSelectOne}"
                                            var="idCiudadItem"
                                            itemValue="#{idCiudadItem}"
                                            itemLabel="#{idCiudadItem.nombre} - #{idCiudadItem.idRegion.nombre} - #{idCiudadItem.idRegion.idPais.nombre}"/>
                             <f:converter binding="#{ciudadConverter}"/>
                         </p:selectOneMenu>
+                        
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{empresaController.create}" value="#{bundle.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args,'EmpresaCreateDialog');"/>
+                    <p:commandButton actionListener="#{empresaController.guardar()}" value="#{bundle.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args,'EmpresaCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="EmpresaCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
