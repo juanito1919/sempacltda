@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empresa.findByEliminado", query = "SELECT e FROM Empresa e WHERE e.eliminado = :eliminado"),
     //Personalizados
     @NamedQuery(name = "Empresa.findByCorreoElectronico", query = "SELECT e FROM Empresa e WHERE e.correoElectronico = :correoElectronico"),
+    @NamedQuery(name = "Empresa.findByEmail", query = "SELECT e FROM Empresa e WHERE e.correoElectronico = :correoElectronico"),
     @NamedQuery(name = "Empresa.findByUsername", query = "SELECT e FROM Empresa e WHERE e.username = :username"),    
     @NamedQuery(name = "Empresa.findByUsernameEmail", query = "SELECT e FROM Empresa e WHERE (e.username = :username OR e.correoElectronico = :username) AND e.eliminado = :eliminado")
 })
@@ -53,7 +54,7 @@ public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByEliminado ="Empresa.findByEliminado";
     public static final String findByUsername ="Empresa.findByUsername";
-    public static final String findByEmail ="Empresa.findByUsername";
+    public static final String findByEmail ="Empresa.findByEmail";
     public static final String findByUsernameEmail ="Empresa.findByUsernameEmail";
     public static final String findByCorreoElectronico ="Empresa.findByCorreoElectronico";
     @Id

@@ -1,16 +1,11 @@
 package ec.sempac.isw.control;
 
-import ec.sempac.isw.control.util.MuestraMensaje;
-import ec.sempac.isw.modelo.Ciudad;
-import ec.sempac.isw.modelo.ClaseEmpresa;
 import ec.sempac.isw.modelo.Empresa;
-import ec.sempac.isw.modelo.Pais;
-import ec.sempac.isw.modelo.Region;
+import ec.sempac.isw.control.util.JsfUtil;
+import ec.sempac.isw.control.util.JsfUtil.PersistAction;
+import ec.sempac.isw.control.util.MuestraMensaje;
 import ec.sempac.isw.modelo.SistemaEmpresa;
-import ec.sempac.isw.negocio.CiudadFacade;
-import ec.sempac.isw.negocio.ClaseEmpresaFacade;
-import ec.sempac.isw.negocio.PaisFacade;
-import ec.sempac.isw.negocio.RegionFacade;
+import ec.sempac.isw.negocio.EmpresaFacade;
 import ec.sempac.isw.negocio.SistemaEmpresaFacade;
 import ec.sempac.isw.seguridades.Sesion;
 
@@ -22,69 +17,44 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
-import ec.sempac.isw.seguridades.ActivacionUsuario;
-import java.io.IOException;
-import javax.mail.Session;
-import javax.servlet.ServletException;
+import javax.ejb.EJBException;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
-@ManagedBean(name = "empresaController")
+@Named("empresaController")
 @SessionScoped
-public class EmpresaController extends AbstractController<Empresa> implements Serializable {
+public class EmpresaController implements Serializable {
 
     @EJB
     private ec.sempac.isw.negocio.EmpresaFacade ejbFacade;
-
-    @EJB
-    private PaisFacade ejbFacadePais;
-
-    @EJB
-    private RegionFacade ejbFacadeProvincia;
-
-    @EJB
-    private CiudadFacade ejbFacadeCiudad;
-
-    @EJB
-    private ClaseEmpresaFacade ejbFacadeClaseEmpresa;
-
     @EJB
     private SistemaEmpresaFacade ejbFacadeSistEmpresa;
-
-    private List<Empresa> itemsEmpresa;
-    private List<Pais> itemPaises;
-    private Pais pais;
-    private List<Region> itemProvincias;
-    private Region provincia;
-    private List<Ciudad> itemCiudades;
-    private Ciudad ciudad;
-    private List<ClaseEmpresa> itemClaseEmpresa;
-
-    private String contrasena;
+    private List<Empresa> items = null;
+    private Empresa selected;
     private String confirmaContrasena;
-    private String msj;
-
+    private String contrasena;
     public EmpresaController() {
-        super(Empresa.class);
     }
-
-    @PostConstruct
-    public void init() {
-        super.setFacade(ejbFacade);
-        this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
-        this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
-        this.setItemClaseEmpresa(this.ejbFacadeClaseEmpresa.getItemsClaseEmpresa(false));
-    }
-
-    @Override
-    protected void setEmbeddableKeys() {
-    }
-
-    @Override
-    protected void initializeEmbeddableKey() {
+    public void guardar(){
+     if (this.getSelected() != null
+                    && this.getSelected().getNombre() != null
+                    && this.getSelected().getDireccion() != null
+                    && this.getSelected().getUsername() != null
+                    && this.getSelected().getCorreoElectronico() != null
+                    && this.getSelected().getContrasena() != null
+                    && this.getSelected().getRuc() != null) {
+                this.create();
+                this.crearSistema();
+            }
+         else {
+            System.out.println("Debe ingresar todos los campos por favor");
+            MuestraMensaje.addError("Debe ingresar todos los campos por favor");
+        }
     }
     public void crearSistema(){
             SistemaEmpresa sisEmpresa = new SistemaEmpresa();
@@ -95,333 +65,166 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
             sisEmpresa.setTiempoBloqueo(0);
             this.ejbFacadeSistEmpresa.create(sisEmpresa);
     }
-    @Override
-    public void postCreate(){
-        System.out.println("si llegooooo");
-        crearSistema();
-    }
-    public void asignarEmpresa() {
-        this.setSelected(ActivacionUsuario.getEmpresa());
-    }
-
-//    public void cambiaPais() {
-//        if (pais != null) {
-//            this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
-//        } else {
-//            this.setItemProvincias(null);
-//        }
-//        this.itemCiudades = null;
-//        if (this.getSelected().getIdCiudad() != null) {
-//            this.getSelected().setIdCiudad(null);
-//        }
-//    }
-//
-//    public void cambiaProvincia() {
-//        if (provincia != null) {
-//            this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
-//        } else {
-//            this.setItemCiudades(null);
-//        }
-//        if (this.getSelected().getIdCiudad() != null) {
-//            this.getSelected().setIdCiudad(null);
-//        }
-//    }
-//
-//    public void preparaEditar() {
-//        this.pais = this.getSelected().getIdCiudad().getIdRegion().getIdPais();
-//        this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
-//        this.provincia = this.getSelected().getIdCiudad().getIdRegion();
-//        this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
-//        this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
-//    }
-//
-//    public void preparaCrear() {
-//        this.setSelected(new Empresa());
-//        this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
-//        this.setItemProvincias(null);
-//        this.setItemCiudades(null);
-//        this.pais = null;
-//        this.provincia = null;
-//        this.ciudad = null;
-//    }
-
-    public void closeEmpresa() throws ServletException {
-        Sesion.cerrarSesion();
-        this.init();
-    }
-
-    public void validaSession() throws IOException {
-        Sesion.validaSesion();
-    }
-
-    public void revisaNombre() {
-        setMsj("");
-        Empresa user = this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
-        if (user != null) {
-            System.out.println(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
-            setMsj(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
-            MuestraMensaje.addError(getMsj());
-        }
-    }
-
-    public void revisaMail() {
-        msj = "";
-        Empresa user = this.ejbFacade.getItemsUserName(this.getSelected().getCorreoElectronico());
-        if (user != null) {
-            msj = ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste");
-            MuestraMensaje.addError(msj);
-        }
-    }
-
-    public void revisaContasena() {
-        msj = "";
-        if (!this.contrasena.equals(this.confirmaContrasena)) {
-            msj = ResourceBundle.getBundle("/BundleMensajesES").getString("ContrasenaNoConisiden");
-            MuestraMensaje.addError(msj);
-        }
-    }
-
-    public void guardar(ActionEvent event) {
-        boolean ok = true;
-        revisaContasena();
-        if (msj != "") {
-            ok = false;
-        }
-        revisaMail();
-        if (msj != "") {
-            ok = false;
-        }
-        revisaNombre();
-        if (msj != "") {
-            ok = false;
-        }
-        if (ok) {
-            try {
-                this.getSelected().setContrasena(Sesion.MD5(contrasena));
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+    public void validarUsername() {
+        if (selected.getUsername() != null) {
+            if (ejbFacade.getItemsUserName(selected.getUsername()) != null) {
+                MuestraMensaje.addError("Ya existe, Empresa con username: " + selected.getUsername() + "\' Ingrese Otro\'");
+                System.out.println("Ya existe");
+                selected.setUsername(null);
+            } else {
+                System.out.println(" User correcto");
+                MuestraMensaje.addSatisfactorio("Correcto");
             }
-            this.getSelected().setEliminado(false);
-            this.save(event);
-            SistemaEmpresa empUser = new SistemaEmpresa();
-            this.setSelected(this.ejbFacade.getItemsUserName(this.getSelected().getUsername()));
-            empUser.setIdEmpresa(this.getSelected().getIdEmpresa());
-            empUser.setFechaAsignacion(new Date());
-            empUser.setEstado('V');
-            empUser.setTiempoBloqueo(0);
-            this.ejbFacadeSistEmpresa.create(empUser);
-            this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
-            this.setSelected(null);
+        }
+    }
+    public void validarEmail() {
+        if (selected.getCorreoElectronico() != null) {
+            if (ejbFacade.getUserEmail(selected.getCorreoElectronico()) != null) {
+                MuestraMensaje.addError("Ya existe, Empresa con email: " + selected.getCorreoElectronico() + "\' Ingrese Otro\'");
+                System.out.println("Ya existe");
+                selected.setCorreoElectronico(null);
+            } else {
+                System.out.println(" User correcto");
+                MuestraMensaje.addSatisfactorio("Correcto");
+            }
+        }
+    }
+    public void validarContrasena() {
+        if (contrasena != null) {
+            if (contrasena.length() < 6 || contrasena.length() > 15) {
+                MuestraMensaje.addError("La contrasena debe tener minimo 6 caracteres y maximo 16");
+                System.out.println("La contrasena debe tener minimo 6 caracteres y maximo 16");
+                selected.setContrasena(null);
+                contrasena = null;
+            } else {
+                MuestraMensaje.addSatisfactorio("Correcto");
+                System.out.println("Pass correcto");
+            }
+            confirmaContrasena = null;
+        }
+    }
+    public void validarConfirmacionContrasena() {
+        if (contrasena != null) {
+            if (confirmaContrasena != null) {
+                if (!contrasena.equals(confirmaContrasena)) {
+                    MuestraMensaje.addError("No coinciden las contrasenas");
+                    System.out.println("no coinciden las pass");
+                    confirmaContrasena = null;
+                } else {
+                    cifrarContrasena();
+                    MuestraMensaje.addSatisfactorio("Verificacion Correcta");
+                    System.out.println("verificacion correcta");
+                }
+            } else {
+                MuestraMensaje.addError("Ingrese la confirmacion de contrasena");
+            }
+        } else {
+            confirmaContrasena = null;
+        }
+    }
+    public void cifrarContrasena() {
+        if (contrasena != null) {
+            try {
+                selected.setContrasena(Sesion.MD5(contrasena));
+                System.out.println("contra:" + selected.getContrasena());
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            MuestraMensaje.addError("Ingrese una contrasena");
+        }
+    }
+    public Empresa getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Empresa selected) {
+        this.selected = selected;
+    }
+
+    protected void setEmbeddableKeys() {
+    }
+
+    protected void initializeEmbeddableKey() {
+    }
+
+    private EmpresaFacade getFacade() {
+        return ejbFacade;
+    }
+
+    public Empresa prepareCreate() {
+        selected = new Empresa();
+        initializeEmbeddableKey();
+        return selected;
+    }
+
+    public void create() {
+        persist(PersistAction.CREATE, "Empresa Creada");
+        if (!JsfUtil.isValidationFailed()) {
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+        
+    }
+
+    public void update() {
+        persist(PersistAction.UPDATE, "Empresa Actualizada");
+    }
+
+    public void destroy() {
+        persist(PersistAction.DELETE, "Empresa Eliminada");
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public void editar(ActionEvent event) {
-        boolean ok = true;
-        revisaMail();
-        if (msj != "") {
-            ok = false;
+    public List<Empresa> getItems() {
+        if (items == null) {
+            items = getFacade().findAll();
         }
-        revisaNombre();
-        if (msj != "") {
-            ok = false;
+        return items;
+    }
+
+    private void persist(PersistAction persistAction, String successMessage) {
+        if (selected != null) {
+            setEmbeddableKeys();
+            try {
+                if (persistAction != PersistAction.DELETE) {
+                    getFacade().edit(selected);
+                } else {
+                    getFacade().remove(selected);
+                }
+                JsfUtil.addSuccessMessage(successMessage);
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+                if (msg.length() > 0) {
+                    JsfUtil.addErrorMessage(msg);
+                } else {
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            }
         }
-        if (ok) {
-            this.getSelected().setEliminado(false);
-            this.save(event);
-            this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
-            this.setSelected(null);
-        }
     }
 
-    public void eliminar(ActionEvent event) {
-        this.getSelected().setEliminado(true);
-        this.save(event);
-        this.setItemsEmpresa(this.ejbFacade.getItemsEmpresa(false));
-        this.setSelected(null);
+    public Empresa getEmpresa(java.lang.Integer id) {
+        return getFacade().find(id);
     }
 
-    /**
-     * @return the ejbFacadePais
-     */
-    public PaisFacade getEjbFacadePais() {
-        return ejbFacadePais;
+    public List<Empresa> getItemsAvailableSelectMany() {
+        return getFacade().findAll();
     }
 
-    /**
-     * @param ejbFacadePais the ejbFacadePais to set
-     */
-    public void setEjbFacadePais(PaisFacade ejbFacadePais) {
-        this.ejbFacadePais = ejbFacadePais;
-    }
-
-    /**
-     * @return the ejbFacadeProvincia
-     */
-    public RegionFacade getEjbFacadeProvincia() {
-        return ejbFacadeProvincia;
-    }
-
-    /**
-     * @param ejbFacadeProvincia the ejbFacadeProvincia to set
-     */
-    public void setEjbFacadeProvincia(RegionFacade ejbFacadeProvincia) {
-        this.ejbFacadeProvincia = ejbFacadeProvincia;
-    }
-
-    /**
-     * @return the ejbFacadeCiudad
-     */
-    public CiudadFacade getEjbFacadeCiudad() {
-        return ejbFacadeCiudad;
-    }
-
-    /**
-     * @param ejbFacadeCiudad the ejbFacadeCiudad to set
-     */
-    public void setEjbFacadeCiudad(CiudadFacade ejbFacadeCiudad) {
-        this.ejbFacadeCiudad = ejbFacadeCiudad;
-    }
-
-    /**
-     * @return the itemPaises
-     */
-    public List<Pais> getItemPaises() {
-        return itemPaises;
-    }
-
-    /**
-     * @param itemPaises the itemPaises to set
-     */
-    public void setItemPaises(List<Pais> itemPaises) {
-        this.itemPaises = itemPaises;
-    }
-
-    /**
-     * @return the pais
-     */
-    public Pais getPais() {
-        return pais;
-    }
-
-    /**
-     * @param pais the pais to set
-     */
-    public void setPais(Pais pais) {
-        this.pais = pais;
-    }
-
-    /**
-     * @return the itemProvincias
-     */
-    public List<Region> getItemProvincias() {
-        return itemProvincias;
-    }
-
-    /**
-     * @param itemProvincias the itemProvincias to set
-     */
-    public void setItemProvincias(List<Region> itemProvincias) {
-        this.itemProvincias = itemProvincias;
-    }
-
-    /**
-     * @return the provincia
-     */
-    public Region getProvincia() {
-        return provincia;
-    }
-
-    /**
-     * @param provincia the provincia to set
-     */
-    public void setProvincia(Region provincia) {
-        this.provincia = provincia;
-    }
-
-    /**
-     * @return the itemCiudades
-     */
-    public List<Ciudad> getItemCiudades() {
-        return itemCiudades;
-    }
-
-    /**
-     * @param itemCiudades the itemCiudades to set
-     */
-    public void setItemCiudades(List<Ciudad> itemCiudades) {
-        this.itemCiudades = itemCiudades;
-    }
-
-    /**
-     * @return the ciudad
-     */
-    public Ciudad getCiudad() {
-        return ciudad;
-    }
-
-    /**
-     * @param ciudad the ciudad to set
-     */
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    /**
-     * @return the ejbFacadeClaseEmpresa
-     */
-    public ClaseEmpresaFacade getEjbFacadeClaseEmpresa() {
-        return ejbFacadeClaseEmpresa;
-    }
-
-    /**
-     * @param ejbFacadeClaseEmpresa the ejbFacadeClaseEmpresa to set
-     */
-    public void setEjbFacadeClaseEmpresa(ClaseEmpresaFacade ejbFacadeClaseEmpresa) {
-        this.ejbFacadeClaseEmpresa = ejbFacadeClaseEmpresa;
-    }
-
-    /**
-     * @return the itemClaseEmpresa
-     */
-    public List<ClaseEmpresa> getItemClaseEmpresa() {
-        return itemClaseEmpresa;
-    }
-
-    /**
-     * @param itemClaseEmpresa the itemClaseEmpresa to set
-     */
-    public void setItemClaseEmpresa(List<ClaseEmpresa> itemClaseEmpresa) {
-        this.itemClaseEmpresa = itemClaseEmpresa;
-    }
-
-    /**
-     * @return the itemsEmpresa
-     */
-    public List<Empresa> getItemsEmpresa() {
-        return itemsEmpresa;
-    }
-
-    /**
-     * @param itemsEmpresa the itemsEmpresa to set
-     */
-    public void setItemsEmpresa(List<Empresa> itemsEmpresa) {
-        this.itemsEmpresa = itemsEmpresa;
-    }
-
-    /**
-     * @return the contrasena
-     */
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    /**
-     * @param contrasena the contrasena to set
-     */
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public List<Empresa> getItemsAvailableSelectOne() {
+        return getFacade().findAll();
     }
 
     /**
@@ -439,31 +242,58 @@ public class EmpresaController extends AbstractController<Empresa> implements Se
     }
 
     /**
-     * @return the msj
+     * @return the contrasena
      */
-    public String getMsj() {
-        return msj;
+    public String getContrasena() {
+        return contrasena;
     }
 
     /**
-     * @param msj the msj to set
+     * @param contrasena the contrasena to set
      */
-    public void setMsj(String msj) {
-        this.msj = msj;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    /**
-     * @return the ejbFacadeSistEmpresa
-     */
-    public SistemaEmpresaFacade getEjbFacadeSistEmpresa() {
-        return ejbFacadeSistEmpresa;
-    }
+    @FacesConverter(forClass = Empresa.class)
+    public static class EmpresaControllerConverter implements Converter {
 
-    /**
-     * @param ejbFacadeSistEmpresa the ejbFacadeSistEmpresa to set
-     */
-    public void setEjbFacadeSistEmpresa(SistemaEmpresaFacade ejbFacadeSistEmpresa) {
-        this.ejbFacadeSistEmpresa = ejbFacadeSistEmpresa;
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            EmpresaController controller = (EmpresaController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "empresaController");
+            return controller.getEmpresa(getKey(value));
+        }
+
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Integer value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Empresa) {
+                Empresa o = (Empresa) object;
+                return getStringKey(o.getIdEmpresa());
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Empresa.class.getName()});
+                return null;
+            }
+        }
+
     }
 
 }
