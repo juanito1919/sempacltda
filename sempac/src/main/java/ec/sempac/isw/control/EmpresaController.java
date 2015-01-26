@@ -42,11 +42,13 @@ public class EmpresaController implements Serializable {
     private Empresa selected;
     private String confirmaContrasena;
     private String contrasena;
+    private char estado;
     public EmpresaController() {
     }
         @PostConstruct
     public void init() {
         selected = new Empresa();
+        setEstado('V');
     }
     public void guardar(){
      if (this.getSelected() != null
@@ -72,6 +74,30 @@ public class EmpresaController implements Serializable {
             sisEmpresa.setEstado('V');
             sisEmpresa.setTiempoBloqueo(0);
             this.ejbFacadeSistEmpresa.create(sisEmpresa);
+    }
+    public void editar(){
+     if (this.getSelected() != null
+                    && this.getSelected().getNombre() != null
+                    && this.getSelected().getDireccion() != null
+                    && this.getSelected().getUsername() != null
+                    && this.getSelected().getCorreoElectronico() != null
+                    && this.getSelected().getContrasena() != null
+                    && this.getSelected().getRuc() != null) {
+                this.update();
+                this.editarSistema();
+            }
+         else {
+            System.out.println("Debe ingresar todos los campos por favor");
+            MuestraMensaje.addError("Debe ingresar todos los campos por favor");
+        }
+     this.setSelected(null);
+    }
+    public void editarSistema(){
+            SistemaEmpresa sisEmpresa = new SistemaEmpresa();
+            sisEmpresa = ejbFacadeSistEmpresa.find(this.getSelected().getIdEmpresa());
+            sisEmpresa.setEstado(estado);
+            sisEmpresa.setTiempoBloqueo(0);
+            this.ejbFacadeSistEmpresa.edit(sisEmpresa);
     }
     public void validarUsername() {
         if (selected.getUsername() != null) {
@@ -272,6 +298,20 @@ public class EmpresaController implements Serializable {
      */
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    /**
+     * @return the estado
+     */
+    public char getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(char estado) {
+        this.estado = estado;
     }
 
     @FacesConverter(forClass = Empresa.class)
