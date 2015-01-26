@@ -48,7 +48,7 @@ public class ClaseEmpresa implements Serializable {
     private Integer idClaseEmpresa;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 32)
+    @Size(min = 1, max = 64)
     @Column(nullable = false, length = 64)
     private String nombre;
     @Basic(optional = false)
