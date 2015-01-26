@@ -7,7 +7,9 @@ import ec.sempac.isw.control.util.MuestraMensaje;
 import ec.sempac.isw.modelo.SistemaEmpresa;
 import ec.sempac.isw.negocio.EmpresaFacade;
 import ec.sempac.isw.negocio.SistemaEmpresaFacade;
+import ec.sempac.isw.seguridades.ActivacionUsuario;
 import ec.sempac.isw.seguridades.Sesion;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -25,6 +28,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.ServletException;
 
 @Named("empresaController")
 @SessionScoped
@@ -39,6 +43,10 @@ public class EmpresaController implements Serializable {
     private String confirmaContrasena;
     private String contrasena;
     public EmpresaController() {
+    }
+        @PostConstruct
+    public void init() {
+        selected = new Empresa();
     }
     public void guardar(){
      if (this.getSelected() != null
@@ -61,7 +69,7 @@ public class EmpresaController implements Serializable {
             Empresa e = this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
             sisEmpresa.setIdEmpresa(e.getIdEmpresa());
             sisEmpresa.setFechaAsignacion(new Date());
-            sisEmpresa.setEstado('G');
+            sisEmpresa.setEstado('V');
             sisEmpresa.setTiempoBloqueo(0);
             this.ejbFacadeSistEmpresa.create(sisEmpresa);
     }
@@ -135,6 +143,17 @@ public class EmpresaController implements Serializable {
         } else {
             MuestraMensaje.addError("Ingrese una contrasena");
         }
+    }
+        public void closeEmpresa() throws ServletException {
+        Sesion.cerrarSesion();
+        this.init();
+    }
+
+    public void validaSession() throws IOException {
+        Sesion.validaSesion();
+    }
+    public void asignarEmpresa(){
+        selected = ActivacionUsuario.getEmpresa();
     }
     public Empresa getSelected() {
         return selected;
