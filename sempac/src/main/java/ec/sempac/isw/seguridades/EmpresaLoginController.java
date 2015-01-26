@@ -100,11 +100,12 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
 
     public void validaUsuario() {
         try {
+            System.out.println("Si ingresa");
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
             Empresa listEmpresa = this.ejbFacade.getEmpresa(username);
             if (listEmpresa == null) {
-
+                
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("UsuarioNoExiste"));
                 return;
             }
@@ -117,7 +118,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
             empresaSistema = ejbFacadeEmpresaSistema.find(listEmpresa.getIdEmpresa());
 
             if (empresaSistema == null) {
-
+                
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/propiedadesMensajesEC").getString("UsuarioNoExiste"));
 
                 return;
@@ -178,6 +179,8 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
                             : ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaCaducada"));
                     //System.out.println("Muestra Cambio Contraseña "+this.mensajeDialogoCambioContrasena);
                     this.muestraDialogoCambioContrasena();
+                } else{
+                    MuestraMensaje.addAdvertencia("Usuario no habilitado ");
                 }
             } else if (estadoUsuario.equals("B")) {
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/propiedadesMensajesEC").getString("UsuarioCuentaBloqueada"));
