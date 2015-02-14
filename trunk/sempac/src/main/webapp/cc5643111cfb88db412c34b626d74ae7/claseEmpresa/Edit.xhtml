@@ -12,12 +12,12 @@
             <h:form id="ClaseEmpresaEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{claseEmpresaController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditClaseEmpresaLabel_idClaseEmpresa}" for="idClaseEmpresa" />
-                        <p:inputText id="idClaseEmpresa" value="#{claseEmpresaController.selected.idClaseEmpresa}" title="#{bundle.EditClaseEmpresaTitle_idClaseEmpresa}" required="true" requiredMessage="#{bundle.EditClaseEmpresaRequiredMessage_idClaseEmpresa}"/>
-                        <p:outputLabel value="#{bundle.EditClaseEmpresaLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{claseEmpresaController.selected.nombre}" title="#{bundle.EditClaseEmpresaTitle_nombre}" required="true" requiredMessage="#{bundle.EditClaseEmpresaRequiredMessage_nombre}"/>
-                        <p:outputLabel value="#{bundle.EditClaseEmpresaLabel_eliminado}" for="eliminado" />
-                        <p:selectBooleanCheckbox id="eliminado" value="#{claseEmpresaController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditClaseEmpresaRequiredMessage_eliminado}"/>
+                        <p:outputLabel value="CLASE DE EMPRESA" for="nombre" />
+                        <p:inputText id="nombre" value="#{claseEmpresaController.selected.nombre}" 
+                                     title="NOMBRE DE CLASE DE EMPRESA" required="true" requiredMessage="NOMBRE REQUERIDO"/>
+                        <p:outputLabel value="ELIMINADO" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{claseEmpresaController.selected.eliminado}" 
+                                                 required="true" requiredMessage="CAMPO DE ELIMINACION REQUERIDO"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{claseEmpresaController.update}" value="#{bundle.Save}" update="display,:ClaseEmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ClaseEmpresaEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ClaseEmpresaEditDialog.hide()"/>

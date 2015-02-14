@@ -8,15 +8,15 @@
 
     <ui:composition>
 
-        <p:dialog id="PaisViewDlg" widgetVar="PaisViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPaisTitle}">
+        <p:dialog id="PaisViewDlg" widgetVar="PaisViewDialog" modal="true" resizable="false" appendTo="@(body)" header="VER">
             <h:form id="PaisViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{paisController.selected != null}">
-                        <h:outputText value="#{bundle.ViewPaisLabel_idPais}"/>
-                        <h:outputText value="#{paisController.selected.idPais}" title="#{bundle.ViewPaisTitle_idPais}"/>
-                        <h:outputText value="#{bundle.ViewPaisLabel_nombre}"/>
-                        <h:outputText value="#{paisController.selected.nombre}" title="#{bundle.ViewPaisTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewPaisLabel_eliminado}"/>
+                        <h:outputText value="ID"/>
+                        <h:outputText value="#{paisController.selected.idPais}" title="ID"/>
+                        <h:outputText value="NOMBRE DEL PAIS"/>
+                        <h:outputText value="#{paisController.selected.nombre}" title="NOMBRE DEL PAIS"/>
+                        <h:outputText value="ELIMINADO"/>
                         <p:selectBooleanCheckbox value="#{paisController.selected.eliminado}" disabled="true"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="PaisViewDialog.hide()"/>

@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListCiudadTitle}"></h:outputText>
+            <h:outputText value="CUIDADES"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="CiudadListForm">
-                <p:panel header="#{bundle.ListCiudadTitle}">
+                <p:panel header="LISTA DE CUIDADES">
                     <p:dataTable id="datalist" value="#{ciudadController.items}" var="item"
                                  selectionMode="single" selection="#{ciudadController.selected}"
                                  paginator="true"
@@ -29,27 +29,33 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCiudadTitle_idCiudad}"/>
+                                <h:outputText value="ID"/>
                             </f:facet>
                             <h:outputText value="#{item.idCiudad}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCiudadTitle_nombre}"/>
+                                <h:outputText value="CIUDAD"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCiudadTitle_eliminado}"/>
+                                <h:outputText value="REGION/PROVINCIA"/>
                             </f:facet>
-                            <p:selectBooleanCheckbox value="#{item.eliminado}" disabled="true"/>
+                            <h:outputText value="#{item.idRegion.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCiudadTitle_idRegion}"/>
+                                <h:outputText value="PAIS"/>
                             </f:facet>
-                            <h:outputText value="#{item.idRegion}"/>
+                            <h:outputText value="#{item.idRegion.idPais.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ELIMINADO"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.eliminado}" disabled="true"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{ciudadController.prepareCreate}" update=":CiudadCreateForm" oncomplete="PF('CiudadCreateDialog').show()"/>

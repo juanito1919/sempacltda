@@ -77,7 +77,9 @@ public T getSelected() {
         }
         return items;
     }
-
+    public void setItems(List<T> items) {
+            this.items = items;
+    }
     public void save(ActionEvent event) {
         String msg = "";// = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
         persist(PersistAction.UPDATE, msg);
@@ -99,7 +101,9 @@ public T getSelected() {
             items = null; // Invalidate list of items to trigger re-query.
         }
     }
-
+public void update() {
+        persist(PersistAction.UPDATE, "Actualizada");
+    }
 //    public void delete(ActionEvent event) {
 //        //String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Deleted");
 //        String msg = "";

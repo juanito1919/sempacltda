@@ -8,15 +8,15 @@
 
     <ui:composition>
 
-        <p:dialog id="AreaCapacitacionViewDlg" widgetVar="AreaCapacitacionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewAreaCapacitacionTitle}">
+        <p:dialog id="AreaCapacitacionViewDlg" widgetVar="AreaCapacitacionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="VER">
             <h:form id="AreaCapacitacionViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{areaCapacitacionController.selected != null}">
-                        <h:outputText value="#{bundle.ViewAreaCapacitacionLabel_idAreaCapacitacion}"/>
-                        <h:outputText value="#{areaCapacitacionController.selected.idAreaCapacitacion}" title="#{bundle.ViewAreaCapacitacionTitle_idAreaCapacitacion}"/>
-                        <h:outputText value="#{bundle.ViewAreaCapacitacionLabel_nombre}"/>
-                        <h:outputText value="#{areaCapacitacionController.selected.nombre}" title="#{bundle.ViewAreaCapacitacionTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewAreaCapacitacionLabel_eliminado}"/>
+                        <h:outputText value="ID"/>
+                        <h:outputText value="#{areaCapacitacionController.selected.idAreaCapacitacion}" title="NOMBRE"/>
+                        <h:outputText value="NOMBRE"/>
+                        <h:outputText value="#{areaCapacitacionController.selected.nombre}" title="NOMBRE"/>
+                        <h:outputText value="ELIMINADO"/>
                         <p:selectBooleanCheckbox value="#{areaCapacitacionController.selected.eliminado}" disabled="true"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="AreaCapacitacionViewDialog.hide()"/>

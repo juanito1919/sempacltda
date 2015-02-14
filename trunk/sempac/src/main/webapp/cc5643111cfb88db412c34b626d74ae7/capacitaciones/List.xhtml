@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListCapacitacionesTitle}"></h:outputText>
+            <h:outputText value="LISTA CAPACITACIONES"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="CapacitacionesListForm">
-                <p:panel header="#{bundle.ListCapacitacionesTitle}">
+                <p:panel header="CAPACITACIONES">
                     <p:dataTable id="datalist" value="#{capacitacionesController.items}" var="item"
                                  selectionMode="single" selection="#{capacitacionesController.selected}"
                                  paginator="true"
@@ -26,77 +26,37 @@
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_idCapacitaciones}"/>
+                                <h:outputText value="USUARIO"/>
                             </f:facet>
-                            <h:outputText value="#{item.idCapacitaciones}"/>
+                            <h:outputText value="#{item.idUsuario.nombres} #{item.idUsuario.apellidos}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_institucion}"/>
+                                <h:outputText value="NOMBRE DE LA INSTITUCION"/>
                             </f:facet>
                             <h:outputText value="#{item.institucion}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_nombre}"/>
+                                <h:outputText value="CAPACITACION EN"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_fechaInico}"/>
+                                <h:outputText value="AREA DE CAPACITACION"/>
                             </f:facet>
-                            <h:outputText value="#{item.fechaInico}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
+                            <h:outputText value="#{item.idAreaCapacitacion.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_fechaFin}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaFin}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_url}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.url}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_eliminado}"/>
+                                <h:outputText value="ELIMINADO"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.eliminado}" disabled="true"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_idAreaCapacitacion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idAreaCapacitacion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_idTipoCertificado}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idTipoCertificado}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_idTipoEvento}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idTipoEvento}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacitacionesTitle_idUsuario}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idUsuario}"/>
-                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{capacitacionesController.prepareCreate}" update=":CapacitacionesCreateForm" oncomplete="PF('CapacitacionesCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CapacitacionesViewForm" oncomplete="PF('CapacitacionesViewDialog').show()" disabled="#{empty capacitacionesController.selected}"/>

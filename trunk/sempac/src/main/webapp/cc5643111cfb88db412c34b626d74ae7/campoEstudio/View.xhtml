@@ -8,15 +8,15 @@
 
     <ui:composition>
 
-        <p:dialog id="CampoEstudioViewDlg" widgetVar="CampoEstudioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCampoEstudioTitle}">
+        <p:dialog id="CampoEstudioViewDlg" widgetVar="CampoEstudioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="VER">
             <h:form id="CampoEstudioViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{campoEstudioController.selected != null}">
-                        <h:outputText value="#{bundle.ViewCampoEstudioLabel_idCampoEstudio}"/>
-                        <h:outputText value="#{campoEstudioController.selected.idCampoEstudio}" title="#{bundle.ViewCampoEstudioTitle_idCampoEstudio}"/>
-                        <h:outputText value="#{bundle.ViewCampoEstudioLabel_nombre}"/>
-                        <h:outputText value="#{campoEstudioController.selected.nombre}" title="#{bundle.ViewCampoEstudioTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewCampoEstudioLabel_eliminado}"/>
+                        <h:outputText value="ID"/>
+                        <h:outputText value="#{campoEstudioController.selected.idCampoEstudio}" title="ID"/>
+                        <h:outputText value="NOMBRE DEL CAMPO DE ESTUDIO"/>
+                        <h:outputText value="#{campoEstudioController.selected.nombre}" title="NOMBRE DEL CAMPO DE ESTUDIO"/>
+                        <h:outputText value="ELIMINADO"/>
                         <p:selectBooleanCheckbox value="#{campoEstudioController.selected.eliminado}" disabled="true"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="CampoEstudioViewDialog.hide()"/>

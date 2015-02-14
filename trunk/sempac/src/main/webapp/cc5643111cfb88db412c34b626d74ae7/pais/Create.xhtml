@@ -8,16 +8,20 @@
 
     <ui:composition>
 
-        <p:dialog id="PaisCreateDlg" widgetVar="PaisCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePaisTitle}">
+        <p:dialog id="PaisCreateDlg" widgetVar="PaisCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR PAIS">
             <h:form id="PaisCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{paisController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePaisLabel_idPais}" for="idPais" />
-                        <p:inputText id="idPais" value="#{paisController.selected.idPais}" title="#{bundle.CreatePaisTitle_idPais}" required="true" requiredMessage="#{bundle.CreatePaisRequiredMessage_idPais}"/>
-                        <p:outputLabel value="#{bundle.CreatePaisLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{paisController.selected.nombre}" title="#{bundle.CreatePaisTitle_nombre}" required="true" requiredMessage="#{bundle.CreatePaisRequiredMessage_nombre}"/>
-                        <p:outputLabel value="#{bundle.CreatePaisLabel_eliminado}" for="eliminado" />
-                        <p:selectBooleanCheckbox id="eliminado" value="#{paisController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditPaisRequiredMessage_eliminado}"/>
+                        <p:outputLabel value="NOMBRE DEL PAIS" for="nombre" />
+                        <p:inputText id="nombre" value="#{paisController.selected.nombre}" 
+                                     title="NOMBRE DEL PAIS" 
+                                     required="true" 
+                                     requiredMessage="NOMBRE DEL PAIS REQUERIDO"/>
+                        <p:outputLabel value="ELIMINADO" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" 
+                                                 value="#{paisController.selected.eliminado}" 
+                                                 required="true" 
+                                                 requiredMessage="ELIMINACION REQUERIDA"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{paisController.create}" value="#{bundle.Save}" update="display,:PaisListForm:datalist,:growl" oncomplete="handleSubmit(args,'PaisCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PaisCreateDialog.hide()"/>

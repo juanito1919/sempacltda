@@ -8,15 +8,15 @@
 
     <ui:composition>
 
-        <p:dialog id="ClaseEmpresaViewDlg" widgetVar="ClaseEmpresaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewClaseEmpresaTitle}">
+        <p:dialog id="ClaseEmpresaViewDlg" widgetVar="ClaseEmpresaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="VER">
             <h:form id="ClaseEmpresaViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{claseEmpresaController.selected != null}">
-                        <h:outputText value="#{bundle.ViewClaseEmpresaLabel_idClaseEmpresa}"/>
-                        <h:outputText value="#{claseEmpresaController.selected.idClaseEmpresa}" title="#{bundle.ViewClaseEmpresaTitle_idClaseEmpresa}"/>
-                        <h:outputText value="#{bundle.ViewClaseEmpresaLabel_nombre}"/>
-                        <h:outputText value="#{claseEmpresaController.selected.nombre}" title="#{bundle.ViewClaseEmpresaTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewClaseEmpresaLabel_eliminado}"/>
+                        <h:outputText value="ID"/>
+                        <h:outputText value="#{claseEmpresaController.selected.idClaseEmpresa}" title="ID"/>
+                        <h:outputText value="NOMBRE DE LA CLASE DE EMPRESA"/>
+                        <h:outputText value="#{claseEmpresaController.selected.nombre}" title="NOMBRE DE LA CLASE DE EMPRESA"/>
+                        <h:outputText value="ELIMINADO"/>
                         <p:selectBooleanCheckbox value="#{claseEmpresaController.selected.eliminado}" disabled="true"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="ClaseEmpresaViewDialog.hide()"/>
