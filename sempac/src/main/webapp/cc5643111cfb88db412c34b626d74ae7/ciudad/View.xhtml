@@ -8,18 +8,20 @@
 
     <ui:composition>
 
-        <p:dialog id="CiudadViewDlg" widgetVar="CiudadViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCiudadTitle}">
+        <p:dialog id="CiudadViewDlg" widgetVar="CiudadViewDialog" modal="true" resizable="false" appendTo="@(body)" header="VER">
             <h:form id="CiudadViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{ciudadController.selected != null}">
-                        <h:outputText value="#{bundle.ViewCiudadLabel_idCiudad}"/>
-                        <h:outputText value="#{ciudadController.selected.idCiudad}" title="#{bundle.ViewCiudadTitle_idCiudad}"/>
-                        <h:outputText value="#{bundle.ViewCiudadLabel_nombre}"/>
-                        <h:outputText value="#{ciudadController.selected.nombre}" title="#{bundle.ViewCiudadTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewCiudadLabel_eliminado}"/>
+                        <h:outputText value="ID"/>
+                        <h:outputText value="#{ciudadController.selected.idCiudad}" title="ID"/>
+                        <h:outputText value="CIUDAD"/>
+                        <h:outputText value="#{ciudadController.selected.nombre}" title="CIUDAD"/>
+                        <h:outputText value="REGION/PROVINCIA"/>
+                        <h:outputText value="#{ciudadController.selected.idRegion.nombre}" title="REGION/PROVINCIA"/>
+                        <h:outputText value="PAIS"/>
+                        <h:outputText value="#{ciudadController.selected.idRegion.idPais.nombre}" title="PAIS"/>
+                        <h:outputText value="ELIMINADO"/>
                         <p:selectBooleanCheckbox value="#{ciudadController.selected.eliminado}" disabled="true"/>
-                        <h:outputText value="#{bundle.ViewCiudadLabel_idRegion}"/>
-                        <h:outputText value="#{ciudadController.selected.idRegion}" title="#{bundle.ViewCiudadTitle_idRegion}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="CiudadViewDialog.hide()"/>
                 </h:panelGroup>

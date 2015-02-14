@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListCampoEstudioTitle}"></h:outputText>
+            <h:outputText value="CAMPO DE ESTUDIO"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="CampoEstudioListForm">
-                <p:panel header="#{bundle.ListCampoEstudioTitle}">
+                <p:panel header="LISTADO DE CAMPOS DE ESTUDIO">
                     <p:dataTable id="datalist" value="#{campoEstudioController.items}" var="item"
                                  selectionMode="single" selection="#{campoEstudioController.selected}"
                                  paginator="true"
@@ -26,22 +26,21 @@
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCampoEstudioTitle_idCampoEstudio}"/>
+                                <h:outputText value="ID"/>
                             </f:facet>
                             <h:outputText value="#{item.idCampoEstudio}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCampoEstudioTitle_nombre}"/>
+                                <h:outputText value="NOMBRE DEL CAMPO DE ESTUDIO"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCampoEstudioTitle_eliminado}"/>
+                                <h:outputText value="ELIMINADO"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.eliminado}" disabled="true"/>
                         </p:column>

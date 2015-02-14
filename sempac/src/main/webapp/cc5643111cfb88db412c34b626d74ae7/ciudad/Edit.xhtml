@@ -8,23 +8,28 @@
 
     <ui:composition>
 
-        <p:dialog id="CiudadEditDlg" widgetVar="CiudadEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCiudadTitle}">
+        <p:dialog id="CiudadEditDlg" widgetVar="CiudadEditDialog" modal="true" resizable="false" appendTo="@(body)" header="EDITAR CIUDAD">
             <h:form id="CiudadEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{ciudadController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditCiudadLabel_idCiudad}" for="idCiudad" />
-                        <p:inputText id="idCiudad" value="#{ciudadController.selected.idCiudad}" title="#{bundle.EditCiudadTitle_idCiudad}" required="true" requiredMessage="#{bundle.EditCiudadRequiredMessage_idCiudad}"/>
-                        <p:outputLabel value="#{bundle.EditCiudadLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{ciudadController.selected.nombre}" title="#{bundle.EditCiudadTitle_nombre}" required="true" requiredMessage="#{bundle.EditCiudadRequiredMessage_nombre}"/>
-                        <p:outputLabel value="#{bundle.EditCiudadLabel_eliminado}" for="eliminado" />
-                        <p:selectBooleanCheckbox id="eliminado" value="#{ciudadController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditCiudadRequiredMessage_eliminado}"/>
-                        <p:outputLabel value="#{bundle.EditCiudadLabel_idRegion}" for="idRegion" />
-                        <p:selectOneMenu id="idRegion" value="#{ciudadController.selected.idRegion}" required="true" requiredMessage="#{bundle.EditCiudadRequiredMessage_idRegion}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                        <p:outputLabel value="NOMBRE DE LA CIUDAD" for="nombre" />
+                        <p:inputText id="nombre" value="#{ciudadController.selected.nombre}" 
+                                     title="NOMBRE DE LA CIUDAD" required="true" 
+                                     requiredMessage="nombre de la cuidad requerida"/>
+                        <p:outputLabel value="REGION/PROVINCIA" for="idRegion" />
+                        <p:selectOneMenu id="idRegion" value="#{ciudadController.selected.idRegion}"
+                                         required="true" 
+                                         requiredMessage="REGION REQUERIDA">
                             <f:selectItems value="#{regionController.itemsAvailableSelectOne}"
                                            var="idRegionItem"
-                                           itemValue="#{idRegionItem}"/>
+                                           itemValue="#{idRegionItem}"
+                                           itemLabel="#{idRegionItem.nombre} - #{idRegionItem.idPais.nombre}"/>
+                            <f:converter binding="#{regionConverter}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="ELIMINADO" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{ciudadController.selected.eliminado}" 
+                                                 required="true" 
+                                                 requiredMessage="ELIMINADO REQUERIDO"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{ciudadController.update}" value="#{bundle.Save}" update="display,:CiudadListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CiudadEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CiudadEditDialog.hide()"/>

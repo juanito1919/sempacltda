@@ -8,16 +8,20 @@
 
     <ui:composition>
 
-        <p:dialog id="AreaCapacitacionCreateDlg" widgetVar="AreaCapacitacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateAreaCapacitacionTitle}">
+        <p:dialog id="AreaCapacitacionCreateDlg" widgetVar="AreaCapacitacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR AREA DE CAPACITACION">
             <h:form id="AreaCapacitacionCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{areaCapacitacionController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateAreaCapacitacionLabel_idAreaCapacitacion}" for="idAreaCapacitacion" />
-                        <p:inputText id="idAreaCapacitacion" value="#{areaCapacitacionController.selected.idAreaCapacitacion}" title="#{bundle.CreateAreaCapacitacionTitle_idAreaCapacitacion}" required="true" requiredMessage="#{bundle.CreateAreaCapacitacionRequiredMessage_idAreaCapacitacion}"/>
-                        <p:outputLabel value="#{bundle.CreateAreaCapacitacionLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{areaCapacitacionController.selected.nombre}" title="#{bundle.CreateAreaCapacitacionTitle_nombre}" required="true" requiredMessage="#{bundle.CreateAreaCapacitacionRequiredMessage_nombre}"/>
-                        <p:outputLabel value="#{bundle.CreateAreaCapacitacionLabel_eliminado}" for="eliminado" />
-                        <p:selectBooleanCheckbox id="eliminado" value="#{areaCapacitacionController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditAreaCapacitacionRequiredMessage_eliminado}"/>
+                        <p:outputLabel value="NOMBRE" for="nombre" />
+                        <p:inputText id="nombre" value="#{areaCapacitacionController.selected.nombre}" 
+                                     title="NOMBRE" 
+                                     required="true" 
+                                     requiredMessage="Nombre requerido"/>
+                        <p:outputLabel value="ELIMINADO" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" 
+                                                 value="#{areaCapacitacionController.selected.eliminado}" 
+                                                 required="true" 
+                                                 requiredMessage="Seleccion eliminacion requerida"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{areaCapacitacionController.create}" value="#{bundle.Save}" update="display,:AreaCapacitacionListForm:datalist,:growl" oncomplete="handleSubmit(args,'AreaCapacitacionCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="AreaCapacitacionCreateDialog.hide()"/>

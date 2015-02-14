@@ -8,15 +8,15 @@
 
     <ui:composition>
 
-        <p:dialog id="CarreraViewDlg" widgetVar="CarreraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCarreraTitle}">
+        <p:dialog id="CarreraViewDlg" widgetVar="CarreraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="VER">
             <h:form id="CarreraViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{carreraController.selected != null}">
-                        <h:outputText value="#{bundle.ViewCarreraLabel_idCarrera}"/>
-                        <h:outputText value="#{carreraController.selected.idCarrera}" title="#{bundle.ViewCarreraTitle_idCarrera}"/>
-                        <h:outputText value="#{bundle.ViewCarreraLabel_nombre}"/>
-                        <h:outputText value="#{carreraController.selected.nombre}" title="#{bundle.ViewCarreraTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewCarreraLabel_eliminado}"/>
+                        <h:outputText value="ID"/>
+                        <h:outputText value="#{carreraController.selected.idCarrera}" title="ID"/>
+                        <h:outputText value="NOMBRE DE LA CARRERA"/>
+                        <h:outputText value="#{carreraController.selected.nombre}" title="NOMBRE DE LA CARRERA"/>
+                        <h:outputText value="ELIMINADO"/>
                         <p:selectBooleanCheckbox value="#{carreraController.selected.eliminado}" disabled="true"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="CarreraViewDialog.hide()"/>

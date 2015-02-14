@@ -8,23 +8,23 @@
 
     <ui:composition>
 
-        <p:dialog id="RegionEditDlg" widgetVar="RegionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditRegionTitle}">
+        <p:dialog id="RegionEditDlg" widgetVar="RegionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="EDITAR PROVINCIA/REGION">
             <h:form id="RegionEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{regionController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditRegionLabel_idRegion}" for="idRegion" />
-                        <p:inputText id="idRegion" value="#{regionController.selected.idRegion}" title="#{bundle.EditRegionTitle_idRegion}" required="true" requiredMessage="#{bundle.EditRegionRequiredMessage_idRegion}"/>
-                        <p:outputLabel value="#{bundle.EditRegionLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{regionController.selected.nombre}" title="#{bundle.EditRegionTitle_nombre}" required="true" requiredMessage="#{bundle.EditRegionRequiredMessage_nombre}"/>
-                        <p:outputLabel value="#{bundle.EditRegionLabel_eliminado}" for="eliminado" />
-                        <p:selectBooleanCheckbox id="eliminado" value="#{regionController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditRegionRequiredMessage_eliminado}"/>
-                        <p:outputLabel value="#{bundle.EditRegionLabel_idPais}" for="idPais" />
-                        <p:selectOneMenu id="idPais" value="#{regionController.selected.idPais}" required="true" requiredMessage="#{bundle.EditRegionRequiredMessage_idPais}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                        <p:outputLabel value="NOMBRE DE LA REGION/PROVINCIA" for="nombre" />
+                        <p:inputText id="nombre" value="#{regionController.selected.nombre}" title="REGION/PROVINCIA" required="true" requiredMessage="NOMBRE REQUERIDO"/>
+                        <p:outputLabel value="PAIS" for="idPais" />
+                        <p:selectOneMenu id="idPais" value="#{regionController.selected.idPais}" required="true" 
+                                         requiredMessage="SELECCIONE UN PAIS">
                             <f:selectItems value="#{paisController.itemsAvailableSelectOne}"
                                            var="idPaisItem"
-                                           itemValue="#{idPaisItem}"/>
+                                           itemValue="#{idPaisItem}"
+                                           itemLabel="#{idPaisItem.nombre}"/>
+                            <f:converter binding="#{paisConverter}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="ELIMINADO" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{regionController.selected.eliminado}" required="true" requiredMessage="ELIMINADO REQUERIDO"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{regionController.update}" value="#{bundle.Save}" update="display,:RegionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RegionEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="RegionEditDialog.hide()"/>

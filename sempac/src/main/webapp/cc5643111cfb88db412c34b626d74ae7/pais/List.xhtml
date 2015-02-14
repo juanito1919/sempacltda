@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListPaisTitle}"></h:outputText>
+            <h:outputText value="PAISES"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="PaisListForm">
-                <p:panel header="#{bundle.ListPaisTitle}">
+                <p:panel header="LISTA DE PAISES">
                     <p:dataTable id="datalist" value="#{paisController.items}" var="item"
                                  selectionMode="single" selection="#{paisController.selected}"
                                  paginator="true"
@@ -29,19 +29,19 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPaisTitle_idPais}"/>
+                                <h:outputText value="ID"/>
                             </f:facet>
                             <h:outputText value="#{item.idPais}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPaisTitle_nombre}"/>
+                                <h:outputText value="NOMBRE DEL PAIS"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPaisTitle_eliminado}"/>
+                                <h:outputText value="ELIMINADO"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.eliminado}" disabled="true"/>
                         </p:column>

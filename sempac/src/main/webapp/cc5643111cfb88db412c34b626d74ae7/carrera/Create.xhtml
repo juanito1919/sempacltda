@@ -8,16 +8,14 @@
 
     <ui:composition>
 
-        <p:dialog id="CarreraCreateDlg" widgetVar="CarreraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCarreraTitle}">
+        <p:dialog id="CarreraCreateDlg" widgetVar="CarreraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="CREAR CARRERA">
             <h:form id="CarreraCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{carreraController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateCarreraLabel_idCarrera}" for="idCarrera" />
-                        <p:inputText id="idCarrera" value="#{carreraController.selected.idCarrera}" title="#{bundle.CreateCarreraTitle_idCarrera}" required="true" requiredMessage="#{bundle.CreateCarreraRequiredMessage_idCarrera}"/>
-                        <p:outputLabel value="#{bundle.CreateCarreraLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{carreraController.selected.nombre}" title="#{bundle.CreateCarreraTitle_nombre}" required="true" requiredMessage="#{bundle.CreateCarreraRequiredMessage_nombre}"/>
-                        <p:outputLabel value="#{bundle.CreateCarreraLabel_eliminado}" for="eliminado" />
-                        <p:selectBooleanCheckbox id="eliminado" value="#{carreraController.selected.eliminado}" required="true" requiredMessage="#{bundle.EditCarreraRequiredMessage_eliminado}"/>
+                        <p:outputLabel value="NOMBRE DE LA CARRERA" for="nombre" />
+                        <p:inputText id="nombre" value="#{carreraController.selected.nombre}" title="NOMBRE DE LA CARRERA" required="true" requiredMessage="SE REQUIERE EL NOMBRE DE LA CARRERA"/>
+                        <p:outputLabel value="ELIMINADO" for="eliminado" />
+                        <p:selectBooleanCheckbox id="eliminado" value="#{carreraController.selected.eliminado}" required="true" requiredMessage="ELIMINADO"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{carreraController.create}" value="#{bundle.Save}" update="display,:CarreraListForm:datalist,:growl" oncomplete="handleSubmit(args,'CarreraCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CarreraCreateDialog.hide()"/>

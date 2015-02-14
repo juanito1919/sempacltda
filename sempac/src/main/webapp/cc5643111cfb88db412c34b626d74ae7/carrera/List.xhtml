@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListCarreraTitle}"></h:outputText>
+            <h:outputText value="CARRERAS"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="CarreraListForm">
-                <p:panel header="#{bundle.ListCarreraTitle}">
+                <p:panel header="LISTA DE CARRERAS">
                     <p:dataTable id="datalist" value="#{carreraController.items}" var="item"
                                  selectionMode="single" selection="#{carreraController.selected}"
                                  paginator="true"
@@ -29,19 +29,19 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCarreraTitle_idCarrera}"/>
+                                <h:outputText value="ID"/>
                             </f:facet>
                             <h:outputText value="#{item.idCarrera}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCarreraTitle_nombre}"/>
+                                <h:outputText value="NOMBRE DE LA CARRERA"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCarreraTitle_eliminado}"/>
+                                <h:outputText value="ELIMINADO"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.eliminado}" disabled="true"/>
                         </p:column>

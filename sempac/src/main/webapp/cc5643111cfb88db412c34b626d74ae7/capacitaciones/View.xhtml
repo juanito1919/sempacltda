@@ -8,36 +8,39 @@
 
     <ui:composition>
 
-        <p:dialog id="CapacitacionesViewDlg" widgetVar="CapacitacionesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCapacitacionesTitle}">
+        <p:dialog id="CapacitacionesViewDlg" widgetVar="CapacitacionesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="VER">
             <h:form id="CapacitacionesViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{capacitacionesController.selected != null}">
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_idCapacitaciones}"/>
-                        <h:outputText value="#{capacitacionesController.selected.idCapacitaciones}" title="#{bundle.ViewCapacitacionesTitle_idCapacitaciones}"/>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_institucion}"/>
-                        <h:outputText value="#{capacitacionesController.selected.institucion}" title="#{bundle.ViewCapacitacionesTitle_institucion}"/>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_nombre}"/>
-                        <h:outputText value="#{capacitacionesController.selected.nombre}" title="#{bundle.ViewCapacitacionesTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_fechaInico}"/>
-                        <h:outputText value="#{capacitacionesController.selected.fechaInico}" title="#{bundle.ViewCapacitacionesTitle_fechaInico}">
+                        <h:outputText value="NOMBRE DE LA INSTITUCION" style="font-weight: bold"/>
+                        <h:outputText value="#{capacitacionesController.selected.institucion}" title="NOMBRE DE LA INSTITUCION"/>
+                        <h:outputText value="NOMBRE DE LA CAPACITACION" style="font-weight: bold"/>
+                        <h:outputText value="#{capacitacionesController.selected.nombre}" title="NOMBRE DE LA CAPACITACION"/>
+                        <h:outputText value="FECHA DE INICIO" style="font-weight: bold"/>
+                        <h:outputText value="#{capacitacionesController.selected.fechaInico}" title="FECHA DE INICIO">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_fechaFin}"/>
+                        <h:outputText value="FECHA DE CULMINACION"  style="font-weight: bold"/>
                         <h:outputText value="#{capacitacionesController.selected.fechaFin}" title="#{bundle.ViewCapacitacionesTitle_fechaFin}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_url}"/>
-                        <h:outputText value="#{capacitacionesController.selected.url}" title="#{bundle.ViewCapacitacionesTitle_url}"/>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_eliminado}"/>
+                        <h:outputText value="DIR: ARCHIVO" style="font-weight: bold"/>
+                        <h:outputText value="#{capacitacionesController.selected.url}" title="DIRECTORIO RAIZ DEL ARCHIVO"/>
+                        <h:outputText value="ELIMINADO" style="font-weight: bold"/>
                         <p:selectBooleanCheckbox value="#{capacitacionesController.selected.eliminado}" disabled="true"/>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_idAreaCapacitacion}"/>
-                        <h:outputText value="#{capacitacionesController.selected.idAreaCapacitacion}" title="#{bundle.ViewCapacitacionesTitle_idAreaCapacitacion}"/>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_idTipoCertificado}"/>
-                        <h:outputText value="#{capacitacionesController.selected.idTipoCertificado}" title="#{bundle.ViewCapacitacionesTitle_idTipoCertificado}"/>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_idTipoEvento}"/>
-                        <h:outputText value="#{capacitacionesController.selected.idTipoEvento}" title="#{bundle.ViewCapacitacionesTitle_idTipoEvento}"/>
-                        <h:outputText value="#{bundle.ViewCapacitacionesLabel_idUsuario}"/>
-                        <h:outputText value="#{capacitacionesController.selected.idUsuario}" title="#{bundle.ViewCapacitacionesTitle_idUsuario}"/>
+                        <h:outputText value="AREA DE CAPACITACION" style="font-weight: bold"/>
+                        <h:outputText value="#{capacitacionesController.selected.idAreaCapacitacion}" title="AREA DE CAPACITACION"/>
+                        <h:outputText value="TIPO DE CERTIFICADO" style="font-weight: bold"/>
+                        <h:outputText value="#{capacitacionesController.selected.idTipoCertificado}" title="TIPO DE CERTIFICADO"/>
+                        <h:outputText value="TIPO DE EVENTO" style="font-weight: bold"/>
+                        <h:outputText value="#{capacitacionesController.selected.idTipoEvento}" title="TIPO DE EVENTO"/>
+                        <h:outputText value="DATOS DE USUARIO" style="font-weight: bold"/>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Nombres" style="font-weight: bold"/>
+                            <h:outputText value="#{capacitacionesController.selected.idUsuario.nombres} #{capacitacionesController.selected.idUsuario.apellidos}" title="USUARIO"/>
+                            <h:outputText value="# Indetidad" style="font-weight: bold"/>
+                            <h:outputText value="#{capacitacionesController.selected.idUsuario.identidad}" title="USUARIO"/>
+                        </h:panelGrid>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="CapacitacionesViewDialog.hide()"/>
                 </h:panelGroup>

@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 
 @ManagedBean(name = "areaCapacitacionController")
 @SessionScoped
@@ -17,6 +18,12 @@ public class AreaCapacitacionController extends AbstractController<AreaCapacitac
 
     public AreaCapacitacionController() {
         super(AreaCapacitacion.class);
+    }
+
+    @Override
+    public void create(ActionEvent event) {
+        super.create(event); //To change body of generated methods, choose Tools | Templates.
+        this.setItems(this.ejbFacade.findAll());
     }
 
     @PostConstruct

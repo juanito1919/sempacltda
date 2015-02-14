@@ -8,18 +8,18 @@
 
     <ui:composition>
 
-        <p:dialog id="RegionViewDlg" widgetVar="RegionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRegionTitle}">
+        <p:dialog id="RegionViewDlg" widgetVar="RegionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="VER">
             <h:form id="RegionViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{regionController.selected != null}">
-                        <h:outputText value="#{bundle.ViewRegionLabel_idRegion}"/>
-                        <h:outputText value="#{regionController.selected.idRegion}" title="#{bundle.ViewRegionTitle_idRegion}"/>
-                        <h:outputText value="#{bundle.ViewRegionLabel_nombre}"/>
-                        <h:outputText value="#{regionController.selected.nombre}" title="#{bundle.ViewRegionTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewRegionLabel_eliminado}"/>
+                        <h:outputText value="ID"/>
+                        <h:outputText value="#{regionController.selected.idRegion}" title="ID"/>
+                        <h:outputText value="REGION/PROVINCIA"/>
+                        <h:outputText value="#{regionController.selected.nombre}" title="REGION/PROVINCIA"/>
+                        <h:outputText value="PAIS"/>
+                        <h:outputText value="#{regionController.selected.idPais.nombre}" title="PAIS"/>
+                        <h:outputText value="ELIMINADO"/>
                         <p:selectBooleanCheckbox value="#{regionController.selected.eliminado}" disabled="true"/>
-                        <h:outputText value="#{bundle.ViewRegionLabel_idPais}"/>
-                        <h:outputText value="#{regionController.selected.idPais}" title="#{bundle.ViewRegionTitle_idPais}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="RegionViewDialog.hide()"/>
                 </h:panelGroup>
