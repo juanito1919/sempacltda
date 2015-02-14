@@ -35,6 +35,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -145,9 +146,9 @@ public class UsuarioController implements Serializable {
 
         Usuario user = this.ejbFacadeSistemaUsuario.getUsuario(ActivacionUsuario.getCodigoUsuario(), 'P');
         if (user != null) {
-            estadoPago=true;
+            estadoPago = true;
         } else {
-            estadoPago=false;
+            estadoPago = false;
         }
 
     }
@@ -1182,21 +1183,25 @@ public class UsuarioController implements Serializable {
         Usuario user = ActivacionUsuario.getUsuario();
         System.out.println("codigo user.." + user.getIdUsuario());
         SistemaUsuario su = ejbFacadeSistemaUsuario.getUsuarioActivacion(user.getIdUsuario());
-        int mes = 0;
-        int anio = new Date().getYear();
-        if (new Date().getMonth() == 10) {
-            mes = 1;
-            anio += 1;
-        } else if (new Date().getMonth() == 11) {
-            mes = 2;
-            anio += 1;
-        } else if (new Date().getMonth() == 12) {
-            mes = 3;
-            anio += 1;
-        } else {
-            mes += 3;
-        }
-        Date caducidad = new Date(anio, mes, new Date().getDate());//fecha actual mas 3 meses
+//        int mes = 0;
+//        int anio = new Date().getYear();
+//        if (new Date().getMonth() == 10) {
+//            mes = 1;
+//            anio += 1;
+//        } else if (new Date().getMonth() == 11) {
+//            mes = 2;
+//            anio += 1;
+//        } else if (new Date().getMonth() == 12) {
+//            mes = 3;
+//            anio += 1;
+//        } else {
+//            mes += 3;
+//        }
+        Calendar today = Calendar.getInstance();
+        today = Calendar.getInstance();
+        today.add(Calendar.MONTH, 3);//fecha actual mas 3 meses
+        Date caducidad = today.getTime();
+        // Date caducidad = new Date(anio, mes, new Date().getDate());//fecha actual mas 3 meses
 
         Pagos aux = ejbFacadePagos.getPago(user.getIdUsuario());
         if (aux != null) {
