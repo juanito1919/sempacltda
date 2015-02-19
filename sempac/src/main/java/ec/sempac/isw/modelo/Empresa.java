@@ -93,6 +93,9 @@ public class Empresa implements Serializable {
     @NotNull
     @Column(nullable = false)
     private boolean eliminado;
+    @Size(max = 128)
+    @Column(length = 128)
+    private String url;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpresa")
     private List<PersonalRequerido> personalRequeridoList;
     @JoinColumn(name = "ID_CLASE_EMPRESA", referencedColumnName = "ID_CLASE_EMPRESA")
@@ -241,6 +244,20 @@ public class Empresa implements Serializable {
     @Override
     public String toString() {
         return "ec.sempac.isw.modelo.Empresa[ idEmpresa=" + idEmpresa + " ]";
+    }
+
+    /**
+     * @return the url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url the url to set
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
     
 }
