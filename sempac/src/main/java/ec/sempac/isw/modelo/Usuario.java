@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
@@ -67,15 +66,25 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByEliminado", query = "SELECT u FROM Usuario u WHERE u.eliminado = :eliminado"),
     //personalizadas
     @NamedQuery(name = "Usuario.findByUsernameEmail", query = "SELECT u FROM Usuario u WHERE (u.username = :username OR u.correoElectronico = :username) AND u.eliminado = :eliminado"),
-    @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE  u.correoElectronico = :correoElectronico AND u.eliminado = :eliminado")    
+    @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE  u.correoElectronico = :correoElectronico AND u.eliminado = :eliminado"),
+    @NamedQuery(name = "Usuario.findByPais", query = "SELECT u FROM Usuario u WHERE  u.idCiudad.idRegion.idPais.idPais=:pais and u.eliminado = :eliminado"),
+    @NamedQuery(name = "Usuario.findByPaisyRgion", query = "SELECT u FROM Usuario u WHERE  (u.idCiudad.idRegion.idPais.idPais =:pais AND u.idCiudad.idRegion.idRegion =:region) AND u.eliminado = :eliminado"),
+    @NamedQuery(name = "Usuario.findByPaisyRgionYciudad", query = "SELECT u FROM Usuario u WHERE  (u.idCiudad.idRegion.idPais.idPais =:pais AND u.idCiudad.idRegion.idRegion =:region AND u.idCiudad.idCiudad =:ciudad) AND u.eliminado = :eliminado"),
+    @NamedQuery(name = "Usuario.findByAvanzada", query = "SELECT u FROM Usuario u JOIN UserHabilidadesEspectativas he ON u.idUsuario = he.usuario.idUsuario WHERE u.idCiudad.idRegion.idPais.idPais like :pais AND u.idCiudad.idRegion.idRegion like :region AND u.idCiudad.idCiudad like :ciudad AND he.espectativas.idEspectativas IN :espectativa AND he.habilidades.idHabilidades IN :habilidad AND u.tipo=:tipo AND u.eliminado = :eliminado")
+
 })
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    public static final String findByUsernameEmail ="Usuario.findByUsernameEmail";
-    public static final String findByEliminado ="Usuario.findByEliminado";
-    public static final String findByUsername ="Usuario.findByUsername";
-    public static final String findByCorreoElectronico ="Usuario.findByCorreoElectronico";
-    public static final String findByEmail ="Usuario.findByEmail";
+    public static final String findByUsernameEmail = "Usuario.findByUsernameEmail";
+    public static final String findByEliminado = "Usuario.findByEliminado";
+    public static final String findByUsername = "Usuario.findByUsername";
+    public static final String findByCorreoElectronico = "Usuario.findByCorreoElectronico";
+    public static final String findByEmail = "Usuario.findByEmail";
+    public static final String findByPais = "Usuario.findByPais";
+    public static final String findByPaisYregion = "Usuario.findByPaisyRgion";
+    public static final String findByPaisyRgionYciudad = "Usuario.findByPaisyRgionYciudad";
+    public static final String findByAvanzada = "Usuario.findByAvanzada";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -103,7 +112,7 @@ public class Usuario implements Serializable {
     @NotNull
     @Size(min = 1, max = 64)
     @Column(name = "CORREO_ELECTRONICO", nullable = false, length = 64)
-    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",message = "Correo inválido")
+    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Correo inválido")
     private String correoElectronico;
     @Basic(optional = false)
     @NotNull
@@ -558,5 +567,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "ec.sempac.isw.modelo.Usuario[ idUsuario=" + idUsuario + " ]";
     }
-    
+
 }

@@ -43,5 +43,5 @@
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
-    
+    <display-name>ContactManagement</display-name>
 </web-app>

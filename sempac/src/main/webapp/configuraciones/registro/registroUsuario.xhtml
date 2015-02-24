@@ -20,7 +20,7 @@
                                styleClass="encabezadosDialog"/>
             </f:facet>
             <h:form id="UsuarioCreateForm">
-                <p:growl id="mensaje" showDetail="true" life="500"/> 
+                <p:growl id="mensaje" showDetail="true"/> 
                 <h:panelGroup id="display">
                     <h:panelGrid columns="4" 
                                  columnClasses="column1Class, column2Class,column3Class,column4Class" 
@@ -193,7 +193,7 @@
                         </p:selectOneMenu>
 
                     </h:panelGrid>
-                    <p:commandButton actionListener="#{usuarioController.registraCuenta}" value="#{bundleEtiquetasES.Registrar}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
+                    <p:commandButton actionListener="#{usuarioController.registraCuenta}" value="#{bundleEtiquetasES.Registrar}" update="display,mensaje" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
                     <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="UsuarioCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

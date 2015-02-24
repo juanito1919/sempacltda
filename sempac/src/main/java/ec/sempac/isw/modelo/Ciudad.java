@@ -43,7 +43,8 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class Ciudad implements Serializable {
     private static final long serialVersionUID = 1L;
-    public static final String findByRegionEliminado ="Ciudad.findByRegionEliminado";    
+    public static final String findByRegionEliminado ="Ciudad.findByRegionEliminado";  
+    public static final String findByEliminado ="Ciudad.findByEliminado";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

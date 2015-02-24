@@ -35,5 +35,13 @@ public class PersonalRequeridoFacade extends AbstractFacade<PersonalRequerido> {
         query.setParameter("eliminado", eliminado);
          return query.getResultList();  
     }
+     public List<PersonalRequerido> getItemsUsuariosInteresados(Integer idEmpresa,boolean activo,boolean eliminado) {
+        Query query = this.em.createNamedQuery(PersonalRequerido.findByEliminado);
+        query.setParameter("idEmpresa", idEmpresa);
+        query.setParameter("activo", activo);
+        query.setParameter("eliminado", eliminado);
+         return query.getResultList();  
+    }
+    
      
 }

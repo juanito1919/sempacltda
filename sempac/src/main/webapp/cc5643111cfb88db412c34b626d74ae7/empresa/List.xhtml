@@ -8,12 +8,10 @@
 
     <ui:composition template="/template.xhtml">
 
-
-        <ui:define name="title">
-            <h:outputText value="EMPRESAS"></h:outputText>
+          <ui:define name="title">
+            <h:outputText value="#{bundleEtiquetasES.Empresa}"></h:outputText>
         </ui:define>
-
-        <ui:define name="body">
+  <ui:define name="body">
             <h:form id="EmpresaListForm">
                     <p:growl id="mensaje" showDetail="true" life="1500"/> 
                 <p:panel header="Lista de Empresas">
@@ -95,7 +93,7 @@
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
-        </ui:define>
+      </ui:define>
     </ui:composition>
 
 </html>

@@ -12,8 +12,9 @@
     </div> 
 
     <p:panel header="Referencia Personal" 
-             style="border: none; width: 80%; margin: 5px auto;">
+             style="border: none; width: 75%; margin: auto;">
         <h:form id="ReferenciaPersonalCreateForm">
+            <p:growl id="mensajeReferenciaPersonal" showDetail="true" life="3000"/>
             <h:panelGroup id="display">
                 #{referenciaPersonalController.iniciaSelected()}
                 <h:panelGrid 
@@ -26,7 +27,8 @@
                                    for="nombres" />
                     <p:inputText id="nombres" 
                                  value="#{referenciaPersonalController.selected.nombres}" 
-                                 title="#{bundle.CreateReferenciaPersonalTitle_nombres}" 
+                                 title="#{bundle.CreateReferenciaPersonalTitle_nombres}"
+                                 styleClass="inputText"
                                  required="true" 
                                  requiredMessage="#{bundle.CreateReferenciaPersonalRequiredMessage_nombres}"/>
                     <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_apellidos}" 
@@ -34,7 +36,8 @@
                     <p:inputText id="apellidos" 
                                  value="#{referenciaPersonalController.selected.apellidos}" 
                                  title="#{bundle.CreateReferenciaPersonalTitle_apellidos}" 
-                                 required="true" 
+                                 required="true"
+                                 styleClass="inputText"
                                  requiredMessage="#{bundle.CreateReferenciaPersonalRequiredMessage_apellidos}"/>
                     <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_telefono}" 
                                    for="telefono" />
@@ -42,23 +45,27 @@
                                  value="#{ referenciaPersonalController.selected.telefono}" 
                                  title="#{bundle.CreateReferenciaPersonalTitle_telefono}" 
                                  required="true"
+                                 styleClass="inputText"
                                  requiredMessage="#{bundle.CreateReferenciaPersonalRequiredMessage_telefono}"/>
                     <p:outputLabel value="#{bundle.CreateReferenciaPersonalLabel_correo}" 
                                    for="correo" />
                     <p:inputText id="correo" 
                                  value="#{referenciaPersonalController.selected.correo}" 
+                                 styleClass="inputText"
                                  title="#{bundle.CreateReferenciaPersonalTitle_correo}" />
+                    
                     <p:commandButton id="botonSubir" value="Subir Documento" onclick="dialogSubida.show();
                             return false;"/>
                     <p:inputText id="url" 
                                  disabled="true"
+                                 styleClass="inputText"
                                  value="#{referenciaPersonalController.selected.url}" 
                                  title="#{bundle.CreateReferenciaPersonalTitle_url}" />
 
                 </h:panelGrid>
                 <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
                     <p:commandButton actionListener="#{referenciaPersonalController.guardaNuevo}" 
-                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" ajax="false" update="display,:ReferenciaPersonalListForm:datalist"/>
+                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" update="display,:ReferenciaPersonalListForm:datalist,mensajeReferenciaPersonal" ajax="false" />
 
                     <p:commandButton value="#{bundleEtiquetasES.Cancelar}" 
                                      onclick="ReferenciaPersonalCreateDialog.hide()" 

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="barraMenu">
+        <p:toolbar style="width: 80%; margin: auto; margin-top: 5px; margin-bottom: -5px;">                  
+            <p:toolbarGroup align="center">
+                <p:commandButton id="paguinaPrincipalBot" styleClass="butonBarra" value="Paguina Principal"
+                                 title="Paguina Principal"
+                                 actionListener="#{controlUrlControler.openPrincipalEmpresa()}"
+                                 ajax="false"
+                                 icon="ui-icon-home" 
+                                 /> 
+                <p:separator/>
+                <p:commandButton id="infoPersonalBot" styleClass="butonBarra" value="Busqueda Empleados"
+                                 title="Informacion Personal"
+                                 actionListener="#{controlUrlControler.openbuscarEmpleados()}"
+                                 ajax="false"
+                                 icon="ui-icon-person" 
+                                 />  
+
+
+                <p:commandButton id="prefeLaboralesBot" styleClass="butonBarra" value="Publicar Empleo"
+                                 title="Preferencias Laborales" 
+                                 actionListener="#{controlUrlControler.openPublicarEmpleo()}"
+                                 ajax="false"
+                                 icon="ui-icon-suitcase"
+                                 />
+
+            </p:toolbarGroup>
+        </p:toolbar>
+    </h:form>
+</ui:composition>

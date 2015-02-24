@@ -12,7 +12,7 @@
     </div> 
 
     <p:panel header="#{bundleEtiquetasES.ExperienciaLaboral}" 
-             style="border: none; width: 75%; margin: 5px auto;">
+             style="border: none; width: 80%; margin: 5px auto;">
         <h:form id="experienciaLaboralCreateForm">
             <h:panelGroup id="display">
                 #{experienciaLaboralController.iniciaSelected()}
@@ -21,53 +21,72 @@
                     border="0"
                     columnClasses="column1Class, column2Class,column3Class,column4Class" 
                     >
-                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Empresa}" 
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Empresa}:" 
                                    for="empresa" />
                     <p:inputText id="empresa" 
                                  onkeyup="value = value.toUpperCase()"
+                                 styleClass="inputText" 
                                  value="#{experienciaLaboralController.selected.empresa}" 
                                  title="#{bundleEtiquetasES.Empresa}" >
+                         <p:watermark for="empresa" value="Nombre Empresa o Negocio"/>
                     </p:inputText>
-                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Cargo}" 
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Cargo}:" 
                                    for="cargo" />
                     <p:inputText id="cargo" 
                                  onkeyup="value = value.toUpperCase()"
+                                 styleClass="inputText" 
                                  value="#{experienciaLaboralController.selected.cargo}" 
                                  title="#{bundleEtiquetasES.Cargo}" >
                     </p:inputText>
-                    
-                    <p:outputLabel value="#{bundleEtiquetasES.InicioActividades}" 
+
+                    <p:outputLabel value="#{bundleEtiquetasES.InicioActividades}:" 
                                    for="fechaInicio" />
-                        <p:calendar id="fechaInicio" 
-                                    pattern="dd/MM/yyyy" 
-                                    value="#{experienciaLaboralController.selected.fechaInicio}" 
-                                    title="#{bundleEtiquetasES.InicioActividades}" 
-                                    required="true" 
-                                    requiredMessage="#{bundleEtiquetasES.InicioActividades} #{bundleEtiquetasES.CampoRequerido}" 
-                                    showOn="button"/>
-                        <p:outputLabel value="#{bundleEtiquetasES.FinActividades}" 
+                    <p:calendar id="fechaInicio" 
+                                pattern="dd/MM/yyyy" 
+                                styleClass="inputText" 
+                                value="#{experienciaLaboralController.selected.fechaInicio}" 
+                                title="#{bundleEtiquetasES.InicioActividades}" 
+                                required="true" 
+                                requiredMessage="#{bundleEtiquetasES.InicioActividades} #{bundleEtiquetasES.CampoRequerido}" 
+                                showOn="button"/>
+                    <p:outputLabel value="#{bundleEtiquetasES.FinActividades}:" 
                                    for="fechaFin" />
-                        <p:calendar id="fechaFin" 
-                                    pattern="dd/MM/yyyy" 
-                                    value="#{experienciaLaboralController.selected.fechaFin}" 
-                                    title="#{bundleEtiquetasES.FinActividades}" 
-                                    showOn="button"/>    
-                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Actividades}" 
-                                   for="actividades" />
-                        <p:inputTextarea id="actividades" 
-                                 onkeyup="value = value.toUpperCase()"
-                                 value="#{experienciaLaboralController.selected.actividades}" 
-                                 title="#{bundleEtiquetasES.Actividades}" >
-                        </p:inputTextarea>
-                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Tiempo}" 
+                    <p:calendar id="fechaFin" 
+                                pattern="dd/MM/yyyy" 
+                                styleClass="inputText" 
+                                value="#{experienciaLaboralController.selected.fechaFin}" 
+                                title="#{bundleEtiquetasES.FinActividades}" 
+                                showOn="button"/>    
+
+                    <p:outputLabel value="#{bundleEtiquetasES.Tiempo}:" 
                                    for="tiempo" />
                     <p:inputText id="tiempo" 
+                                 styleClass="inputText" 
                                  onkeyup="value = value.toUpperCase()"
                                  value="#{experienciaLaboralController.selected.tiempo}" 
                                  title="#{bundleEtiquetasES.Tiempo}" >
                     </p:inputText>
+                    <p:commandButton id="botonSubir" value="Subir Documento" onclick="dialogSubida.show();
+                            return false;"/>
+                    <p:inputText id="url" 
+                                 disabled="true"
+                                 styleClass="inputText" 
+                                 value="#{referenciaPersonalController.selected.url}" 
+                                 title="#{bundle.CreateReferenciaPersonalTitle_url}" />
 
+                    
 
+                </h:panelGrid>
+                <h:panelGrid columns="2" border="0" columnClasses="column1Class, column2Class">
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Actividades}:" 
+                                   for="actividades" />
+                    <p:inputTextarea id="actividades" 
+                                     onkeyup="value = value.toUpperCase()"
+                                     cols="127"
+                                     value="#{experienciaLaboralController.selected.actividades}" 
+                                     title="#{bundleEtiquetasES.Actividades}" >
+                        <p:watermark for="actividades" value="Ingresa las Actividades que haya realizado en tal Trabajo"/>
+                    </p:inputTextarea>
                 </h:panelGrid>
                 <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
                     <p:commandButton actionListener="#{experienciaLaboralController.guardaNuevo(event)}" 

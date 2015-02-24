@@ -65,7 +65,7 @@
                     styleClass="ui-widget-content ui-helper-clearfix:after ui-widget-header ui-shadow .ui-dialog .ui-dialog-content"
                     modal="true">
             <h:form id="formInicioSessionEmpleados"> 
-                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <p:growl id="mensajeEmpleadologin" showDetail="true" life="3000" />
                 <h:panelGrid columns="1" 
                              cellpadding="10">
                     <p:inputText id="username" 
@@ -86,10 +86,9 @@
                     <h:panelGrid columns="2" >
                         <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidada" style="color: #0066ff; font-size:0.8em; " value="¿Olvidastes tu Contrasena?"/>
                         <p:commandButton value="Entrar" 
-                                      
                                          action="#{usuarioLoginController.validaUsuario()}"
                                          style="margin-left: 35px; width: 130px;"
-                                         update="password,username"
+                                         update="password,username,mensajeEmpleadologin"
                                          styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"/>
                     </h:panelGrid>
 

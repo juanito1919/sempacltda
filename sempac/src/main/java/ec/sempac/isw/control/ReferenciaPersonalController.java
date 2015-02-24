@@ -77,10 +77,13 @@ public class ReferenciaPersonalController extends AbstractController<ReferenciaP
     public void subirArchivos(FileUploadEvent event) {
         UploadedFile file = event.getFile();
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        String filePath = ec.getRealPath(String.format("/Documentos/"+ActivacionUsuario.getUsuario().getUsername()+"/%s", file.getFileName()));
-        //TODO
-        //AGRAGAR LA CARPETA DEL USUARIO
-        String rutaRelativa = "../../Documentos/" + File.separator + ActivacionUsuario.getUsuario().getUsername() + File.separator + file.getFileName();
+        String filePath = ec.getRealPath(String.format(File.separator + "Documentos" + File.separator + ActivacionUsuario.getUsuario().getUsername() + "/%s", file.getFileName()));
+        
+        File file2 = new File(ec.getRealPath(File.separator + "Documentos" + File.separator + ActivacionUsuario.getUsuario().getUsername()));
+        if (!file2.exists()) {
+            file2.mkdirs();
+        }
+        String rutaRelativa = "../../Documentos" + File.separator + ActivacionUsuario.getUsuario().getUsername() + File.separator + file.getFileName();
         try {
             this.getSelected().setUrl(rutaRelativa);
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);

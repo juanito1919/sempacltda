@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Habilidades;
@@ -20,6 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class UserHabilidadesEspectativasFacade extends AbstractFacade<UserHabilidadesEspectativas> {
+
     @PersistenceContext(unitName = "ec.sempac_sempac_war_1.0PU")
     private EntityManager em;
 
@@ -31,7 +31,25 @@ public class UserHabilidadesEspectativasFacade extends AbstractFacade<UserHabili
     public UserHabilidadesEspectativasFacade() {
         super(UserHabilidadesEspectativas.class);
     }
-    
+
+    public List<UserHabilidadesEspectativas> getSoloHabilidades(Long idUsuario) {
+        Query query = this.em.createNamedQuery(UserHabilidadesEspectativas.findByIdUsuario);
+        query.setParameter("idUsuario", idUsuario);
+        return query.getResultList();
+    }
+
+    public List<UserHabilidadesEspectativas> getSoloEspectativas(Long idUsuario) {
+        Query query = this.em.createNamedQuery(UserHabilidadesEspectativas.findByIdUsuario);
+        query.setParameter("idUsuario", idUsuario);
+        return query.getResultList();
+    }
+
+    public List<UserHabilidadesEspectativas> getSoloEspectativasYHabilidades(Long idUsuario) {
+        Query query = this.em.createNamedQuery(UserHabilidadesEspectativas.findByIdUsuario);
+        query.setParameter("idUsuario", idUsuario);
+        return query.getResultList();
+    }
+
     public List<UserHabilidadesEspectativas> getItemsHabilidadesUsuario(Long idUsuario) {
         Query query = this.em.createNamedQuery(UserHabilidadesEspectativas.findByIdUsuario);
         query.setParameter("idUsuario", idUsuario);
