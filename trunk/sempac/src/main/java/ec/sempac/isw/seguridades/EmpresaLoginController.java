@@ -105,7 +105,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
             // Validando credenciales del Usuario 
             Empresa listEmpresa = this.ejbFacade.getEmpresa(username);
             if (listEmpresa == null) {
-                
+
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("UsuarioNoExiste"));
                 return;
             }
@@ -118,7 +118,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
             empresaSistema = ejbFacadeEmpresaSistema.find(listEmpresa.getIdEmpresa());
 
             if (empresaSistema == null) {
-                
+
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/propiedadesMensajesEC").getString("UsuarioNoExiste"));
 
                 return;
@@ -132,10 +132,9 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
             if (this.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
 
             //if (empresaSistema.getEmpresa().getContrasena().equals(this.contrasena)) {
-                
                 //if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {
                 if (estadoUsuario.equals("V")) {
-                    System.out.println("hollaaa");
+
                     // Iniciando la variable de session con los datos del usuario mediante la entidad.                      
                     ActivacionUsuario.setEmpresa(this.getUsuario());
                     // ActivacionUsuario.setCodigoIfip(this.getUsuario().getCodigoIfip().getCodigo());
@@ -157,7 +156,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
 //                    //Colocando el codigo del acceso al sistema
 //                    ActivacionUsuario.setCodigoAccesoSistema(this.getSistemaAccesoEmpresa().getIdSistemaAccesoEmpresa());
 //                    //Accediendo al Menu
-                    String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principalEmpresa");
+                    String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principal");
                     Sesion.redireccionaPagina(url);
                     // Si la contraseña ha caducado
                 } else if (estadoUsuario.equals("V") && Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {
@@ -179,7 +178,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
                             : ResourceBundle.getBundle("/propiedadesMensajesEC").getString("ContrasenaCaducada"));
                     //System.out.println("Muestra Cambio Contraseña "+this.mensajeDialogoCambioContrasena);
                     this.muestraDialogoCambioContrasena();
-                } else{
+                } else {
                     MuestraMensaje.addAdvertencia("Usuario no habilitado ");
                 }
             } else if (estadoUsuario.equals("B")) {

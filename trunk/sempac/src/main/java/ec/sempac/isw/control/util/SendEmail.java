@@ -21,8 +21,8 @@ import javax.mail.internet.MimeMessage;
 public class SendEmail {
 
     public String enviarMail(String to, String from, String subject, String msj) {
-        final String username = "juan.japal31@gmail.com";
-        final String password = "juanitojl1988";
+        final String username = "semptac.ecu@gmail.com";
+        final String password = "soloyolose";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -38,7 +38,7 @@ public class SendEmail {
                 });
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("juan.japal@hotmail.com"));
+            message.setFrom(new InternetAddress("semptac.ecu@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
             message.setSubject(subject);

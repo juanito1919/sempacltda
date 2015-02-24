@@ -105,14 +105,14 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
         System.err.println("prepara login");
     }
     public void validaUsuario() {
-        System.out.println("entro carajo");
+       
         try {
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
             Usuario listUsuario = this.ejbFacade.getUsuario(username);
             if (listUsuario == null) {
 
-                MuestraMensaje.addAdvertencia("ERROR USUARIO");
+                MuestraMensaje.addAdvertencia("Usuario No Encontrado");
                 return;
             }
             SistemaUsuario usuarioSistema;
@@ -134,12 +134,12 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
 
             // Colocando el tiempo de inactividad que tiene el sistema
             Sesion.tiempoInactividad(10000);
-            System.out.println("Contrasena :"+this.contrasena);
+            //System.out.println("Contrasena :"+this.contrasena);
          
-            System.out.println("ContrasenaDesemcritada :"+Sesion.MD5(this.contrasena));
+            //System.out.println("ContrasenaDesemcritada :"+Sesion.MD5(this.contrasena));
             if (this.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
             //if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
-
+                 
                 // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
                 if (estadoUsuario.equals("V")||estadoUsuario.equals("P")) {
                     
@@ -166,6 +166,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
                     //Accediendo al Menu
                     String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principal");
                     Sesion.redireccionaPagina(url);
+                    
                     // Si la contraseña ha caducado
                 } else if (estadoUsuario.equals("V") && Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
                     // Actualizando el Estado de la Contraseña a Caducada

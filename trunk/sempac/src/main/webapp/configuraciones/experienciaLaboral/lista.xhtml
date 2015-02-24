@@ -17,37 +17,63 @@
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,20,30"
                          >
-                
-                <p:column >
+                <p:ajax event="rowSelect"   update="editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="editButton deleteButton"/>
+                <p:column width="20%">
                     <f:facet name="header">
                         <h:outputText value="#{bundleEtiquetasES.Empresa}"/>
                     </f:facet>
                     <h:outputText value="#{item.empresa}"/>
                 </p:column>
-                
-                <p:column >
+
+                <p:column width="10%">
                     <f:facet name="header">
                         <h:outputText value="#{bundleEtiquetasES.Cargo}"/>
                     </f:facet>
                     <h:outputText value="#{item.cargo}"/>
                 </p:column>
-                
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{bundleEtiquetasES.InicioActividades}"/>
                     </f:facet>
-                    <p:calendar  pattern="dd/MM/yyyy" 
-                                 value="#{item.fechaInicio}" 
-                                 disabled="true"/>
+                    <h:outputText value="#{item.fechaInicio}" />
                 </p:column>
-                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleEtiquetasES.FinActividades}"/>
+                    </f:facet>
+                    <h:outputText  value="#{item.fechaInicio}" />
+                </p:column>
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{bundleEtiquetasES.Tiempo}"/>
                     </f:facet>
                     <h:outputText value="#{item.tiempo}"/>
                 </p:column>
-                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="ARCHIVO"/>
+                    </f:facet>
+                    <h:outputLink id="link1"  value="#{item.url}" target="_blank">Descargar</h:outputLink>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="ACCIONES"/>
+                    </f:facet>
+                    <p:commandButton id="editButton"   
+                                     icon="ui-icon-pencil" 
+                                     value="#{bundle.Edit}"
+                                     update=":experienciaLaboralCreateForm">
+                        <f:setPropertyActionListener target="#{experienciaLaboralController.seleccion}"  value="#{item}"/>
+                    </p:commandButton>
+                    <p:commandButton id="deleteButton"
+                                     value="#{bundle.Delete}"
+                                     actionListener="#{referenciaPersonalController.destroy()}"
+
+                                     icon="ui-icon-close">
+                    </p:commandButton>
+                </p:column>
             </p:dataTable>
         </p:panel>
     </h:form>

@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/template.xhtml">
+         <h:form id="EmpresaListForm">
+                <p:panel header="#{bundleEtiquetasES.Lista} #{bundleEtiquetasES.Empresas}">
+                    <p:dataTable id="datalist" value="#{empresaController.itemsEmpresa}" var="item"
+                                 selectionMode="single" selection="#{empresaController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idEmpresa}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleEtiquetasES.Ruc}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ruc}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleEtiquetasES.Nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleEtiquetasES.Ciudad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idCiudad.nombre}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleEtiquetasES.Direccion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.direccion}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleEtiquetasES.TipoEmpresa}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idClaseEmpresa.nombre}"/>
+                        </p:column>
+                        
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleEtiquetasES.Crear}" actionListener="#{empresaController.preparaCrear}" update=":EmpresaCreateForm" oncomplete="PF('EmpresaCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleEtiquetasES.Ver}"  update=":EmpresaViewForm" oncomplete="PF('EmpresaViewDialog').show()" disabled="#{empty empresaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleEtiquetasES.Editar}" actionListener="#{empresaController.preparaEditar}" update=":EmpresaEditForm" oncomplete="PF('EmpresaEditDialog').show()" disabled="#{empty empresaController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleEtiquetasES.Eliminar}" actionListener="#{empresaController.eliminar}" update=":growl,datalist" disabled="#{empty empresaController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+    </ui:composition>
+</html>
+

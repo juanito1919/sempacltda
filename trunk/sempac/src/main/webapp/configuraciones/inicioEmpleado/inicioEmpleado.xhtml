@@ -24,11 +24,12 @@
         <div style="width: 20%; float:left;">
             <h:form id="butonRealizarPago">
                 <p:panel id="pago" header="Estado de Cuenta" style="border: none; width: 100%;" >
+                    #{usuarioController.verificarEstadoPago()}
                     <span style="font-size: 1.0em;">Estado de la Cuenta:</span>
                     <c:if test="#{usuarioController.estadoPago == true}">
                         <span style="font-size: 1.0em; font-weight: bold; color: #0066ff">Pagado</span> 
                     </c:if>
-                    <c:if test="#{usuarioController.verificarEstadoPago == false}">
+                    <c:if test="#{usuarioController.estadoPago == false}">
                         <span style="font-size: 1.0em; font-weight: bold; color:#cc0000; ">No Pagado</span> 
                     </c:if>
                     <h:graphicImage  id="fotoEstado" value="" height="150" width="150" />
@@ -67,7 +68,7 @@
             <p:panel id="panelCV" header="Actualizar CV" style="border: none; width: 98%; margin: 0px auto; " >
 
                 <h:link outcome="/configuraciones/usuario/inicio"  styleClass="link">
-                    <p:graphicImage url="../../resources/images/hojadevida.gif" width="150" height="150" style="margin-left: 50px;" />
+                    <p:graphicImage url="../../resources/images/hojadevida.gif" width="100" height="100" style="margin-left: 50px;" />
                 </h:link>
 
             </p:panel>
@@ -79,6 +80,8 @@
                             <p:separator style="border-color:#ececec; border-width: 0.1em; box-shadow: none;"/> 
                             <p:commandLink styleClass="linkBuscaTrabajo" 
                                            update="carDetail" 
+                                           action="#{personalRequeridoController.empleo}"
+                                           actionListener="#{empleoRequeridoController.prepareCreate}"
                                            oncomplete="PF('display').show()" >
                                 <f:setPropertyActionListener value="#{item}" target="#{personalRequeridoController.selected}" />
                                 <div style="float: left;">
@@ -95,6 +98,7 @@
 
                     </p:scrollPanel>
                 </p:panel>
+                
                 <p:dialog id="dialogAplicarEmpleo" header="Aplicar Trabajo" modal="true" widgetVar="display" style="width: 300px;">
 
                     <h:panelGrid id="carDetail" columns="2" border="0" style="border: none;">
@@ -115,7 +119,7 @@
 
                     </h:panelGrid>
                     <div>
-                        <p:commandButton id="butonAplicarTrabajo" value="APLICAR"/>
+                        <p:commandButton id="butonAplicarTrabajo" actionListener="#{empleoRequeridoController.guardaNuevo}" ajax="false"  value="APLICAR"/>
                         <p:commandButton id="cancelar" value="CANCELAR"/>
                     </div>
                 </p:dialog>
@@ -125,7 +129,7 @@
 
         </div>
         <p:dialog id="dialogRealizarPago" header="Realizar Pago" modal="true" widgetVar="displayPago" style="width: 300px;">
-            <form id="formPago">
+            <h:form id="formPago">
                 <h:panelGrid id="detalles" columns="2" border="0" style="border: none;">
                     <p:graphicImage value="../../resources/images/Financial_Transactions-128.png"/>
 
@@ -141,7 +145,7 @@
                                  actionListener="#{usuarioController.pagosDeposito}"
                                  value="Pagar"  /> 
                 <p:commandButton id="cancelar" value="CANCELAR"/>
-            </form>
+            </h:form>
         </p:dialog>
 
     </ui:define>

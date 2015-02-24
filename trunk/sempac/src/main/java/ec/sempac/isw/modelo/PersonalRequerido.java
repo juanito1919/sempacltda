@@ -44,10 +44,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PersonalRequerido.findByFechaModificacion", query = "SELECT p FROM PersonalRequerido p WHERE p.fechaModificacion = :fechaModificacion"),
     @NamedQuery(name = "PersonalRequerido.findByCoorLongitud", query = "SELECT p FROM PersonalRequerido p WHERE p.coorLongitud = :coorLongitud"),
     @NamedQuery(name = "PersonalRequerido.findByCoorLatitud", query = "SELECT p FROM PersonalRequerido p WHERE p.coorLatitud = :coorLatitud"),
-    @NamedQuery(name = "PersonalRequerido.findByEliminado", query = "SELECT p FROM PersonalRequerido p WHERE p.eliminado = :eliminado")})
+    @NamedQuery(name = "PersonalRequerido.findByEliminado", query = "SELECT p FROM PersonalRequerido p WHERE p.eliminado = :eliminado"),
+    @NamedQuery(name = "PersonalRequerido.findByEmpleoRequerido", query = "SELECT e.idPersonalRequerido FROM EmpleoRequerido e WHERE e.idPersonalRequerido.idEmpresa = :idEmpresa AND e.activo = :activo AND e.eliminado = :eliminado")
+})
+    
 public class PersonalRequerido implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByEliminado ="PersonalRequerido.findByEliminado";
+    public static final String findByEmpleoRequerido ="PersonalRequerido.findByEmpleoRequerido";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

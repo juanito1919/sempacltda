@@ -5,11 +5,13 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="resources/plantilla/VentanaPrincipalPlantilla.xhtml">
+                template="resources/plantilla/VentanaPrincipalPlantilla.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:f="http://java.sun.com/jsf/core">
     <ui:define  name="formulario">
         <h:outputStylesheet library="css" name="styleSlider.css"/>
         <div style="float: left; border-radius: 1px; width: 20%;">
-            <p:panel header="Informacion" style="width: 210px; border: none; margin-bottom: 5px;">
+            <p:panel header="Informacion" style="width: 100%; border: none; margin-bottom: 5px;">
                 <img src="http://1.bp.blogspot.com/-mcq-h5B3Cjw/VHTnA4UPf4I/AAAAAAAAdvQ/P65oboyee8M/s1600/anunciate.gif" alt="" width="190" height="150"/>
             </p:panel> 
             <p:panel header="Danos Me gusta.." style=" border:none; width: 210px; margin-bottom: 5px;">
@@ -54,8 +56,33 @@
             <ui:include src="resources/plantilla/comentarios.xhtml"/>
         </div>
         <div style="float:left; border-radius: 1px; width: 20%;">
-            <p:panel header="Informacion" style="width: 215px; border: none;">
-                <a href="configuraciones/registro/registroprueba.xhtml">registro</a>
+            <p:panel header="Informacion" style="width: 100%; border: none;">
+                <h:form>
+                    <p:scrollPanel  style="border: none; width: 104%; height: 200px;"  mode="native">
+
+                        <c:forEach items="#{personalRequeridoController.items}" var="item">
+                            <p:separator style="border-color:#ececec; border-width: 0.1em; box-shadow: none;"/> 
+                            <p:commandLink styleClass="linkBuscaTrabajo" 
+                                           action="#{controlUrlControler.openRegistroUsuario()}"
+                                           >
+                                <f:setPropertyActionListener value="#{item}" target="#{personalRequeridoController.selected}" />
+                                <div style="float: left;">
+                                    <img src="http://www.frikipedia.es/images/7/7a/1_Empresa.png" alt="" width="50px" height="50px"/>
+                                </div>
+                                <div style="float: left;">
+                                    <div class="negro titulo">#{item.idEmpresa.nombre}</div>
+                                    <div>Cargo: #{item.idHabilidades.nombre}</div>
+                                    <div>Ciudad: #{item.idCiudad.nombre}</div>
+                                </div>
+                                <div style="clear:both;"/>
+                            </p:commandLink>
+                        </c:forEach>
+
+                    </p:scrollPanel>
+                </h:form>
+            </p:panel>
+            <p:panel header="Nuestra Comunidad" style="width: 100%; border: none;">
+                
             </p:panel>
         </div>
     </ui:define>

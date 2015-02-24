@@ -2,46 +2,83 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                template="../../resources/plantilla/ventanaInicioEmpleadoPlantilla.xhtml"
+                template="../../resources/plantilla/ventanaInicioEmpresaPlantilla.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define  name="formulario">
         <div class="panelTitulo">
-            Registro de Empleos  
+            REGISTRO DE EMPLEOS 
         </div>
-        <div style="width: 70%;">
+
+        <div style="float: left; width: 20%;">
+            <p:panel header="Anuncios" style="border: none; margin: 0px auto;">
+
+            </p:panel>
+        </div>
+
+        <div style="float: left; width: 80%;">
             <p:panel header="Registro Empleos" style="border: none; margin: 0px auto;">
-                <h:form>
+                <div style=" margin-bottom: 10px; font-size: 1.1em; color: #0066ff;">Aqui pudes publicar los diferentes empleos que requiere tu empresa.</div> 
+                <h:form id="formPublicarTrabajo">
+                    #{personalRequeridoController.iniciarBusqueda()}
                     <h:panelGroup id="display" style="border: none; margin: 0px auto;">
-                        <h:panelGrid columns="4" 
+                        <h:panelGrid columns="2" 
                                      border="0" 
                                      cellspacing="4" 
                                      cellpadding="0" 
-                                     columnClasses="column1Class, column2Class,column3Class, column4Class" >
-                            <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Habilidad}" 
+                                     columnClasses="column1Class, column2Class">
+                            <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Habilidad}:" 
                                            for="habilidad" />
-                            <p:selectOneMenu id="espectativa" 
-                                             value="#{usuarioController.habilidadBusqueda}"
+                            <p:selectOneMenu id="habilidad" required="true"
+                                             value="#{personalRequeridoController.habilidadBusqueda}"
                                              >
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                                <f:selectItems value="#{usuarioController.itemsHabilidades}"
+                                <f:selectItems value="#{personalRequeridoController.itemsHabilidades}"
                                                var="HabilidadItem"
                                                itemValue="#{HabilidadItem}"
                                                itemLabel="#{HabilidadItem.nombre}"
                                                />
                                 <f:converter binding="#{habilidadesConverter}"/>
                             </p:selectOneMenu>
-                            <p:outputLabel value="Fecha:" for="fecha" />
-                            <p:inputText id="fecha" value="#{personalRequeridoController.fechaActual}"/>
-                            <p:outputLabel value="Descripcion" for="desc"/>
-                            <h:inputTextarea id="desc" cols="40" rows="5" value="#{personalRequeridoController.selected.descripcion}" />
+                            <p:outputLabel for="ciudad" value="#{bundleEtiquetasES.Ciudad}"  />
+                            <p:selectOneMenu id="ciudad" 
+                                             value="#{personalRequeridoController.ciudad}"
+
+                                             required="true"
+                                             effect="fade" 
+                                             var="t" 
+                                             style="width:200px" 
+                                             filter="true" 
+                                             filterMatchMode="contains">
+                                <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+                                <f:selectItems value="#{personalRequeridoController.itemCiudades}" 
+                                               var="ciudadItem"
+                                               itemValue="#{ciudadItem}" 
+                                               itemLabel="#{ciudadItem.nombre}"/>
+                                <p:column>
+                                    <h:outputText value="#{t.nombre}" />
+                                </p:column>
+                                <f:converter binding="#{ciudadConverter}"/>
+                            </p:selectOneMenu>  
+                            <p:outputLabel value="FECHA:" for="fecha" />
+                            <p:inputText id="fecha" rendered="true" value="#{personalRequeridoController.fechaActual}"/>
+                            <p:outputLabel value="DESCRIPCION" for="desc"/>
+                            <h:inputTextarea id="desc" required="true" cols="60" rows="5" value="#{personalRequeridoController.selected.descripcion}" />
                         </h:panelGrid>
-                        <p:commandButton  value="#{bundleEtiquetasES.Registrar}" actionListener="#{referenciaPersonalController.saveNew}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
-                        <p:commandButton value="#{bundleEtiquetasES.Cancelar}" onclick="UsuarioCreateDialog.hide()"/>
+                        <div style=" margin-top:20px; margin-bottom: 20px; margin-left:30%; ">
+                            <p:commandButton  value="PUBLICAR" actionListener="#{personalRequeridoController.guardarNuevo}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
+                            <p:commandButton value="#{bundleEtiquetasES.Cancelar}" action="#{controlUrlControler.openPrincipalEmpresa()}"/>
+                        </div>
+
                     </h:panelGroup>
                 </h:form>
+                <h:form>
+                    <p:commandButton value="REGRESAR" ajax="false" action="#{controlUrlControler.openPrincipalEmpresa()}"/>
+
+                </h:form>
+
             </p:panel>
         </div>
     </ui:define>

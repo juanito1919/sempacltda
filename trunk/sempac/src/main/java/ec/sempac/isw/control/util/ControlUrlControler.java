@@ -18,7 +18,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class ControlUrlControler implements Serializable{
+public class ControlUrlControler implements Serializable {
 
     /**
      * Creates a new instance of ControlUrlControler
@@ -54,12 +54,34 @@ public class ControlUrlControler implements Serializable{
     public void openPaginaLogrosPersonales() throws IOException {
         Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("logrosPersonales"));
     }
-    
+
     public void openRegistroUsuario() throws IOException {
         Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("registro"));
     }
-    
+
     public void openLoginUsuario() throws IOException {
         Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("loginUsuario"));
+    }
+
+    public void openPrincipalEmpresa() throws IOException {
+        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("principalEmpresa"));
+    }
+
+    public void openPublicarEmpleo() throws IOException {
+        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("publicarEmpleo"));
+    }
+
+    public void openbuscarEmpleados() throws IOException {
+        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("buscarEmpleados"));
+    }
+
+    public void openbusquedaAvanzada() throws IOException {
+        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("buscarAvanzada"));
+    }
+
+    //habilidadesEspectativas
+
+    public void openHabilidadesEspectativas() throws IOException {
+        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("habilidadesEspectativas"));
     }
 }

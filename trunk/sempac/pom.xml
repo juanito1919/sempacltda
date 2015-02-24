@@ -21,6 +21,12 @@
             <version>SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>primefaces-extensions</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>unknown.binary</groupId>
             <artifactId>org.eclipse.persistence.asm</artifactId>
             <version>SNAPSHOT</version>

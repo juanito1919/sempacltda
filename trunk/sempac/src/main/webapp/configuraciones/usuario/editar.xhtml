@@ -13,8 +13,6 @@
         <h:form id="UsuarioEditForm">
             <div style="width: 70%; float: left;">
                 <p:panel header="Información personal" style="border: none;" >
-
-
                     <h:panelGroup id="display">
                         <h:panelGrid columns="4" 
                                      border="0" 
@@ -22,28 +20,63 @@
                                      cellpadding="0" 
                                      columnClasses="column1Class, column2Class,column3Class,column4Class" >
 
-                            <p:inputText id="idUsuario" value="#{usuarioController.selected.idUsuario}" title="#{bundle.EditUsuarioTitle_idUsuario}" required="true" rendered="false" />
-                            <p:outputLabel value="#{bundle.EditUsuarioLabel_tipoDocumento}" for="numDocumento" />
-                            <p:inputText id="numDocumento" styleClass="inputText" value="#{usuarioController.selected.identidad}" title="#{bundle.EditUsuarioLabel_tipoDocumento}" requiredMessage="#{bundleEtiquetasES.Identidad} #{bundleEtiquetasES.CampoRequerido}"  disabled="false"/>
+                            <p:inputText id="idUsuario" 
+                                         value="#{usuarioController.selected.idUsuario}" 
+                                         title="#{bundle.EditUsuarioTitle_idUsuario}" 
+                                         required="true" rendered="false" />
+                            <p:outputLabel value="#{bundle.EditUsuarioLabel_tipoDocumento}" 
+                                           for="numDocumento" />
+                            <p:inputText id="numDocumento" 
+                                         styleClass="inputText" 
+                                         value="#{usuarioController.selected.identidad}" 
+                                         title="#{bundle.EditUsuarioLabel_tipoDocumento}" 
+                                         requiredMessage="#{bundleEtiquetasES.Identidad} #{bundleEtiquetasES.CampoRequerido}"  
+                                         disabled="false"/>
                             <p:outputLabel/>
                             <p:outputLabel/>
-                            <p:outputLabel value="#{bundle.EditUsuarioLabel_nombres}" for="nombres" />
-                            <p:inputText id="nombres" styleClass="inputText" value="#{usuarioController.selected.nombres}" title="#{bundle.EditUsuarioTitle_nombres}" required="true" >
+                            <p:outputLabel value="#{bundle.EditUsuarioLabel_nombres}" 
+                                           for="nombres" />
+                            <p:inputText id="nombres" 
+                                         styleClass="inputText" 
+                                         value="#{usuarioController.selected.nombres}" 
+                                         title="#{bundle.EditUsuarioTitle_nombres}"
+                                         required="true" >
 
                             </p:inputText>
-                            <p:outputLabel value="#{bundle.EditUsuarioLabel_apellidos}" for="apellidos" />
-                            <p:inputText id="apellidos" styleClass="inputText" value="#{usuarioController.selected.apellidos}" title="#{bundle.EditUsuarioTitle_apellidos}"/>
-                            <p:outputLabel value="#{bundle.EditUsuarioLabel_fechaNacimiento}" for="fechaNacimiento" />
-                            <p:calendar id="fechaNacimiento"  pattern="MM/dd/yyyy" value="#{usuarioController.selected.fechaNacimiento}" title="#{bundle.EditUsuarioTitle_fechaNacimiento}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_fechaNacimiento}"/>
-                            <p:outputLabel value="#{bundle.EditUsuarioLabel_edad}" for="edad" />
-                            <p:inputText id="edad" styleClass="inputText" value="#{usuarioController.selected.edad}" title="#{bundle.EditUsuarioTitle_edad}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_edad}" disabled="true"/>
-                            <p:outputLabel value="#{bundle.EditUsuarioLabel_genero}" for="genero" />
-                            <p:selectOneMenu id="genero" value="#{usuarioController.selected.genero}" required="true" >
+                            <p:outputLabel value="#{bundle.EditUsuarioLabel_apellidos}" 
+                                           for="apellidos" />
+                            <p:inputText id="apellidos" 
+                                         styleClass="inputText" 
+                                         value="#{usuarioController.selected.apellidos}"
+                                         title="#{bundle.EditUsuarioTitle_apellidos}"/>
+                            <p:outputLabel value="#{bundle.EditUsuarioLabel_fechaNacimiento}"
+                                           for="fechaNacimiento" />
+                            <p:calendar id="fechaNacimiento" 
+                                        pattern="MM/dd/yyyy"
+                                        value="#{usuarioController.selected.fechaNacimiento}"
+                                        title="#{bundle.EditUsuarioTitle_fechaNacimiento}"
+                                        required="true"
+                                        requiredMessage="#{bundle.EditUsuarioRequiredMessage_fechaNacimiento}"/>
+                            <p:outputLabel value="#{bundle.EditUsuarioLabel_edad}"
+                                           for="edad" />
+                            <p:inputText id="edad" 
+                                         styleClass="inputText" 
+                                         value="#{usuarioController.selected.edad}"
+                                         title="#{bundle.EditUsuarioTitle_edad}"
+                                         required="true" 
+                                         requiredMessage="#{bundle.EditUsuarioRequiredMessage_edad}"
+                                         disabled="true"/>
+                            <p:outputLabel value="#{bundle.EditUsuarioLabel_genero}"
+                                           for="genero" />
+                            <p:selectOneMenu id="genero"
+                                             value="#{usuarioController.selected.genero}" 
+                                             required="true" >
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Masculino}" itemValue="M" />
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Femenino}" itemValue="F" />
                             </p:selectOneMenu>
-                            <p:outputLabel value="#{bundleEtiquetasES.EstadoCivil}"   for="estadoCivil" />
+                            <p:outputLabel value="#{bundleEtiquetasES.EstadoCivil}"
+                                           for="estadoCivil" />
                             <p:selectOneMenu id="estadoCivil" 
                                              value="#{usuarioController.selected.estadoCivil}"
                                              required="true" 
@@ -72,15 +105,20 @@
 
                 </p:panel>
             </div>
-            <div style="width: 30%; float:left;">
-                <p:panel id="panelFoto" header="Foto" style="border: none;">
-                    <p:lightBox styleClass="imagebox" id="lighbox1"> 
-                        <h:outputLink value="#{usuarioController.selected.url}" title="Nature 1">
-                            <h:graphicImage  id="fotoPerfil" value="#{usuarioController.selected.url}"  height="140" width="160" />
-                        </h:outputLink>
-                    </p:lightBox>
-                    <p:commandButton value="Cambiar Foto" icon="ui-icon-refresh" type="button" onclick="PF('dlg2').show();" />
-
+            <div style="width: 30%; float:left; margin: auto;">
+                <p:panel id="panelFoto" header="Foto" style="border: none; margin: auto;">
+                    <div style="width: 50%; margin: auto;">
+                        <p:lightBox styleClass="imagebox" id="lighbox1"> 
+                            <h:outputLink value="#{usuarioController.selected.url}" title="Foto de Perfil">
+                                <h:graphicImage  id="fotoPerfil" style="margin: auto;" value="#{usuarioController.selected.url}" 
+                                                 height="150" width="110%" />
+                            </h:outputLink>
+                        </p:lightBox>
+                        <p/>
+                        <p:commandButton value="Cambiar Foto" 
+                                         icon="ui-icon-refresh" 
+                                         type="button" 
+                                         onclick="PF('dlg2').show();" /></div>
 
                 </p:panel>
             </div>
@@ -141,26 +179,50 @@
                             </p:selectOneMenu>
 
                             <p:outputLabel value="#{bundle.EditUsuarioLabel_direccion}" for="direccion" />
-                            <p:inputText id="direccion" styleClass="inputText" value="#{usuarioController.selected.direccion}" title="#{bundle.EditUsuarioTitle_direccion}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_direccion}"/>
-                            <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoFijo}" for="telefonoFijo" />
-                            <p:inputText id="telefonoFijo" styleClass="inputText" value="#{usuarioController.selected.telefonoFijo}" title="#{bundle.EditUsuarioTitle_telefonoFijo}" />
-                            <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoMovil}" for="telefonoMovil" />
-                            <p:inputText id="telefonoMovil" styleClass="inputText" value="#{usuarioController.selected.telefonoMovil}" title="#{bundle.EditUsuarioTitle_telefonoMovil}">
+                            <p:inputText id="direccion"
+                                         styleClass="inputText"
+                                         value="#{usuarioController.selected.direccion}"
+                                         title="#{bundle.EditUsuarioTitle_direccion}"
+                                         required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_direccion}">
+                                <p:watermark for="direccion" value="Barrio, Calle 1, Calle 2, Num"/>
+                            </p:inputText>
+                            <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoFijo}"
+                                           for="telefonoFijo" />
+                            <p:inputText id="telefonoFijo"
+                                         styleClass="inputText"
+                                         value="#{usuarioController.selected.telefonoFijo}" 
+                                         title="#{bundle.EditUsuarioTitle_telefonoFijo}" />
+                            <p:outputLabel value="#{bundle.EditUsuarioLabel_telefonoMovil}"
+                                           for="telefonoMovil" />
+                            <p:inputText id="telefonoMovil"
+                                         styleClass="inputText" 
+                                         value="#{usuarioController.selected.telefonoMovil}"
+                                         title="#{bundle.EditUsuarioTitle_telefonoMovil}">
                                 <f:validator validatorId="numeroCelularValidador"/>
                                 <p:message for="telefonoMovil" display="tooltip" />
                             </p:inputText>
-                            <p:outputLabel value="#{bundle.EditUsuarioLabel_correoElectronico}" for="correoElectronico" />
-                            <p:inputText id="correoElectronico" styleClass="inputText" value="#{usuarioController.selected.correoElectronico}" title="#{bundle.EditUsuarioTitle_correoElectronico}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_correoElectronico}" validatorMessage="Invalid email format">
+                            <p:outputLabel value="#{bundle.EditUsuarioLabel_correoElectronico}"
+                                           for="correoElectronico" />
+                            <p:inputText id="correoElectronico"
+                                         styleClass="inputText" 
+                                         value="#{usuarioController.selected.correoElectronico}"
+                                         title="#{bundle.EditUsuarioTitle_correoElectronico}" 
+                                         required="true" 
+                                         requiredMessage="#{bundle.EditUsuarioRequiredMessage_correoElectronico}" 
+                                         validatorMessage="Invalid email format">
                             </p:inputText>
                         </h:panelGrid>
                     </h:panelGroup>
                 </p:panel>
                 <div style="margin-left: 50%; margin-bottom: 20px;">
-                    <p:commandButton value="GUARDAR" actionListener="#{usuarioController.actualizarUsuario}" icon="ui-icon-disk" ajax="false" validateClient="true"/>
-                    <p:commandButton value="CANCELAR" icon="ui-icon-closethick"/>
+                    <p:commandButton value="GUARDAR"
+                                     actionListener="#{usuarioController.actualizarUsuario}" 
+                                     icon="ui-icon-disk" ajax="false"
+                                     validateClient="true"/>
+                    <p:commandButton value="CANCELAR" 
+                                     icon="ui-icon-closethick"/>
                 </div>
             </div>
-
         </h:form>
         <p:dialog header="Selecionar foto de Perfil" widgetVar="dlg2" modal="true" height="500" width="800" resizable="false">
 
