@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,8 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "UserHabilidadesEspectativas.findByIdEspectativas", query = "SELECT u FROM UserHabilidadesEspectativas u WHERE u.userHabilidadesEspectativasPK.idEspectativas = :idEspectativas"),
     @NamedQuery(name = "UserHabilidadesEspectativas.findByIdHabilidades", query = "SELECT u FROM UserHabilidadesEspectativas u WHERE u.userHabilidadesEspectativasPK.idHabilidades = :idHabilidades")})
 public class UserHabilidadesEspectativas implements Serializable {
-    private static final long serialVersionUID = 1L;    
-    public static final String findByIdUsuario ="UserHabilidadesEspectativas.findByIdUsuario";  
+
+    private static final long serialVersionUID = 1L;
+    public static final String findByIdUsuario = "UserHabilidadesEspectativas.findByIdUsuario";
     @EmbeddedId
     protected UserHabilidadesEspectativasPK userHabilidadesEspectativasPK;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", nullable = false, insertable = false, updatable = false)
@@ -42,6 +44,12 @@ public class UserHabilidadesEspectativas implements Serializable {
     @JoinColumn(name = "ID_HABILIDADES", referencedColumnName = "ID_HABILIDADES", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Habilidades habilidades;
+    @Size(max = 256)
+    @Column(name = "DESCRIPCION_HABILIDAD", length = 256)
+    private String descripcionHabilidad;
+    @Size(max = 256)
+    @Column(name = "DESCRIPCION_ESPECTATIVAS", length = 256)
+    private String descripcionEspectativas;
 
     public UserHabilidadesEspectativas() {
     }
@@ -110,5 +118,33 @@ public class UserHabilidadesEspectativas implements Serializable {
     public String toString() {
         return "ec.sempac.isw.modelo.UserHabilidadesEspectativas[ userHabilidadesEspectativasPK=" + userHabilidadesEspectativasPK + " ]";
     }
-    
+
+    /**
+     * @return the descripcionHabilidad
+     */
+    public String getDescripcionHabilidad() {
+        return descripcionHabilidad;
+    }
+
+    /**
+     * @param descripcionHabilidad the descripcionHabilidad to set
+     */
+    public void setDescripcionHabilidad(String descripcionHabilidad) {
+        this.descripcionHabilidad = descripcionHabilidad;
+    }
+
+    /**
+     * @return the descripcionEspectativas
+     */
+    public String getDescripcionEspectativas() {
+        return descripcionEspectativas;
+    }
+
+    /**
+     * @param descripcionEspectativas the descripcionEspectativas to set
+     */
+    public void setDescripcionEspectativas(String descripcionEspectativas) {
+        this.descripcionEspectativas = descripcionEspectativas;
+    }
+
 }
