@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
@@ -47,8 +46,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ExperienciaLaboral.findByUsuarioEliminado", query = "SELECT e FROM ExperienciaLaboral e WHERE e.idUsuario.idUsuario = :idUsuario AND e.eliminado = :eliminado")
 })
 public class ExperienciaLaboral implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    public static final String findByUsuarioEliminado ="ExperienciaLaboral.findByUsuarioEliminado"; 
+    public static final String findByUsuarioEliminado = "ExperienciaLaboral.findByUsuarioEliminado";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -78,8 +78,9 @@ public class ExperienciaLaboral implements Serializable {
     private String url;
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
-    private int tiempo;
+    @Size(max = 32)
+    @Column(nullable = false, length = 32)
+    private String tiempo;
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
@@ -87,6 +88,12 @@ public class ExperienciaLaboral implements Serializable {
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idUsuario;
+    @Size(max = 128)
+    @Column(name = "TELEFONO_EMPRESA", length = 128)
+    private String telefonoEmpresa;
+    @Size(max = 128)
+    @Column(name = "DIRECCION_EMPRESA", length = 128)
+    private String direccionEmpresa;
 
     public ExperienciaLaboral() {
     }
@@ -95,7 +102,7 @@ public class ExperienciaLaboral implements Serializable {
         this.idExperienciaLaboral = idExperienciaLaboral;
     }
 
-    public ExperienciaLaboral(Long idExperienciaLaboral, String empresa, Date fechaInicio, int tiempo, boolean eliminado) {
+    public ExperienciaLaboral(Long idExperienciaLaboral, String empresa, Date fechaInicio, String tiempo, boolean eliminado) {
         this.idExperienciaLaboral = idExperienciaLaboral;
         this.empresa = empresa;
         this.fechaInicio = fechaInicio;
@@ -159,11 +166,11 @@ public class ExperienciaLaboral implements Serializable {
         this.url = url;
     }
 
-    public int getTiempo() {
+    public String getTiempo() {
         return tiempo;
     }
 
-    public void setTiempo(int tiempo) {
+    public void setTiempo(String tiempo) {
         this.tiempo = tiempo;
     }
 
@@ -207,5 +214,33 @@ public class ExperienciaLaboral implements Serializable {
     public String toString() {
         return "ec.sempac.isw.modelo.ExperienciaLaboral[ idExperienciaLaboral=" + idExperienciaLaboral + " ]";
     }
-    
+
+    /**
+     * @return the telefonoEmpresa
+     */
+    public String getTelefonoEmpresa() {
+        return telefonoEmpresa;
+    }
+
+    /**
+     * @param telefonoEmpresa the telefonoEmpresa to set
+     */
+    public void setTelefonoEmpresa(String telefonoEmpresa) {
+        this.telefonoEmpresa = telefonoEmpresa;
+    }
+
+    /**
+     * @return the direccionEmpresa
+     */
+    public String getDireccionEmpresa() {
+        return direccionEmpresa;
+    }
+
+    /**
+     * @param direccionEmpresa the direccionEmpresa to set
+     */
+    public void setDireccionEmpresa(String direccionEmpresa) {
+        this.direccionEmpresa = direccionEmpresa;
+    }
+
 }
