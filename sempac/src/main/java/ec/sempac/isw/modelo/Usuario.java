@@ -164,6 +164,9 @@ public class Usuario implements Serializable {
     private Integer coorLongitud;
     @Column(name = "COOR_LATITUD")
     private Integer coorLatitud;
+    @Size(max = 256)
+    @Column(name = "PERFIL", length = 256)
+    private String perfil;
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
@@ -568,4 +571,18 @@ public class Usuario implements Serializable {
         return "ec.sempac.isw.modelo.Usuario[ idUsuario=" + idUsuario + " ]";
     }
 
+    /**
+     * @return the perfil
+     */
+    public String getPerfil() {
+        return perfil;
+    }
+
+    /**
+     * @param perfil the perfil to set
+     */
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
+    
 }
