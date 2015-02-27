@@ -1287,20 +1287,6 @@ public class UsuarioController implements Serializable {
         Usuario user = ActivacionUsuario.getUsuario();
         System.out.println("codigo user.." + user.getIdUsuario());
         SistemaUsuario su = ejbFacadeSistemaUsuario.getUsuarioActivacion(user.getIdUsuario());
-//        int mes = 0;
-//        int anio = new Date().getYear();
-//        if (new Date().getMonth() == 10) {
-//            mes = 1;
-//            anio += 1;
-//        } else if (new Date().getMonth() == 11) {
-//            mes = 2;
-//            anio += 1;
-//        } else if (new Date().getMonth() == 12) {
-//            mes = 3;
-//            anio += 1;
-//        } else {
-//            mes += 3;
-//        }
         Calendar today = Calendar.getInstance();
         today = Calendar.getInstance();
         today.add(Calendar.MONTH, 3);//fecha actual mas 3 meses
@@ -1319,7 +1305,7 @@ public class UsuarioController implements Serializable {
         
         ejbFacadePagos.create(pagos);
         su.setFechaCaducidad(caducidad);////  fecha de registro mas 3 meses
-        su.setEstado('P');
+        su.setEstado('E');
         ejbFacadeSistemaUsuario.edit(su);
         
         System.out.println("Stisfactorio....");
