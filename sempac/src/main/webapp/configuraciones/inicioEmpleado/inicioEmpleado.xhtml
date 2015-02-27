@@ -19,27 +19,45 @@
         </style>
 
         <div class="panelTitulo">
-
+            PAGUINA PRINCIPAL
         </div> 
-        <div style="width: 20%; float:left;">
+        <div style="width: 30%; float:left;">
             <h:form id="butonRealizarPago">
-                <p:panel id="pago" header="Estado de Cuenta" style="border: none; width: 100%;" >
-                    #{usuarioController.verificarEstadoPago()}
-                    <span style="font-size: 1.0em;">Estado de la Cuenta:</span>
-                    <c:if test="#{usuarioController.estadoPago == true}">
-                        <span style="font-size: 1.0em; font-weight: bold; color: #0066ff">Pagado</span> 
-                    </c:if>
-                    <c:if test="#{usuarioController.estadoPago == false}">
-                        <span style="font-size: 1.0em; font-weight: bold; color:#cc0000; ">No Pagado</span> 
-                    </c:if>
-                    <h:graphicImage  id="fotoEstado" value="" height="150" width="150" />
-                    <br/>
-                    <p:commandButton value="Realizar Pago" oncomplete="PF('displayPago').show()"/>
+                <p:panel id="pago" header="Estado de Cuenta" footer="Informacion" style="border: none; width: 100%;" >
+                    
+                    #{usuarioController.estadoCuenta()}
+                    <p:graphicImage value="../../resources/images/icon-retail-payments.png" width="100" height="100" style="margin-left:30%;"/>
+                    <h:panelGrid 
+                        columns="2" 
+                        border="0"
+                        columnClasses="column1Class, column2Class">
+                        <p:outputLabel value="Id USUARIO:"/>
+                        <p:outputLabel  value="#{usuarioController.selected.idUsuario}"/>
+                        <p:outputLabel  value="FECHA PAGO:"/>
+                        <p:outputLabel   value="#{usuarioController.sistemaUsuario.fechaAsignacion}"/>
+                        <p:outputLabel  value="FECHA CADUCIDAD:"/>
+                        <p:outputLabel   value="#{usuarioController.sistemaUsuario.fechaCaducidad}"/>
+                        <c:if test="#{usuarioController.sistemaUsuario.estado=='V'}">
+                            <p:outputLabel  value="ESTADO CUENTA:"/>
+                            <p:outputLabel   value="No Pagado"/>
+                            <p:commandButton value="Realizar Pago" oncomplete="PF('displayPago').show()"/>
+                        </c:if>
+                        <c:if test="#{usuarioController.sistemaUsuario.estado=='P'}">
+                            <p:outputLabel  value="TOTAL PAGADO:"/>
+                            <p:outputLabel   value=""/>
+                            <p:outputLabel  value="ESTADO CUENTA:"/>
+                            <p:outputLabel   value="Pagado"/>
+                        </c:if>
+                    </h:panelGrid>
 
+                </p:panel>
+                <p:panel id="oferta" header="ofertas de Empleo" footer="Informacion" style="border: none; width: 100%;">
+                    <p:graphicImage value="../../resources/images/jobsearch_icon.png" width="100" height="100" style="margin-left:30%;"/>
+                    <p:commandButton value="Ver Ofertas de Trabajo"/>
                 </p:panel>
             </h:form>
         </div>
-        <div style="width: 60%; float:left;">
+        <div style="width: 50%; float:left;">
             <p:panel id="panelPerfil" header="Datos Personales" style="border: none; width: 100%;" >
                 <div style="width: 20%; float:left;">
                     <p:lightBox styleClass="imagebox" id="lighbox1"> 
@@ -52,7 +70,7 @@
                         <h:link value="Editar Perfil" styleClass="link"/>
                     </div>
                 </div>
-                <div style=" width: 50%; float:left; margin-left: 30px; border-left-width: 10px;">
+                <div style=" width: 50%; float:left; margin-left: 55px; border-left-width: 10px;">
                     <div style="font-size: 1.5em; color: #0066ff;">#{usuarioController.selected.nombres.toUpperCase()} #{usuarioController.selected.apellidos.toUpperCase()}</div>
                     <div style="font-size: 1.2em;">Genero: #{usuarioController.selected.genero}</div>
                     <div style="font-size: 1.2em;">Cedula/Pasaporte: #{usuarioController.selected.identidad}</div>
@@ -75,7 +93,7 @@
             <h:form>
                 <p:panel id="panelNotificaciones" header="Ofertas de Empleo"  style="border: none; width: 98%; height: 200px;" >
                     <p:scrollPanel  style="border: none; width: 104%; height: 200px;"  mode="native">
-                       
+
                         <c:forEach items="#{personalRequeridoController.items}" var="item">
                             <p:separator style="border-color:#ececec; border-width: 0.1em; box-shadow: none;"/> 
                             <p:commandLink styleClass="linkBuscaTrabajo" 
@@ -83,7 +101,7 @@
                                            action="#{personalRequeridoController.empleo}"
                                            actionListener="#{empleoRequeridoController.prepareCreate}"
                                            oncomplete="PF('display').show()" >
-                                <f:setPropertyActionListener value="#{item}" target="#{personalRequeridoController.selected}" />
+
                                 <div style="float: left;">
                                     <img src="http://www.frikipedia.es/images/7/7a/1_Empresa.png" alt="" width="50px" height="50px"/>
                                 </div>
@@ -97,8 +115,9 @@
                         </c:forEach>
 
                     </p:scrollPanel>
+                    <p:commandLink value="Ver mas Oferntas" actionListener="#{controlUrlControler.openOfertasTrabajo()}"/>
                 </p:panel>
-                
+
                 <p:dialog id="dialogAplicarEmpleo" header="Aplicar Trabajo" modal="true" widgetVar="display" style="width: 300px;">
 
                     <h:panelGrid id="carDetail" columns="2" border="0" style="border: none;">
@@ -143,7 +162,7 @@
                 </h:panelGrid>
                 <p:commandButton id="pagar"
                                  actionListener="#{usuarioController.pagosDeposito}"
-                                 value="Pagar"  /> 
+                                 value="Pagar"/> 
                 <p:commandButton id="cancelar" value="CANCELAR"/>
             </h:form>
         </p:dialog>
