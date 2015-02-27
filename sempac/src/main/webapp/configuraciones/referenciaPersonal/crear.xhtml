@@ -15,11 +15,13 @@
              style="border: none; width: 75%; margin: auto;">
         <h:form id="ReferenciaPersonalCreateForm">
             <p:growl id="mensajeReferenciaPersonal" showDetail="true" life="3000"/>
-            <h:panelGroup id="display">
-                #{referenciaPersonalController.iniciaSelected()}
+            #{referenciaPersonalController.iniciaSelected()}
+            <h:panelGroup id="display" rendered="#{referenciaPersonalController.selected!=null}">
+
                 <h:panelGrid 
                     columns="4" 
                     border="0"
+
                     columnClasses="column1Class, column2Class,column3Class,column4Class" 
                     >
 
@@ -53,7 +55,7 @@
                                  value="#{referenciaPersonalController.selected.correo}" 
                                  styleClass="inputText"
                                  title="#{bundle.CreateReferenciaPersonalTitle_correo}" />
-                    
+
                     <p:commandButton id="botonSubir" value="Subir Documento" onclick="dialogSubida.show();
                             return false;"/>
                     <p:inputText id="url" 
@@ -63,16 +65,28 @@
                                  title="#{bundle.CreateReferenciaPersonalTitle_url}" />
 
                 </h:panelGrid>
-                <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
-                    <p:commandButton actionListener="#{referenciaPersonalController.guardaNuevo}" 
-                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" update="display,:ReferenciaPersonalListForm:datalist,mensajeReferenciaPersonal" ajax="false" />
+                <div  style="margin-left: 40%; margin-bottom: 20px; margin-top: 10px;">
+                    <p:commandButton actionListener="#{referenciaPersonalController.guardaNuevo(event)}" 
+                                     value="AGREGAR/MODIFICAR" icon="ui-icon-disk"
+                                     update="display,:ReferenciaPersonalListForm:datalist,
+                                     mensajeReferenciaPersonal,
+                                     :ReferenciaPersonalCreateForm:nombres,
+                                     :ReferenciaPersonalCreateForm:apellidos,
+                                     :ReferenciaPersonalCreateForm:telefono,
+                                     :ReferenciaPersonalCreateForm:correo"
+                                     />
 
-                    <p:commandButton value="#{bundleEtiquetasES.Cancelar}" 
-                                     onclick="ReferenciaPersonalCreateDialog.hide()" 
-                                     icon="ui-icon-circle-close"/>
+                    <p:commandButton value="NUEVA REFERENCIA" 
+                                     icon="ui-icon-document"
+                                     ajax="false"
+                                     />
                 </div>
             </h:panelGroup>
         </h:form>
+        <f:facet name="footer">
+            <p:outputLabel value="Importante: " style="color:red; "/>
+            <p:outputLabel value="Solo Padra Ingresar 3 Referencias Personales" style="color:#0000cc; "/>
+        </f:facet>
     </p:panel>
     <p:separator style="border-style: dotted; width: 75%; margin-bottom: 10px;"/>
     <ui:include src="lista.xhtml"/>

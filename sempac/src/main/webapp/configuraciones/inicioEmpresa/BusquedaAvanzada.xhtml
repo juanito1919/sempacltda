@@ -117,11 +117,11 @@
                                  paginator="true"
                                  paginatorPosition="bottom"
                                  rowKey="#{item.idUsuario}"
-                                 rows="20"
+                                 rows="11"
 
-                                 rowsPerPageTemplate="20,20,30,40,20,30"
+
                                  >
-                        <p:column width="20">
+                        <p:column width="5">
                             <f:facet name="header">
                                 <h:outputText value="CEDULA"/>
                             </f:facet>
@@ -134,11 +134,31 @@
                             </f:facet>
                             <h:outputText value="#{item.nombres} #{item.apellidos}"/>
                         </p:column>
+                        <p:column width="100">
+                            <f:facet name="header">
+                                <h:outputText value="DIRECCION"/>
+                            </f:facet>
+                            <h:outputText value="#{item.direccion}"/>
+                        </p:column>
+                        <p:column width="100">
+                            <f:facet name="header">
+                                <h:outputText value="TELEFONO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telefonoFijo}"/>
+                        </p:column>
+                        <p:column width="100">
+                            <f:facet name="header">
+                                <h:outputText value="DISPONIBILIDAD"/>
+                            </f:facet>
+                            <h:outputText value="#{usuarioController.obtenerDisponibilidad(item.disponibilidad)}"/>
+                        </p:column>
                         <p:column width="120">
                             <f:facet name="header">
-                                <h:outputText value="HABILIDADES"/>
+                                <h:outputText value="ACCION"/>
                             </f:facet>
-                            <h:outputText value="#{item.experienciaLaboralList}"/>
+                            <p:commandButton value="Ver Toda" actionListener="#{controlUrlControler.openResultadoBusqueda()}">
+                                <f:setPropertyActionListener target="#{usuarioController.selected}" value="#{item}"/>
+                            </p:commandButton>
                         </p:column>
 
                     </p:dataTable>

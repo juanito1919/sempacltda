@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="../../resources/plantilla/ventanaInicioEmpleadoPlantilla.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define  name="formulario">
+        <div class="panelTitulo">
+            OFERTAS DE EMPLEO
+        </div> 
+
+        <div style="width: 69%; float:left;">
+            <p:panel header="Ofertas de Empleo" style="width: 100%; border: none;">
+                <div style="margin: 10px auto 10px auto; font-size: 1.8em; color: #0066ff;">Aqui podras Encontrar el Empleo que Necesitas</div>
+                <h:form>
+                    <p:dataTable  value="#{personalRequeridoController.items}" widgetVar="carsTable" var="item"
+                                  emptyMessage="No Existe Ofertas de Trabajo" 
+
+                                  paginator="true"
+                                  paginatorPosition="bottom"
+                                  selection="#{personalRequeridoController.selected}"
+                                  rows="15"
+                                  >
+
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search all fields:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="EMPRESA">
+                            <h:outputText value="#{item.idEmpresa.nombre}" />
+                        </p:column>
+                        <p:column headerText="CARGO">
+                            <h:outputText value="#{item.idHabilidades.nombre}" />
+                        </p:column>
+                        <p:column headerText="FECHA DE PUBLICACION">
+                            <h:outputText value="#{item.idCiudad.nombre}" />
+                        </p:column>
+                        <p:column headerText="CIUDAD/CANTON">
+                            <h:outputText value="#{item.fechaModificacion}" />
+                        </p:column>
+                        <p:column headerText="DESCRIPCION">
+                            <h:outputText value="#{item.descripcion}" />
+                        </p:column>
+                        <p:column headerText="ACCION">
+                            <p:commandButton value="Ver" update=":aplicarEmpleoForm">
+                                <f:setPropertyActionListener target="#{personalRequeridoController.selected}" value="#{item}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:panel>
+        </div>
+        <div style="width: 30%; float:left;">
+            <p:panel header="Aplicar Empleo" footer="Informacion" style="width: 100%; border: none;">
+                <div style="margin: 10px auto 10px auto; font-size: 1.2em; color: #0066ff;">Seleciona el Empleo que necesitas y Aplica</div>
+                <h:form id="aplicarEmpleoForm">
+                    <h:panelGrid id="carDetail" 
+                                 columns="2"
+                                 border="0" 
+                                 columnClasses="column1Class, column2Class" 
+                                 style="border: none;">
+                        <p:outputLabel value="EMPRESA:" for="empresa"/>
+                        <p:inputText id="empresa" value="#{personalRequeridoController.selected.idEmpresa.nombre}" size="35" readonly="true"/>
+                        <p:outputLabel value="CARGO/AREA:" for="cargo"/>
+                        <p:outputLabel id="cargo" value="#{personalRequeridoController.selected.idHabilidades.nombre}"/>
+
+                        <p:outputLabel value="FECHA:" for="fecha"/>
+                        <p:inputText id="fecha" value="#{personalRequeridoController.selected.fechaModificacion}" size="35" readonly="true"/>
+
+                        <p:outputLabel value="CIUDAD/CANTON:" for="ciudad"/>
+                        <p:inputText id="ciudad" value="#{personalRequeridoController.selected.idCiudad.nombre}" size="35" readonly="true"/>
+
+                        <p:outputLabel value="DESCRIPCION:" for="descripcion"/>
+                        <p:inputTextarea id="descripcion" value="#{personalRequeridoController.selected.descripcion}" rows="6" cols="37"  readonly="true"/>
+
+                    </h:panelGrid>
+                    <div style="margin-left: 20%;">
+                        <p:commandButton id="butonAplicarTrabajo" actionListener="#{empleoRequeridoController.guardaNuevo}" ajax="false" style="width: 190px;"  value="APLICAR"/>
+                        
+                    </div>
+                </h:form>
+            </p:panel>
+
+        </div>
+
+    </ui:define>
+</ui:composition>

@@ -13,7 +13,7 @@
             <p:message id="mensajeNombreColegio" for="colegio" />
             <p:message id="mensajeEspecilidad" for="especialidad" />
             <p:message id="mensajeAnios" for="aniosEstudios" />
-            <p:panel header="Estudios Secundarios" style="border: none; margin-top: -10px;" >
+            <p:panel header="Estudios Secundarios" footer="Nota: Sobre la educacion secundaria ingrese el colegio donde haya culminado sus estudios" style="border: none; margin-top: -10px;" >
                 <h:panelGroup id="display" style="width: 500px; height: 800px;">
                     #{especialidadSecundariaController.iniciaSelected()}
                     <h:panelGrid columns="2" 
@@ -21,13 +21,13 @@
                                  cellpadding="5"
                                  columnClasses="column1Class, column2Class">
                         <p:outputLabel for="colegio" value="#{bundleEtiquetasES.Institucion}"  />
-                        <p:selectOneMenu id="colegio" 
+                        <p:selectOneMenu id="colegio"
+                                         style="width: 270px;"
                                          value="#{especialidadSecundariaController.selected.colegio}"
                                          converter="colegioConverter"
                                          required="true"
                                          effect="fade" 
                                          var="t" 
-                                         style="width:200px" 
                                          filter="true" 
                                           
                                          filterMatchMode="contains">
@@ -48,8 +48,9 @@
                                      value="#{especialidadSecundariaController.selected.especialidad}"
                                      title="#{bundleEtiquetasES.Especialidad}"
                                      required="true" 
+                                     style="width: 270px;"
                                      onkeyup="value = value.toUpperCase()"
-                                     size="32"/>
+                                     />
 
                         <p:outputLabel value="#{bundleEtiquetasES.AniosEstudio}" 
                                        for="aniosEstudios" />
@@ -57,10 +58,11 @@
                                      value="#{especialidadSecundariaController.selected.aniosEstudios}" 
                                      title="#{bundleEtiquetasES.AniosEstudio}" 
                                      validatorMessage=""
+                                     style="width: 270px;"
                                      required="true"
                                      onkeyup="value = value.toUpperCase()"/>
-                         <p:commandButton id="buttonSubir" value="Cargar Certificado"/>
-                          <p:inputText id="ruta" value="" size="35" disabled="true"/>
+                        <p:commandButton id="buttonSubir" value="Cargar Certificado"/>
+                        <p:inputText id="ruta" value="" size="50" disabled="true"/>
                     </h:panelGrid>
                     <div style="margin-left: 30%; margin-bottom: 20px; margin-top: 30px;">
                         <p:commandButton actionListener="#{especialidadSecundariaController.guardarColegio}" icon="ui-icon-disk"  value="GUARDAR"/>

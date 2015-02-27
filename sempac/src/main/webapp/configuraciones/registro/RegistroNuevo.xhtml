@@ -12,19 +12,23 @@
             REGISTRO DE USUARIO
         </div> 
         <h:form id="UsuarioRegistro">
-            <div style="width: 100%; margin: auto; float: left; ">
-                <p:panel header="Información personal" style="border: none;" >
+            <div style="width: 90%; margin-left: 5%; float: left;">
+
+                <p:panel header="Información personal" footer="La Informacion Ingresa debe ser veridica" style="border: none; background-color:#FAFAFA; " >
+                    <div style="font-size: 1.8em; color:steelblue; margin-top: 10px; margin-bottom: 10px;">
+                        Primera vez en Semptac? Registrate y  a las ofertas de trabajo:
+                    </div> 
                     <p:growl id="mensaje" showDetail="true" life="3000"/> 
-                    <h:panelGroup id="display">
+                    <p:fieldset legend="Datos Personales" style="margin-bottom:10px; ">
                         <h:panelGrid columns="4" 
                                      border="0" 
                                      cellspacing="4" 
                                      cellpadding="0" 
                                      columnClasses="column1Class, column2Class,column3Class,column4Class" 
                                      rendered="#{usuarioController.selected != null}">
-
                             <p:outputLabel value="#{bundleEtiquetasES.TipoIdientidad}" for="tipoIdentidad" />
                             <p:selectOneMenu id="tipoIdentidad" 
+                                             style="width: 240px;"
                                              value="#{usuarioController.selected.tipoIdentidad}"
                                              required="true" 
                                              requiredMessage="#{bundleEtiquetasES.TipoIdientidad}  #{bundleEtiquetasES.CampoRequerido}">                          
@@ -41,7 +45,7 @@
                             <p:outputLabel value="#{bundleEtiquetasES.Identidad}" for="identidad" />
                             <p:inputText id="identidad" 
                                          disabled="#{usuarioController.selected.tipoIdentidad==null}"
-                                         onkeyup="value = value.toUpperCase()"
+                                         styleClass="inputText" 
                                          value="#{usuarioController.selected.identidad}" 
                                          title="#{bundleEtiquetasES.Identidad}"
                                          required="true" 
@@ -52,7 +56,9 @@
 
                             <p:outputLabel value="#{bundleEtiquetasES.Nombres}" for="nombres" />
                             <p:inputText id="nombres" 
-                                         onkeyup="value = value.toUpperCase()"
+
+                                         styleClass="inputText" 
+
                                          value="#{usuarioController.selected.nombres}" 
                                          title="#{bundleEtiquetasES.Nombres}"
                                          required="true" 
@@ -60,11 +66,35 @@
 
                             <p:outputLabel value="#{bundleEtiquetasES.Apellidos}" for="apellidos" />
                             <p:inputText id="apellidos" 
-                                         onkeyup="value = value.toUpperCase()"
+                                         styleClass="inputText" 
                                          value="#{usuarioController.selected.apellidos}" 
                                          title="#{bundleEtiquetasES.Apellidos}" />
+                            <p:outputLabel value="#{bundleEtiquetasES.FechaNacimiento}" for="fechaNacimiento" />
+                            <p:calendar id="fechaNacimiento" 
+                                        value="#{usuarioController.selected.fechaNacimiento}" 
+                                        locale="de"
+                                        navigator="true"
+                                        size="42"
+
+                                        pattern="dd/MM/yyyy" 
+                                        title="#{bundleEtiquetasES.FechaNacimiento}" 
+                                        required="true" 
+                                        requiredMessage="#{bundleEtiquetasES.FechaNacimiento} #{bundleEtiquetasES.CampoRequerido}" 
+                                        maxdate="#{usuarioController.FMaxima}"
+                                        />
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <p:fieldset legend="Datos Acesso al Sistema" style="margin-bottom:10px">
+                        <h:panelGrid columns="4" 
+                                     border="0" 
+                                     cellspacing="4" 
+                                     cellpadding="0" 
+                                     columnClasses="column1Class, column2Class,column3Class,column4Class" 
+                                     rendered="#{usuarioController.selected != null}">
                             <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
                             <p:inputText id="username" 
+                                         style="width: 230px; height: 15px;"
                                          value="#{usuarioController.selected.username}" 
                                          title="#{bundleEtiquetasES.UserName}" 
                                          required="true" 
@@ -73,22 +103,11 @@
                                         listener="#{usuarioController.validarUsername()}" 
                                         update=":UsuarioCreateForm:mensaje"/>
                             </p:inputText>
-                            <p:outputLabel value="#{bundleEtiquetasES.FechaNacimiento}" for="fechaNacimiento" />
-                            <p:calendar id="fechaNacimiento" 
-                                        value="#{usuarioController.selected.fechaNacimiento}" 
-                                        locale="de"
-                                        navigator="true"
-                                        pattern="dd/MM/yyyy" 
-                                        title="#{bundleEtiquetasES.FechaNacimiento}" 
-                                        required="true" 
-                                        requiredMessage="#{bundleEtiquetasES.FechaNacimiento} #{bundleEtiquetasES.CampoRequerido}" 
-                                        maxdate="#{usuarioController.FMaxima}"
-                                        showOn="button"/>
-
                             <p:outputLabel value="#{bundleEtiquetasES.Contrasena}" for="contrasena" />
                             <p:password id="contrasena" 
                                         value="#{usuarioController.contrasena}" 
                                         title="#{bundleEtiquetasES.Contrasena}" 
+                                        style="width: 230px; height: 15px;"
                                         required="true" 
                                         requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
                                 <p:ajax event="blur" 
@@ -101,17 +120,39 @@
                                         value="#{usuarioController.confirmaContrasena}" 
                                         title="#{bundleEtiquetasES.Contrasena}" 
                                         required="true" 
+                                        style="width: 230px; height: 15px;"
                                         requiredMessage="#{bundleEtiquetasES.Contrasena} #{bundleEtiquetasES.CampoRequerido}">
                                 <p:ajax event="blur" 
                                         listener="#{usuarioController.validarConfirmacionContrasena()}" 
                                         update=":UsuarioRegistro:mensaje"
                                         />
                             </p:password>
+                            <p:outputLabel value="#{bundleEtiquetasES.CorreoElectronico}" for="correoElectronico" />
+                            <p:inputText id="correoElectronico" 
+                                         value="#{usuarioController.selected.correoElectronico}" 
+                                         title="#{bundleEtiquetasES.CorreoElectronico}" 
+                                         required="true" 
+                                         style="width: 230px; height: 15px;"
+                                         requiredMessage="#{bundleEtiquetasES.CorreoElectronico} #{bundleEtiquetasES.CampoRequerido}">
+                                <p:ajax event="blur" 
+                                        listener="#{usuarioController.revisaisMail()}" 
+                                        update=":UsuarioCreateForm:mensaje"/>
+                            </p:inputText>
 
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <p:fieldset legend="Informacion de Interes" style="margin-bottom:10px">
+                        <h:panelGrid columns="4" 
+                                     border="0" 
+                                     cellspacing="4" 
+                                     cellpadding="0" 
+                                     columnClasses="column1Class, column2Class,column3Class,column4Class" 
+                                     rendered="#{usuarioController.selected != null}">
                             <p:outputLabel value="#{bundleEtiquetasES.Pais}" for="pais" />
                             <p:selectOneMenu id="pais" 
                                              value="#{usuarioController.pais}"
                                              required="true" 
+                                             style="width: 240px;"
                                              requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
                                 <f:selectItems value="#{usuarioController.itemPaises}"
@@ -129,6 +170,7 @@
                             <p:selectOneMenu id="provincia" 
                                              value="#{usuarioController.provincia}"
                                              required="true" 
+                                             style="width: 240px;"
 
                                              requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
@@ -149,6 +191,7 @@
                             <p:selectOneMenu id="ciudad" 
                                              value="#{usuarioController.selected.idCiudad}"
                                              required="true" 
+                                             style="width: 240px;"
                                              requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
                                 <f:selectItems value="#{usuarioController.itemCiudades}"
@@ -162,6 +205,7 @@
                             <p:selectOneMenu id="estadoCivil" 
                                              value="#{usuarioController.selected.estadoCivil}"
                                              required="true" 
+                                             style="width: 240px;"
                                              requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Soltero}" itemValue="S" />  
@@ -172,7 +216,7 @@
                             </p:selectOneMenu>
                             <p:outputLabel value="#{bundleEtiquetasES.Direccion}" for="direccion" />
                             <p:inputText id="direccion" 
-                                         onkeyup="value = value.toUpperCase()"
+                                         styleClass="inputText" 
                                          value="#{usuarioController.selected.direccion}" 
                                          title="#{bundleEtiquetasES.Direccion}" 
                                          required="true" 
@@ -180,21 +224,13 @@
                                 <p:watermark for="direccion" value="Barrio, Calle 1, Calle 2, Num"/>
                             </p:inputText>
 
-                            <p:outputLabel value="#{bundleEtiquetasES.CorreoElectronico}" for="correoElectronico" />
-                            <p:inputText id="correoElectronico" 
-                                         value="#{usuarioController.selected.correoElectronico}" 
-                                         title="#{bundleEtiquetasES.CorreoElectronico}" 
-                                         required="true" 
-                                         requiredMessage="#{bundleEtiquetasES.CorreoElectronico} #{bundleEtiquetasES.CampoRequerido}">
-                                <p:ajax event="blur" 
-                                        listener="#{usuarioController.revisaisMail()}" 
-                                        update=":UsuarioCreateForm:mensaje"/>
-                            </p:inputText>
+
 
                             <p:outputLabel value="#{bundleEtiquetasES.Disponibilidad}" for="disponibilidad" />
                             <p:selectOneMenu id="disponibilidad" 
                                              value="#{usuarioController.selected.disponibilidad}"
                                              required="true" 
+                                             style="width: 240px;"
                                              requiredMessage="#{bundleEtiquetasES.EstadoCivil} - #{bundleEtiquetasES.CampoRequerido}">
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.TiempoCompleto}" itemValue="C" />  
@@ -202,12 +238,14 @@
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Otro}" itemValue="O" />  
                             </p:selectOneMenu>
                         </h:panelGrid>
-                        <div style="width: 20%; margin: auto; margin-top: 20px;">
-                            <p:commandButton actionListener="#{usuarioController.create}" value="REGISTRAR" icon="ui-icon-disk" update=":UsuarioRegistro:mensaje"/>
-                            <p:commandButton value="CANCELAR" icon="ui-icon-closethick"/>
-                        </div>
+                    </p:fieldset>
 
-                    </h:panelGroup>
+                    <div style="width: 25%; margin: auto; margin-top: 20px;">
+                        <p:commandButton actionListener="#{usuarioController.create}" value="REGISTRAR" icon="ui-icon-disk" update=":UsuarioRegistro:mensaje"/>
+                        <p:commandButton value="CANCELAR" icon="ui-icon-closethick"/>
+                    </div>
+
+                
                 </p:panel>
             </div>
         </h:form>

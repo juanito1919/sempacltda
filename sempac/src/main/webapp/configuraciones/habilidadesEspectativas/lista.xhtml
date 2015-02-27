@@ -7,33 +7,73 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h:form id="userHabilidadesEspectativasListForm">
-        <p:panel header="Lista Hablidades-Espectativas" style="border: none; width: 100%; margin: 0 auto;">
-            <p:dataTable id="datalist" value="#{userHabilidadesEspectativasController.itemsHabExp}" var="item"
+        <p:panel header="Lista Hablidades-Espectativas" style="border: none; width: 99%; margin: 0 auto;">
+            <p:growl id="message" life="3000" showDetail="true" />
+            <p:dataTable id="datalist2" value="#{userHabilidadesEspectativasController.itemsHabExp}" var="item"
                          selectionMode="single" 
                          selection="#{userHabilidadesEspectativasController.seleccion}"
+                         resizableColumns="true"
                          paginator="true"
+                         paginatorPosition="bottom"
                          rowKey="#{item.userHabilidadesEspectativasPK}"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,20,30"
+                         rows="5"
+
                          >
-                <p:ajax
-                    event="rowSelect"
-                    listener="#{userHabilidadesEspectativasController.mostrar()}"
-                    />
-                <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="#{bundleEtiquetasES.Habilidad}"/>
-                    </f:facet>
+                <p:ajax event="rowSelect" listener="#{userHabilidadesEspectativasController.mostrar()}"   update="editButton deleteButton"/>
+                <p:ajax event="rowUnselect" listener="#{userHabilidadesEspectativasController.deselecionar}" update="editButton deleteButton"/>
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column colspan="2" headerText="HABILIDADES" />
+                        <p:column colspan="2" headerText="ESPECTATIVAS" />
+                        <p:column  headerText="ACCIONES" />
+                    </p:row>
+                    <p:row>
+                        <p:column width="10%" headerText="AREA" />
+                        <p:column width="20%" headerText="DESCRIPCION" />
+                        <p:column width="10%" headerText="AREA" />
+                        <p:column width="20%" headerText="DESCRIPCION" />
+                        <p:column width="10%" headerText="" />
+                    </p:row>
+
+
+                </p:columnGroup>
+                <p:column>
                     <h:outputText value="#{item.habilidades.nombre}"/>
                 </p:column>
                 <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="#{bundleEtiquetasES.Espectativa}"/>
-                    </f:facet>
+                    <h:outputText value="#{item.descripcionHabilidad}"/>
+                </p:column>
+                <p:column >
                     <h:outputText value="#{item.espectativas.nombre}"/>
                 </p:column>
-                
+                <p:column >
+                    <h:outputText value="#{item.descripcionEspectativas}"/>
+                </p:column>
+                <p:column>
+                    <p:commandButton id="editButton"
+                                     value="Editar"
+                                     update=":userHabilidadesEspectativasListForm,
+                                     :userHabilidadesEspectativasCreateForm:habilidad,
+                                     :userHabilidadesEspectativasCreateForm:espectativa,
+                                     :userHabilidadesEspectativasCreateForm:descripcione,
+                                     :userHabilidadesEspectativasCreateForm:descripcionh"
+                                     >
+                        <f:setPropertyActionListener target="#{userHabilidadesEspectativasController.selected}" value="#{item}" />
+                    </p:commandButton>
+                    <p:commandButton id="deleteButton"
+                                     value="Eliminar"
+                                     actionListener="#{userHabilidadesEspectativasController.eliminar}"
+                                     update=":userHabilidadesEspectativasListForm:datalist2,
+                                     :userHabilidadesEspectativasListForm:message">
+                        <p:confirm header="Confirmacion" message="Esta Seguro que desea eliminar?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                </p:column>
             </p:dataTable>
         </p:panel>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" ajax="false" icon="ui-icon-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
     </h:form>
+    <ui:include src="editar.xhtml"/>
 </ui:composition>

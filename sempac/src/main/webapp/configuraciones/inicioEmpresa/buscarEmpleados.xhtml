@@ -88,12 +88,13 @@
                                  selectionMode="single" 
                                  selection="#{usuarioController.seleccionado}"
                                  paginator="true"
+
                                  paginatorPosition="bottom"
                                  rowKey="#{item.idUsuario}"
-                                 rows="20"
-
-                                 rowsPerPageTemplate="20,20,30,40,20,30"
+                                 rows="15"
                                  >
+                        <p:ajax event="rowSelect"   update="verPerfil"/>
+                        <p:ajax event="rowUnselect" update="verPerfil"/>
                         <p:column width="5">
                             <f:facet name="header">
                                 <h:outputText value="CEDULA"/>
@@ -107,13 +108,33 @@
                             </f:facet>
                             <h:outputText value="#{item.nombres} #{item.apellidos}"/>
                         </p:column>
+                        <p:column width="100">
+                            <f:facet name="header">
+                                <h:outputText value="DIRECCION"/>
+                            </f:facet>
+                            <h:outputText value="#{item.direccion}"/>
+                        </p:column>
+                        <p:column width="100">
+                            <f:facet name="header">
+                                <h:outputText value="TELEFONO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telefonoFijo}"/>
+                        </p:column>
+                        <p:column width="100">
+                            <f:facet name="header">
+                                <h:outputText value="DISPONIBILIDAD"/>
+                            </f:facet>
+                            <h:outputText value="#{usuarioController.obtenerDisponibilidad(item.disponibilidad)}"/>
+                        </p:column>
                         <p:column width="120">
                             <f:facet name="header">
                                 <h:outputText value="ACCION"/>
                             </f:facet>
-                            <p:commandButton value="Ver Perfil"/>
+                            <p:commandLink id="verPerfil" value="Ver Perfil" actionListener="#{controlUrlControler.openResultadoBusqueda()}">
+                                <f:setPropertyActionListener target="#{usuarioController.selected}" value="#{item}"/>
+                            </p:commandLink>
                         </p:column>
-                       
+
                     </p:dataTable>
 
                 </h:form>
