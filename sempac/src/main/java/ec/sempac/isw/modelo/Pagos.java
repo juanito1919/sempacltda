@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pagos.findByIdUsuario", query = "SELECT p FROM Pagos p WHERE p.idUsuario.idUsuario = :idUsuario AND p.eliminado = :eliminado")})
 public class Pagos implements Serializable {
     private static final long serialVersionUID = 1L;
-    public static final String findByIdUsuario ="SistemaUsuario.findByIdUsuario";
+    public static final String findByIdUsuario ="Pagos.findByIdUsuario";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
