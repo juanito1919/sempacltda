@@ -7,73 +7,83 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:dialog id="ReferenciaPersonalEditDlg" 
-              widgetVar="ReferenciaPersonalEditDialog" 
+    <p:dialog id="userHabilidadesEspectativasDialogID" 
+              widgetVar="userHabilidadesEspectativasDialog" 
               modal="true" resizable="false" 
+              
               appendTo="@(body)" 
               header="#{bundle.EditReferenciaPersonalTitle}">
-        <h:form id="ReferenciaPersonalEditForm">
-             <p:panelGrid columns="2" 
-                          
-                          rendered="#{referenciaPersonalController.selected != null}">
-                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_referenciaPersonalPK_idReferenciaPersonal}" 
-                                   for="referenciaPersonalPK_idReferenciaPersonal" />
-                    <p:inputText id="referenciaPersonalPK_idReferenciaPersonal" 
-                                 value="#{referenciaPersonalController.selected.referenciaPersonalPK.idReferenciaPersonal}" 
-                                 title="#{bundle.EditReferenciaPersonalTitle_referenciaPersonalPK_idReferenciaPersonal}" 
-                                 required="true" 
-                                 requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_referenciaPersonalPK_idReferenciaPersonal}"/>
-                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_nombres}" 
-                                   for="nombres" />
-                    <p:inputText id="nombres" 
-                                 value="#{referenciaPersonalController.selected.nombres}" 
-                                 title="#{bundle.EditReferenciaPersonalTitle_nombres}" 
-                                 required="true" 
-                                 requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_nombres}"/>
-                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_apellidos}"
-                                   for="apellidos" />
-                    <p:inputText id="apellidos" 
-                                 value="#{referenciaPersonalController.selected.apellidos}" 
-                                 title="#{bundle.EditReferenciaPersonalTitle_apellidos}" 
-                                 required="true" 
-                                 requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_apellidos}"/>
-                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_telefono}" 
-                                   for="telefono" />
-                    <p:inputText id="telefono" 
-                                 value="#{referenciaPersonalController.selected.telefono}" 
-                                 title="#{bundle.EditReferenciaPersonalTitle_telefono}" 
-                                 required="true"
-                                 requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_telefono}"/>
-                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_correo}" 
-                                   for="correo" />
-                    <p:inputText id="correo" 
-                                 value="#{referenciaPersonalController.selected.correo}" 
-                                 title="#{bundle.EditReferenciaPersonalTitle_correo}" />
-                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_url}" 
-                                   for="url" />
-                    <p:inputText id="url" 
-                                 value="#{referenciaPersonalController.selected.url}" 
-                                 title="#{bundle.EditReferenciaPersonalTitle_url}" />
-                    <p:outputLabel value="#{bundle.EditReferenciaPersonalLabel_usuario}" 
-                                   for="usuario" />
-                    <p:selectOneMenu id="usuario" 
-                                     value="#{referenciaPersonalController.selected.usuario}" 
-                                     required="true" 
-                                     requiredMessage="#{bundle.EditReferenciaPersonalRequiredMessage_usuario}">
-                        <f:selectItems value="#{referenciaPersonalController.listaUsuario}"
-                                       var="usuarioItem"
-                                       itemValue="#{usuarioItem}"
-                                       itemLabel="#{usuarioItem.nombres}" />
-                        <f:converter binding="#{usuarioConverter}"/>
-                    </p:selectOneMenu>
-                </p:panelGrid>
-                <p:commandButton actionListener="#{referenciaPersonalController.update}" 
-                                 value="#{bundle.Save}" 
-                                 update=":ReferenciaPersonalListForm"/>
-                <p:commandButton value="#{bundle.Cancel}" 
-                                 onclick="ReferenciaPersonalEditDialog.hide()"/>
+        <h:form id="userHabilidadesEspectativasEditarForm">
+            <h:panelGroup id="display">
+                #{userHabilidadesEspectativasController.iniciaSelected()}
+                <p:fieldset legend="Informacion de Habilidades" style="margin-bottom:20px">
+                    <h:panelGrid 
+                        columns="4" 
+                        border="0"
+                        columnClasses="column1Class, column2Class,column3Class,column4Class" 
+                        >
+                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Habilidad}:" 
+                                       for="habilidad" />
+                        <p:selectOneMenu id="habilidad" 
+                                         style="width: 200px;"
+                                         required="true"
+                                         value="#{userHabilidadesEspectativasController.selected.habilidades}"
+                                         >
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{userHabilidadesEspectativasController.itemsHabilidades}"
+                                           var="HabilidadItem"
+                                           itemValue="#{HabilidadItem}"
+                                           itemLabel="#{HabilidadItem.nombre}"
+                                           />
+                            <f:converter binding="#{habilidadesConverter}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel rendered="true" value="DESCRIPCION:" 
+                                       for="descripcionh" />
+                        <p:inputTextarea id="descripcionh" value="#{userHabilidadesEspectativasController.selected.descripcionHabilidad}" cols="50"/>
+                    </h:panelGrid>
+                </p:fieldset>
+                <p:fieldset legend="Informacion de Espectativas" style="margin-bottom:20px">
+                    <h:panelGrid 
+                        columns="4" 
+                        border="0"
+                        columnClasses="column1Class, column2Class,column3Class,column4Class" 
+                        >
+                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Espectativa}" 
+                                       for="espectativa" />
+                        <p:selectOneMenu id="espectativa" 
+                                         style="width: 200px;"
+                                         value="#{userHabilidadesEspectativasController.selected.espectativas}"
+                                         >
+                            <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                            <f:selectItems value="#{userHabilidadesEspectativasController.itemsEspectativas}"
+                                           var="EspectativaItem"
+                                           itemValue="#{EspectativaItem}"
+                                           itemLabel="#{EspectativaItem.nombre}"
+                                           />
+                            <f:converter binding="#{espectativasConverter}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel rendered="true" value="DESCRIPCION:" 
+                                       for="descripcione" />
+                        <p:inputTextarea id="descripcione" value="#{userHabilidadesEspectativasController.selected.descripcionEspectativas}" cols="50"/>
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <div  style="margin-left: 40%; margin-bottom: 20px; margin-top: 10px;">
+                    <p:commandButton actionListener="#{userHabilidadesEspectativasController.guardaNuevo(event)}" 
+                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" 
+                                     update=":userHabilidadesEspectativasListForm,
+                                     :userHabilidadesEspectativasCreateForm:habilidad,
+                                     :userHabilidadesEspectativasCreateForm:espectativa,
+                                     :userHabilidadesEspectativasCreateForm:descripcione,
+                                     :userHabilidadesEspectativasCreateForm:descripcionh"/>
+
+                    <p:commandButton 
+                        value="#{bundleEtiquetasES.Cancelar}" 
+                        icon="ui-icon-circle-close"
+                        update=":userHabilidadesEspectativasListForm"/>
+                </div>
+            </h:panelGroup>
         </h:form>
-       
     </p:dialog>
 
 </ui:composition>

@@ -11,7 +11,7 @@
 
         <h:form id="EspecialidadPrimariaCreateForm">
           
-            <p:panel header="Estudios Primarios" style="border: none; margin-top: -10px;" >
+            <p:panel header="Estudios Primarios" footer="Nota: Sobre la educacion primaria ingrese la escula donde haya culminado sus estudios" style="border: none; margin-top: -10px;" >
                 <h:panelGroup id="display" style="width: 500px; height: 800px;">
                     #{estudiosPrimariaController.iniciaSelected()}
                     <h:panelGrid columns="2" 
@@ -40,8 +40,7 @@
                         </p:selectOneMenu>  
                           <p:outputLabel value="TIEMPO DE ESTUDIO:" for="anio"/>
                           <p:inputText id="anio" value="#{estudiosPrimariaController.selected.duracion}"/>
-                          <p:commandButton id="buttonSubir" value="Cargar Certificado"/>
-                          <p:inputText id="ruta" value="" size="35" disabled="true"/>
+                         
                     </h:panelGrid>
                     <div style="margin-left: 30%; margin-bottom: 20px; margin-top: 30px;">
                         <p:commandButton actionListener="#{estudiosPrimariaController.guardarEscuela}" icon="ui-icon-disk" ajax="false"  value="GUARDAR"/>

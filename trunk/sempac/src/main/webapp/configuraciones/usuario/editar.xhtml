@@ -9,7 +9,6 @@
         <div class="panelTitulo">
             INFORMACION PERSONAL
         </div> 
-
         <h:form id="UsuarioEditForm">
             <div style="width: 70%; float: left;">
                 <p:panel header="Información personal" style="border: none;" >
@@ -19,7 +18,6 @@
                                      cellspacing="4" 
                                      cellpadding="0" 
                                      columnClasses="column1Class, column2Class,column3Class,column4Class" >
-
                             <p:inputText id="idUsuario" 
                                          value="#{usuarioController.selected.idUsuario}" 
                                          title="#{bundle.EditUsuarioTitle_idUsuario}" 
@@ -104,6 +102,16 @@
                     </h:panelGroup>
 
                 </p:panel>
+                <p:panel header="Descripcion Perfil" style="border: none;" >
+                    <p:inputTextarea id="desPerfil" value="#{usuarioController.selected.perfil}"  rows="3" cols="140">
+                        <p:watermark for="desPerfil" value="Ingrese informacion referente a"/>
+                    </p:inputTextarea>
+
+                    <f:facet name="footer">
+                        <p:outputLabel value="Nota: " style="color:red; "/>
+                        <p:outputLabel value="Tiene 256 caracteres para describir su perfil" style="color:#6600ff; "/>
+                    </f:facet>
+                </p:panel>
             </div>
             <div style="width: 30%; float:left; margin: auto;">
                 <p:panel id="panelFoto" header="Foto" style="border: none; margin: auto;">
@@ -123,7 +131,7 @@
                 </p:panel>
             </div>
             <div style="clear:both; width: 70%;">
-                <p:panel header="Direccion Domiciliaria" style="border: none;">
+                <p:panel header="Direccion Domiciliaria"  style="border: none;">
                     <h:panelGroup id="display1">
                         <h:panelGrid columns="4"
                                      border="0" 
@@ -164,7 +172,7 @@
                                         update=":UsuarioEditForm:ciudad"/>
                             </p:selectOneMenu>
 
-                            <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
+                            <p:outputLabel value="#{bundleEtiquetasES.Ciudad} / CANTON" for="ciudad" />
                             <p:selectOneMenu id="ciudad" 
                                              value="#{usuarioController.selected.idCiudad}"
                                              required="true" 
@@ -213,6 +221,11 @@
                             </p:inputText>
                         </h:panelGrid>
                     </h:panelGroup>
+                    <f:facet name="footer">
+                        <p:outputLabel value="Importante: " style="color:red; "/>
+                        <p:outputLabel value="Recuerde que la información entregada es indispensable para la búsqueda de un empleo acorde a sus necesidades, por lo tanto pedimos entregar los datos con veracidad, ya que la compañía la utilizara en cualquier momento para su beneficio
+                                       La información ingresada queda bajo su responsabilidad y sera substituible de ser verificada por la compañía." style="color:#6600ff; "/>
+                    </f:facet>
                 </p:panel>
                 <div style="margin-left: 50%; margin-bottom: 20px;">
                     <p:commandButton value="GUARDAR"

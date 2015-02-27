@@ -5,14 +5,120 @@
                 template="../../resources/plantilla/ventanaInicioEmpresaPlantilla.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:define  name="formulario">
         <div class="panelTitulo">
             RESULTADO DE BUSQUEDA
         </div>
-        <div style="width: 20%; float: left;">
+        <div style="width: 30%; float: left;">
+            <p:panel header="Anuncios" style="border: none;">
 
+            </p:panel> 
+        </div>
+        <div style="width: 70%; float: left;">
+            <p:scrollPanel mode="native" style="width:99%;height:450px; border: 0;">
+                <p:accordionPanel multiple="true">
+                    <p:tab title="Datos Personales">
+                        <h:panelGrid columns="2" border="0">
+                            <p:panel footer="Foto de Perfil" style="border: none;">
+                                <p:graphicImage value="#{usuarioController.selected.url}" width="150" height="150"/>
+                            </p:panel>
+                            <h:panelGrid columns="2" border="0" columnClasses="column1ClassClassPerfil, column2ClassPerfil">
+                                <p:outputLabel value="CEDULA:" for="cedula"/>
+                                <p:outputLabel id="cedula" value="#{usuarioController.selected.identidad}"/>
+                                <p:outputLabel value="NOMBRES:" for="nombres"/>
+                                <p:outputLabel id="nombres" value="#{usuarioController.selected.nombres}"/>
+                                <p:outputLabel value="APELLIDOS:" for="apellido"/>
+                                <p:outputLabel id="apellido" value="#{usuarioController.selected.apellidos}"/>
+                                <p:outputLabel value="FECHA NACIMIENTO:" for="fechanacimiento"/>
+                                <p:outputLabel id="fechanacimiento" value="#{usuarioController.selected.fechaNacimiento}"/>
+                                <p:outputLabel value="DIRECCION:" for="direccion"/>
+                                <p:outputLabel id="direccion" value="#{usuarioController.selected.direccion}"/>
+                                <p:outputLabel value="EMAIL:" for="email"/>
+                                <p:outputLabel id="email" value="#{usuarioController.selected.correoElectronico}"/>
+                                <p:outputLabel value="TELEFONO FIJO:" for="fijo"/>
+                                <p:outputLabel id="fijo" value="#{usuarioController.selected.telefonoFijo}"/>
+                                <p:outputLabel value="TELEFONO CELULAR:" for="celular"/>
+                                <p:outputLabel id="celular" value="#{usuarioController.selected.telefonoMovil}"/>
+                                <p:outputLabel value="DISPONIBILIDAD:" for="disponibilidad"/>
+                                <p:outputLabel id="disponibilidad" value="#{usuarioController.obtenerDisponibilidad(usuarioController.selected.disponibilidad)}"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                    </p:tab>
+                    <p:tab title="Formacion Academica">
+
+                        #{estudiosPrimariaController.iniciaSelectedPerfil(usuarioController.selected)}
+                        <c:choose>
+                            <c:when test="#{not empty estudiosPrimariaController.selected}" >
+                                <p:panel rendered="#{estudiosPrimariaController.selected != null}" style="border: 0;">
+                                    <h:panelGrid columns="2" border="0">
+                                        <p:outputLabel value="ESCUELA:" for="escuela"/>
+                                        <h:outputText id="escuela" value="#{estudiosPrimariaController.selected.escuela.nombre}"/>
+                                        <p:outputLabel value="ANOS ESTUDIO:" for="anios"/>
+                                        <h:outputText id="anios" value="#{estudiosPrimariaController.selected.duracion}"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </c:when>
+                            <c:when test="#{empty estudiosPrimariaController.selected}" >
+                                <p:outputLabel value="Educacion Primaria no esta llena" style="color: red;"/>
+                            </c:when>
+                        </c:choose>
+
+                        #{especialidadSecundariaController.iniciaSelectedPerfil(usuarioController.selected)}
+                        <c:choose>
+                            <c:when test="#{not empty especialidadSecundariaController.selected}">
+                                <p:panel rendered="#{especialidadSecundariaController.selected != null}" style="border: 0;">
+                                    <h:panelGrid columns="2" border="0">
+                                        <p:outputLabel value="COLEGIO:" for="colegio"/>
+                                        <h:outputText id="colegio" value="#{especialidadSecundariaController.selected.colegio.nombre}"/>
+                                        <p:outputLabel value="ESPECILIDAD:" for="especilidadColegio"/>
+                                        <h:outputText id="especilidadColegio" value="#{especialidadSecundariaController.selected.especialidad}"/>
+                                        <p:outputLabel value="ANOS ESTUDIO:" for="aniosc"/>
+                                        <h:outputText id="aniosc" value="#{especialidadSecundariaController.selected.aniosEstudios}"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </c:when>
+                            <c:when test="#{empty especialidadSecundariaController.selected}">
+
+                                <div><p:outputLabel value="Educacion Secundaria no tiene o no esta Ingresada " style="color: red;"/></div>
+                            </c:when>
+                        </c:choose>
+
+
+                        #{estudiosUniversitariosController.iniciarSelectPerfil(usuarioController.selected)}
+                        <p:panel rendered="#{estudiosUniversitariosController.itemsEstudiosUniversitarios.size()!=0}" style="border: 0;">
+
+                            <c:forEach  items="#{estudiosUniversitariosController.itemsEstudiosUniversitarios}" var="uni">
+                                <h:panelGrid columns="2" border="0">
+                                    <p:outputLabel value="UNIVERSIDAD:"/>
+                                    <h:outputText  value="#{uni.universidad.nombre}"/>
+                                    <p:outputLabel value="CARRERA:"/>
+                                    <h:outputText  value="#{uni.carrera.nombre}"/>
+                                    <p:outputLabel value="TITULO OBTENIDO:"/>
+                                    <h:outputText  value="#{uni.titulo}"/>
+                                    <p:outputLabel value="ANOS ESTUDIO:" />
+                                    <h:outputText  value="#{uni.tiempoEstudios}"/>
+                                    <p/>
+                                </h:panelGrid>
+                            </c:forEach>
+
+                        </p:panel>
+
+                    </p:tab>
+                    <p:tab title="Habilidades y Espectativas">
+
+                    </p:tab>
+                    <p:tab title="Esperiencia Laboral">
+
+                    </p:tab>
+                    <p:tab title="Referencia Personal">
+
+                    </p:tab>
+                </p:accordionPanel>
+            </p:scrollPanel>
         </div>
     </ui:define>
 

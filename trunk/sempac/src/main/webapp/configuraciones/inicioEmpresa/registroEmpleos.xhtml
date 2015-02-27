@@ -12,22 +12,22 @@
             REGISTRO DE EMPLEOS 
         </div>
 
-        <div style="float: left; width: 20%;">
+        <div style="float: left; width: 30%;">
             <p:panel header="Anuncios" style="border: none; margin: 0px auto;">
 
             </p:panel>
         </div>
 
-        <div style="float: left; width: 80%;">
-            <p:panel header="Registro Empleos" style="border: none; margin: 0px auto;">
+        <div style="float: left; width: 70%;">
+            <p:panel header="Registro Empleos" footer="Los Empleos que Publique seran mostrado en la paguina principal" style="border: none; margin: 0px auto;">
                 <div style=" margin-bottom: 10px; font-size: 1.1em; color: #0066ff;">Aqui pudes publicar los diferentes empleos que requiere tu empresa.</div> 
                 <h:form id="formPublicarTrabajo">
                     #{personalRequeridoController.iniciarBusqueda()}
                     <h:panelGroup id="display" style="border: none; margin: 0px auto;">
-                        <h:panelGrid columns="2" 
-                                     border="0" 
-                                     cellspacing="4" 
-                                     cellpadding="0" 
+                        <h:panelGrid columns="2"
+                                     border="0"
+                                     cellspacing="4"
+                                     cellpadding="0"
                                      columnClasses="column1Class, column2Class">
                             <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Habilidad}:" 
                                            for="habilidad" />
@@ -45,7 +45,6 @@
                             <p:outputLabel for="ciudad" value="#{bundleEtiquetasES.Ciudad}"  />
                             <p:selectOneMenu id="ciudad" 
                                              value="#{personalRequeridoController.ciudad}"
-
                                              required="true"
                                              effect="fade" 
                                              var="t" 
@@ -71,14 +70,8 @@
                             <p:commandButton  value="PUBLICAR" actionListener="#{personalRequeridoController.guardarNuevo}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
                             <p:commandButton value="#{bundleEtiquetasES.Cancelar}" action="#{controlUrlControler.openPrincipalEmpresa()}"/>
                         </div>
-
                     </h:panelGroup>
                 </h:form>
-                <h:form>
-                    <p:commandButton value="REGRESAR" ajax="false" action="#{controlUrlControler.openPrincipalEmpresa()}"/>
-
-                </h:form>
-
             </p:panel>
         </div>
     </ui:define>

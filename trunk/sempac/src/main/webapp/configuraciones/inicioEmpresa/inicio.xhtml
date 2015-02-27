@@ -49,12 +49,13 @@
             <div style="float: left;">
                 <p:lightBox styleClass="imagebox" id="lighbox1"> 
                     <h:outputLink value="" title="Foto de Perfil">
-                        <h:graphicImage  id="fotoPerfil" value="../../resources/images/icon-business.png" height="150" width="150" />
-                        
+
+                        <h:graphicImage  id="fotoPerfil" value="#{empresaController.selected.url}" height="150" width="150" />
+
                     </h:outputLink>
                 </p:lightBox>
                 <h:form id="formCambiarFoto">
-                    <p:commandLink value="Cambiar Foto"/>
+                    <p:commandLink value="Cambiar Foto" onclick="PF('dlg2').show();"/>
                 </h:form>
 
             </div>
@@ -67,12 +68,74 @@
                 <div><span class="title">Ciudad:</span><span class="contenido">#{empresaController.selected.idCiudad.nombre}</span></div>
                 <div><span class="title">Direccion:</span><span class="contenido">#{empresaController.selected.direccion}</span></div>
             </div>
+            <div style="clear:both; margin-top: 10px;">
+                <p:panel header="Personas que han aplicado a los empleos publicados" style="width: 99%; border: none; margin-top: 10px;">
+                    <h:form id="resultadoEmpleos">
 
+                        <p:dataTable style="width: 100%;" id="datalist" value="#{empleoRequeridoController.listEmpleoRequerigo}" var="item"
+                                     selectionMode="single" 
+                                     selection="#{empleoRequeridoController.selected}"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     rowKey="#{item.idEmpleoRequerido}"
+                                     rows="11"
+
+
+                                     >
+                            <p:column width="5">
+                                <f:facet name="header">
+                                    <h:outputText value="HABILIDAD"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idPersonalRequerido.idHabilidades.nombre}"/>
+                            </p:column>
+                            <p:column width="5">
+                                <f:facet name="header">
+                                    <h:outputText value="CIUDAD"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idPersonalRequerido.idCiudad.nombre}"/>
+                            </p:column>
+                            <p:column width="5">
+                                <f:facet name="header">
+                                    <h:outputText value="DESCRIPCION"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idPersonalRequerido.descripcion}"/>
+                            </p:column>
+                            <p:column width="5">
+                                <f:facet name="header">
+                                    <h:outputText value="EMPLEADO INTERESADO"/>
+                                </f:facet>
+                                <p:commandLink value="Ver Perfil" actionListener="#{controlUrlControler.openResultadoBusqueda()}">
+                                    <f:setPropertyActionListener target="#{usuarioController.selected}" value="#{item.idUsuario}"/>
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:panel>
+            </div>
         </div>
+
         <div style="width: 20%; float: left;">
             <p:panel header="Publicidad" style="border: none;">
                 <img src="http://1.bp.blogspot.com/-mcq-h5B3Cjw/VHTnA4UPf4I/AAAAAAAAdvQ/P65oboyee8M/s1600/anunciate.gif" alt="" width="100%" height="150"/>
             </p:panel>
         </div>
+        <p:dialog header="Selecionar foto de Perfil" widgetVar="dlg2" modal="true" height="500" width="800" resizable="false">
+
+            <h:form id="SubirFotoUsuario" enctype="multipart/form-data">
+                <p:fileUpload fileUploadListener="#{empresaController.subirFoto}" 
+                              mode="advanced" 
+                              dragDropSupport="false"
+                              label="Buscar Archivo"
+
+                              update="messages,SubirFotoUsuario" 
+                              sizeLimit="900000" 
+                              cancelLabel="Cancelar"
+                              uploadLabel="Subir"
+                              fileLimit="1" 
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                              oncomplete="PF('dlg2').hide();"/>
+                <p:growl id="messages" showDetail="true" />
+            </h:form>
+        </p:dialog>
     </ui:define>
 </ui:composition>

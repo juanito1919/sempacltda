@@ -12,18 +12,18 @@
     </div> 
 
     <p:panel header="Idioma" 
-             style="border: none; width: 75%; margin: 5px auto;">
+             style="border: none; width: 60%; margin: 5px auto;">
         <h:form id="idiomaDominadoCreateForm">
             <h:panelGroup id="display">
                     #{idiomaDominadoController.iniciaSelected()}
                 <h:panelGrid 
-                    columns="6" 
+                    columns="2" 
                     border="0"
                     columnClasses="column1Class, column2Class,column3Class,column4Class,column1Class,column6Class" 
                     >
-                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Idioma}" 
+                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Idioma}:" 
                                for="idioma" />
-                    <p:selectOneMenu id="idioma" 
+                    <p:selectOneMenu id="idioma" style="width: 210px;" 
                                      value="#{idiomaDominadoController.selected.idioma}"
                                      >
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
@@ -39,6 +39,7 @@
                     <p:outputLabel rendered="true" value="#{bundleEtiquetasES.NivelHablado}" 
                                    for="hablado" />
                     <p:selectOneMenu id="hablado" 
+                                     style="width: 210px;"
                                      required="false"
                                      value="#{idiomaDominadoController.selected.nivelHablado}">
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}" itemValue="-"/>
@@ -51,6 +52,7 @@
                                    for="escrito" />
                     <p:selectOneMenu id="escrito" 
                                      required="false"
+                                     style="width: 210px;"
                                      value="#{idiomaDominadoController.selected.nivelEscrito}">
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}" itemValue="-"/>
                         <f:selectItem itemLabel="#{bundleEtiquetasES.Alto}" itemValue="A" />  
