@@ -34,13 +34,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EstudiosEspecializados.findByIdEstudiosEspecializados", query = "SELECT e FROM EstudiosEspecializados e WHERE e.idEstudiosEspecializados = :idEstudiosEspecializados"),
     @NamedQuery(name = "EstudiosEspecializados.findByTitulo", query = "SELECT e FROM EstudiosEspecializados e WHERE e.titulo = :titulo"),
     @NamedQuery(name = "EstudiosEspecializados.findByUrl", query = "SELECT e FROM EstudiosEspecializados e WHERE e.url = :url"),
-    @NamedQuery(name = "EstudiosEspecializados.findByEliminado", query = "SELECT e FROM EstudiosEspecializados e WHERE e.eliminado = :eliminado")})
+    @NamedQuery(name = "EstudiosEspecializados.findByEliminado", query = "SELECT e FROM EstudiosEspecializados e WHERE e.eliminado = :eliminado"),
+    @NamedQuery(name = "EstudiosEspecializados.findByUsuario", query = "SELECT e FROM EstudiosEspecializados e WHERE e.idUsuario.idUsuario = :idUsuario AND e.eliminado = :eliminado")})
 public class EstudiosEspecializados implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    public static final String findByUsuario ="EstudiosEspecializados.findByUsuario"; 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID_ ESTUDIOS_ESPECIALIZADOS", nullable = false)
+    @Column(name = "ID_ESTUDIOS_ESPECIALIZADOS", nullable = false)
     private Long idEstudiosEspecializados;
     @Size(max = 64)
     @Column(length = 64)
