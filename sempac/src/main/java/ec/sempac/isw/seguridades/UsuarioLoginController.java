@@ -133,7 +133,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             String estadoUsuario = String.valueOf(usuarioSistema.getEstado());
 
             // Colocando el tiempo de inactividad que tiene el sistema
-            Sesion.tiempoInactividad(100000);
+            Sesion.tiempoInactividad(1000000);
             //System.out.println("Contrasena :"+this.contrasena);
          
             //System.out.println("ContrasenaDesemcritada :"+Sesion.MD5(this.contrasena));
