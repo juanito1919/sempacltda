@@ -1287,6 +1287,9 @@ public class UsuarioController implements Serializable {
         Usuario user = ActivacionUsuario.getUsuario();
         System.out.println("codigo user.." + user.getIdUsuario());
         SistemaUsuario su = ejbFacadeSistemaUsuario.getUsuarioActivacion(user.getIdUsuario());
+        if(su.getEstado()=='E'){
+            
+            return;}
         Calendar today = Calendar.getInstance();
         today = Calendar.getInstance();
         today.add(Calendar.MONTH, 3);//fecha actual mas 3 meses
