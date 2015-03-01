@@ -133,7 +133,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             String estadoUsuario = String.valueOf(usuarioSistema.getEstado());
 
             // Colocando el tiempo de inactividad que tiene el sistema
-            Sesion.tiempoInactividad(10000);
+            Sesion.tiempoInactividad(100000);
             //System.out.println("Contrasena :"+this.contrasena);
          
             //System.out.println("ContrasenaDesemcritada :"+Sesion.MD5(this.contrasena));
@@ -141,7 +141,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             //if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
                  
                 // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
-                if (estadoUsuario.equals("V")||estadoUsuario.equals("P")) {
+                if (estadoUsuario.equals("V")||estadoUsuario.equals("P") ||estadoUsuario.equals("E")) {
                     
                     // Iniciando la variable de session con los datos del usuario mediante la entidad.                      
                     ActivacionUsuario.setUsuario(this.getUsuario());
