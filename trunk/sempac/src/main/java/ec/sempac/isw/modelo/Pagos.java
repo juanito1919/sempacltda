@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pagos.findByValor", query = "SELECT p FROM Pagos p WHERE p.valor = :valor"),
     @NamedQuery(name = "Pagos.findByEliminado", query = "SELECT p FROM Pagos p WHERE p.eliminado = :eliminado"),
     //Usuario
-    @NamedQuery(name = "Pagos.findByIdUsuario", query = "SELECT p FROM Pagos p WHERE p.idUsuario.idUsuario = :idUsuario AND p.eliminado = :eliminado")})
+    @NamedQuery(name = "Pagos.findByIdUsuario", query = "SELECT p FROM Pagos p WHERE p.idUsuario.idUsuario = :idUsuario AND p.eliminado = :eliminado ORDER BY p.fechaRegistro DESC")})
 public class Pagos implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByIdUsuario ="Pagos.findByIdUsuario";
