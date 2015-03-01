@@ -7,9 +7,11 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.EstudiosEspecializados;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,10 @@ public class EstudiosEspecializadosFacade extends AbstractFacade<EstudiosEspecia
     public EstudiosEspecializadosFacade() {
         super(EstudiosEspecializados.class);
     }
-    
+    public List<EstudiosEspecializados> getItemsEspecializacionUser(Long idUsuario) {
+        Query query = this.em.createNamedQuery(EstudiosEspecializados.findByUsuario);
+        query.setParameter("eliminado", false);
+        query.setParameter("idUsuario", idUsuario);
+        return query.getResultList();
+    }
 }
