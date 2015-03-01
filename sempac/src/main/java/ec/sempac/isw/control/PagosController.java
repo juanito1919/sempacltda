@@ -11,6 +11,7 @@ import ec.sempac.isw.seguridades.ActivacionUsuario;
 import ec.sempac.isw.seguridades.Sesion;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -34,6 +35,10 @@ public class PagosController extends AbstractController<Pagos> implements Serial
     private Usuario usuario;
     private String correoElectronico;
 
+    private List<Pagos> itemsEspera;
+    private List<Pagos> itemsPagoUsuario;
+    private String identidad;
+
     public PagosController() {
         super(Pagos.class);
     }
@@ -42,44 +47,80 @@ public class PagosController extends AbstractController<Pagos> implements Serial
     public void init() {
         super.setFacade(ejbFacade);
         setSelected(new Pagos());
-        setUsuario(ActivacionUsuario.getUsuario());
-        setSistemaUsuario(ejbFacadeSistemaUsuario.getUsuarioActivacion(getUsuario().getIdUsuario()));
-    }
-
-    public void buscarUsuario() {
-        System.out.println("pasoo");
-        setUsuario(ejbFacadeUsuario.getUsuario(correoElectronico));
-        if (getUsuario() == null) {
-            System.out.println("si encontro");
-            MuestraMensaje.addError("Usuario no registrado");
-        } else {
-            setSistemaUsuario(ejbFacadeSistemaUsuario.find(getUsuario().getIdUsuario()));
-        }
-    }
-
-    public void modificarSistemaUsuario(ActionEvent event) {
-        if (getSistemaUsuario() != null && getUsuario()!=null) {
-            System.out.println("si va a guardar");
-            this.create(event);
-            getSistemaUsuario().setEstado('P');
-            getSistemaUsuario().setFechaCaducidad(new Date());/// esto mas 12
-            ejbFacadeSistemaUsuario.edit(getSistemaUsuario());
-            this.getSelected().setIdUsuario(getUsuario());
-            this.getSelected().setFechaRegistro(new Date());
-            this.getSelected().setValor(new BigDecimal(0.0));
-            ejbFacade.create(getSelected());
-        } else {
-            System.out.println("no va a guardar");
-            MuestraMensaje.addError("Seleccione primero un usuario");
-        }
-        setUsuario(null);
+        //if (ActivacionUsuario.getUsuario() != null) {
+        //setUsuario(ActivacionUsuario.getUsuario());
+        // setSistemaUsuario(ejbFacadeSistemaUsuario.getUsuarioActivacion(getUsuario().getIdUsuario()));
+        itemsEspera = ejbFacade.getItemsEspera();
+        itemsPagoUsuario = new ArrayList<Pagos>();
+        //}
     }
 
     @Override
+    public void update() {
+        if (this.getSelected() != null) {
+            this.getSelected().getIdUsuario().getSistemaUsuario().setFechaCaducidad(this.getSelected().getFechaCaducidad());
+            super.update(); //To change body of generated methods, choose Tools | Templates.
+            ejbFacadeSistemaUsuario.edit(this.getSelected().getIdUsuario().getSistemaUsuario());
+            itemsEspera = ejbFacade.getItemsEspera();
+            buscarUsuario();
+        }
+    }
+
+    @Override
+    public Pagos prepareCreate(ActionEvent event) {
+        return super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveNew(ActionEvent event) {
+        if (this.getSelected() != null && usuario!=null && usuario.getSistemaUsuario()!=null) {
+            usuario.getSistemaUsuario().setFechaCaducidad(this.getSelected().getFechaCaducidad());
+            this.getSelected().setIdUsuario(usuario);
+            super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
+            ejbFacadeSistemaUsuario.edit(usuario.getSistemaUsuario());
+            itemsEspera = ejbFacade.getItemsEspera();
+            buscarUsuario();
+        }
+    }
+
+    public void buscarUsuario() {
+        System.out.println("pasoo " + identidad);
+        if (identidad != null) {
+            setUsuario(ejbFacadeUsuario.getUserIdentificador(identidad));
+            if (getUsuario() == null) {
+                MuestraMensaje.addError("Usuario no registrado");
+                itemsPagoUsuario = new ArrayList<Pagos>();
+            } else {
+                itemsPagoUsuario = ejbFacade.getItemsUsuario(usuario.getIdUsuario());
+            }
+        } else {
+            this.setUsuario(null);
+        }
+    }
+
+//    public void modificarSistemaUsuario(ActionEvent event) {
+//        if (getSistemaUsuario() != null && getUsuario() != null) {
+//            System.out.println("si va a guardar");
+//            this.create(event);
+//            getSistemaUsuario().setEstado('P');
+//            getSistemaUsuario().setFechaCaducidad(new Date());/// esto mas 12
+//            ejbFacadeSistemaUsuario.edit(getSistemaUsuario());
+//            this.getSelected().setIdUsuario(getUsuario());
+//            this.getSelected().setFechaRegistro(new Date());
+//            this.getSelected().setValor(new BigDecimal(0.0));
+//            ejbFacade.create(getSelected());
+//        } else {
+//            System.out.println("no va a guardar");
+//            MuestraMensaje.addError("Seleccione primero un usuario");
+//        }
+//        setUsuario(null);
+//    }
+
+    @Override
     protected void setEmbeddableKeys() {
-        this.getSelected().setIdUsuario(getUsuario());
-        this.getSelected().setFechaRegistro(new Date());
-        this.getSelected().setValor(new BigDecimal(0.0));
+//        this.getSelected().setIdUsuario(getUsuario());
+//        this.getSelected().setFechaRegistro(new Date());
+//        this.getSelected().setValor(new BigDecimal(0.0));
         //System.out.println("Usuario:  "+ this.getSelected().getIdUsuario());
     }
 
@@ -133,6 +174,51 @@ public class PagosController extends AbstractController<Pagos> implements Serial
      */
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    /**
+     * @return the itemsEspera
+     */
+    public List<Pagos> getItemsEspera() {
+        for (Pagos espera : itemsEspera) {
+
+        }
+        return itemsEspera;
+    }
+
+    /**
+     * @param itemsEspera the itemsEspera to set
+     */
+    public void setItemsEspera(List<Pagos> itemsEspera) {
+        this.itemsEspera = itemsEspera;
+    }
+
+    /**
+     * @return the identidad
+     */
+    public String getIdentidad() {
+        return identidad;
+    }
+
+    /**
+     * @param identidad the identidad to set
+     */
+    public void setIdentidad(String identidad) {
+        this.identidad = identidad;
+    }
+
+    /**
+     * @return the itemsPagoUsuario
+     */
+    public List<Pagos> getItemsPagoUsuario() {
+        return itemsPagoUsuario;
+    }
+
+    /**
+     * @param itemsPagoUsuario the itemsPagoUsuario to set
+     */
+    public void setItemsPagoUsuario(List<Pagos> itemsPagoUsuario) {
+        this.itemsPagoUsuario = itemsPagoUsuario;
     }
 
 }
