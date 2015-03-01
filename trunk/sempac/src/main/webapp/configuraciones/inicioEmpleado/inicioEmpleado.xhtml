@@ -162,7 +162,8 @@
                 </h:panelGrid>
                 <p:commandButton id="pagar"
                                  actionListener="#{usuarioController.pagosDeposito}"
-                                 value="Pagar"/> 
+                                 ajax="false"
+                                 value="Pagar"  /> 
                 <p:commandButton id="cancelar" value="CANCELAR"/>
             </h:form>
         </p:dialog>
