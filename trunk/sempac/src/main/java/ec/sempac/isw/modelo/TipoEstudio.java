@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoEstudio.findByEliminado", query = "SELECT t FROM TipoEstudio t WHERE t.eliminado = :eliminado")})
 public class TipoEstudio implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String findByDescripcion ="TipoEstudio.findByDescripcion";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
