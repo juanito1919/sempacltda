@@ -45,13 +45,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SistemaUsuario.findByIntentosFallidos", query = "SELECT s FROM SistemaUsuario s WHERE s.intentosFallidos = :intentosFallidos"),
     @NamedQuery(name = "SistemaUsuario.findByFechaUltimoIntentoFallido", query = "SELECT s FROM SistemaUsuario s WHERE s.fechaUltimoIntentoFallido = :fechaUltimoIntentoFallido"),
     
-    @NamedQuery(name = "SistemaUsuario.findByEstadoPago", query = "SELECT s.usuario FROM SistemaUsuario s WHERE s.idUsuario = :idUsuario AND s.estado = :estado")
+    @NamedQuery(name = "SistemaUsuario.findByEstadoPago", query = "SELECT s.usuario FROM SistemaUsuario s WHERE s.idUsuario = :idUsuario AND s.estado = :estado"),
+    @NamedQuery(name = "SistemaUsuario.findByEspera", query = "SELECT s.usuario FROM SistemaUsuario s WHERE s.estado = :estado AND s.usuario.eliminado = :eliminado")
     
 })
 public class SistemaUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByEstadoPago ="SistemaUsuario.findByEstadoPago";
     public static final String findByIdUsuario ="SistemaUsuario.findByIdUsuario";
+    public static final String findByEspera ="SistemaUsuario.findByEspera";
     @Id
     @Basic(optional = false)
     @NotNull
