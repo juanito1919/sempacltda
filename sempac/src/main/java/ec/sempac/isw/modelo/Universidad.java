@@ -39,10 +39,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Universidad.findAll", query = "SELECT u FROM Universidad u"),
     @NamedQuery(name = "Universidad.findByIdUniversidad", query = "SELECT u FROM Universidad u WHERE u.idUniversidad = :idUniversidad"),
     @NamedQuery(name = "Universidad.findByNombre", query = "SELECT u FROM Universidad u WHERE u.nombre = :nombre"),
-    @NamedQuery(name = "Universidad.findByEliminado", query = "SELECT u FROM Universidad u WHERE u.eliminado = :eliminado")})
+    @NamedQuery(name = "Universidad.findByEliminado", query = "SELECT u FROM Universidad u WHERE u.eliminado = :eliminado"),
+    @NamedQuery(name = "Universidad.findByPaisEliminado", query = "SELECT u FROM Universidad u WHERE u.idPais.idPais = :idPais AND u.eliminado = :eliminado")})
 public class Universidad implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String findByEliminado ="Universidad.findByEliminado";
+    
+    public static final String findByPaisEliminado ="Universidad.findByPaisEliminado";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
