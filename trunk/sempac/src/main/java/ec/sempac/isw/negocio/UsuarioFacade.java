@@ -160,5 +160,15 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             return null;
         }
     }
-
+    public Usuario getUserIdentificador(String identidad) {
+        Query query = this.em.createNamedQuery(Usuario.findByIdentidad);
+        query.setParameter("identidad", identidad);
+        query.setParameter("eliminado", false);
+        try {
+            return (Usuario) query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("Es nulo");
+            return null;
+        }
+    }
 }
