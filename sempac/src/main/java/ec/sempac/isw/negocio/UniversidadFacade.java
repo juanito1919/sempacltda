@@ -36,4 +36,10 @@ public class UniversidadFacade extends AbstractFacade<Universidad> {
         query.setParameter("eliminado",eliminado);
         return query.getResultList();
     }
+    public List<Universidad> getItemsUniversidadPais(short idPais) {
+        Query query = this.em.createNamedQuery(Universidad.findByPaisEliminado);
+        query.setParameter("eliminado",false);
+        query.setParameter("idPais",idPais);
+        return query.getResultList();
+    }
 }
