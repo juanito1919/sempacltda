@@ -92,7 +92,7 @@ public class ActivacionUsuario {
      * @return the codigoUsuario
      */
     public static Long getCodigoUsuario() {
-        return Long.parseLong((Sesion.getVariable("codigoUsuario") != null) ? Sesion.getVariable("codigoUsuario").toString() : null);
+        return Long.parseLong((Sesion.getVariable("codigoUsuario") != null) ? Sesion.getVariable("codigoUsuario").toString() : "0");
     }
     public static int getCodigoEmpresa() {
         return Integer.parseInt((Sesion.getVariable("codigoEmpresa") != null) ? Sesion.getVariable("codigoEmpresa").toString() : null);
