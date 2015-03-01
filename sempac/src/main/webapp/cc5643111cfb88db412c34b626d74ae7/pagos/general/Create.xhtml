@@ -44,6 +44,12 @@
                     </p:panelGrid>
 
                     <p:panel id="panelUsuario">
+                        <h:panelGrid columns="2" style="width:100%;">
+                            <p:outputLabel value="USUARIO" />
+                            <p:inputText placeholder="Buscar Por Identificacion" value="#{pagosController.identidad}">
+                                <p:ajax event="blur"  listener="#{pagosController.buscarUsuario()}"  update="panelUsuario"/>
+                            </p:inputText>
+                        </h:panelGrid>
                         <h:panelGrid columns="2"  rendered="#{pagosController.usuario!=null}">
                             <f:facet name="header">
                                 <p:graphicImage value="Documentos/#{pagosController.usuario.username}/#{pagosController.usuario.url}" width="60" height="60"/> 
@@ -65,7 +71,7 @@
                         <p:commandButton actionListener="#{pagosController.saveNew}" 
                                          value="#{bundle.Save}" 
                                          rendered="#{pagosController.usuario!=null}"
-                                         update="display,:PagosListForm:datalist,:growl,:buscarForm" 
+                                         update="display,:PagosListForm:datalist,:growl" 
                                          oncomplete="handleSubmit(args, 'PagosCreateDialog');"/>
                     </p:panel>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PagosCreateDialog.hide()"/>

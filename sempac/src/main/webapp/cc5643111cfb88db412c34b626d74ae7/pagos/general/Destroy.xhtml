@@ -8,8 +8,8 @@
 
     <ui:composition>
 
-        <p:dialog id="PagosViewDlg" widgetVar="PagosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="DATOS">
-            <h:form id="PagosViewForm">
+        <p:dialog id="PagosDestroyDlg" widgetVar="PagosDestroyDialog" modal="true" resizable="false" appendTo="@(body)" header="Eliminar Permanentemente">
+            <h:form id="PagosDestroyForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pagosController.selected != null}">
                         <h:outputText value="FECHA DE REGISTRO" style="font-weight: bold; color: #cc0000"/>
@@ -64,9 +64,12 @@
                             <h:outputText value="#{pagosController.selected.idUsuario.correoElectronico}"/>
                         </h:panelGrid>
                     </p:panel>
-                    <p:commandButton value="Cerrar" onclick="PagosViewDialog.hide()"/>
+                        <p:commandButton id="destroyButton" icon="ui-icon-trash"  
+                                         value="Eliminar Permanentemente" 
+                                         actionListener="#{pagosController.destroy}" 
+                                         update="display,:PagosListForm:datalist,:growl" disabled="#{empty pagosController.selected}"/>
+                     <p:commandButton value="#{bundle.Close}" onclick="PagosDestroyDialog.hide()"/>
                 </h:panelGroup>
-
             </h:form>
         </p:dialog>
 

@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="PagosEditDlg" widgetVar="PagosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="EDITAR PAGOS">
+        <p:dialog id="PagosEditDlg" widgetVar="PagosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="EDITAR">
             <h:form id="PagosEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pagosController.selected != null}">
@@ -22,7 +22,6 @@
                                     value="#{pagosController.selected.fechaRegistro}" 
                                     required="true" 
                                     requiredMessage="F. REQUERIDA" 
-                                    disabled="true"
                                     showOn="button"/>
 
                         <p:outputLabel value="F. CADUCIDAD" for="fechaCaducidad" />
@@ -34,10 +33,9 @@
 
                         <p:outputLabel value="# DEPOSITO" for="numeroDeposito" />
                         <p:inputText id="numeroDeposito" 
-                                     value="#{pagosController.selected.numeroDeposito}"
-                                     disabled="true"/>
+                                     value="#{pagosController.selected.numeroDeposito}"/>
 
-                        <p:outputLabel value="F. DEPOSITO" for="fechaDeposito" />
+                        <p:outputLabel value="#{bundle.EditPagosLabel_fechaDeposito}" for="fechaDeposito" />
                         <p:calendar id="fechaDeposito" 
                                     locale="de"
                                     navigator="true"
@@ -62,8 +60,7 @@
                                 <f:selectItem itemLabel="EN ESPERA" itemValue="E" />  
                             </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{pagosController.update}" value="#{bundle.Save}" 
-                                     update="display,:PagosListForm:datalist,:growl,:buscarForm " oncomplete="handleSubmit(args, 'PagosEditDialog');"/>
+                    <p:commandButton actionListener="#{pagosController.update}" value="#{bundle.Save}" update="display,:PagosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PagosEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PagosEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

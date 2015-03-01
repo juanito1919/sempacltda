@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="PagosViewDlg" widgetVar="PagosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="DATOS">
+        <p:dialog id="PagosViewDlg" widgetVar="PagosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="VER">
             <h:form id="PagosViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pagosController.selected != null}">
@@ -64,9 +64,8 @@
                             <h:outputText value="#{pagosController.selected.idUsuario.correoElectronico}"/>
                         </h:panelGrid>
                     </p:panel>
-                    <p:commandButton value="Cerrar" onclick="PagosViewDialog.hide()"/>
+                    <p:commandButton value="#{bundle.Close}" onclick="PagosViewDialog.hide()"/>
                 </h:panelGroup>
-
             </h:form>
         </p:dialog>
 
