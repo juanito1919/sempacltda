@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Todos los Pagos"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="PagosListForm">
+                <p:dataTable id="datalist" value="#{pagosController.items}" var="item"
+                             selectionMode="single" selection="#{pagosController.selected}"
+                             paginator="true"
+                             rowKey="#{item.idPagos}"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             >
+                    <f:facet name="header">
+                        <h:outputText value="Listado de Todos los Pagos"/>
+                    </f:facet>
+                    <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                    <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                    <p:column sortBy="#{item.idUsuario.identidad}" filterBy="#{item.idUsuario.identidad}">
+                        <f:facet name="header">
+                            <h:outputText value="IDENTIFICACION"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idUsuario.identidad}"/>
+                    </p:column>
+                    <p:column sortBy="#{item.idUsuario.nombres} #{item.idUsuario.apellidos}" filterBy="#{item.idUsuario.nombres} #{item.idUsuario.apellidos}">
+                        <f:facet name="header">
+                            <h:outputText value="USUARIO"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idUsuario.nombres} #{item.idUsuario.apellidos} "/>
+                    </p:column>
+                    <p:column sortBy="#{item.fechaRegistro}" >
+                        <f:facet name="header">
+                            <h:outputText value="F. REGISTRO"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaRegistro}">
+                            <f:convertDateTime pattern="EEE, dd MMM, yyyy, HH:mm" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column sortBy="#{item.fechaCaducidad}" >
+                        <f:facet name="header">
+                            <h:outputText value="F. CADUCIDAD"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaCaducidad}">
+                            <f:convertDateTime pattern="EEE, dd MMM, yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column sortBy="#{item.fechaDeposito}">
+                        <f:facet name="header">
+                            <h:outputText value="F. DEPOSITO"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaDeposito}">
+                            <f:convertDateTime pattern="EEE, dd MMM, yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column sortBy="#{item.numeroDeposito}" filterBy="#{item.numeroDeposito}">
+                        <f:facet name="header">
+                            <h:outputText value="# DEPOSITO"/>
+                        </f:facet>
+                        <h:outputText value="#{item.numeroDeposito}"/>
+                    </p:column>
+                    <p:column sortBy="#{item.valor}" filterBy="#{item.valor}">
+                        <f:facet name="header">
+                            <h:outputText value="VALOR"/>
+                        </f:facet>
+                        <h:outputText value="#{item.valor}"/>
+                    </p:column>
+                    <p:column sortBy="#{item.eliminado}">
+                        <f:facet name="header">
+                            <h:outputText value="ELIMINADO"/>
+                        </f:facet>
+                        <p:selectBooleanCheckbox value="#{item.eliminado}" disabled="true"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pagosController.prepareCreate}" update=":PagosCreateForm" oncomplete="PF('PagosCreateDialog').show()"/>
+                        <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PagosViewForm" oncomplete="PF('PagosViewDialog').show()" disabled="#{empty pagosController.selected}"/>
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PagosEditForm" oncomplete="PF('PagosEditDialog').show()" disabled="#{empty pagosController.selected}"/>
+                        <p:commandButton id="deleteButton"   icon="ui-icon-trash" value="Destruir" update=":PagosDestroyForm" oncomplete="PF('PagosDestroyDialog').show()" disabled="#{empty pagosController.selected}"/>
+                    </f:facet>
+                </p:dataTable>
+
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+            <ui:include src="Destroy.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>
