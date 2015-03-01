@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "USUARIO", catalog = "jmj", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"USERNAME"}),
+    @UniqueConstraint(columnNames = {"IDENTIDAD"}),
     @UniqueConstraint(columnNames = {"CORREO_ELECTRONICO"})})
 @XmlRootElement
 @NamedQueries({
@@ -51,7 +52,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByContrasena", query = "SELECT u FROM Usuario u WHERE u.contrasena = :contrasena"),
     @NamedQuery(name = "Usuario.findByFechaNacimiento", query = "SELECT u FROM Usuario u WHERE u.fechaNacimiento = :fechaNacimiento"),
     @NamedQuery(name = "Usuario.findByTipoIdentidad", query = "SELECT u FROM Usuario u WHERE u.tipoIdentidad = :tipoIdentidad"),
-    @NamedQuery(name = "Usuario.findByIdentidad", query = "SELECT u FROM Usuario u WHERE u.identidad = :identidad"),
+    @NamedQuery(name = "Usuario.findByIdentidad", query = "SELECT u FROM Usuario u WHERE u.identidad = :identidad AND u.eliminado = :eliminado"),
     @NamedQuery(name = "Usuario.findByGenero", query = "SELECT u FROM Usuario u WHERE u.genero = :genero"),
     @NamedQuery(name = "Usuario.findByEstadoCivil", query = "SELECT u FROM Usuario u WHERE u.estadoCivil = :estadoCivil"),
     @NamedQuery(name = "Usuario.findByTelefonoFijo", query = "SELECT u FROM Usuario u WHERE u.telefonoFijo = :telefonoFijo"),
@@ -85,6 +86,7 @@ public class Usuario implements Serializable {
     public static final String findByPaisYregion = "Usuario.findByPaisyRgion";
     public static final String findByPaisyRgionYciudad = "Usuario.findByPaisyRgionYciudad";
     public static final String findByAvanzada = "Usuario.findByAvanzada";
+    public static final String findByIdentidad = "Usuario.findByIdentidad";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -130,6 +132,7 @@ public class Usuario implements Serializable {
     private Character tipoIdentidad;
     @Basic(optional = false)
     @NotNull
+    
     @Size(min = 1, max = 32)
     @Column(nullable = false, length = 32)
     private String identidad;
