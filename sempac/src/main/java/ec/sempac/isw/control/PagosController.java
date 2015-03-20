@@ -53,6 +53,14 @@ public class PagosController extends AbstractController<Pagos> implements Serial
         itemsEspera = ejbFacade.getItemsEspera();
         itemsPagoUsuario = new ArrayList<Pagos>();
         //}
+        getItems();
+        System.out.println("Si actualoza");
+    }
+
+    @Override
+    public List<Pagos> getItems() {
+        this.setItems(null);
+        return super.getItems(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
