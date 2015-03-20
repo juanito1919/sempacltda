@@ -68,7 +68,9 @@
                         <h:outputText value="#{item.valor}"/>
                     </p:column>
 
-                    <f:facet name="footer"><p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PagosEditForm" oncomplete="PF('PagosEditDialog').show()" disabled="#{empty pagosController.selected}"/>
+                    <f:facet name="footer">
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PagosEditForm" oncomplete="PF('PagosEditDialog').show()" disabled="#{empty pagosController.selected}"/>
+                        <p:commandButton id="updateButton"   icon="ui-icon-refresh" value="Actualizar"  actionListener="#{pagosController.init}" update=":PagosListForm"/>
                     </f:facet>
                 </p:dataTable>
             </h:form>

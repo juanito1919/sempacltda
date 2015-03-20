@@ -87,6 +87,7 @@
                         <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PagosViewForm" oncomplete="PF('PagosViewDialog').show()" disabled="#{empty pagosController.selected}"/>
                         <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PagosEditForm" oncomplete="PF('PagosEditDialog').show()" disabled="#{empty pagosController.selected}"/>
                         <p:commandButton id="deleteButton"   icon="ui-icon-trash" value="Destruir" update=":PagosDestroyForm" oncomplete="PF('PagosDestroyDialog').show()" disabled="#{empty pagosController.selected}"/>
+                        <p:commandButton id="updateButton"   icon="ui-icon-refresh" value="Actualizar"  actionListener="#{pagosController.init}" update=":PagosListForm"/>
                     </f:facet>
                 </p:dataTable>
 
