@@ -64,31 +64,31 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean(name = "usuarioController")
 @SessionScoped
 public class UsuarioController implements Serializable {
-    
+
     @EJB
     private UsuarioFacade ejbFacade;
-    
+
     @EJB
     private PaisFacade ejbFacadePais;
-    
+
     @EJB
     private RegionFacade ejbFacadeProvincia;
-    
+
     @EJB
     private CiudadFacade ejbFacadeCiudad;
-    
+
     @EJB
     private SistemaUsuarioFacade ejbFacadeSistemaUsuario;
-    
+
     @EJB
     private SistemaAccesoFacade ejbFacadeSistemaAcceso;
-    
+
     @EJB
     private HabilidadesFacade ejbFacadeHabilidades;
-    
+
     @EJB
     private EspectativasFacade ejbFacadeEspectativas;
-    
+
     private String DIRECTORIO_DOCUMENTOS = "c:\\documentos";
     private String DIRECTORIO_TEMP = "c://temp";
     private List<Pais> itemPaises;
@@ -108,10 +108,10 @@ public class UsuarioController implements Serializable {
     private String imageTemp;
     private boolean estadoPago;
     private char tipoUsuario;
-    
+
     private List<UserHabilidadesEspectativas> itemsHabilidadesEspectativas;
     private UserHabilidadesEspectativas HabilidadesEspectativaSeleccionado;
-    
+
     private List<Usuario> itemsUsuariosSeleccionados;
     private List<Habilidades> itemsHabilidades;
     private List<Espectativas> itemsEspectativas;
@@ -119,7 +119,7 @@ public class UsuarioController implements Serializable {
 ////MIO
     private List<Usuario> items = null;
     private Usuario selected;
-    
+
     private Date fMaxima;
     private Pagos pagos;
     @EJB
@@ -128,7 +128,7 @@ public class UsuarioController implements Serializable {
 
     public UsuarioController() {
     }
-    
+
     @PostConstruct
     public void init() {
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
@@ -139,20 +139,20 @@ public class UsuarioController implements Serializable {
         fMaxima = new Date(new Date().getYear() - 12, new Date().getMonth(), new Date().getDate());//fecha actual menos 12 anios
         this.selected.setEdad(this.getSelected().getEdad());
     }
-    
+
     public void actualizarUsuario(ActionEvent evet) {
         this.save(evet);
     }
-    
+
     public void verificarEstadoPago() {
-        
+
         Usuario user = this.ejbFacadeSistemaUsuario.getUsuario(ActivacionUsuario.getCodigoUsuario(), 'P');
         if (user != null) {
             estadoPago = true;
         } else {
             estadoPago = false;
         }
-        
+
     }
 
 //    public void iniciarBusqueda() {
@@ -163,46 +163,46 @@ public class UsuarioController implements Serializable {
 //        prepareNuevo();
 //    }
     public void buscarUsuarioBasico() {
-        
+
         this.itemsUsuariosSeleccionados = null;
         if (pais != null && provincia == null && ciudad == null) {
             this.itemsUsuariosSeleccionados = ejbFacade.getUsuarioPorPais(pais.getIdPais());
         } else if (pais != null && provincia != null && ciudad == null) {
-            
+
             this.itemsUsuariosSeleccionados = ejbFacade.getUsuarioPorPaisyRegion(pais.getIdPais(), provincia.getIdRegion());
         } else if (pais != null && provincia != null && ciudad != null) {
-            
+
             this.itemsUsuariosSeleccionados = ejbFacade.getUsuarioPorPaisyRegionYciudad(pais.getIdPais(), provincia.getIdRegion(), ciudad.getIdCiudad());
         } else {
             this.itemsUsuariosSeleccionados = ejbFacade.findAll();
         }
-        
+
     }
-    
+
     public void busquedaAvanzada() {
-        
+
         List<Long> listHabilidades = new ArrayList<Long>();
         List<Long> listEspectaitivas = new ArrayList<Long>();
         listEspectaitivas.clear();
         listHabilidades.clear();
         tieneHabilidades(listHabilidades);
         tieneespectitivas(listEspectaitivas);
-        
+
         this.itemsUsuariosSeleccionados = null;
         if (pais == null && provincia == null && ciudad == null) {
-            
+
         }
         if (pais != null && provincia == null && ciudad == null) {
-            
+
         }
         if (pais != null && provincia != null && ciudad == null) {
-            
+
         }
         if (pais != null && provincia != null && ciudad != null) {
             this.itemsUsuariosSeleccionados = ejbFacade.getUsuarioBusquedaAvanzada(pais.getIdPais(), provincia.getIdRegion(), ciudad.getIdCiudad(), listEspectaitivas, listHabilidades, tipoUsuario, "");
         }
     }
-    
+
     private void tieneHabilidades(List<Long> listHabilidades) {
         if (itemsHabilidades == null || itemsHabilidades.isEmpty()) {
             itemsHabilidades = ejbFacadeHabilidades.findAll();
@@ -210,9 +210,9 @@ public class UsuarioController implements Serializable {
         for (Habilidades habilidade : itemsHabilidades) {
             listHabilidades.add(habilidade.getIdHabilidades());
         }
-        
+
     }
-    
+
     private void tieneespectitivas(List<Long> listEspectativas) {
         if (itemsEspectativas == null || itemsEspectativas.isEmpty()) {
             itemsEspectativas = ejbFacadeEspectativas.findAll();
@@ -221,15 +221,15 @@ public class UsuarioController implements Serializable {
             listEspectativas.add(espectativas.getIdEspectativas());
         }
     }
-    
+
     private void esPasante() {
-        
+
         if (tipoUsuario == 'P') {
-            
+
         } else {
-            
+
         }
-        
+
     }
 //    public void cargarUsuariosBusqueda() {
 //        System.out.println("entro busqueda");
@@ -281,7 +281,7 @@ public class UsuarioController implements Serializable {
 //    }
 
     public void AgragarHabEspBusqueda(ActionEvent event) {
-        
+
         System.out.println(habilidadBusqueda);
         System.out.println(espectativaBusqueda);
         UserHabilidadesEspectativas nuevo = new UserHabilidadesEspectativas();
@@ -296,26 +296,26 @@ public class UsuarioController implements Serializable {
 //        this.itemsHabilidadesEspectativas.add(HabilidadesEspectativaSeleccionado);
         //this.HabilidadesEspectativaSeleccionado=new UserHabilidadesEspectativas();
     }
-    
+
     public void QuitarHabEspBusqueda(ActionEvent event) {
         this.itemsHabilidadesEspectativas.remove(HabilidadesEspectativaSeleccionado);
         // cargarUsuariosBusqueda();
     }
-    
+
     public void cambiaPaisBusqueda() {
         cambiaPais();
         //cargarUsuariosBusqueda();
     }
-    
+
     public void cambiaProvinciaBusqueda() {
         cambiaProvincia();
         //  cargarUsuariosBusqueda();
     }
-    
+
     public void cambiaCiudadBusqueda() {
         // cargarUsuariosBusqueda();
     }
-    
+
     public void cambiaPais() {
         if (pais != null) {
             this.setItemProvincias(this.ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais()));
@@ -327,12 +327,12 @@ public class UsuarioController implements Serializable {
             this.getSelected().setIdCiudad(null);
         }
     }
-    
+
     public void asignarUsuario() {
         System.out.println("uruario " + ActivacionUsuario.getUsuario());
         this.setSelected(ActivacionUsuario.getUsuario());
     }
-    
+
     public void cambiaProvincia() {
         if (provincia != null) {
             this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
@@ -343,18 +343,18 @@ public class UsuarioController implements Serializable {
             this.getSelected().setIdCiudad(null);
         }
     }
-    
+
     public void close() throws ServletException {
         Sesion.cerrarSesion();
         // ejbFacadeSistemaAcceso.remove(null);
         this.init();
-        
+
     }
-    
+
     public void validaSession() throws IOException {
         Sesion.validaSesion();
     }
-    
+
     public void revisaContasena() {
         System.out.println("Entroooo " + this.contrasena + " " + confirmaContrasena);
         this.getSelected().setContrasena(contrasena);
@@ -363,7 +363,7 @@ public class UsuarioController implements Serializable {
             MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("ContrasenaNoConisiden"));
         }
     }
-    
+
     public void revisaNombre() {
         System.out.println("Usuario " + this.getSelected().getUsername());
         Usuario user = this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
@@ -372,7 +372,7 @@ public class UsuarioController implements Serializable {
             MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
         }
     }
-    
+
     public void revisaisMail() {
         System.out.println("Mail " + this.getSelected().getCorreoElectronico());
         Usuario user = this.ejbFacade.getItemsCorreo(this.getSelected().getCorreoElectronico());
@@ -381,7 +381,7 @@ public class UsuarioController implements Serializable {
             MuestraMensaje.addError(ResourceBundle.getBundle("/BundleMensajesES").getString("UserNameExiste"));
         }
     }
-    
+
     public void prepareNuevo() {
         System.err.println("entro nuevo");
         this.setSelected(new Usuario());
@@ -392,7 +392,7 @@ public class UsuarioController implements Serializable {
         this.setConfirmaContrasena("");
         this.setDireccion("");
     }
-    
+
     public void registraCuenta(ActionEvent event) {
         if (this.getSelected().getTipoIdentidad() == 'C') {
             if (!Validaciones.validaCedula(this.getSelected().getIdentidad())) {
@@ -427,7 +427,7 @@ public class UsuarioController implements Serializable {
             this.getSelected().setTipo('U');
             this.getSelected().setEliminado(false);
             this.saveNew(event);
-            
+
             SistemaUsuario sisUser = new SistemaUsuario();
             this.setSelected(this.ejbFacade.getItemsUserName(this.getSelected().getUsername()));
             sisUser.setIdUsuario(this.getSelected().getIdUsuario());
@@ -441,35 +441,35 @@ public class UsuarioController implements Serializable {
                 folder = new File(miDir.getCanonicalPath() + File.separator + "Documentos" + File.separator + getSelected().getUsername());
                 folder.mkdirs();
             } catch (IOException ex) {
-                
+
             }
         } else {
             MuestraMensaje.addError(msj);
         }
     }
-    
+
     public void actionFoto() {
         this.setCroppeFoto(null);
         this.setImageTemp(null);
     }
-    
+
     public void hola(ActionEvent evet) {
         System.out.println("holaaAA");
     }
-    
+
     public void guardarFoto() {
         System.out.println("como estassssss");
     }
-    
+
     public void actionGuardarFoto() {
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         DIRECTORIO_DOCUMENTOS = servletContext.getRealPath("") + File.separatorChar + "Documntos" + File.separatorChar;
-        
+
         String archivo = DIRECTORIO_DOCUMENTOS + this.getSelected().getUsername() + ".jpg";
         System.out.println("comoooooooo: " + archivo);
         // getSelected().setUrl(archivo);
         try {
-            
+
             if (getCroppeFoto() != null) {
                 FileImageOutputStream imageOutput = new FileImageOutputStream(new File(archivo));
                 imageOutput.write(getCroppeFoto().getBytes(), 0, getCroppeFoto().getBytes().length);
@@ -490,21 +490,21 @@ public class UsuarioController implements Serializable {
                 outStream.close();
                 inputStream.close();
             }
-            
+
             actionFoto();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
-    
+
     public void uploadFile(FileUploadEvent event) {
         try {
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             DIRECTORIO_DOCUMENTOS = servletContext.getRealPath("")
                     + File.separatorChar + "Documentos" + File.separatorChar;
-            
+
             String archivo = DIRECTORIO_DOCUMENTOS + "temp" + File.separatorChar + event.getFile().getFileName();
             FileOutputStream fileOutputStream = new FileOutputStream(archivo);
             byte[] buffer = new byte[6124];
@@ -520,15 +520,15 @@ public class UsuarioController implements Serializable {
             }
             fileOutputStream.close();
             inputStream.close();
-            
+
             this.setImageTemp(event.getFile().getFileName());
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Error al subir el archivo"));
         }
     }
-    
+
     public void subirFoto(FileUploadEvent event) {
         UploadedFile file = event.getFile();
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
@@ -539,9 +539,9 @@ public class UsuarioController implements Serializable {
         if (!file2.exists()) {
             file2.mkdirs();
         }
-        
+
         String rutaRelativa = "../../Documentos/" + File.separator + this.getSelected().getUsername() + File.separator + file.getFileName();
-        
+
         try {
             this.getSelected().setUrl(rutaRelativa);//agrega la ruta
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
@@ -564,7 +564,7 @@ public class UsuarioController implements Serializable {
             Logger.getLogger(ReferenciaPersonalController.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
-        
+
         return;
     }
 ///MIO
@@ -576,12 +576,12 @@ public class UsuarioController implements Serializable {
         itemProvincias = null;
         if (pais != null) {
             itemProvincias = ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais());
-            
+
         } else {
             itemProvincias = null;
         }
     }
-    
+
     public void selectProvincia() {
         selected.setIdCiudad(null);
         if (pais != null && provincia != null) {
@@ -590,7 +590,7 @@ public class UsuarioController implements Serializable {
             setItemCiudades(null);
         }
     }
-    
+
     public void validarUsername() {
         if (selected.getUsername() != null) {
             if (ejbFacade.getItemsUserName(selected.getUsername()) != null) {
@@ -603,7 +603,7 @@ public class UsuarioController implements Serializable {
             }
         }
     }
-    
+
     public void validarContrasena() {
         if (contrasena != null) {
             if (contrasena.length() < 6 || contrasena.length() > 15) {
@@ -618,7 +618,7 @@ public class UsuarioController implements Serializable {
             confirmaContrasena = null;
         }
     }
-    
+
     public void validarConfirmacionContrasena() {
         if (contrasena != null) {
             if (confirmaContrasena != null) {
@@ -638,7 +638,7 @@ public class UsuarioController implements Serializable {
             confirmaContrasena = null;
         }
     }
-    
+
     public void cifrarContrasena() {
         if (contrasena != null) {
             try {
@@ -653,11 +653,11 @@ public class UsuarioController implements Serializable {
             MuestraMensaje.addError("Ingrese una contrasena");
         }
     }
-    
+
     public void validadIdentidad() {
         if (selected.getTipoIdentidad() != null) {
             if (selected.getTipoIdentidad() == 'C') {
-                
+
                 if (!Validaciones.validaCedula(selected.getIdentidad())) {
                     MuestraMensaje.addError("Cedula incorrecta");
                     System.out.println("tipo incorrecto");
@@ -668,7 +668,7 @@ public class UsuarioController implements Serializable {
             }
         }
     }
-    
+
     public void validaTipoIdentidad() {
         System.out.println("esto es TI: " + selected.getTipoIdentidad());
         selected.setIdentidad(null);
@@ -681,7 +681,11 @@ public class UsuarioController implements Serializable {
         }
         return;
     }
-    
+
+    private void editarSistemaUsuario() {
+
+    }
+
     private void crearSistemaUsuario() {
         SistemaUsuario sistemaUsuario = new SistemaUsuario();
         sistemaUsuario.setIdUsuario((ejbFacade.getItemsUserName(selected.getUsername())).getIdUsuario());
@@ -702,7 +706,7 @@ public class UsuarioController implements Serializable {
         ActivacionUsuario.setCodigoUsuario(user.getIdUsuario());
         ActivacionUsuario.setCodigoPeriodo(String.valueOf(new Date().getYear() + 1900));
         ActivacionUsuario.setCambiarContrasena(false);
-        
+
         try {
             System.out.println("p0ndras la direccion");
             Sesion.redireccionaPagina("/sempac/faces/configuraciones/inicioEmpleado/inicioEmpleado.xhtml");
@@ -710,7 +714,7 @@ public class UsuarioController implements Serializable {
             MuestraMensaje.addError("No se pudo iniciar la session");
         }
     }
-    
+
     public void revisaMail() {
         System.out.println("Mail " + this.getSelected().getCorreoElectronico());
         Usuario user = this.ejbFacade.getItemsCorreo(this.getSelected().getCorreoElectronico());
@@ -1005,17 +1009,17 @@ public class UsuarioController implements Serializable {
     public void setImageTemp(String imageTemp) {
         this.imageTemp = imageTemp;
     }
-    
+
     public Usuario getSelected() {
         return selected;
     }
-    
+
     public void setSelected(Usuario selected) {
         this.selected = selected;
     }
-    
+
     protected boolean setEmbeddableKeys() {
-        
+
         if (selected != null) {
             if (selected.getTipoIdentidad() != null && selected.getTipoIdentidad() != '-') {
                 if (selected.getIdentidad() != null) {
@@ -1028,7 +1032,7 @@ public class UsuarioController implements Serializable {
                                             if (selected.getCorreoElectronico() != null) {
                                                 if (selected.getDisponibilidad() != null) {
                                                     selected.setTipo('U');
-                                                    
+
                                                     System.out.println("11: " + selected.getTipo());
                                                     return true;
                                                 } else {
@@ -1086,20 +1090,38 @@ public class UsuarioController implements Serializable {
             return false;
         }
     }
-    
+
     protected void initializeEmbeddableKey() {
     }
-    
+
     private UsuarioFacade getFacade() {
         return ejbFacade;
     }
-    
+
     public Usuario prepareCreate() {
         selected = new Usuario();
         initializeEmbeddableKey();
         return selected;
     }
-    
+private SistemaUsuario sistemaUsuario;
+    public Usuario prepareEdit() {
+        System.out.println("si vnien");
+        if (selected != null) {
+            System.out.println("no nullo");
+            this.ciudad = selected.getIdCiudad();
+            this.provincia = this.ciudad.getIdRegion();
+            this.pais = this.provincia.getIdPais();
+            if (ciudad != null) {
+                setItemCiudades(ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
+            }
+            if (provincia != null) {
+                itemProvincias = ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais());
+            }
+            sistemaUsuario = ejbFacadeSistemaUsuario.getUsuarioActivacion(selected.getIdUsuario());
+        }
+        return selected;
+    }
+
     public void create() {
         persist(JsfUtil.PersistAction.CREATE, "Usuario Creado correctamente");
         crearSistemaUsuario();
@@ -1107,11 +1129,18 @@ public class UsuarioController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
-    
+
     public void update() {
-        persist(JsfUtil.PersistAction.UPDATE, ResourceBundle.getBundle("/Bundles").getString("UsuarioUpdated"));
+        if(selected!=null){
+        persist(JsfUtil.PersistAction.UPDATE, "Edicion Correcta");
+        if(selected.getSistemaUsuario()!=null){
+            sistemaUsuario.setEstado(this.getSelected().getSistemaUsuario().getEstado());
+         ejbFacadeSistemaUsuario.edit(sistemaUsuario);
+        }
+        }
+        
     }
-    
+
     public void destroy() {
         persist(JsfUtil.PersistAction.DELETE, ResourceBundle.getBundle("/Bundles").getString("UsuarioDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -1119,28 +1148,28 @@ public class UsuarioController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
-    
+
     public void saveNew(ActionEvent event) {
-        
+
         String msg = "";
         persist(JsfUtil.PersistAction.CREATE, msg);
         if (!JsfUtil.isValidationFailed()) {
             items = null; // Invalidate list of items to trigger re-query.
         }
     }
-    
+
     public void save(ActionEvent event) {
         String msg = "";// = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
         persist(JsfUtil.PersistAction.UPDATE, msg);
     }
-    
+
     public List<Usuario> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
     }
-    
+
     private void persist(JsfUtil.PersistAction persistAction, String successMessage) {
         if (selected != null) {
             System.out.println("entroo...");
@@ -1153,7 +1182,7 @@ public class UsuarioController implements Serializable {
                         getFacade().remove(selected);
                     }
                     JsfUtil.addSuccessMessage(successMessage);
-                    
+
                 } catch (EJBException ex) {
                     String msg = "";
                     Throwable cause = ex.getCause();
@@ -1174,11 +1203,11 @@ public class UsuarioController implements Serializable {
             }
         }
     }
-    
+
     public List<Usuario> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
-    
+
     public List<Usuario> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
@@ -1224,10 +1253,10 @@ public class UsuarioController implements Serializable {
     public void setTipoUsuario(char tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-    
+
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
-        
+
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -1237,19 +1266,19 @@ public class UsuarioController implements Serializable {
                     getValue(facesContext.getELContext(), null, "usuarioController");
             return controller.getFacade().find(getKey(value));
         }
-        
+
         java.lang.Long getKey(String value) {
             java.lang.Long key;
             key = Long.valueOf(value);
             return key;
         }
-        
+
         String getStringKey(java.lang.Long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-        
+
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -1263,33 +1292,34 @@ public class UsuarioController implements Serializable {
                 return null;
             }
         }
-        
+
     }
-    
+
     public Date getFMaxima() {
         return fMaxima;
     }
-    
+
     public void setFMaxima(Date fMaxima) {
         this.fMaxima = fMaxima;
     }
-    
+
     public Pagos getPagos() {
         return pagos;
     }
-    
+
     public void setPagos(Pagos pagos) {
         this.pagos = pagos;
     }
-    
+
     public void pagosDeposito(ActionEvent event) {
-        
+
         Usuario user = ActivacionUsuario.getUsuario();
         System.out.println("codigo user.." + user.getIdUsuario());
         SistemaUsuario su = ejbFacadeSistemaUsuario.getUsuarioActivacion(user.getIdUsuario());
-        if(su.getEstado()=='E'){
-            
-            return;}
+        if (su.getEstado() == 'E') {
+
+            return;
+        }
         Calendar today = Calendar.getInstance();
         today = Calendar.getInstance();
         today.add(Calendar.MONTH, 3);//fecha actual mas 3 meses
@@ -1305,13 +1335,13 @@ public class UsuarioController implements Serializable {
         pagos.setFechaRegistro(new Date());
         pagos.setFechaCaducidad(caducidad); ////  fecha de registro mas 3 meses
         pagos.setValor(new BigDecimal(0.0));
-        
+
         ejbFacadePagos.create(pagos);
         su.setFechaCaducidad(caducidad);////  fecha de registro mas 3 meses
         su.setEstado('E');
         ejbFacadeSistemaUsuario.edit(su);
-        
+
         System.out.println("Stisfactorio....");
     }
-    
+
 }
