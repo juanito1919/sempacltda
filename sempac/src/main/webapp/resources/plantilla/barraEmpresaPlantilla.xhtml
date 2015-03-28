@@ -7,7 +7,8 @@
 
     <h:form id="barraMenu">
         <p:toolbar style="width: 80%; margin: auto; margin-top: 5px; margin-bottom: -5px;">                  
-            <p:toolbarGroup align="center">
+
+            <p:toolbarGroup align="left">
                 <p:commandButton id="paguinaPrincipalBot" styleClass="butonBarra" value="Paguina Principal"
                                  title="Paguina Principal"
                                  actionListener="#{controlUrlControler.openPrincipalEmpresa()}"
@@ -29,6 +30,17 @@
                                  ajax="false"
                                  icon="ui-icon-suitcase"
                                  />
+
+            </p:toolbarGroup>
+            <p:toolbarGroup align="right">
+                <p:separator/>
+                <p:commandButton id="SalirBot" value="Salir"
+                                 actionListener="#{empresaController.closeEmpresa}"
+                                 style="width: 80px; height: 50px;"
+                                 icon="fa fa-download"
+                                 type="button"
+                                 ajax="false"
+                                 /> 
 
             </p:toolbarGroup>
         </p:toolbar>

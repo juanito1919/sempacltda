@@ -50,10 +50,12 @@
                             <p:outputLabel value="#{bundle.EditUsuarioLabel_fechaNacimiento}"
                                            for="fechaNacimiento" />
                             <p:calendar id="fechaNacimiento" 
-                                        pattern="MM/dd/yyyy"
+                                        pattern="dd/MM/yyyy"
                                         value="#{usuarioController.selected.fechaNacimiento}"
                                         title="#{bundle.EditUsuarioTitle_fechaNacimiento}"
                                         required="true"
+                                        navigator="true"
+                                      
                                         requiredMessage="#{bundle.EditUsuarioRequiredMessage_fechaNacimiento}"/>
                             <p:outputLabel value="#{bundle.EditUsuarioLabel_edad}"
                                            for="edad" />
@@ -103,13 +105,16 @@
 
                 </p:panel>
                 <p:panel header="Descripcion Perfil" style="border: none;" >
-                    <p:inputTextarea id="desPerfil" value="#{usuarioController.selected.perfil}"  rows="3" cols="140">
+                    <p:inputTextarea id="desPerfil" value="#{usuarioController.selected.perfil}"  rows="7" cols="140">
                         <p:watermark for="desPerfil" value="Ingrese informacion referente a"/>
+                        <p:ajax event="keyup" listener="#{usuarioController.getTamanoCampo()}" update="espaciosdisponibles"/>     
                     </p:inputTextarea>
 
                     <f:facet name="footer">
+                        <h:outputText id="espaciosdisponibles" value="Caracteres Restantes: #{usuarioController.tamano}"/>
+                        <p/>
                         <p:outputLabel value="Nota: " style="color:red; "/>
-                        <p:outputLabel value="Tiene 256 caracteres para describir su perfil" style="color:#6600ff; "/>
+                        <p:outputLabel value="Tiene 500 caracteres para describir su perfil" style="color:#6600ff; "/>
                     </f:facet>
                 </p:panel>
             </div>
@@ -172,7 +177,7 @@
                                         update=":UsuarioEditForm:ciudad"/>
                             </p:selectOneMenu>
 
-                            <p:outputLabel value="#{bundleEtiquetasES.Ciudad} / CANTON" for="ciudad" />
+                            <p:outputLabel value="#{bundleEtiquetasES.Ciudad}/CANTON" for="ciudad" />
                             <p:selectOneMenu id="ciudad" 
                                              value="#{usuarioController.selected.idCiudad}"
                                              required="true" 
@@ -212,7 +217,7 @@
                             <p:outputLabel value="#{bundle.EditUsuarioLabel_correoElectronico}"
                                            for="correoElectronico" />
                             <p:inputText id="correoElectronico"
-                                         styleClass="inputText" 
+                                         style="width: 230px; height: 15px;"
                                          value="#{usuarioController.selected.correoElectronico}"
                                          title="#{bundle.EditUsuarioTitle_correoElectronico}" 
                                          required="true" 

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
@@ -42,8 +41,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EmpleoRequerido.findByNombreEmpleoRequerido", query = "SELECT e FROM EmpleoRequerido e WHERE e.nombreEmpleoRequerido = :nombreEmpleoRequerido"),
     @NamedQuery(name = "EmpleoRequerido.findByActivo", query = "SELECT e FROM EmpleoRequerido e WHERE e.activo = :activo"),
     @NamedQuery(name = "EmpleoRequerido.findByFechaModificacion", query = "SELECT e FROM EmpleoRequerido e WHERE e.fechaModificacion = :fechaModificacion"),
-    @NamedQuery(name = "EmpleoRequerido.findByEliminado", query = "SELECT e FROM EmpleoRequerido e WHERE e.eliminado = :eliminado")})
+    @NamedQuery(name = "EmpleoRequerido.findByEliminado", query = "SELECT e FROM EmpleoRequerido e WHERE e.eliminado = :eliminado"),
+    @NamedQuery(name = "EmpleoRequerido.findByEmpresa", query = "SELECT e FROM EmpleoRequerido e WHERE e.idPersonalRequerido.idEmpresa.idEmpresa =:idEmpresa AND e.eliminado = :eliminado"),
+    @NamedQuery(name = "EmpleoRequerido.findByUsuarioYpersonalRequerido", query = "SELECT e FROM EmpleoRequerido e WHERE e.idPersonalRequerido.idPersonalRequerido =:idPersonalRequerido AND e.idUsuario.idUsuario=:idUsuario AND e.eliminado = :eliminado")})
 public class EmpleoRequerido implements Serializable {
+
+    public static String findByEmpresa = "EmpleoRequerido.findByEmpresa";
+    public static String findByUsuarioYpersonalRequerido = "EmpleoRequerido.findByUsuarioYpersonalRequerido";
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -189,5 +193,5 @@ public class EmpleoRequerido implements Serializable {
     public String toString() {
         return "ec.sempac.isw.modelo.EmpleoRequerido[ idEmpleoRequerido=" + idEmpleoRequerido + " ]";
     }
-    
+
 }

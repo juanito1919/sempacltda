@@ -10,29 +10,27 @@
 
 
         <h:form id="EspecialidadSecundariaCreateForm">
-            <p:message id="mensajeNombreColegio" for="colegio" />
-            <p:message id="mensajeEspecilidad" for="especialidad" />
-            <p:message id="mensajeAnios" for="aniosEstudios" />
+        
             <p:panel header="Estudios Secundarios" footer="Nota: Sobre la educacion secundaria ingrese el colegio donde haya culminado sus estudios" style="border: none; margin-top: -10px;" >
                 <h:panelGroup id="display" style="width: 500px; height: 800px;">
                     #{especialidadSecundariaController.iniciaSelected()}
-                    <h:panelGrid columns="2" 
+                    <h:panelGrid columns="4" 
                                  border="0" 
                                  cellpadding="5"
-                                 columnClasses="column1Class, column2Class">
+                                 columnClasses="column1Class, column2Class,column3Class, column4Class">
                         <p:outputLabel for="colegio" value="#{bundleEtiquetasES.Institucion}"  />
                         <p:selectOneMenu id="colegio"
                                          style="width: 270px;"
                                          value="#{especialidadSecundariaController.selected.colegio}"
                                          converter="colegioConverter"
-                                         required="true"
+
                                          effect="fade" 
                                          var="t" 
                                          filter="true" 
-                                          
+
                                          filterMatchMode="contains">
                             <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
-                            <f:selectItems value="#{especialidadSecundariaController.itemColegio}" 
+                            <f:selectItems value="#{colegioController.itemsAvailableSelectOne}" 
                                            var="colegioItem"
                                            itemValue="#{colegioItem}" 
                                            itemLabel="#{colegioItem.nombre}"/>
@@ -40,11 +38,29 @@
                                 <h:outputText value="#{t.nombre}" />
                             </p:column>
                             <f:converter binding="#{colegioConverter}"/>
+                            <p:ajax event="change"
+                                    update="otra"
+                                    listener="#{especialidadSecundariaController.limpiarNombreColegio()}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="OTRA INSTITUCION:" 
+                                       for="otra" />
+                        <p:inputText id="otra" 
+                                     styleClass="inputText" 
+                                     value="#{especialidadSecundariaController.nombre}" 
+                                     title="Otra institucion" 
+                                     validatorMessage=""
+                                     style="width: 270px;"
 
+                                     onkeyup="value = value.toUpperCase()">
+                            <p:ajax event="keyup"
+                                    update="colegio"
+                                    listener="#{especialidadSecundariaController.limpiarColegio()}"
+                                    />
+                        </p:inputText>
                         <p:outputLabel value="#{bundleEtiquetasES.Especialidad}" 
                                        for="especialidad" />
                         <p:inputText id="especialidad" 
+                                     styleClass="inputText" 
                                      value="#{especialidadSecundariaController.selected.especialidad}"
                                      title="#{bundleEtiquetasES.Especialidad}"
                                      required="true" 
@@ -55,22 +71,49 @@
                         <p:outputLabel value="#{bundleEtiquetasES.AniosEstudio}" 
                                        for="aniosEstudios" />
                         <p:inputText id="aniosEstudios" 
+                                     styleClass="inputText" 
                                      value="#{especialidadSecundariaController.selected.aniosEstudios}" 
                                      title="#{bundleEtiquetasES.AniosEstudio}" 
                                      validatorMessage=""
                                      style="width: 270px;"
                                      required="true"
                                      onkeyup="value = value.toUpperCase()"/>
-                        <p:commandButton id="buttonSubir" value="Cargar Certificado"/>
-                        <p:inputText id="ruta" value="" size="50" disabled="true"/>
+                        <p:commandButton id="buttonSubir" 
+                                         value="Cargar Certificado"
+                                         onclick="dialogSubida.show();
+                                                 return false;"/>
+                        <p:inputText id="url" 
+                                     disabled="true"
+                                     style="width: 270px;"
+                                     value="#{especialidadSecundariaController.selected.url}" 
+                                     title="#{bundle.CreateReferenciaPersonalTitle_url}" />
                     </h:panelGrid>
-                    <div style="margin-left: 30%; margin-bottom: 20px; margin-top: 30px;">
-                        <p:commandButton actionListener="#{especialidadSecundariaController.guardarColegio}" icon="ui-icon-disk"  value="GUARDAR"/>
+                    <div style="margin-left: 50%; margin-bottom: 20px; margin-top: 30px;">
+                        <p:commandButton actionListener="#{especialidadSecundariaController.guardarColegio}" 
+                                         icon="ui-icon-disk"
+                                         value="GUARDAR" ajax="false"/>
                         <p:commandButton actionListener="#{especialidadSecundariaController.eliminarColegio}" value="ELIMINAR"  icon="ui-icon-closethick" update="colegio, especialidad, aniosEstudios"/>
                     </div>
                 </h:panelGroup>
             </p:panel>
-        </h:form>
 
+        </h:form>
+        <p:dialog widgetVar="dialogSubida" width="600" height="200" modal="true">
+            <h:form id="SubirArchivoEspecilidadSecundaria" enctype="multipart/form-data">
+                <p:fileUpload id="file" fileUploadListener="#{especialidadSecundariaController.subirArchivos}" 
+                              mode="advanced" 
+                              dragDropSupport="false"
+                              label="Buscar Archivo"
+                              update="messages,:#{p:component('url')}" 
+                              sizeLimit="900000" 
+                              
+                              cancelLabel="Cancelar"
+                              uploadLabel="Subir"
+                              fileLimit="1" 
+                              allowTypes="/(\.|\/)(png|jpg|pdf|doc|docx)$/" 
+                              oncomplete="PF('dialogSubida').hide();"/>
+                <p:growl id="messages" showDetail="true" />
+            </h:form>
+        </p:dialog>
     </ui:composition>
 </html>

@@ -48,7 +48,7 @@ public abstract class AbstractController<T> {
         this.ejbFacade = ejbFacade;
     }
 
-public T getSelected() {
+    public T getSelected() {
         return selected;
     }
 
@@ -77,9 +77,11 @@ public T getSelected() {
         }
         return items;
     }
+
     public void setItems(List<T> items) {
-            this.items = items;
+        this.items = items;
     }
+
     public void save(ActionEvent event) {
         String msg = "";// = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
         persist(PersistAction.UPDATE, msg);
@@ -90,9 +92,11 @@ public T getSelected() {
         persist(PersistAction.UPDATE, msg);
         this.postCreate();
     }
+
     protected void postCreate() {
         // Nothing to do if entity does not have any embeddable key.
     }
+
     public void saveNew(ActionEvent event) {
 
         String msg = "";
@@ -101,7 +105,8 @@ public T getSelected() {
             items = null; // Invalidate list of items to trigger re-query.
         }
     }
-public void update() {
+
+    public void update() {
         persist(PersistAction.UPDATE, "Actualizada");
     }
 //    public void delete(ActionEvent event) {
@@ -113,15 +118,18 @@ public void update() {
 //            items = null; // Invalidate list of items to trigger re-query.
 //        }
 //    }
+
     public void destroy() {
-        //persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PaisDeleted"));
+       // persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PaisDeleted"));
         String msg = "";
         persist(PersistAction.DELETE, msg);
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
-    }private void persist(PersistAction persistAction, String successMessage) {
+    }
+
+    private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             this.setEmbeddableKeys();
             try {
@@ -196,7 +204,8 @@ public void update() {
     public void prepareEdit(ActionEvent event) {
         // Nothing to do if entity does not have any embeddable key.
     }
-        public List<T> getItemsAvailableSelectMany() {
+
+    public List<T> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 

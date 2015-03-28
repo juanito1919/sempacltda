@@ -4,20 +4,20 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <h:form id="experienciaLaboralListForm">
-        <p:panel header="Experiencias Laborales" style="border: none; width: 100%; margin: 0 auto;">
+        <p:panel header="Experiencias Laborales" style="border: none; width: 100%; height: 300px; margin: 0 auto;">
             <p:dataTable id="datalist" value="#{experienciaLaboralController.itemsExperienciaLaboral}" 
                          var="item"
-                         selectionMode="single" 
+                         emptyMessage="No se Encuentra Registrado informacion laboral"
                          selection="#{experienciaLaboralController.seleccion}"
                          paginator="true"
                          rowKey="#{item}"
                          rows="10"
-                         rowsPerPageTemplate="10,20,30,40,20,30"
                          >
-                <p:ajax event="rowSelect"   update="editButton deleteButton"/>
+                <p:ajax event="rowSelect"  listener="#{experienciaLaboralController.selecionar()}"  update="editButton deleteButton"/>
                 <p:ajax event="rowUnselect" update="editButton deleteButton"/>
                 <p:column width="20%">
                     <f:facet name="header">
@@ -25,26 +25,31 @@
                     </f:facet>
                     <h:outputText value="#{item.empresa}"/>
                 </p:column>
-
                 <p:column width="10%">
                     <f:facet name="header">
                         <h:outputText value="#{bundleEtiquetasES.Cargo}"/>
                     </f:facet>
                     <h:outputText value="#{item.cargo}"/>
                 </p:column>
-
+                <p:column width="10%">
+                    <f:facet name="header">
+                        <h:outputText value="TELEFONO"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefonoEmpresa}"/>
+                </p:column>
+                <p:column width="10%">
+                    <f:facet name="header">
+                        <h:outputText value="DIRECCION"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccionEmpresa}"/>
+                </p:column>
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{bundleEtiquetasES.InicioActividades}"/>
                     </f:facet>
-                    <h:outputText value="#{item.fechaInicio}" />
+                    <h:outputText value="#{experienciaLaboralController.cambiarFormatoFecha(item.fechaInicio)}" />
                 </p:column>
-                <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="#{bundleEtiquetasES.FinActividades}"/>
-                    </f:facet>
-                    <h:outputText  value="#{item.fechaInicio}" />
-                </p:column>
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{bundleEtiquetasES.Tiempo}"/>
@@ -64,17 +69,29 @@
                     <p:commandButton id="editButton"   
                                      icon="ui-icon-pencil" 
                                      value="#{bundle.Edit}"
-                                     update=":experienciaLaboralCreateForm">
-                        <f:setPropertyActionListener target="#{experienciaLaboralController.seleccion}"  value="#{item}"/>
+                                     update=":experienciaLaboralCreateForm:empresa,
+                                     :experienciaLaboralCreateForm:cargo,
+                                     :experienciaLaboralCreateForm:fechaInicio,
+                                     :experienciaLaboralCreateForm:actividades,
+                                     :experienciaLaboralCreateForm:tiempo,
+                                     :experienciaLaboralCreateForm:telefono,
+                                     :experienciaLaboralCreateForm:direccion,
+                                     :experienciaLaboralCreateForm:url">
+                        <f:setPropertyActionListener target="#{experienciaLaboralController.selected}"  value="#{item}"/>
                     </p:commandButton>
                     <p:commandButton id="deleteButton"
                                      value="#{bundle.Delete}"
-                                     actionListener="#{referenciaPersonalController.destroy()}"
-
+                                     actionListener="#{experienciaLaboralController.eliminar(event, item)}"
+                                     update=":experienciaLaboralListForm:datalist"
                                      icon="ui-icon-close">
+                        <p:confirm header="Confirmation" message="Esta seguro que desea Eliminar?" icon="ui-icon-alert" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
         </p:panel>
+        <p:confirmDialog global="true" showEffect="fade"  hideEffect="explode">
+            <p:commandButton value="SI" type="button" ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="NO" type="button" ajax="false" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
     </h:form>
 </ui:composition>

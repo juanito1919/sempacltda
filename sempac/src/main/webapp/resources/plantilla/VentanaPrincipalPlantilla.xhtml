@@ -3,32 +3,34 @@
 <f:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:ui="http://java.sun.com/jsf/facelets">
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
     <html>
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <h:outputStylesheet library="css" name="estilo.css"/>
-            <h:outputStylesheet library="css" name="style.css"/>
-          
-            <h:outputScript library="js" name="pfcrud.js"/>
             <h:outputScript library="js" name="primefaces.js"/>
-            <h:outputScript library="js" name="script.js"/>
-            <h:outputScript library="js" name="menu.js"/>
-            <h:outputScript library="js" name="modernizr.custom.04022.js"/>
-            <title>Empresa Semptac</title>
+           
+
+            <title>SEMPTAC CIA. LTDA.</title>
+
+
         </h:head>
         <h:body>
-            <ui:include src="bannerPlantilla.xhtml"/> 
-            <ui:include src="../../login/inicioSession.xhtml"/>
-            <ui:include src="barraPrincipalPlantilla.xhtml"/>
-            <div class="panelFormulario" style="height:600px; ">
-                <ui:insert name="formulario"/>
-            </div>
-            <ui:include src="PlantillaRedesSociales.xhtml"/> 
-            <ui:include src="informacionPlantilla.xhtml"/>
-            <div class="panelInformacionContalcto">
+          
+                <ui:include src="bannerPlantilla.xhtml"/> 
+                <ui:include src="../../login/inicioSession.xhtml"/>
+                <ui:include src="barraPrincipalPlantilla.xhtml"/>
+                <div class="panelFormulario" style="height:700px; ">
+                    <ui:insert name="formulario"/>
+                </div>
                 
-            </div>
+                <ui:include src="PlantillaRedesSociales.xhtml"/> 
+                <ui:include src="informacionPlantilla.xhtml"/>
+                <div class="panelInformacionContalcto">
+
+                </div>
+            
         </h:body>
     </html>
 </f:view>

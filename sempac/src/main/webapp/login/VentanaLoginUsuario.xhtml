@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="login.css"/>
+    </h:head>
+    <h:body>
+
+        <div class="main">
+            <div class="login-form">
+                <h1>Ingreso de Usuarios</h1>
+                <div class="head">
+                   
+                    <p:graphicImage value="../resources/images/user.png"></p:graphicImage>
+
+                </div>
+                <h:form id="formInicioSessionEmpleados"> 
+                    <p:growl id="mensajeEmpleadologin" showDetail="true" life="3000" />
+
+
+                    <p:inputText id="username" 
+                                 value="#{usuarioLoginController.username}" 
+                                 required="true" 
+                                 styleClass="text"
+                                 label="username">
+                        <p:watermark for="username" value="Correo electronico"/>
+                    </p:inputText>
+
+                    <p:password id="password" 
+                                value="#{usuarioLoginController.contrasena}" 
+                                required="true" 
+                                styleClass="password"
+                                label="password">
+                        <p:watermark for="password" value="Contrasena"/>
+                    </p:password>
+
+                    <div class="submit">
+
+                        <p:commandButton type="submit" 
+                                         value="Iniciar Session" 
+                                         style=" width:100%; background-color: #128A42!important;" 
+                                         actionListener="#{usuarioLoginController.validaUsuario()}"
+                                         update="password,username,mensajeEmpleadologin">
+                           
+
+                        </p:commandButton>
+
+
+                    </div>
+                   
+                    <p><a href="/sempac/faces/login/ContrasenaOlvidada.xhtml">Has Olvidado Tu Contraseña?</a></p>
+                </h:form>
+            </div>
+
+        </div>
+
+    </h:body>
+</html>
+

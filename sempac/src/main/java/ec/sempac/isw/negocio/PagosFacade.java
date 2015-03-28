@@ -43,7 +43,7 @@ public class PagosFacade extends AbstractFacade<Pagos> {
             //if(query.getResultList().size()>1){
 
             // }else{
-            return (Pagos) query.getResultList().get(0);
+            return  (query.getResultList()!=null && !query.getResultList().isEmpty())?(Pagos)query.getResultList().get(0):null;
             // }
         } catch (NoResultException e) {
             return null;

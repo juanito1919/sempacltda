@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.Colegio;
@@ -20,6 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class EscuelaFacade extends AbstractFacade<Escuela> {
+
     @PersistenceContext(unitName = "ec.sempac_sempac_war_1.0PU")
     private EntityManager em;
 
@@ -31,16 +31,17 @@ public class EscuelaFacade extends AbstractFacade<Escuela> {
     public EscuelaFacade() {
         super(Escuela.class);
     }
-    public List<Escuela> getItemsEscuela(String nombre) {
+
+    public Escuela getIEscuela(String nombre) {
         Query query = this.em.createNamedQuery(Escuela.findByAutoCompletado);
-        query.setParameter("nombre", "'" + nombre + "%'");
+        query.setParameter("nombre", nombre + "%");
         query.setParameter("eliminado", false);
-        return query.getResultList();
+        return (query.getResultList()!=null && !query.getResultList().isEmpty())?(Escuela)query.getResultList().get(0):null;
     }
 
-    public List<Escuela> getItemsEscuela(boolean  estado) {
+    public List<Escuela> getItemsEscuela(boolean estado) {
         Query query = this.em.createNamedQuery(Escuela.findByEliminado);
-        query.setParameter("eliminado",estado);
+        query.setParameter("eliminado", estado);
         return query.getResultList();
     }
 }

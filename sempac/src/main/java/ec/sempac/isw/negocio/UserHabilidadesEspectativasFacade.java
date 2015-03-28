@@ -10,6 +10,7 @@ import ec.sempac.isw.modelo.UserHabilidadesEspectativas;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -53,6 +54,12 @@ public class UserHabilidadesEspectativasFacade extends AbstractFacade<UserHabili
     public List<UserHabilidadesEspectativas> getItemsHabilidadesUsuario(Long idUsuario) {
         Query query = this.em.createNamedQuery(UserHabilidadesEspectativas.findByIdUsuario);
         query.setParameter("idUsuario", idUsuario);
-        return query.getResultList();
+         try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+        
+       
     }
 }

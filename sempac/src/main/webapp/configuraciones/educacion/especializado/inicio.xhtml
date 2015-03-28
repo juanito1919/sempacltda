@@ -16,13 +16,14 @@
                         columnClasses="column1Class, column2Class,column3Class,column4Class" 
                         >
 
-                        <p:panel header="Universidad / Escuela Superior">
+                        <p:panel header="Universidad / Escuela Superior" style="border: none;">
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="PAIS" for="pais" />
                                 <p:selectOneMenu id="pais" 
                                                  value="#{estudiosEspecializadosController.pais}"
                                                  required="true" 
                                                  requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                                    <f:selectItem  itemLabel="#{bundleEtiquetasES.Seleccione}"/>
                                     <f:selectItems value="#{usuarioController.itemPaises}"
                                                    var="PaisItem"
                                                    itemValue="#{PaisItem}"
@@ -83,7 +84,14 @@
                     <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
                         <p:commandButton actionListener="#{estudiosEspecializadosController.saveNew}" 
                                          value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" 
-                                         update="estudiosEspecializadosCreateForm, estudiosSuperioresListForm"/>
+                                         update=":estudiosEspecializadosCreateForm:pais,
+                                         :estudiosEspecializadosCreateForm:universidad,
+                                         :estudiosEspecializadosCreateForm:titulo,
+                                         :estudiosEspecializadosCreateForm:campo,
+                                         :estudiosEspecializadosCreateForm:tipo
+                                         :estudiosSuperioresListForm:datalist"
+                                         ajax="false"
+                                         />
 
                         <p:commandButton actionListener="#{estudiosEspecializadosController.destroy()}"
                                          value="#{bundleEtiquetasES.Quitar}" 

@@ -10,6 +10,7 @@
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <h:outputStylesheet library="css" name="estilo.css"/>
+        
             <script type="text/javascript">
                 function handleLoginRequest(xhr, status, args) {
                     if (args.validationFailed || !args.loggedIn) {
@@ -26,23 +27,23 @@
         </h:head>
         <!-- panel que contine dos botones uno para el registro y otros para iniciar session -->  
         <h:form>
-            <p:panel styleClass="panelLogin" style="border: none;">
-                 <h:commandButton value="Soy Una Empresa" style=" margin-left: 10px; height: 30px; width: 220px; 
-                                     background-color:#b5b5b5; border: none;
-                                     border-radius: 10px; color: #ffffff;" 
-                                     action="#{usuarioController.prepareNuevo()}"
-                                     onclick="dlIniciarSessionEmpresas.show();
-                                             return false;">
+            <p:panel styleClass="panelLogin" style="border: none;background-color:#f8f8f8;">
+                <h:commandButton value="Soy un Contratista" style=" margin-left: 10px; height: 30px; width: 220px; 
+                                 background-color:#b5b5b5; border: none;
+                                 border-radius: 10px; color: #ffffff;" 
+                                 action="#{usuarioController.prepareNuevo()}"
+                                 onclick="dlIniciarSessionEmpresas.show();
+                                         return false;">
 
-                    </h:commandButton>
+                </h:commandButton>
                 <h:panelGrid columns="2" cellspacing="5" cellpadding="5" style="margin: 0px auto 0px auto;">
-                      <h:commandButton value="Iniciar Session" style="height: 70px; width: 100px; 
+                    <h:commandButton value="Iniciar Session" style="height: 70px; width: 100px; 
                                      background-color:#0066ff; border: none;
                                      border-radius: 10px; color: #ffffff;" 
                                      action="#{usuarioLoginController.prepareNuevo()}"                                     
                                      onclick="dlIniciarSessionEmpleados.show();
-                                               return false;"/>
-                      
+                                             return false;"/>
+
                     <h:commandButton value="Registrarse" style="height: 70px; width: 100px; 
                                      background-color:#33cc00; border: none;
                                      border-radius: 10px; color: #ffffff;" 
@@ -54,47 +55,18 @@
                 </h:panelGrid>   
             </p:panel>
         </h:form>
-   
+
         <!-- dialog para iniciar session -->
         <ui:include src="../configuraciones/registro/registroUsuario.xhtml"/>
-        <p:dialog   widgetVar="dlIniciarSessionEmpleados" 
-                    header="Acceso a Usuarios"
+        <p:dialog   widgetVar="dlIniciarSessionEmpleados"
                     minHeight="40" 
                     width="400"
+                    closeOnEscape="true"
                     resizable="false"
-                    styleClass="ui-widget-content ui-helper-clearfix:after ui-widget-header ui-shadow .ui-dialog .ui-dialog-content"
+                    styleClass="customDialog"
                     modal="true">
-            <h:form id="formInicioSessionEmpleados"> 
-                <p:growl id="mensajeEmpleadologin" showDetail="true" life="3000" />
-                <h:panelGrid columns="1" 
-                             cellpadding="10">
-                    <p:inputText id="username" 
-                                 value="#{usuarioLoginController.username}" 
-                                 required="true" 
-                                 style="height: 25px; font-size: 1.2em;"
-                                 label="username" size="37" >
-                        <p:watermark for="username" value="Correo electronico"/>
-                    </p:inputText>
-                    <p:password id="password" 
-                                size="37" 
-                                value="#{usuarioLoginController.contrasena}" 
-                                required="true" 
-                                style="height: 25px; font-size: 1.2em;"
-                                label="password">
-                        <p:watermark for="password" value="Contrasena"/>
-                    </p:password>
-                    <h:panelGrid columns="2" >
-                        <h:link id="linkOlvidaContrasenaBot" outcome="/login/ContrasenaOlvidada" style="color: #0066ff; font-size:0.8em; " value="¿Olvidastes tu Contrasena?"/>
-                        <p:commandButton value="Entrar" 
-                                         action="#{usuarioLoginController.validaUsuario()}"
-                                         style="margin-left: 35px; width: 130px;"
-                                         update="password,username,mensajeEmpleadologin"
-                                         styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"/>
-                    </h:panelGrid>
-
-                   
-                </h:panelGrid>
-            </h:form>
+            <ui:include src="VentanaLoginUsuario.xhtml"/>
+           
         </p:dialog>
 
 
@@ -103,42 +75,14 @@
 
 
         <p:dialog   widgetVar="dlIniciarSessionEmpresas" 
-                    header="Acceso Empresas"
+                  
                     minHeight="40" 
                     width="400"
                     resizable="false"
-                    styleClass="ui-widget-content ui-helper-clearfix:after ui-widget-header ui-shadow .ui-dialog .ui-dialog-content"
+                    styleClass="customDialog"
                     modal="true">
-            <h:form id="formInicioSessionEmpresas"> 
-                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                <h:panelGrid columns="1" 
-                             cellpadding="10">
-                    <p:inputText id="username" 
-                                 value="#{empresaLoginController.username}" 
-                                 required="true" 
-                                 style="height: 25px; font-size: 1.2em;"
-                                 label="username" size="37" >
-                        <p:watermark for="username" value="Correo electronico"/>
-                    </p:inputText>
-                    <p:password id="password" 
-                                size="37" 
-                                value="#{empresaLoginController.contrasena}" 
-                                required="true" 
-                                style="height: 25px; font-size: 1.2em;"
-                                label="password">
-                        <p:watermark for="password" value="Contrasena"/>
-                    </p:password>
-                    <h:panelGrid columns="2" >
-                        <h:link id="linkOlvidaContrasenaBot" style="color: #0066ff; font-size:0.8em;" outcome="/login/ContrasenaOlvidadaEmpresa" value="¿Olvidastes tu Contrasena?" />
-                        <p:commandButton value="Entrar" 
-                                         action="#{empresaLoginController.validaUsuario()}"
-                                         style="margin-left: 67px;"
-                                         update="password,username"
-                                         styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"/>
-                    </h:panelGrid>
-                  
-                </h:panelGrid>
-            </h:form>
+            <ui:include src="VentanaLoginEmpresa.xhtml"/>
+            <ui:include src=""/>
         </p:dialog>
 
 

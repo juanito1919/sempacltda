@@ -3,14 +3,26 @@ package ec.sempac.isw.control;
 import ec.sempac.isw.modelo.ExperienciaLaboral;
 import ec.sempac.isw.modelo.Usuario;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 @ManagedBean(name = "experienciaLaboralController")
 @SessionScoped
@@ -18,9 +30,9 @@ public class ExperienciaLaboralController extends AbstractController<Experiencia
 
     @EJB
     private ec.sempac.isw.negocio.ExperienciaLaboralFacade ejbFacade;
-    
+
     private List<ExperienciaLaboral> itemsExperienciaLaboral;
-    
+
     private ExperienciaLaboral seleccion;
 
     public ExperienciaLaboralController() {
@@ -31,35 +43,89 @@ public class ExperienciaLaboralController extends AbstractController<Experiencia
     public void init() {
         super.setFacade(ejbFacade);
         //borrar esta parte
-        ActivacionUsuario.setUsuario(new Usuario(Long.parseLong("1")));
+
         this.setItemsExperienciaLaboral(this.ejbFacade.getItemsMeritoEliminadoUsuario(ActivacionUsuario.getUsuario().getIdUsuario(), false));
     }
-    
-    public void iniciaSelected(){
+
+    public void iniciaSelected() {
         this.setSelected(new ExperienciaLaboral());
     }
-    
-    public void guardaNuevo(ActionEvent event){
-        if (this.getSelected().getEmpresa().trim().equals("") ||this.getSelected().getCargo().trim().equals("")||this.getSelected().getActividades().trim().equals("")|| this.getSelected().getFechaInicio() ==null)
-            return;
-        //CAMBIAR estar liena por 
-        this.getSelected().setIdUsuario(ActivacionUsuario.getUsuario());
-        this.getSelected().setEliminado(false);
-        this.save(event);
-        this.getItemsExperienciaLaboral().add(this.getSelected());
-        this.setSelected(new ExperienciaLaboral());  
 
+    public String cambiarFormatoFecha(Date date) {
+        DateFormat df = DateFormat.getDateInstance();
+        return df.format(date);
     }
 
-    public void eliminar (ActionEvent event){
-        System.out.println("seleccion "+seleccion);
-        if (seleccion!=null){
-            seleccion.setEliminado(true);
-            this.ejbFacade.edit(seleccion);
-            this.itemsExperienciaLaboral.remove(seleccion);
-            seleccion=null;
+    public void guardaNuevo(ActionEvent event) {
+        if (getSelected() != null) //CAMBIAR estar liena por 
+        {
+            this.getSelected().setIdUsuario(ActivacionUsuario.getUsuario());
+
+            this.getSelected().setEliminado(false);
+            this.save(event);
+            this.setItemsExperienciaLaboral(this.ejbFacade.getItemsMeritoEliminadoUsuario(ActivacionUsuario.getUsuario().getIdUsuario(), false));
+            this.setSelected(new ExperienciaLaboral());
         }
     }
+
+    public void selecionar() {
+        this.setSelected(seleccion);
+
+    }
+
+    public void eliminar(ActionEvent event, ExperienciaLaboral item) {
+        setSelected(item);
+        if (getSelected() != null) {
+            getSelected().setEliminado(true);
+            this.ejbFacade.remove(getSelected());
+            this.itemsExperienciaLaboral.remove(getSelected());
+            setSelected(null);
+            item = null;
+            iniciaSelected();
+        }
+    }
+
+    public void subirArchivos(FileUploadEvent event) {
+        UploadedFile file = event.getFile();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        String filePath = ec.getRealPath(String.format(File.separator + "Documentos" + File.separator + ActivacionUsuario.getUsuario().getUsername() + "/%s", file.getFileName()));
+        
+        File file2 = new File(ec.getRealPath(File.separator + "Documentos" + File.separator + ActivacionUsuario.getUsuario().getUsername()));
+        if (!file2.exists()) {
+            file2.mkdirs();
+        }
+        String rutaRelativa = "../../Documentos" + File.separator + ActivacionUsuario.getUsuario().getUsername() + File.separator + file.getFileName();
+        try {
+            System.out.println("direcion antes: "+this.getSelected().getUrl());
+            this.getSelected().setUrl(rutaRelativa);
+            
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+            byte[] buffer = new byte[6124];
+            int bulk;
+            InputStream inputStream = file.getInputstream();
+            while (true) {
+                bulk = inputStream.read(buffer);
+                if (bulk < 0) {
+                    break;
+                }
+                fileOutputStream.write(buffer, 0, bulk);
+                fileOutputStream.flush();
+            }
+            fileOutputStream.close();
+            inputStream.close();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ReferenciaPersonalController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
+            return;
+        }
+
+        FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Archivo Subido"));
+
+        return;
+    }
+
     @Override
     protected void setEmbeddableKeys() {
     }

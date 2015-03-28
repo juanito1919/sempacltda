@@ -10,7 +10,7 @@
         <p:panel header="Lista Hablidades-Espectativas" style="border: none; width: 99%; margin: 0 auto;">
             <p:growl id="message" life="3000" showDetail="true" />
             <p:dataTable id="datalist2" value="#{userHabilidadesEspectativasController.itemsHabExp}" var="item"
-                         selectionMode="single" 
+                        
                          selection="#{userHabilidadesEspectativasController.seleccion}"
                          resizableColumns="true"
                          paginator="true"
@@ -52,6 +52,7 @@
                 <p:column>
                     <p:commandButton id="editButton"
                                      value="Editar"
+                                     icon="ui-icon-pencil"
                                      update=":userHabilidadesEspectativasListForm,
                                      :userHabilidadesEspectativasCreateForm:habilidad,
                                      :userHabilidadesEspectativasCreateForm:espectativa,
@@ -62,7 +63,8 @@
                     </p:commandButton>
                     <p:commandButton id="deleteButton"
                                      value="Eliminar"
-                                     actionListener="#{userHabilidadesEspectativasController.eliminar}"
+                                     icon="ui-icon-close"
+                                     actionListener="#{userHabilidadesEspectativasController.eliminar(event, item)}"
                                      update=":userHabilidadesEspectativasListForm:datalist2,
                                      :userHabilidadesEspectativasListForm:message">
                         <p:confirm header="Confirmacion" message="Esta Seguro que desea eliminar?" icon="ui-icon-alert" />

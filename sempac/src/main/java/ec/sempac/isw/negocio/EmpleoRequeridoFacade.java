@@ -7,9 +7,13 @@
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.EmpleoRequerido;
+
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +31,27 @@ public class EmpleoRequeridoFacade extends AbstractFacade<EmpleoRequerido> {
 
     public EmpleoRequeridoFacade() {
         super(EmpleoRequerido.class);
+    }
+    public EmpleoRequerido getEmpleoRequerido(Long idPersonalRequerido,Long IdUsuario) {
+        Query query = this.em.createNamedQuery(EmpleoRequerido.findByUsuarioYpersonalRequerido);
+        query.setParameter("idPersonalRequerido", idPersonalRequerido);
+        query.setParameter("idUsuario", IdUsuario);
+        query.setParameter("eliminado", false);
+        try {
+            return (EmpleoRequerido) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    public List<EmpleoRequerido> getListEmpleoRequerido(Integer idEmpresa) {
+        Query query = this.em.createNamedQuery(EmpleoRequerido.findByEmpresa);
+        query.setParameter("idEmpresa", idEmpresa);
+        query.setParameter("eliminado", false);
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     
 }

@@ -11,10 +11,12 @@ and open the template in the editor.
 body {
     top: 0px;
     font-size:0.6em;
-
+    //background: url(../resources/images/ffff.jpg);
+    background-color:#f8f8f8;
     font-weight:normal;
     margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px ;
     font-family: Verdana, Geneva, sans-serif;
+    // font-family:"Cambria Math"
 
 }
 .panelRedSocial{
@@ -154,15 +156,26 @@ body {
     color: #cc0000;
     width: 250px;
 }
+.column1ClassPerfil,.column3ClassPerfil{
+    font-family: Verdana, Geneva, sans-serif;
+    text-align: right;
+    font-weight: bold;
+    color:#0066ff;
+    width: 250px;
+}
 .column1ClassAzquierda{
-   font-family: Verdana, Geneva, sans-serif;
- 
+    font-family: Verdana, Geneva, sans-serif;
+    text-align:right;
+    font-size: 0.9em;
     font-weight: bold;
     color: #cc0000;
     width: 250px; 
-    
+
 }
 .column2Class,.column4Class{
+    width: 230px;
+}
+.column2ClassPerfil,.column4ClassPerfil{
     width: 230px;
 }
 .inputText{
@@ -203,4 +216,104 @@ body {
 .dialogo .ui-dialog-content{
     background-color: #ffffff!important; 
 }
+
+div.menu2
+{
+    /*width:500px;margin:0 auto;*//*Uncomment this line to make the menu center-aligned.*/
+    text-align:center;
+    width: 80%;
+    margin-top: 10px;
+    margin: auto;
+    margin-bottom: 5px;
+    background-image: url(../resources/images/bg1.gif);
+
+    border:0px solid black;
+    font-size:0;
+}
+
+div.menu2 a
+{
+    display: inline-block;
+    padding: 0 20px;
+    background-image: url(../resources/images/bg.gif);
+    color:White;
+    text-decoration:none;
+    font: bold 12px Arial;
+    line-height: 50px;
+}
+
+div.menu2 a:hover, div.menu2 a.current
+{
+    background-position:0 -60px;
+}
+
+div.menu2 a.dummy
+{
+    width:2px;
+    padding:0 0;
+}
+
+
+.customDialog {
+    background:#eee!important;
+}
+
+.ui-dialog.customDialog .ui-dialog-content {
+    padding: 0;
+    margin: 3px 3px;
+    background:white!important;
+    font-size: 1.3em!important;
+    font-family: Verdana, Geneva, sans-serif;
+}
+.ui-dialog .ui-dialog-titlebar{
+    font-size: 1.9em!important; 
+}
+
+.ui-dialog-titlebar.customDialog {
+    background: green!important;
+    color: black;
+    font-size: 1.9em!important;
+    box-shadow: none;
+}
+.centered  {
+
+    text-align:left;
+
+    width: 65%;
+}
+
+
+.left {
+    float: left; 
+
+}
+.rig {
+    vertical-align:auto;
+    float: right; 
+    width: 120%;
+    height: 130px;
+    border-radius: 1px;
+    border-color: #cc0000;
+
+}
+.nombre{
+    text-align:right; 
+    color:#cc0000;
+    font-size: 1.0em;
+}
+.res{
+    text-align:left;
+}
+.button { /* clase general */
+    border: 1px solid #dedede;
+    border-radius: 3px;
+    width: 100%;
+    color: #555;
+
+    display: inline-block;
+    font: bold 12px/12px HelveticaNeue, Arial;
+    padding: 8px 11px;
+    text-decoration: none;
+}
+
 

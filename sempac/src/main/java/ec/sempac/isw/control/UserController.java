@@ -203,37 +203,37 @@ public class UserController implements Serializable {
         return;
     }
 
-    private void crearSistemaUsuario() {
-        SistemaUsuario sistemaUsuario = new SistemaUsuario();
-        sistemaUsuario.setIdUsuario((ejbFacade.getItemsUserName(selected.getUsername())).getIdUsuario());
-        sistemaUsuario.setFechaAsignacion(new Date());
-        sistemaUsuario.setEstado('V');//V = valido, P = Pago
-        sistemaUsuario.setTiempoBloqueo(0);
-        ejbFacadeSistemaUsuario.create(sistemaUsuario);
-        File miDir = new File(".");
-        File folder;
-        try {
-            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            String filePath = ec.getRealPath("Documentos");
-            System.out.println("hola como vas " + filePath);
-            folder = new File(filePath + File.separator + getSelected().getUsername());
-            folder.mkdirs();
-        } catch (Exception ex) {
-            MuestraMensaje.addError("No se pudo crear el directorio de archivos");
-        }
-        Usuario user = ejbFacade.getItemsUserName(selected.getUsername());
-        ActivacionUsuario.setUsuario(user);
-        ActivacionUsuario.setCodigoUsuario(user.getIdUsuario());
-        ActivacionUsuario.setCodigoPeriodo(String.valueOf(new Date().getYear() + 1900));
-        ActivacionUsuario.setCambiarContrasena(false);
-
-        try {
-            System.out.println("p0ndras la direccion");
-            Sesion.redireccionaPagina("http://localhost:8080/sempac/faces/configuraciones/inicioEmpleado/inicioEmpleado.xhtml");
-        } catch (Exception ex) {
-            MuestraMensaje.addError("No se pudo iniciar la session");
-        }
-    }
+//    private void crearSistemaUsuario() {
+//        SistemaUsuario sistemaUsuario = new SistemaUsuario();
+//        sistemaUsuario.setIdUsuario((ejbFacade.getItemsUserName(selected.getUsername())).getIdUsuario());
+//        sistemaUsuario.setFechaAsignacion(new Date());
+//        sistemaUsuario.setEstado('V');//V = valido, P = Pago
+//        sistemaUsuario.setTiempoBloqueo(0);
+//        ejbFacadeSistemaUsuario.create(sistemaUsuario);
+//        File miDir = new File(".");
+//        File folder;
+//        try {
+//            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+//            String filePath = ec.getRealPath("Documentos");
+//            System.out.println("hola como vas " + filePath);
+//            folder = new File(filePath + File.separator + getSelected().getUsername());
+//            folder.mkdirs();
+//        } catch (Exception ex) {
+//            MuestraMensaje.addError("No se pudo crear el directorio de archivos");
+//        }
+//        Usuario user = ejbFacade.getItemsUserName(selected.getUsername());
+//        ActivacionUsuario.setUsuario(user);
+//        ActivacionUsuario.setCodigoUsuario(user.getIdUsuario());
+//        ActivacionUsuario.setCodigoPeriodo(String.valueOf(new Date().getYear() + 1900));
+//        ActivacionUsuario.setCambiarContrasena(false);
+//
+//        try {
+//            System.out.println("p0ndras la direccion uno");
+//            Sesion.redireccionaPagina("http://localhost:8080/sempac/faces/configuraciones/inicioEmpleado/inicioEmpleado.xhtml");
+//        } catch (Exception ex) {
+//            MuestraMensaje.addError("No se pudo iniciar la session");
+//        }
+//    }
 
     public void revisaMail() {
         System.out.println("Mail " + this.getSelected().getCorreoElectronico());
@@ -381,7 +381,7 @@ public class UserController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE, "Usuario Creado correctamente");
-        crearSistemaUsuario();
+       // crearSistemaUsuario();
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }

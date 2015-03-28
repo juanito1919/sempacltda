@@ -8,6 +8,7 @@ import ec.sempac.isw.negocio.HabilidadesFacade;
 import ec.sempac.isw.seguridades.Empleos;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -26,14 +27,14 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
     private HabilidadesFacade ejbFacadeHabilidades;
     @EJB
     private CiudadFacade ejbFacadeCiudad;
-    
+
     private List<PersonalRequerido> itemsPersonalRequerido;
     private List<Habilidades> itemsHabilidades;
     private Habilidades habilidadBusqueda;
     private String fechaActual;
     private List<Ciudad> itemCiudades;
     private Ciudad ciudad;
-    
+
     public PersonalRequeridoController() {
         super(PersonalRequerido.class);
     }
@@ -41,6 +42,7 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
     @PostConstruct
     public void init() {
         super.setFacade(ejbFacade);
+
         setItemsPersonalRequerido(ejbFacade.getItemsPersonalRequerido(false));// todas las notifiaciones q no esten eliminadas
     }
 
@@ -58,10 +60,17 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
     public List<PersonalRequerido> getItemsPersonalRequerido() {
         return itemsPersonalRequerido;
     }
-    public void empleo(){
+
+    public void empleo() {
         Empleos.setPersonalRequerido(getSelected());/////
         System.out.println("engreso empleo req");
     }
+
+    public String cambiarFormatoFecha(Date date) {
+        DateFormat df = DateFormat.getDateInstance();
+        return df.format(date);
+    }
+
     public void iniciarBusqueda() {
 
         this.setItemsHabilidades(this.ejbFacadeHabilidades.getItemsHabilidadesEliminado(false));
@@ -73,8 +82,8 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
 
     public String fechaActual() {
         Date data = new Date();
-        String fecha = data.toString();
-        return fecha;
+        DateFormat df = DateFormat.getDateInstance(2);
+        return df.format(data);
     }
 
     public void guardarNuevo(ActionEvent event) {
@@ -90,7 +99,7 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
     }
 
     public void prepareNuevo() {
-        System.err.println("entro nuevo");
+
         this.setSelected(new PersonalRequerido());
 
     }
@@ -171,6 +180,5 @@ public class PersonalRequeridoController extends AbstractController<PersonalRequ
     public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
     }
-    
-    
+
 }

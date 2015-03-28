@@ -6,6 +6,7 @@
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -71,7 +72,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByPais", query = "SELECT u FROM Usuario u WHERE  u.idCiudad.idRegion.idPais.idPais=:pais and u.eliminado = :eliminado"),
     @NamedQuery(name = "Usuario.findByPaisyRgion", query = "SELECT u FROM Usuario u WHERE  (u.idCiudad.idRegion.idPais.idPais =:pais AND u.idCiudad.idRegion.idRegion =:region) AND u.eliminado = :eliminado"),
     @NamedQuery(name = "Usuario.findByPaisyRgionYciudad", query = "SELECT u FROM Usuario u WHERE  (u.idCiudad.idRegion.idPais.idPais =:pais AND u.idCiudad.idRegion.idRegion =:region AND u.idCiudad.idCiudad =:ciudad) AND u.eliminado = :eliminado"),
-    @NamedQuery(name = "Usuario.findByAvanzada", query = "SELECT u FROM Usuario u JOIN UserHabilidadesEspectativas he ON u.idUsuario = he.usuario.idUsuario WHERE u.idCiudad.idRegion.idPais.idPais like :pais AND u.idCiudad.idRegion.idRegion like :region AND u.idCiudad.idCiudad like :ciudad AND he.espectativas.idEspectativas IN :espectativa AND he.habilidades.idHabilidades IN :habilidad AND u.tipo=:tipo AND u.eliminado = :eliminado")
+    @NamedQuery(name = "Usuario.findByAvanzada", query = "SELECT u FROM Usuario u JOIN UserHabilidadesEspectativas he ON u.idUsuario = he.usuario.idUsuario WHERE u.idCiudad.idRegion.idPais.idPais like :pais AND u.idCiudad.idRegion.idRegion like :region AND u.idCiudad.idCiudad like :ciudad AND he.espectativas.idEspectativas IN :espectativa AND he.habilidades.idHabilidades IN :habilidad AND u.tipo=:tipo AND u.eliminado = :eliminado"),
+    @NamedQuery(name = "Usuario.findByAvanzadaPais", query = "SELECT u FROM Usuario u JOIN UserHabilidadesEspectativas he ON u.idUsuario = he.usuario.idUsuario WHERE u.idCiudad.idRegion.idPais.idPais like :pais AND he.espectativas.idEspectativas IN :espectativa AND he.habilidades.idHabilidades IN :habilidad AND u.tipo=:tipo AND u.eliminado = :eliminado"),
+    @NamedQuery(name = "Usuario.findByAvanzadaNinguna", query = "SELECT u FROM Usuario u JOIN UserHabilidadesEspectativas he ON u.idUsuario = he.usuario.idUsuario WHERE he.espectativas.idEspectativas IN :espectativa AND he.habilidades.idHabilidades IN :habilidad AND u.tipo=:tipo AND u.eliminado = :eliminado"),
+    @NamedQuery(name = "Usuario.findByAvanzadaPaisRegion", query = "SELECT u FROM Usuario u JOIN UserHabilidadesEspectativas he ON u.idUsuario = he.usuario.idUsuario WHERE u.idCiudad.idRegion.idPais.idPais like :pais AND u.idCiudad.idRegion.idRegion like :region AND he.espectativas.idEspectativas IN :espectativa AND he.habilidades.idHabilidades IN :habilidad AND u.tipo=:tipo AND u.eliminado = :eliminado")
 
 })
 public class Usuario implements Serializable {
@@ -86,7 +90,11 @@ public class Usuario implements Serializable {
     public static final String findByPaisYregion = "Usuario.findByPaisyRgion";
     public static final String findByPaisyRgionYciudad = "Usuario.findByPaisyRgionYciudad";
     public static final String findByAvanzada = "Usuario.findByAvanzada";
+    public static final String findByAvanzadaPais = "Usuario.findByAvanzadaPais";
+    public static final String findByAvanzadaPaisyRegion = "Usuario.findByAvanzadaPaisRegion";
+    public static final String findByAvanzadaNinguna = "Usuario.findByAvanzadaNinguna";
     public static final String findByIdentidad = "Usuario.findByIdentidad";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -132,7 +140,7 @@ public class Usuario implements Serializable {
     private Character tipoIdentidad;
     @Basic(optional = false)
     @NotNull
-    
+
     @Size(min = 1, max = 32)
     @Column(nullable = false, length = 32)
     private String identidad;
@@ -167,8 +175,8 @@ public class Usuario implements Serializable {
     private Integer coorLongitud;
     @Column(name = "COOR_LATITUD")
     private Integer coorLatitud;
-    @Size(max = 256)
-    @Column(name = "PERFIL", length = 256)
+    @Size(max = 512)
+    @Column(name = "PERFIL", length = 512)
     private String perfil;
     @Basic(optional = false)
     @NotNull
@@ -344,6 +352,26 @@ public class Usuario implements Serializable {
     }
 
     public Integer getEdad() {
+        if (getFechaNacimiento() != null) {
+            Date fechaActual = new Date();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            String hoy = formato.format(fechaActual);
+            String fechaNacimiento = formato.format(this.getFechaNacimiento());
+            String[] dat1 = fechaNacimiento.split("/");
+            String[] dat2 = hoy.split("/");
+            int anos = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
+            int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
+            if (mes < 0) {
+                anos = anos - 1;
+            } else if (mes == 0) {
+                int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+                if (dia > 0) {
+                    anos = anos - 1;
+                }
+            }
+            edad = anos;
+        }
+
         return edad;
     }
 
@@ -587,5 +615,5 @@ public class Usuario implements Serializable {
     public void setPerfil(String perfil) {
         this.perfil = perfil;
     }
-    
+
 }

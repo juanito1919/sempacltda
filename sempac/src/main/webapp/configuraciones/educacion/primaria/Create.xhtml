@@ -10,41 +10,61 @@
 
 
         <h:form id="EspecialidadPrimariaCreateForm">
-          
+
             <p:panel header="Estudios Primarios" footer="Nota: Sobre la educacion primaria ingrese la escula donde haya culminado sus estudios" style="border: none; margin-top: -10px;" >
                 <h:panelGroup id="display" style="width: 500px; height: 800px;">
                     #{estudiosPrimariaController.iniciaSelected()}
-                    <h:panelGrid columns="2" 
+                    <h:panelGrid columns="4" 
                                  border="0" 
-                                 cellpadding="5"
-                                 columnClasses="column1Class, column2Class">
-                          <p:outputLabel for="colegio" value="#{bundleEtiquetasES.Institucion}"  />
+                                 cellpadding="0"
+                                 columnClasses="column1Class, column2Class,column3Class, column4Class">
+                        <p:outputLabel for="colegio" value="#{bundleEtiquetasES.Institucion}"  />
                         <p:selectOneMenu id="colegio" 
-                                         value="#{estudiosPrimariaController.selected.escuela}"
-                                        
-                                         required="true"
-                                         effect="fade" 
+                                         value="#{estudiosPrimariaController.selected.escuela}" 
+                                         converter="#{escuelaConverter}"
+                                         panelStyle="width:180px"
+                                         effect="fade"
                                          var="t" 
-                                         style="width:200px" 
+                                       
+                                         style="width:235px" 
                                          filter="true" 
-                                         filterMatchMode="contains">
-                            <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
-                            <f:selectItems value="#{estudiosPrimariaController.itemEscuela}" 
-                                           var="escuelaItem"
-                                           itemValue="#{escuelaItem}" 
-                                           itemLabel="#{escuelaItem.nombre}"/>
+                                         filterMatchMode="startsWith">
+                            <f:selectItem itemLabel="Selecione"/>
+                            <f:selectItems value="#{escuelaController.itemsAvailableSelectOne}"
+                                           var="theme"
+                                           itemLabel="#{theme.nombre}"
+                                           itemValue="#{theme}"/>
+
                             <p:column>
                                 <h:outputText value="#{t.nombre}" />
                             </p:column>
-                            <f:converter binding="#{escuelaConverter}"/>
-                        </p:selectOneMenu>  
-                          <p:outputLabel value="TIEMPO DE ESTUDIO:" for="anio"/>
-                          <p:inputText id="anio" value="#{estudiosPrimariaController.selected.duracion}"/>
-                         
+                            <p:ajax event="change"
+                                    update="otra"
+                                    listener="#{estudiosPrimariaController.limpiarNombreEscuala()}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="OTRA INSTITUCION:" for="otra"/>
+                        <p:inputText id="otra"
+                                     styleClass="inputText" 
+                                     value="#{estudiosPrimariaController.nombre}"
+                                     onkeyup="value = value.toUpperCase()"
+                                     >
+                            <p:ajax event="keyup"
+                                    update="colegio"
+                                    listener="#{estudiosPrimariaController.limpiarEscuala()}"
+                                    />
+                        </p:inputText>
+
+                        <p:outputLabel value="TIEMPO DE ESTUDIO:" for="anio"/>
+                        <p:inputText id="anio"
+                                     required="true"
+                                     styleClass="inputText" 
+                                     value="#{estudiosPrimariaController.selected.duracion}"/>
+
                     </h:panelGrid>
-                    <div style="margin-left: 30%; margin-bottom: 20px; margin-top: 30px;">
+                    <div style="margin-left: 40%; margin-bottom: 20px; margin-top: 30px;">
                         <p:commandButton actionListener="#{estudiosPrimariaController.guardarEscuela}" icon="ui-icon-disk" ajax="false"  value="GUARDAR"/>
-                         <p:commandButton value="ELIMINAR"  icon="ui-icon-closethick"/><p:commandButton value="CALCELAR"  icon="ui-icon-closethick" onclick="EspecialidadSecundariaCreateDialog.hide()"/>
+                        <p:commandButton value="ELIMINAR" actionListener="#{estudiosPrimariaController.eliminar(event)}" ajax="false" icon="ui-icon-closethick"/>
+
                     </div>
                 </h:panelGroup>
             </p:panel>

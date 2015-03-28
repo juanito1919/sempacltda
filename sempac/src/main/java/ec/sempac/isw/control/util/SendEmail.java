@@ -8,11 +8,15 @@ package ec.sempac.isw.control.util;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -20,33 +24,37 @@ import javax.mail.internet.MimeMessage;
  */
 public class SendEmail {
 
-    public String enviarMail(String to, String from, String subject, String msj) {
-        final String username = "semptac.ecu@gmail.com";
-        final String password = "soloyolose";
+     public void enviar(String asunto, String contenido, String... destinatarios) throws AddressException, MessagingException {
+        String correo ="semptac.ecu@gmail.com";
+        String contrasena="soloyolose";
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.setProperty("mail.smtp.starttls.enable", "true");
+        prop.setProperty("mail.smtp.auth", "true");
+        prop.setProperty("mail.smtp.user", correo);
 
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        Session mailSession = Session.getDefaultInstance(prop);
+        mailSession.setDebug(true);
+        MimeMessage mensaje = new MimeMessage(mailSession);
 
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("semptac.ecu@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(to));
-            message.setSubject(subject);
-            message.setText(msj);
-            Transport.send(message);
-            return "ok";
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
+        mensaje.setFrom(new InternetAddress(correo));
+
+        for (String destinatario : destinatarios) {
+            mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
         }
+
+        mensaje.setSubject(asunto, "UTF-8");
+        MimeBodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setText(contenido, "UTF-8", "html");
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(messageBodyPart);
+        mensaje.setContent(multipart);
+        Transport transporte = mailSession.getTransport("smtp");
+        transporte.connect(correo, contrasena);
+        transporte.sendMessage(mensaje, mensaje.getAllRecipients());
+        transporte.close();
+
     }
 }

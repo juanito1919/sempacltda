@@ -10,21 +10,21 @@
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <h:outputStylesheet library="css" name="estilo.css"/>
-            <title></title>
+           
         </h:head>
         #{empresaController.validaSession()}
         #{empresaController.asignarEmpresa()}
         <h:form id="formUsuarioLogeado">
-            <p:panel styleClass="panelLogin" style="border: none; border-radius: 0px">
+            <p:panel styleClass="panelLogin" style="background-color:#f8f8f8; border-bottom-right-radius: 5px; height: 19.9%; border-radius: 1px">
+                <p/>
                 <h:panelGrid columns="2"  width="100%">
-                    <p:graphicImage styleClass="imagenLogin" value="/resources/images/icon-business.png"/> 
+                    <p:graphicImage styleClass="imagenLogin" value="#{empresaController.selected.url}"/> 
                     <h:panelGrid columns="1" width="100%">
-                        <p:outputLabel value="Bienvenido/a" style="color:#ff6600; font-size: 1.1em; "/>
+                        <p:outputLabel value="Bienvenido/a" style="color:#ff6600; font-size: 1.4em; "/>
                         <h:panelGrid columns="2" width="100%">
                             <p:outputLabel value="#{empresaController.selected.nombre}" style="color:#3366ff; font-size: 1.3em; font-weight: bold;"/>
                             <p:menuButton value="" style="height: 30px; width: 30px;" >
-                                <p:menuitem value="Modificar Perfil" icon="ui-icon-disk"/>
-                                <p:menuitem value="Cambiar Foto" onclick="PF('dlg2').show();" icon="ui-icon-disk"/>
+                               
                                 <p:menuitem value="Cambiar Contrasena" url="../../configuraciones/usuario/cambioClave/inicio.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
                                 <p:menuitem value="Cuenta"  icon="ui-icon-arrowrefresh-1-w"/>
                                 <p:separator />
@@ -38,7 +38,7 @@
         <h:form>
             <p:growl id="messages" showDetail="true" sticky="true" />
 
-            <p:idleMonitor timeout="18000">
+            <p:idleMonitor timeout="300000">
                 <p:ajax event="idle" listener="#{usuarioController.close()}" update="messages" />
                 <p:ajax event="active" listener="#{usuarioController.close()}" update="messages" />
             </p:idleMonitor>

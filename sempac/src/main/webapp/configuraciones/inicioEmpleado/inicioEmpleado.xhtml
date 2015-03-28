@@ -24,30 +24,43 @@
         <div style="width: 30%; float:left;">
             <h:form id="butonRealizarPago">
                 <p:panel id="pago" header="Estado de Cuenta" footer="Informacion" style="border: none; width: 100%;" >
-                    
-                    #{usuarioController.estadoCuenta()}
                     <p:graphicImage value="../../resources/images/icon-retail-payments.png" width="100" height="100" style="margin-left:30%;"/>
+                    #{usuarioController.estadoCuenta()}
                     <h:panelGrid 
                         columns="2" 
                         border="0"
                         columnClasses="column1Class, column2Class">
-                        <p:outputLabel value="Id USUARIO:"/>
+                        <p:outputLabel value="ID USUARIO:"/>
                         <p:outputLabel  value="#{usuarioController.selected.idUsuario}"/>
                         <p:outputLabel  value="FECHA PAGO:"/>
-                        <p:outputLabel   value="#{usuarioController.sistemaUsuario.fechaAsignacion}"/>
+                        <p:outputLabel   value="#{usuarioController.sistemaUsuario.fechaAsignacion}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" /> 
+                        </p:outputLabel>
                         <p:outputLabel  value="FECHA CADUCIDAD:"/>
-                        <p:outputLabel   value="#{usuarioController.sistemaUsuario.fechaCaducidad}"/>
+                            
+                      
+                        <p:outputLabel   value="#{usuarioController.sistemaUsuario.fechaCaducidad}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" /> 
+                        </p:outputLabel>
                         <c:if test="#{usuarioController.sistemaUsuario.estado=='V'}">
-                            <p:outputLabel  value="ESTADO CUENTA:"/>
-                            <p:outputLabel   value="No Pagado"/>
-                            <p:commandButton value="Realizar Pago" oncomplete="PF('displayPago').show()"/>
+
                         </c:if>
-                        <c:if test="#{usuarioController.sistemaUsuario.estado=='P'}">
-                            <p:outputLabel  value="TOTAL PAGADO:"/>
-                            <p:outputLabel   value=""/>
-                            <p:outputLabel  value="ESTADO CUENTA:"/>
-                            <p:outputLabel   value="Pagado"/>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="#{usuarioController.sistemaUsuario.estado=='V'}">
+                                <p:outputLabel  value="ESTADO CUENTA:"/>
+                                <p:outputLabel   value="No Pagado"/>
+                                <p:commandButton value="Realizar Pago" oncomplete="PF('displayPago').show()"/>
+                            </c:when>
+                            <c:when test="#{usuarioController.sistemaUsuario.estado=='E'}">
+                                <p:outputLabel  value="ESTADO CUENTA:"/>
+                                <p:outputLabel   value="Espera"/>
+                            </c:when>
+                            <c:when test="#{usuarioController.sistemaUsuario.estado=='P'}">
+                                <p:outputLabel  value="ESTADO CUENTA:"/>
+                                <p:outputLabel   value="Pagado"/>
+                            </c:when>
+                        </c:choose>
+                        <p:commandButton value="Actualizar" actionListener="#{usuarioController.estadoCuenta()}" ajax="false"/>
                     </h:panelGrid>
 
                 </p:panel>
@@ -67,12 +80,12 @@
                     </p:lightBox>
 
                     <div style="margin: 0px auto; width: 150px;">
-                        <h:link value="Editar Perfil" styleClass="link"/>
+                        <h:link value="Editar Perfil" outcome="/configuraciones/usuario/inicio" styleClass="link"/>
                     </div>
                 </div>
                 <div style=" width: 50%; float:left; margin-left: 55px; border-left-width: 10px;">
                     <div style="font-size: 1.5em; color: #0066ff;">#{usuarioController.selected.nombres.toUpperCase()} #{usuarioController.selected.apellidos.toUpperCase()}</div>
-                    <div style="font-size: 1.2em;">Genero: #{usuarioController.selected.genero}</div>
+                    <div style="font-size: 1.2em;">Genero: #{(usuarioController.selected.genero=='M')? 'MASCULINO':'FEMENINO'}</div>
                     <div style="font-size: 1.2em;">Cedula/Pasaporte: #{usuarioController.selected.identidad}</div>
                     <div style="font-size: 1.2em;">Edad: #{usuarioController.selected.edad}</div>
                     <div style="font-size: 1.2em;">Telefono/Celular: #{usuarioController.selected.telefonoFijo}</div>
@@ -83,7 +96,7 @@
             </p:panel>
         </div>
         <div style="width: 20%; float:left;">
-            <p:panel id="panelCV" header="Actualizar CV" style="border: none; width: 98%; margin: 0px auto; " >
+            <p:panel id="panelCV" header="Actualizar Hoja de Vida" style="border: none; width: 98%; margin: 0px auto; " >
 
                 <h:link outcome="/configuraciones/usuario/inicio"  styleClass="link">
                     <p:graphicImage url="../../resources/images/hojadevida.gif" width="100" height="100" style="margin-left: 50px;" />
@@ -149,23 +162,44 @@
         </div>
         <p:dialog id="dialogRealizarPago" header="Realizar Pago" modal="true" widgetVar="displayPago" style="width: 300px;">
             <h:form id="formPago">
+                <p:growl id="messagesRealizarPago" showDetail="true" />
                 <h:panelGrid id="detalles" columns="2" border="0" style="border: none;">
                     <p:graphicImage value="../../resources/images/Financial_Transactions-128.png"/>
-
-                    <h:panelGrid id="carDetail" columns="2" border="0" style="border: none;">
+                    <h:panelGrid id="carDetail"
+                                 columns="2"
+                                 border="0"
+                                 columnClasses="column1Class, column2Class"
+                                 style="border: none;">
                         <p:outputLabel value="Numero de Deposito" for="deposito" />
                         <p:inputText id="deposito" 
                                      value="#{usuarioController.pagos.numeroDeposito}" 
                                      required="true"
+                                     validatorMessage="Ingrese el Numero de Deposito"
                                      title="Numero de deposito en la Cuenta bancaria" />
                     </h:panelGrid>
                 </h:panelGrid>
-                <p:commandButton id="pagar"
-                                 actionListener="#{usuarioController.pagosDeposito}"
-                                 ajax="false"
-                                 value="Pagar"  /> 
-                <p:commandButton id="cancelar" value="CANCELAR"/>
+                <div style="margin-left: 40%;">
+                    <p:commandButton id="pagar"
+                                     actionListener="#{usuarioController.pagosDeposito}"
+                                     update="messagesRealizarPago"
+                                     value="Realizar Pago">
+                        <p:confirm header="Confirmacion" message="Esta seguro que el numero de deposito es el correcto?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:commandButton id="cancelar" value="Cancelar" onclick="displayPago.hide();"/>
+                </div>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Yes" type="button" ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" ajax="false" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
             </h:form>
+            <f:facet name="footer">
+                <div style="height: 50px;">
+                    <div style="color: red;">Importante:</div>
+                    <div style="color: #0066ff;">Una vez comprovado los datos padra aplicar a los trabajos</div>
+                </div>
+
+            </f:facet>
+
         </p:dialog>
 
     </ui:define>

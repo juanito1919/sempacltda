@@ -72,7 +72,7 @@ public class EstudiosEspecializadosController extends AbstractController<Estudio
 
     @Override
     public void saveNew(ActionEvent event) {
-        System.out.println("Si ingresa...");
+       // System.out.println("Si ingresa...");
         this.setSelected(new EstudiosEspecializados());
         this.getSelected().setIdCampoEstudio(campoEstudio);
         this.getSelected().setIdTipoEstudio(tipoEstudio);
@@ -81,10 +81,10 @@ public class EstudiosEspecializadosController extends AbstractController<Estudio
         
         TipoEstudio auxTipoEstudio;
         CampoEstudio auxCampoEstudio;
-//        String nulo = (this.getSelected() == null) ? "selected"
-//                : (this.getSelected().getIdTipoEstudio() == null) ? "selected tipo estudio"
-//                        : (ActivacionUsuario.getUsuario() == null) ? "activacion usuario" : "Universidad";
-//        System.out.println("el nulo es: " + nulo);
+        String nulo = (this.getSelected() == null) ? "selected"
+                : (this.getSelected().getIdTipoEstudio() == null) ? "selected tipo estudio"
+                        : (ActivacionUsuario.getUsuario() == null) ? "activacion usuario" : "Universidad";
+        System.out.println("el nulo es: " + nulo);
         if (this.getSelected() != null
                 && this.getSelected().getIdTipoEstudio() != null
                 && ActivacionUsuario.getUsuario() != null
@@ -118,6 +118,7 @@ public class EstudiosEspecializadosController extends AbstractController<Estudio
             }
             //creando especialalizacion
             super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
+            itemsEstudiosEspecializados = ejbFacade.getItemsEspecializacionUser(ActivacionUsuario.getUsuario().getIdUsuario());
         }
 
     }

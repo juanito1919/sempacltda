@@ -6,114 +6,20 @@
                 xmlns:p="http://primefaces.org/ui" 
                 xmlns="http://www.w3.org/1999/xhtml">
     <h:head>
-        <h:outputStylesheet library="css" name="default.css"/> 
-        <h:outputStylesheet library="css" name="component.css"/> 
-        <h:outputStylesheet library="js" name="modernizr.custom.js"/> 
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-7243260-2']);
-            _gaq.push(['_trackPageview']);
-            (function () {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
+
+        
     </h:head>
-    <body>
-        <div class="container">	
-            <!-- Codrops top bar -->
-            <div class="main clearfix">
-                <nav id="menu" class="nav">					
-                    <ul>
-                        <li>
-                            <a href="/sempac/faces/index.xhtml">
-                                <span class="icon">
-                                    <i aria-hidden="true" class="icon-home"></i>
-                                </span>
-                                <span>Menu</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/sempac/faces/paguinaEmpresa/empresa.xhtml">
-                                <span class="icon"> 
-                                    <i aria-hidden="true" class="icon-services"></i>
-                                </span>
-                                <span>Empresa</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="icon">
-                                    <i aria-hidden="true" class="icon-portfolio"></i>
-                                </span>
-                                <span>Portfolio</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="icon">
-                                    <i aria-hidden="true" class="icon-blog"></i>
-                                </span>
-                                <span>Blog</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="icon">
-                                    <i aria-hidden="true" class="icon-team"></i>
-                                </span>
-                                <span>The team</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/sempac/faces/paguinaEmpresa/contacto.xhtml">
-                                <span class="icon">
-                                    <i aria-hidden="true" class="icon-contact"></i>
-                                </span>
-                                <span>Contactos</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div><!-- /container -->
-       <script>
-			//  The function to change the class
-			var changeClass = function (r,className1,className2) {
-				var regex = new RegExp("(?:^|\\s+)" + className1 + "(?:\\s+|$)");
-				if( regex.test(r.className) ) {
-					r.className = r.className.replace(regex,' '+className2+' ');
-			    }
-			    else{
-					r.className = r.className.replace(new RegExp("(?:^|\\s+)" + className2 + "(?:\\s+|$)"),' '+className1+' ');
-			    }
-			    return r.className;
-			};	
-
-			//  Creating our button in JS for smaller screens
-			var menuElements = document.getElementById('menu');
-			menuElements.insertAdjacentHTML('afterBegin','<button type="button" id="menutoggle" class="navtoogle" aria-hidden="true"><i aria-hidden="true" class="icon-menu"> </i> Menu</button>');
-
-			//  Toggle the class on click to show / hide the menu
-			document.getElementById('menutoggle').onclick = function() {
-				changeClass(this, 'navtoogle active', 'navtoogle');
-			}
-
-			// http://tympanus.net/codrops/2013/05/08/responsive-retina-ready-menu/comment-page-2/#comment-438918
-			document.onclick = function(e) {
-				var mobileButton = document.getElementById('menutoggle'),
-					buttonStyle =  mobileButton.currentStyle ? mobileButton.currentStyle.display : getComputedStyle(mobileButton, null).display;
-
-			
-					changeClass(mobileButton, 'navtoogle active', 'navtoogle');
-				//}
-			}
-		</script>
-
-    </body>
-
+    <h:body>
+       
+        <div class="menu2">
+            <a href="/sempac/faces/index.xhtml">INICIO</a>
+           
+            <a href="/sempac/faces/paguinaEmpresa/servicios.xhtml">SERVICIOS</a>
+            <a href="#4">INSPIRACION</a>
+            <a href="/sempac/faces/paguinaEmpresa/empresa.xhtml">LA EMPRESA</a>
+            <a href="/sempac/faces/paguinaEmpresa/contacto.xhtml">CONTACTO</a>
+            <a href="/sempac/faces/paguinaEmpresa/localizanos.xhtml">LOCALIZANOS</a>
+           
+        </div>
+    </h:body>
 </ui:composition>

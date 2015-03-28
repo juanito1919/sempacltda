@@ -1,5 +1,6 @@
 package ec.sempac.isw.control;
 
+import ec.sempac.isw.control.util.MuestraMensaje;
 import ec.sempac.isw.modelo.Espectativas;
 import ec.sempac.isw.modelo.Habilidades;
 import ec.sempac.isw.modelo.UserHabilidadesEspectativas;
@@ -24,17 +25,17 @@ public class UserHabilidadesEspectativasController extends AbstractController<Us
 
     @EJB
     private UserHabilidadesEspectativasFacade ejbFacade;
-    
+
     @EJB
     private HabilidadesFacade ejbFacadeHabilidades;
-    
+
     @EJB
     private EspectativasFacade ejbFacadeEspectativas;
-    
+
     private UserHabilidadesEspectativas seleccion;
-    private List <UserHabilidadesEspectativas> itemsHabExp;
-    private List <Habilidades> itemsHabilidades;
-    private List <Espectativas> itemsEspectativas;
+    private List<UserHabilidadesEspectativas> itemsHabExp;
+    private List<Habilidades> itemsHabilidades;
+    private List<Espectativas> itemsEspectativas;
 
     public UserHabilidadesEspectativasController() {
         super(UserHabilidadesEspectativas.class);
@@ -45,45 +46,53 @@ public class UserHabilidadesEspectativasController extends AbstractController<Us
         super.setFacade(ejbFacade);
         this.setItemsHabilidades(this.ejbFacadeHabilidades.getItemsHabilidadesEliminado(false));
         this.setItemsEspectativas(this.ejbFacadeEspectativas.getItemsEspectativasEliminado(false));
-        //Cambiar
-        this.setItemsHabExp(this.ejbFacade.getItemsHabilidadesUsuario(Long.parseLong("9")));
+        if (ActivacionUsuario.getUsuario() != null) {
+            this.setItemsHabExp(this.ejbFacade.getItemsHabilidadesUsuario(ActivacionUsuario.getUsuario().getIdUsuario()));
+        }
     }
-    
-    public void iniciaSelected(){
+
+    public void iniciaSelected() {
         this.setSelected(new UserHabilidadesEspectativas());
         this.getSelected().setUserHabilidadesEspectativasPK(new UserHabilidadesEspectativasPK());
     }
 
-    public void guardaNuevo(ActionEvent event){
-        System.out.println("guarda "+this.getSelected());
-        if (this.getSelected().getEspectativas()==null || this.getSelected().getHabilidades()==null)
+    public void guardaNuevo(ActionEvent event) {
+
+        if (this.getSelected().getEspectativas() == null || this.getSelected().getHabilidades() == null) {
             return;
-        for (int i=0;i<this.itemsHabExp.size();i++){
-            if (this.itemsHabExp.get(i).getEspectativas().getIdEspectativas()==this.getSelected().getEspectativas().getIdEspectativas()&&this.itemsHabExp.get(i).getHabilidades().getIdHabilidades()==this.getSelected().getHabilidades().getIdHabilidades())
-                return;
         }
-        //CAMBIAR estar liena por 
-        //this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
-        this.getSelected().setUsuario(new Usuario(Long.parseLong("3")));
+        for (int i = 0; i < this.itemsHabExp.size(); i++) {
+            if (this.itemsHabExp.get(i).getEspectativas().getIdEspectativas() == this.getSelected().getEspectativas().getIdEspectativas() && this.itemsHabExp.get(i).getHabilidades().getIdHabilidades() == this.getSelected().getHabilidades().getIdHabilidades()) {
+                return;
+            }
+        }
+        this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
         this.save(event);
-        this.getItemsHabExp().add(this.getSelected());
+        this.setItemsHabExp(this.ejbFacade.getItemsHabilidadesUsuario(ActivacionUsuario.getUsuario().getIdUsuario()));
         this.setSelected(new UserHabilidadesEspectativas());
         this.getSelected().setUserHabilidadesEspectativasPK(new UserHabilidadesEspectativasPK());
     }
-    
-    public void mostrar(){
-        System.out.println("seleccion "+seleccion);
+
+    public void mostrar() {
+
+        this.setSelected(seleccion);
     }
-    public void eliminar (ActionEvent event){
-        if (seleccion!=null){
-            System.err.println(seleccion);
-            this.ejbFacade.remove(seleccion);
-            this.itemsHabExp.remove(seleccion);
-            seleccion=null;
+
+    public void Deselecionar() {
+
+        this.setSelected(null);
+    }
+
+    public void eliminar(ActionEvent event, UserHabilidadesEspectativas item) {
+        setSelected(item);
+        if (getSelected() != null) {
+            this.ejbFacade.remove(getSelected());
+            this.itemsHabExp.remove(getSelected());
+            seleccion = null;
         }
-        
-        
+
     }
+
     @Override
     protected void setEmbeddableKeys() {
         getSelected().getUserHabilidadesEspectativasPK().setIdEspectativas(getSelected().getEspectativas().getIdEspectativas());
@@ -113,14 +122,14 @@ public class UserHabilidadesEspectativasController extends AbstractController<Us
     /**
      * @return the itemsHabilidades
      */
-    public List <Habilidades> getItemsHabilidades() {
+    public List<Habilidades> getItemsHabilidades() {
         return itemsHabilidades;
     }
 
     /**
      * @param itemsHabilidades the itemsHabilidades to set
      */
-    public void setItemsHabilidades(List <Habilidades> itemsHabilidades) {
+    public void setItemsHabilidades(List<Habilidades> itemsHabilidades) {
         this.itemsHabilidades = itemsHabilidades;
     }
 
@@ -141,28 +150,28 @@ public class UserHabilidadesEspectativasController extends AbstractController<Us
     /**
      * @return the itemsEspectativas
      */
-    public List <Espectativas> getItemsEspectativas() {
+    public List<Espectativas> getItemsEspectativas() {
         return itemsEspectativas;
     }
 
     /**
      * @param itemsEspectativas the itemsEspectativas to set
      */
-    public void setItemsEspectativas(List <Espectativas> itemsEspectativas) {
+    public void setItemsEspectativas(List<Espectativas> itemsEspectativas) {
         this.itemsEspectativas = itemsEspectativas;
     }
 
     /**
      * @return the itemsHabExp
      */
-    public List <UserHabilidadesEspectativas> getItemsHabExp() {
+    public List<UserHabilidadesEspectativas> getItemsHabExp() {
         return itemsHabExp;
     }
 
     /**
      * @param itemsHabExp the itemsHabExp to set
      */
-    public void setItemsHabExp(List <UserHabilidadesEspectativas> itemsHabExp) {
+    public void setItemsHabExp(List<UserHabilidadesEspectativas> itemsHabExp) {
         this.itemsHabExp = itemsHabExp;
     }
 
