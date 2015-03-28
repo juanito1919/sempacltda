@@ -61,7 +61,7 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
     // Almancena el la Entidad del Usuario con los datos de usuario quien accedio al sistema
     private Usuario usuario;
     // Guarda la Entidad del Acceso al Sistema del Usuario
-   // private SistemaAcceso usuarioAccesoSistema;
+    // private SistemaAcceso usuarioAccesoSistema;
     // Fecha de Acceso al Sistema.
     private Date fecha;
     //Mensaje en el Dialogo de Cambio de Contraseña
@@ -72,9 +72,9 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
     private boolean habilitaPanelUsuario;
     // FIN DE PARAMETROS PERSONALIZADOS
     // --------------------------------------------------------------------------
-    
+
     private String contrasenaActual;
-    
+
     @Pattern(regexp = "((?=.*\\d).{8,20})", message = "Debe tener almenos 8 caracteres y un Numero")
     private String contrasenaNueva;
     private String confirmacionContrasena;
@@ -104,8 +104,9 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
     public void prepareNuevo() {
         System.err.println("prepara login");
     }
+
     public void validaUsuario() {
-       
+
         try {
             ActivacionUsuario.setCambiarContrasena(false);
             // Validando credenciales del Usuario 
@@ -133,16 +134,16 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
             String estadoUsuario = String.valueOf(usuarioSistema.getEstado());
 
             // Colocando el tiempo de inactividad que tiene el sistema
-            Sesion.tiempoInactividad(1000000);
+            //Sesion.tiempoInactividad(90000000);
             //System.out.println("Contrasena :"+this.contrasena);
-         
+
             //System.out.println("ContrasenaDesemcritada :"+Sesion.MD5(this.contrasena));
             if (this.getUsuario().getContrasena().equals(Sesion.MD5(this.contrasena))) {
             //if (usuarioSistema.getUsuario().getContrasena().equals(this.contrasena)) {
-                 
+
                 // if (estadoUsuario.equals("V") && !Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
-                if (estadoUsuario.equals("V")||estadoUsuario.equals("P") ||estadoUsuario.equals("E")) {
-                    
+                if (estadoUsuario.equals("V") || estadoUsuario.equals("P") || estadoUsuario.equals("E")) {
+
                     // Iniciando la variable de session con los datos del usuario mediante la entidad.                      
                     ActivacionUsuario.setUsuario(this.getUsuario());
                     // ActivacionUsuario.setCodigoIfip(this.getUsuario().getCodigoIfip().getCodigo());
@@ -154,19 +155,16 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
                     //this.usuarioAccesoSistema.setIdUsuario(usuarioSistema);
                     //this.usuarioAccesoSistema.setDireccionIp(ObtieneInformacionCliente.obtenerDireccionIP());
                     //this.usuarioAccesoSistema.setFechaAcceso(new Date());
-
                     // Registrando el acceso al sistema
-                   // ejbFacadeUsuAcc.create(getUsuarioAccesoSistema());
-
+                    // ejbFacadeUsuAcc.create(getUsuarioAccesoSistema());
                     // coloca la fecha de Acceso al Sistema
                     //this.setFecha(this.getUsuarioAccesoSistema().getFechaAcceso());
-
                     //Colocando el codigo del acceso al sistema
-                   // ActivacionUsuario.setCodigoAccesoSistema(this.getUsuarioAccesoSistema().getIdSistemaAcceso());
+                    // ActivacionUsuario.setCodigoAccesoSistema(this.getUsuarioAccesoSistema().getIdSistemaAcceso());
                     //Accediendo al Menu
                     String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principal");
                     Sesion.redireccionaPagina(url);
-                    
+
                     // Si la contraseña ha caducado
                 } else if (estadoUsuario.equals("V") && Validaciones.validaFechaIgualHoy(usuarioSistema.getFechaCaducidad())) {
                     // Actualizando el Estado de la Contraseña a Caducada
@@ -391,7 +389,6 @@ public class UsuarioLoginController extends AbstractController<Usuario> implemen
 //    public void setUsuarioAccesoSistema(SistemaAcceso usuarioAccesoSistema) {
 //        this.usuarioAccesoSistema = usuarioAccesoSistema;
 //    }
-
     /**
      * @return the contrasenaActual
      */

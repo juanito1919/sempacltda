@@ -11,19 +11,27 @@
         <div class="panelTitulo">
             INSTRUCION FORMAL
         </div> 
-        <div style="height: 350px; margin: 0 auto;">
-            <p:tabView orientation="left" dynamic="true">
-                <p:tab title="Estudios Primarios">
-                  <ui:include src="primaria/Create.xhtml"/>  
-                    
+        <style>
+            .TitulosTab{
+                color:#121212!important; 
+                font-size: 1.4em;
+                width: 200px;
+
+            }
+        </style>
+        <div style="height: 600px; margin: 0 auto;">
+            <p:tabView id="hhh" orientation="top"   dynamic="true" >
+                <p:tab title="Estudios Primarios" titleStyleClass="TitulosTab">
+                    <ui:include src="primaria/Create.xhtml"/>  
+
                 </p:tab>
-                <p:tab title="Estudias Secundarios">
-                   <ui:include src="secundaria/Create.xhtml"/>
+                <p:tab title="Estudias Secundarios" titleStyleClass="TitulosTab">
+                    <ui:include src="secundaria/Create.xhtml"/>
                 </p:tab>
-                <p:tab title="Estudios Superiores">
+                <p:tab title="Estudios Superiores" titleStyleClass="TitulosTab">
                     <ui:include src="superior/inicio.xhtml"/>
                 </p:tab>
-                <p:tab title="Estudios Especializados" >
+                <p:tab title="Estudios Especializados" titleStyleClass="TitulosTab" >
                     <ui:include src="especializado/inicio.xhtml"/>
                 </p:tab>
             </p:tabView>

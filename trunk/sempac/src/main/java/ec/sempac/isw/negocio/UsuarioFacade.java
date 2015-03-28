@@ -54,32 +54,75 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }
     }
 
-    // @NamedQuery(name = "Usuario.findByAvanzada", query = "SELECT u FROM Usuario u,UserHabilidadesEspectativas he WHERE (u.idUsuario = he.usuario.idUsuario) and (u.idCiudad.idRegion.idPais.idPais like :pais AND u.idCiudad.idRegion.idRegion like :region AND u.idCiudad.idCiudad like :ciudad and he.espectativas.idEspectativas like :idEspectativa and he.habilidades.idHabilidades like :idhabilidades) AND u.eliminado = :eliminado")
-    public List<Usuario> getUsuarioBusquedaAvanzada(short pais, int region, int ciudad,List<Long> espectativa, List<Long> habilidad, Character pasante, String barrio) {
-       
-        Query query = this.em.createNamedQuery(Usuario.findByAvanzada);
-        System.out.println("PAIS "+"'%"+pais+"'");
-        System.out.println("region "+region);
-        System.out.println("ciudad "+region);
-        System.out.println("Lista habilidades");
-        for (Long habilidad1 : habilidad) {
-            System.out.println("id"+habilidad1);
-        }
-        System.out.println(" lista espectativas");
-        for (Long habilidad1 : espectativa) {
-            System.out.println("id "+habilidad1);
-        }
-        System.out.println("pasantye "+pasante);
+    public List<Usuario> getUsuarioBusquedaAvanzadaNingunaUbicacion(List<Long> espectativa, List<Long> habilidad, Character pasante, String barrio) {
+        Query query;
+
+        query = this.em.createNamedQuery(Usuario.findByAvanzadaNinguna);
+
      
-        
-        query.setParameter("pais",pais);
-        query.setParameter("region", region);
-        query.setParameter("ciudad", ciudad);
-        query.setParameter("espectativa",espectativa);
-        query.setParameter("habilidad",habilidad);
+        query.setParameter("espectativa", espectativa);
+        query.setParameter("habilidad", habilidad);
         query.setParameter("tipo", pasante);
         query.setParameter("eliminado", false);
-        
+
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public List<Usuario> getUsuarioBusquedaAvanzadaPais(short pais, List<Long> espectativa, List<Long> habilidad, Character pasante, String barrio) {
+        Query query;
+
+        query = this.em.createNamedQuery(Usuario.findByAvanzadaPais);
+
+        query.setParameter("pais", pais);
+        query.setParameter("espectativa", espectativa);
+        query.setParameter("habilidad", habilidad);
+        query.setParameter("tipo", pasante);
+        query.setParameter("eliminado", false);
+
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public List<Usuario> getUsuarioBusquedaAvanzadaPaisRegion(short pais, int region, List<Long> espectativa, List<Long> habilidad, Character pasante, String barrio) {
+        Query query;
+
+        query = this.em.createNamedQuery(Usuario.findByAvanzadaPaisyRegion);
+
+        query.setParameter("pais", pais);
+        query.setParameter("espectativa", espectativa);
+        query.setParameter("region", region);
+        query.setParameter("habilidad", habilidad);
+        query.setParameter("tipo", pasante);
+        query.setParameter("eliminado", false);
+
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public List<Usuario> getUsuarioBusquedaAvanzada(short pais, int region, int ciudad, List<Long> espectativa, List<Long> habilidad, Character pasante, String barrio) {
+
+        Query query;
+
+        query = this.em.createNamedQuery(Usuario.findByAvanzada);
+
+        query.setParameter("pais", pais);
+        query.setParameter("region", region);
+        query.setParameter("ciudad", ciudad);
+        query.setParameter("espectativa", espectativa);
+        query.setParameter("habilidad", habilidad);
+        query.setParameter("tipo", pasante);
+        query.setParameter("eliminado", false);
+
         try {
             return query.getResultList();
         } catch (NoResultException e) {
@@ -116,7 +159,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         Query query = this.em.createNamedQuery(Usuario.findByPaisYregion);
         query.setParameter("pais", pais);
         query.setParameter("region", region);
-   
+
         query.setParameter("eliminado", false);
         try {
             return query.getResultList();
@@ -160,6 +203,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             return null;
         }
     }
+
     public Usuario getUserIdentificador(String identidad) {
         Query query = this.em.createNamedQuery(Usuario.findByIdentidad);
         query.setParameter("identidad", identidad);

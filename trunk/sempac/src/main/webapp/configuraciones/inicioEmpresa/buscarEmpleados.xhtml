@@ -6,11 +6,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
+
     <ui:define  name="formulario">
         <!-- ̣̣̣̣**************************************************************************
              PANEL PRINCIPAL                                                     -->                                                   
         <div class="panelTitulo">
-            BUSQUEDA AVANZADA
+            BUSQUEDA BASICA
         </div> 
 
         <div style="float: left; border-radius: 1px; width: 30%;">
@@ -51,7 +52,7 @@
                                         listener="#{usuarioController.cambiaProvinciaBusqueda()}" 
                                         update=":BusquedaUsuarioCreateForm:ciudad,:BusquedaUsuarioListForm"/>
                             </p:selectOneMenu>
-                            <p:outputLabel value="#{bundleEtiquetasES.Ciudad}:" for="ciudad" />
+                            <p:outputLabel value="#{bundleEtiquetasES.Ciudad}/CANTON:" for="ciudad" />
                             <p:selectOneMenu id="ciudad" style="width: 210px;"
                                              value="#{usuarioController.ciudad}">
                                 <f:selectItem itemLabel="Cualquiera"/>
@@ -80,69 +81,68 @@
 
             </p:panel>
         </div>
+        
         <div style="float: left; border-radius: 1px; width: 70%;">
             <p:panel header="Resultado" style="border: none;">
                 <h:form id="BusquedaUsuarioListForm">
-
-                    <p:dataTable id="datalist" value="#{usuarioController.itemsUsuariosSeleccionados}" var="item"
-                                 selectionMode="single" 
-                                 selection="#{usuarioController.seleccionado}"
-                                 paginator="true"
-
-                                 paginatorPosition="bottom"
-                                 rowKey="#{item.idUsuario}"
-                                 rows="15"
-                                 >
-                        <p:ajax event="rowSelect"   update="verPerfil"/>
-                        <p:ajax event="rowUnselect" update="verPerfil"/>
-                        <p:column width="5">
-                            <f:facet name="header">
-                                <h:outputText value="CEDULA"/>
-                            </f:facet>
-                            <h:outputText value="#{item.identidad}"/>
-                        </p:column>
-
-                        <p:column width="100">
-                            <f:facet name="header">
-                                <h:outputText value="NOMBRES Y APELLIDOS"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nombres} #{item.apellidos}"/>
-                        </p:column>
-                        <p:column width="100">
-                            <f:facet name="header">
-                                <h:outputText value="DIRECCION"/>
-                            </f:facet>
-                            <h:outputText value="#{item.direccion}"/>
-                        </p:column>
-                        <p:column width="100">
-                            <f:facet name="header">
-                                <h:outputText value="TELEFONO"/>
-                            </f:facet>
-                            <h:outputText value="#{item.telefonoFijo}"/>
-                        </p:column>
-                        <p:column width="100">
-                            <f:facet name="header">
-                                <h:outputText value="DISPONIBILIDAD"/>
-                            </f:facet>
-                            <h:outputText value="#{usuarioController.obtenerDisponibilidad(item.disponibilidad)}"/>
-                        </p:column>
-                        <p:column width="120">
-                            <f:facet name="header">
-                                <h:outputText value="ACCION"/>
-                            </f:facet>
-                            <p:commandLink id="verPerfil" value="Ver Perfil" actionListener="#{controlUrlControler.openResultadoBusqueda()}">
-                                <f:setPropertyActionListener target="#{usuarioController.selected}" value="#{item}"/>
-                            </p:commandLink>
-                        </p:column>
-
-                    </p:dataTable>
-
+                    <p:scrollPanel style="border: none; width:102%;height:500px">  
+                        <p:dataList id="datalist" 
+                                    value="#{usuarioController.itemsUsuariosSeleccionados}" 
+                                    var="item"
+                                    itemType="none"
+                                    style="border: none;"
+                                    paginator="true"
+                                    styleClass="paginated"
+                                    type="unordered"
+                                    emptyMessage="no hay Datos"
+                                    rows="8"
+                                    >
+                            <p:column style="left: 0px;">
+                                <f:facet name="header">
+                                    RESULTADOS
+                                </f:facet>
+                                <p:panel style="border-color:#3399ff; margin-bottom: 5px;">
+                                    <p:outputLabel value="#{item.nombres} #{item.apellidos}" style=" margin-left: 20px; font-size: 1.1em; font-weight: bold; color: #3333ff;"/>
+                                    <h:panelGrid columns="3" 
+                                                 style="width: 100%;"
+                                                 columnClasses="left,centered,rig"
+                                                 border="0">
+                                        <p:panel footer="Foto de Perfil" style="border: none;">
+                                            <p:graphicImage value="#{item.url}" width="80" height="80"/>
+                                        </p:panel>
+                                        <h:panelGrid columns="2" 
+                                                     columnClasses="nombre,res"
+                                                     border="0">
+                                            <p:outputLabel value="Ciudad/Canton:"/>
+                                            <p:outputLabel value="#{item.idCiudad.nombre}"/>
+                                            <p:outputLabel value="Direccion:"/>
+                                            <p:outputLabel value="#{item.direccion}"/>
+                                            <p:outputLabel value="Telefono:"/>
+                                            <p:outputLabel value="#{item.telefonoFijo}"/>
+                                            <p:outputLabel value="Disponibilidad:"/>
+                                            <p:outputLabel value="#{usuarioController.obtenerDisponibilidad(item.disponibilidad)}"/>
+                                            <p:outputLabel value="Habilidad/Area Trabajo:"/>
+                                            <p:outputLabel value="#{usuarioController.ObtenerHabilidades(item.userHabilidadesEspectativasList)}"/>
+                                            <p:outputLabel value="Profession/Expectativas:"/>
+                                            <p:outputLabel value="#{usuarioController.ObtenerExpectativas(item.userHabilidadesEspectativasList)}"/>
+                                        </h:panelGrid>
+                                        <p:panel style="border-width:  0px 0px 0px 2px; border-radius: 0px; height: 100%; width: 100%; border-color: red;">
+                                            <h:panelGrid columns="1" cellpadding="6" border="0">
+                                                <h:commandButton styleClass="button" value="Ver Perfil" actionListener="#{controlUrlControler.openResultadoBusqueda()}">
+                                                    <f:setPropertyActionListener target="#{usuarioBusquedaController.selecionado}" value="#{item}"/>
+                                                </h:commandButton>
+                                                <p:separator/>
+                                                <h:commandButton styleClass="button" value="Contratar"/>
+                                            </h:panelGrid>
+                                        </p:panel>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:column>
+                        </p:dataList>
+                    </p:scrollPanel>
                 </h:form>
             </p:panel>
-
         </div>
-
-
     </ui:define>
 </ui:composition>
 

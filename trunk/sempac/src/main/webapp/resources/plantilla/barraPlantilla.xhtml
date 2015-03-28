@@ -12,7 +12,7 @@
                                  title="Paguina Principal"
                                  actionListener="#{controlUrlControler.openPaginaPrincipalEmpleado()}"
                                  ajax="false"
-                                 style="width: 120px; height: 50px;"
+                                 style="width: 100px; height: 50px;"
                                  icon="ui-icon-home" 
                                  /> 
                 <p:separator/>
@@ -24,7 +24,7 @@
                                  />  
 
 
-                <p:commandButton id="prefeLaboralesBot" styleClass="butonBarra" value="Preferencias Laborales"
+                <p:commandButton id="prefeLaboralesBot" styleClass="butonBarra" value="Informacion Laboral"
                                  title="Preferencias Laborales" 
                                  actionListener="#{controlUrlControler.openPaginaReferenciasLaborales()}"
                                  ajax="false"
@@ -49,7 +49,7 @@
                                  ajax="false"
                                  icon="ui-icon-star"
                                  /> 
-                <p:commandButton id="habilidadesyEspectativasBot"  value="Habilidades Y Espectativas"
+                <p:commandButton id="habilidadesyEspectativasBot"  value="Area de Trabajo y Profesion"
                                  title="Habilidades Y Espectativas" 
                                  actionListener="#{controlUrlControler.openHabilidadesEspectativas()}"
                                  ajax="false"
@@ -62,14 +62,19 @@
                                  ajax="false"
                                  icon="ui-icon-check"
                                  /> 
+               
+            </p:toolbarGroup>
+            <p:toolbarGroup align="right">
                  <p:separator/>
                 <p:commandButton id="SalirBot" value="Salir"
                                  title="Referencias Personales" 
-                                 actionListener="#{controlUrlControler.openPaginaReferenciasPersonales()}"
+                                 action="#{usuarioController.close()}"
                                  ajax="false"
-                                 style="width: 100px; height: 50px;"
-                                 icon="ui-icon-check"
+                                 style="width: 80px; height: 50px;"
+                               
+                                 type="button"
                                  /> 
+
             </p:toolbarGroup>
         </p:toolbar>
     </h:form>

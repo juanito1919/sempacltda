@@ -156,7 +156,7 @@ public class EmpresaLoginController extends AbstractController<Empresa> implemen
 //                    //Colocando el codigo del acceso al sistema
 //                    ActivacionUsuario.setCodigoAccesoSistema(this.getSistemaAccesoEmpresa().getIdSistemaAccesoEmpresa());
 //                    //Accediendo al Menu
-                    String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principal");
+                    String url = ResourceBundle.getBundle("/BundleObjetosES").getString("principalEmpresa");
                     Sesion.redireccionaPagina(url);
                     // Si la contraseña ha caducado
                 } else if (estadoUsuario.equals("V") && Validaciones.validaFechaIgualHoy(empresaSistema.getFechaCaducidad())) {

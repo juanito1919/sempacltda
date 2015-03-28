@@ -12,6 +12,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>  
     </properties>
 
     <dependencies>
@@ -20,17 +21,13 @@
             <artifactId>org.eclipse.persistence.antlr</artifactId>
             <version>SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.primefaces.extensions</groupId>
-            <artifactId>primefaces-extensions</artifactId>
-            <version>3.0.0</version>
-        </dependency>
 
         <dependency>
             <groupId>unknown.binary</groupId>
             <artifactId>org.eclipse.persistence.asm</artifactId>
             <version>SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>unknown.binary</groupId>
             <artifactId>org.eclipse.persistence.core</artifactId>

@@ -12,21 +12,22 @@
     </div> 
 
     <p:panel header="Habilidades Espectativas" 
-             style="border: none; width: 75%; margin: 5px auto;">
+             style="border: none; width: 90%; margin: 5px auto;">
         <h:form id="userHabilidadesEspectativasCreateForm">
             <h:panelGroup id="display">
                 #{userHabilidadesEspectativasController.iniciaSelected()}
-                <p:fieldset legend="Informacion de Habilidades" style="margin-bottom:20px">
+                <p:fieldset legend="Informacion de Area de Trabajo" style="margin-bottom:20px">
                     <h:panelGrid 
                         columns="4" 
                         border="0"
                         columnClasses="column1Class, column2Class,column3Class,column4Class" 
                         >
-                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Habilidad}:" 
+                        <p:outputLabel rendered="true" value="AREA DE TRABAJO/#{bundleEtiquetasES.Habilidad}:" 
                                        for="habilidad" />
                         <p:selectOneMenu id="habilidad" 
                                          style="width: 200px;"
                                          required="true"
+                                         requiredMessage="Selecione una Habilidad"
                                          value="#{userHabilidadesEspectativasController.selected.habilidades}"
                                          >
                             <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
@@ -42,16 +43,18 @@
                         <p:inputTextarea id="descripcionh" value="#{userHabilidadesEspectativasController.selected.descripcionHabilidad}" cols="50"/>
                     </h:panelGrid>
                 </p:fieldset>
-                <p:fieldset legend="Informacion de Espectativas" style="margin-bottom:20px">
+                <p:fieldset legend="Informacion de Profesion" style="margin-bottom:20px">
                     <h:panelGrid 
                         columns="4" 
                         border="0"
                         columnClasses="column1Class, column2Class,column3Class,column4Class" 
                         >
-                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Espectativa}" 
+                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Espectativa}/Profesion" 
                                        for="espectativa" />
                         <p:selectOneMenu id="espectativa" 
                                          style="width: 200px;"
+                                         required="true"
+                                         requiredMessage="Selecione una Espectativa"
                                          value="#{userHabilidadesEspectativasController.selected.espectativas}"
                                          >
                             <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
@@ -78,12 +81,6 @@
                                      :userHabilidadesEspectativasCreateForm:descripcionh"
                                      ajax="false"
                                      />
-
-                    <p:commandButton 
-                        value="NUEVO" 
-                        icon="ui-icon-document"
-                        actionListener="#{referenciaPersonalController.iniciaSelected()}"
-                        update=":userHabilidadesEspectativasCreateForm"/>
                 </div>
             </h:panelGroup>
         </h:form>

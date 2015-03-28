@@ -39,9 +39,17 @@ public class ColegioFacade extends AbstractFacade<Colegio> {
         return query.getResultList();
     }
 
-    public List<Colegio> getItemsColegio(boolean  estado) {
+    public Colegio getColegio(String nombre) {
+        Query query = this.em.createNamedQuery(Colegio.findByNombre);
+        query.setParameter("nombre", nombre);
+        query.setParameter("eliminado", false);
+        return (query.getResultList() != null && !query.getResultList().isEmpty()) ? (Colegio) query.getResultList().get(0) : null;
+
+    }
+
+    public List<Colegio> getItemsColegio(boolean estado) {
         Query query = this.em.createNamedQuery(Colegio.findByEliminado);
-        query.setParameter("eliminado",estado);
+        query.setParameter("eliminado", estado);
         return query.getResultList();
     }
 }

@@ -11,11 +11,8 @@ import ec.sempac.isw.modelo.Pais;
 import ec.sempac.isw.modelo.Region;
 import ec.sempac.isw.modelo.SistemaUsuario;
 import ec.sempac.isw.modelo.UserHabilidadesEspectativas;
-import ec.sempac.isw.modelo.UserHabilidadesEspectativasPK;
 import ec.sempac.isw.modelo.Usuario;
 import ec.sempac.isw.negocio.CiudadFacade;
-import ec.sempac.isw.negocio.EspectativasFacade;
-import ec.sempac.isw.negocio.HabilidadesFacade;
 import ec.sempac.isw.negocio.PagosFacade;
 import ec.sempac.isw.negocio.PaisFacade;
 import ec.sempac.isw.negocio.RegionFacade;
@@ -25,19 +22,16 @@ import ec.sempac.isw.negocio.UsuarioFacade;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
 import ec.sempac.isw.seguridades.Sesion;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -45,7 +39,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -54,8 +47,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.event.ActionEvent;
-import javax.imageio.stream.FileImageOutputStream;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.CroppedImage;
@@ -83,14 +74,6 @@ public class UsuarioController implements Serializable {
     @EJB
     private SistemaAccesoFacade ejbFacadeSistemaAcceso;
 
-    @EJB
-    private HabilidadesFacade ejbFacadeHabilidades;
-
-    @EJB
-    private EspectativasFacade ejbFacadeEspectativas;
-
-    private String DIRECTORIO_DOCUMENTOS = "c:\\documentos";
-    private String DIRECTORIO_TEMP = "c://temp";
     private List<Pais> itemPaises;
     private Pais pais;
     private List<Region> itemProvincias;
@@ -105,16 +88,8 @@ public class UsuarioController implements Serializable {
     private Espectativas espectativaBusqueda;
     private String direccion;
     private CroppedImage croppeFoto;
+    private SistemaUsuario sistemaUsuario;
     private String imageTemp;
-    private boolean estadoPago;
-    private char tipoUsuario;
-
-    private List<UserHabilidadesEspectativas> itemsHabilidadesEspectativas;
-    private UserHabilidadesEspectativas HabilidadesEspectativaSeleccionado;
-
-    private List<Usuario> itemsUsuariosSeleccionados;
-    private List<Habilidades> itemsHabilidades;
-    private List<Espectativas> itemsEspectativas;
 
 ////MIO
     private List<Usuario> items = null;
@@ -124,15 +99,17 @@ public class UsuarioController implements Serializable {
     private Pagos pagos;
     @EJB
     private PagosFacade ejbFacadePagos;
-    ///
+    private int tamano;
+    private boolean estadoPago;
+    private char tipoUsuario;
 
+    ///
     public UsuarioController() {
     }
 
     @PostConstruct
     public void init() {
         this.setItemPaises(this.ejbFacadePais.getItemsPais(false));
-        this.setSelected(new Usuario());
         pagos = new Pagos();
         itemPaises = ejbFacadePais.getItemsPais(false);
         selected = new Usuario();
@@ -142,6 +119,12 @@ public class UsuarioController implements Serializable {
 
     public void actualizarUsuario(ActionEvent evet) {
         this.save(evet);
+    }
+
+    public void estadoCuenta() {
+        if (ActivacionUsuario.getUsuario() != null) {
+            setSistemaUsuario(ejbFacadeSistemaUsuario.getUsuarioActivacion(ActivacionUsuario.getUsuario().getIdUsuario()));
+        }
     }
 
     public void verificarEstadoPago() {
@@ -155,71 +138,14 @@ public class UsuarioController implements Serializable {
 
     }
 
-//    public void iniciarBusqueda() {
-//      
-//        this.setItemsHabilidades(this.ejbFacadeHabilidades.getItemsHabilidadesEliminado(false));
-//        this.setItemsEspectativas(this.ejbFacadeEspectativas.getItemsEspectativasEliminado(false));
-//        this.itemsHabilidadesEspectativas = new ArrayList<UserHabilidadesEspectativas>();
-//        prepareNuevo();
-//    }
-    public void buscarUsuarioBasico() {
-
-        this.itemsUsuariosSeleccionados = null;
-        if (pais != null && provincia == null && ciudad == null) {
-            this.itemsUsuariosSeleccionados = ejbFacade.getUsuarioPorPais(pais.getIdPais());
-        } else if (pais != null && provincia != null && ciudad == null) {
-
-            this.itemsUsuariosSeleccionados = ejbFacade.getUsuarioPorPaisyRegion(pais.getIdPais(), provincia.getIdRegion());
-        } else if (pais != null && provincia != null && ciudad != null) {
-
-            this.itemsUsuariosSeleccionados = ejbFacade.getUsuarioPorPaisyRegionYciudad(pais.getIdPais(), provincia.getIdRegion(), ciudad.getIdCiudad());
-        } else {
-            this.itemsUsuariosSeleccionados = ejbFacade.findAll();
-        }
-
+    public void getTamanoCampo() {
+        int len = this.getSelected().getPerfil().length();
+        setTamano(512 - len);
     }
 
-    public void busquedaAvanzada() {
-
-        List<Long> listHabilidades = new ArrayList<Long>();
-        List<Long> listEspectaitivas = new ArrayList<Long>();
-        listEspectaitivas.clear();
-        listHabilidades.clear();
-        tieneHabilidades(listHabilidades);
-        tieneespectitivas(listEspectaitivas);
-
-        this.itemsUsuariosSeleccionados = null;
-        if (pais == null && provincia == null && ciudad == null) {
-
-        }
-        if (pais != null && provincia == null && ciudad == null) {
-
-        }
-        if (pais != null && provincia != null && ciudad == null) {
-
-        }
-        if (pais != null && provincia != null && ciudad != null) {
-            this.itemsUsuariosSeleccionados = ejbFacade.getUsuarioBusquedaAvanzada(pais.getIdPais(), provincia.getIdRegion(), ciudad.getIdCiudad(), listEspectaitivas, listHabilidades, tipoUsuario, "");
-        }
-    }
-
-    private void tieneHabilidades(List<Long> listHabilidades) {
-        if (itemsHabilidades == null || itemsHabilidades.isEmpty()) {
-            itemsHabilidades = ejbFacadeHabilidades.findAll();
-        }
-        for (Habilidades habilidade : itemsHabilidades) {
-            listHabilidades.add(habilidade.getIdHabilidades());
-        }
-
-    }
-
-    private void tieneespectitivas(List<Long> listEspectativas) {
-        if (itemsEspectativas == null || itemsEspectativas.isEmpty()) {
-            itemsEspectativas = ejbFacadeEspectativas.findAll();
-        }
-        for (Espectativas espectativas : itemsEspectativas) {
-            listEspectativas.add(espectativas.getIdEspectativas());
-        }
+    public String cambiarformatoFecha(Date fecha) {
+        DateFormat df = DateFormat.getDateInstance(1);
+        return df.format(fecha);
     }
 
     private void esPasante() {
@@ -230,76 +156,6 @@ public class UsuarioController implements Serializable {
 
         }
 
-    }
-//    public void cargarUsuariosBusqueda() {
-//        System.out.println("entro busqueda");
-//        this.itemsUsuariosSeleccionados = new ArrayList<Usuario>();
-//        boolean agregar = false;
-//        if (!(itemsHabilidadesEspectativas.isEmpty() && pais == null && provincia == null && ciudad == null)) {
-//            for (int i = 0; i < listaUsuariosBusqueda.size(); i++) {
-//                Usuario us = listaUsuariosBusqueda.get(i);
-//                for (int j = 0; j < itemsHabilidadesEspectativas.size(); j++) {
-//                    List<UserHabilidadesEspectativas> habEsp = us.getUserHabilidadesEspectativasList();
-//                    for (int k = 0; k < habEsp.size(); k++) {
-//                        if (itemsHabilidadesEspectativas.get(j).getHabilidades().equals(habEsp.get(k).getHabilidades())
-//                                && itemsHabilidadesEspectativas.get(j).getEspectativas().equals(habEsp.get(k).getEspectativas())) {
-//                            agregar = true;
-//                            break;
-//                        }
-//                    }
-//                    if (agregar) {
-//                        break;
-//                    }
-//                }
-//                /// Ubicacion
-//                if (pais != null && agregar) {
-//                    if (!us.getIdCiudad().getIdRegion().getIdPais().equals(pais)) {
-//                        agregar = false;
-//                    }
-//                }
-//                if (provincia != null && agregar) {
-//                    if (!us.getIdCiudad().getIdRegion().equals(provincia)) {
-//                        agregar = false;
-//                    }
-//                }
-//                if (ciudad != null && agregar) {
-//                    if (!us.getIdCiudad().equals(ciudad)) {
-//                        agregar = false;
-//                    }
-//                }
-//                if (!direccion.equals("") && agregar) {
-//                    if (!us.getDireccion().contains(direccion)) {
-//                        agregar = false;
-//                    }
-//                }
-//                if (agregar) {
-//                    itemsUsuariosSeleccionados.add(us);
-//                    agregar = false;
-//                }
-//            }
-//        }
-//    }
-
-    public void AgragarHabEspBusqueda(ActionEvent event) {
-
-        System.out.println(habilidadBusqueda);
-        System.out.println(espectativaBusqueda);
-        UserHabilidadesEspectativas nuevo = new UserHabilidadesEspectativas();
-        nuevo.setEspectativas(espectativaBusqueda);
-        nuevo.setHabilidades(habilidadBusqueda);
-        nuevo.setUserHabilidadesEspectativasPK(new UserHabilidadesEspectativasPK(0, espectativaBusqueda.getIdEspectativas(), habilidadBusqueda.getIdHabilidades()));
-        this.itemsHabilidadesEspectativas.add(nuevo);
-        // cargarUsuariosBusqueda();
-//        this.HabilidadesEspectativaSeleccionado.setUserHabilidadesEspectativasPK(new UserHabilidadesEspectativasPK(0, HabilidadesEspectativaSeleccionado.getEspectativas().getIdEspectativas(), HabilidadesEspectativaSeleccionado.getHabilidades().getIdHabilidades()));
-//        this.HabilidadesEspectativaSeleccionado.setUsuario(new Usuario());
-//        
-//        this.itemsHabilidadesEspectativas.add(HabilidadesEspectativaSeleccionado);
-        //this.HabilidadesEspectativaSeleccionado=new UserHabilidadesEspectativas();
-    }
-
-    public void QuitarHabEspBusqueda(ActionEvent event) {
-        this.itemsHabilidadesEspectativas.remove(HabilidadesEspectativaSeleccionado);
-        // cargarUsuariosBusqueda();
     }
 
     public void cambiaPaisBusqueda() {
@@ -328,11 +184,6 @@ public class UsuarioController implements Serializable {
         }
     }
 
-    public void asignarUsuario() {
-        System.out.println("uruario " + ActivacionUsuario.getUsuario());
-        this.setSelected(ActivacionUsuario.getUsuario());
-    }
-
     public void cambiaProvincia() {
         if (provincia != null) {
             this.setItemCiudades(this.ejbFacadeCiudad.getItemsReionesPais(false, provincia.getIdRegion()));
@@ -344,9 +195,12 @@ public class UsuarioController implements Serializable {
         }
     }
 
+    public void asignarUsuario() {
+        this.setSelected(ActivacionUsuario.getUsuario());
+    }
+
     public void close() throws ServletException {
         Sesion.cerrarSesion();
-        // ejbFacadeSistemaAcceso.remove(null);
         this.init();
 
     }
@@ -394,6 +248,7 @@ public class UsuarioController implements Serializable {
     }
 
     public void registraCuenta(ActionEvent event) {
+        System.out.println("entro pa guadar");
         if (this.getSelected().getTipoIdentidad() == 'C') {
             if (!Validaciones.validaCedula(this.getSelected().getIdentidad())) {
                 System.out.println("cedula error");
@@ -427,7 +282,7 @@ public class UsuarioController implements Serializable {
             this.getSelected().setTipo('U');
             this.getSelected().setEliminado(false);
             this.saveNew(event);
-
+            ActivacionUsuario.setUsuario(this.getSelected());
             SistemaUsuario sisUser = new SistemaUsuario();
             this.setSelected(this.ejbFacade.getItemsUserName(this.getSelected().getUsername()));
             sisUser.setIdUsuario(this.getSelected().getIdUsuario());
@@ -451,82 +306,6 @@ public class UsuarioController implements Serializable {
     public void actionFoto() {
         this.setCroppeFoto(null);
         this.setImageTemp(null);
-    }
-
-    public void hola(ActionEvent evet) {
-        System.out.println("holaaAA");
-    }
-
-    public void guardarFoto() {
-        System.out.println("como estassssss");
-    }
-
-    public void actionGuardarFoto() {
-        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-        DIRECTORIO_DOCUMENTOS = servletContext.getRealPath("") + File.separatorChar + "Documntos" + File.separatorChar;
-
-        String archivo = DIRECTORIO_DOCUMENTOS + this.getSelected().getUsername() + ".jpg";
-        System.out.println("comoooooooo: " + archivo);
-        // getSelected().setUrl(archivo);
-        try {
-
-            if (getCroppeFoto() != null) {
-                FileImageOutputStream imageOutput = new FileImageOutputStream(new File(archivo));
-                imageOutput.write(getCroppeFoto().getBytes(), 0, getCroppeFoto().getBytes().length);
-                imageOutput.close();
-            } else {
-                OutputStream outStream = new FileOutputStream(new File(archivo));
-                InputStream inputStream = new FileInputStream(DIRECTORIO_DOCUMENTOS + "temp/" + this.getImageTemp());
-                byte[] buffer = new byte[6124];
-                int bulk;
-                while (true) {
-                    bulk = inputStream.read(buffer);
-                    if (bulk < 0) {
-                        break;
-                    }
-                    outStream.write(buffer, 0, bulk);
-                    outStream.flush();
-                }
-                outStream.close();
-                inputStream.close();
-            }
-
-            actionFoto();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void uploadFile(FileUploadEvent event) {
-        try {
-            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-            DIRECTORIO_DOCUMENTOS = servletContext.getRealPath("")
-                    + File.separatorChar + "Documentos" + File.separatorChar;
-
-            String archivo = DIRECTORIO_DOCUMENTOS + "temp" + File.separatorChar + event.getFile().getFileName();
-            FileOutputStream fileOutputStream = new FileOutputStream(archivo);
-            byte[] buffer = new byte[6124];
-            int bulk;
-            InputStream inputStream = event.getFile().getInputstream();
-            while (true) {
-                bulk = inputStream.read(buffer);
-                if (bulk < 0) {
-                    break;
-                }
-                fileOutputStream.write(buffer, 0, bulk);
-                fileOutputStream.flush();
-            }
-            fileOutputStream.close();
-            inputStream.close();
-
-            this.setImageTemp(event.getFile().getFileName());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Error al subir el archivo"));
-        }
     }
 
     public void subirFoto(FileUploadEvent event) {
@@ -702,14 +481,16 @@ public class UsuarioController implements Serializable {
             MuestraMensaje.addError("No se pudo crear el directorio de archivos");
         }
         Usuario user = ejbFacade.getItemsUserName(selected.getUsername());
+        //System.out.println("Usuario rrr: "+user.getApellidos());
         ActivacionUsuario.setUsuario(user);
         ActivacionUsuario.setCodigoUsuario(user.getIdUsuario());
         ActivacionUsuario.setCodigoPeriodo(String.valueOf(new Date().getYear() + 1900));
         ActivacionUsuario.setCambiarContrasena(false);
 
         try {
-            System.out.println("p0ndras la direccion");
+            //System.out.println("p0ndras la direccion dos");
             Sesion.redireccionaPagina("/sempac/faces/configuraciones/inicioEmpleado/inicioEmpleado.xhtml");
+
         } catch (Exception ex) {
             MuestraMensaje.addError("No se pudo iniciar la session");
         }
@@ -880,81 +661,6 @@ public class UsuarioController implements Serializable {
     }
 
     /**
-     * @return the itemsUsuariosSeleccionados
-     */
-    public List<Usuario> getItemsUsuariosSeleccionados() {
-        return itemsUsuariosSeleccionados;
-    }
-
-    /**
-     * @param itemsUsuariosSeleccionados the itemsUsuariosSeleccionados to set
-     */
-    public void setItemsUsuariosSeleccionados(List<Usuario> itemsUsuariosSeleccionados) {
-        this.itemsUsuariosSeleccionados = itemsUsuariosSeleccionados;
-    }
-
-    /**
-     * @return the itemsHabilidades
-     */
-    public List<Habilidades> getItemsHabilidades() {
-        return itemsHabilidades;
-    }
-
-    /**
-     * @param itemsHabilidades the itemsHabilidades to set
-     */
-    public void setItemsHabilidades(List<Habilidades> itemsHabilidades) {
-        this.itemsHabilidades = itemsHabilidades;
-    }
-
-    /**
-     * @return the itemsEspectativas
-     */
-    public List<Espectativas> getItemsEspectativas() {
-        return itemsEspectativas;
-    }
-
-    /**
-     * @param itemsEspectativas the itemsEspectativas to set
-     */
-    public void setItemsEspectativas(List<Espectativas> itemsEspectativas) {
-        this.itemsEspectativas = itemsEspectativas;
-    }
-
-    /**
-     * @return the itemsHabilidadesEspectativas
-     */
-    /**
-     * @return the HabilidadesEspectativaSeleccionado
-     */
-    public UserHabilidadesEspectativas getHabilidadesEspectativaSeleccionado() {
-        return HabilidadesEspectativaSeleccionado;
-    }
-
-    /**
-     * @param HabilidadesEspectativaSeleccionado the
-     * HabilidadesEspectativaSeleccionado to set
-     */
-    public void setHabilidadesEspectativaSeleccionado(UserHabilidadesEspectativas HabilidadesEspectativaSeleccionado) {
-        this.HabilidadesEspectativaSeleccionado = HabilidadesEspectativaSeleccionado;
-    }
-
-    /**
-     * @return the itemsHabilidadesEspectativas
-     */
-    public List<UserHabilidadesEspectativas> getItemsHabilidadesEspectativas() {
-        return itemsHabilidadesEspectativas;
-    }
-
-    /**
-     * @param itemsHabilidadesEspectativas the itemsHabilidadesEspectativas to
-     * set
-     */
-    public void setItemsHabilidadesEspectativas(List<UserHabilidadesEspectativas> itemsHabilidadesEspectativas) {
-        this.itemsHabilidadesEspectativas = itemsHabilidadesEspectativas;
-    }
-
-    /**
      * @return the habilidadBusqueda
      */
     public Habilidades getHabilidadBusqueda() {
@@ -1100,10 +806,29 @@ public class UsuarioController implements Serializable {
 
     public Usuario prepareCreate() {
         selected = new Usuario();
-        initializeEmbeddableKey();
         return selected;
     }
-private SistemaUsuario sistemaUsuario;
+
+    public String ObtenerHabilidades(List<UserHabilidadesEspectativas> listUserHabilidadesEspectativas) {
+        String resultado = "";
+
+        for (UserHabilidadesEspectativas Userhabilidad : listUserHabilidadesEspectativas) {
+
+            resultado += Userhabilidad.getHabilidades().getNombre() + ", ";
+        }
+        return resultado;
+    }
+
+    public String ObtenerExpectativas(List<UserHabilidadesEspectativas> listUserHabilidadesEspectativas) {
+        String resultado = "";
+
+        for (UserHabilidadesEspectativas Userhabilidad : listUserHabilidadesEspectativas) {
+
+            resultado += Userhabilidad.getEspectativas().getNombre() + ", ";
+        }
+        return resultado;
+    }
+
     public Usuario prepareEdit() {
         System.out.println("si vnien");
         if (selected != null) {
@@ -1117,7 +842,7 @@ private SistemaUsuario sistemaUsuario;
             if (provincia != null) {
                 itemProvincias = ejbFacadeProvincia.getItemsReionesPais(false, pais.getIdPais());
             }
-            sistemaUsuario = ejbFacadeSistemaUsuario.getUsuarioActivacion(selected.getIdUsuario());
+            setSistemaUsuario(ejbFacadeSistemaUsuario.getUsuarioActivacion(selected.getIdUsuario()));
         }
         return selected;
     }
@@ -1131,14 +856,14 @@ private SistemaUsuario sistemaUsuario;
     }
 
     public void update() {
-        if(selected!=null){
-        persist(JsfUtil.PersistAction.UPDATE, "Edicion Correcta");
-        if(selected.getSistemaUsuario()!=null){
-            sistemaUsuario.setEstado(this.getSelected().getSistemaUsuario().getEstado());
-         ejbFacadeSistemaUsuario.edit(sistemaUsuario);
+        if (selected != null) {
+            persist(JsfUtil.PersistAction.UPDATE, "Edicion Correcta");
+            if (selected.getSistemaUsuario() != null) {
+                getSistemaUsuario().setEstado(this.getSelected().getSistemaUsuario().getEstado());
+                ejbFacadeSistemaUsuario.edit(getSistemaUsuario());
+            }
         }
-        }
-        
+
     }
 
     public void destroy() {
@@ -1229,17 +954,9 @@ private SistemaUsuario sistemaUsuario;
     /**
      * @return the estadoPago
      */
-    public boolean isEstadoPago() {
-        return estadoPago;
-    }
-
     /**
      * @param estadoPago the estadoPago to set
      */
-    public void setEstadoPago(boolean estadoPago) {
-        this.estadoPago = estadoPago;
-    }
-
     /**
      * @return the tipoUsuario
      */
@@ -1252,6 +969,34 @@ private SistemaUsuario sistemaUsuario;
      */
     public void setTipoUsuario(char tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    /**
+     * @return the sistemaUsuario
+     */
+    public SistemaUsuario getSistemaUsuario() {
+        return sistemaUsuario;
+    }
+
+    /**
+     * @param sistemaUsuario the sistemaUsuario to set
+     */
+    public void setSistemaUsuario(SistemaUsuario sistemaUsuario) {
+        this.sistemaUsuario = sistemaUsuario;
+    }
+
+    /**
+     * @return the tamano
+     */
+    public int getTamano() {
+        return tamano;
+    }
+
+    /**
+     * @param tamano the tamano to set
+     */
+    public void setTamano(int tamano) {
+        this.tamano = tamano;
     }
 
     @FacesConverter(forClass = Usuario.class)

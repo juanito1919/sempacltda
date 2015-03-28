@@ -1,5 +1,6 @@
 package ec.sempac.isw.control;
 
+import ec.sempac.isw.control.util.MuestraMensaje;
 import ec.sempac.isw.modelo.ReferenciaPersonal;
 import ec.sempac.isw.modelo.ReferenciaPersonalPK;
 import ec.sempac.isw.negocio.ReferenciaPersonalFacade;
@@ -33,8 +34,10 @@ public class ReferenciaPersonalController extends AbstractController<ReferenciaP
     private ReferenciaPersonalFacade ejbFacade;
 
     private List<ReferenciaPersonal> itemsReferenciaPersonal;
-    private ReferenciaPersonal seleccion;
+
     private StreamedContent file;
+    private ReferenciaPersonal selecionado;
+    private String tipo = "AGREGAR";
 
     public ReferenciaPersonalController() {
         super(ReferenciaPersonal.class);
@@ -47,17 +50,57 @@ public class ReferenciaPersonalController extends AbstractController<ReferenciaP
     }
 
     public void iniciaSelected() {
-        this.setSelected(new ReferenciaPersonal());
-        this.getSelected().setReferenciaPersonalPK(new ReferenciaPersonalPK());
+        tipo = "AGREGAR";
+        this.setSelected(new ReferenciaPersonal(new ReferenciaPersonalPK()));
+
+    }
+
+    public void eleiminar(ActionEvent event) {
+        if (ActivacionUsuario.getUsuario() != null) {
+            this.destroy();
+            setItemsReferenciaPersonal(ejbFacade.getItemsReferenciasEliminadoUsuario(ActivacionUsuario.getCodigoUsuario(), false));
+            this.iniciaSelected();
+        }
+
+    }
+
+    public void cambiarEditar() {
+        setTipo("MODIFICAR");
+
+    }
+
+    public void selecionar() {
+        this.setSelected(getSelecionado());
+
+    }
+
+    public void desSelecionar() {
+        this.setSelected(null);
+
     }
 
     public void guardaNuevo(ActionEvent event) {
 
-        //CAMBIAR estar liena por 
-        this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
-        this.getSelected().setEliminado(false);
-        this.saveNew(event);
-        this.setItemsReferenciaPersonal(ejbFacade.getItemsReferenciasEliminadoUsuario(ActivacionUsuario.getCodigoUsuario(), false));
+        if (ActivacionUsuario.getUsuario() != null) {
+            if (this.getSelected().getNombres().trim().equals("") || this.getSelected().getApellidos().trim().equals("") || this.getSelected().getTelefono().equals("")) {
+                MuestraMensaje.addError("No se Pudo guardar, Haya Campos Vacios");
+            } else {
+
+                if (this.getSelected() != null) {
+                    // if (this.getItemsReferenciaPersonal().size() >= 3 || tipo.equals("AGREGAR")) {
+                    //  MuestraMensaje.addAdvertencia("Solo Pude Ingresar 3 Referencias");
+                    // } else {
+                    this.getSelected().setUsuario(ActivacionUsuario.getUsuario());
+                    this.getSelected().setEliminado(false);
+                    this.save(event);
+                    //this.getItemsReferenciaPersonal().add(this.getSelected());
+                    this.setSelected(new ReferenciaPersonal());
+                    this.getSelected().setReferenciaPersonalPK(new ReferenciaPersonalPK());
+                    this.setItemsReferenciaPersonal(ejbFacade.getItemsReferenciasEliminadoUsuario(ActivacionUsuario.getCodigoUsuario(), false));
+                }
+                // }
+            }
+        }
 
     }
 
@@ -78,7 +121,7 @@ public class ReferenciaPersonalController extends AbstractController<ReferenciaP
         UploadedFile file = event.getFile();
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         String filePath = ec.getRealPath(String.format(File.separator + "Documentos" + File.separator + ActivacionUsuario.getUsuario().getUsername() + "/%s", file.getFileName()));
-        
+
         File file2 = new File(ec.getRealPath(File.separator + "Documentos" + File.separator + ActivacionUsuario.getUsuario().getUsername()));
         if (!file2.exists()) {
             file2.mkdirs();
@@ -102,7 +145,9 @@ public class ReferenciaPersonalController extends AbstractController<ReferenciaP
             inputStream.close();
 
         } catch (Exception ex) {
-            Logger.getLogger(ReferenciaPersonalController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReferenciaPersonalController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
             return;
         }
 
@@ -133,19 +178,8 @@ public class ReferenciaPersonalController extends AbstractController<ReferenciaP
     }
 
     /**
-     * @return the seleccion
-     */
-    public ReferenciaPersonal getSeleccion() {
-        return seleccion;
-    }
-
-    /**
      * @param seleccion the seleccion to set
      */
-    public void setSeleccion(ReferenciaPersonal seleccion) {
-        this.seleccion = seleccion;
-    }
-
     /**
      * @return the itemsReferenciaPersonal
      */
@@ -158,6 +192,34 @@ public class ReferenciaPersonalController extends AbstractController<ReferenciaP
      */
     public void setItemsReferenciaPersonal(List<ReferenciaPersonal> itemsReferenciaPersonal) {
         this.itemsReferenciaPersonal = itemsReferenciaPersonal;
+    }
+
+    /**
+     * @return the selecionado
+     */
+    public ReferenciaPersonal getSelecionado() {
+        return selecionado;
+    }
+
+    /**
+     * @param selecionado the selecionado to set
+     */
+    public void setSelecionado(ReferenciaPersonal selecionado) {
+        this.selecionado = selecionado;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
 }

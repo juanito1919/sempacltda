@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.seguridades;
 
 import ec.sempac.isw.control.AbstractController;
@@ -28,6 +27,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.validation.constraints.Pattern;
 
@@ -36,7 +36,8 @@ import javax.validation.constraints.Pattern;
  * @author miguesaca
  */
 @ManagedBean(name = "contrasenaControllerEmpresa")
-public class ContrasenaControllerEmpresa extends AbstractController<Empresa> implements Serializable{
+public class ContrasenaControllerEmpresa extends AbstractController<Empresa> implements Serializable {
+
     @EJB
     private EmpresaFacade ejbFacade;
     @EJB
@@ -93,27 +94,38 @@ public class ContrasenaControllerEmpresa extends AbstractController<Empresa> imp
                 MuestraMensaje.addAdvertencia(ResourceBundle.getBundle("/BundleMensajesES").getString("CorreoNoRegistrado"));
                 return;
             }
-            String clave=generarClave();
+            String clave = generarClave();
             firm.setContrasena(Sesion.MD5(clave));
             this.setSelected(firm);
             this.save(event);
             SendEmail sendMail = new SendEmail();
             SistemaEmpresa empresaSistema;
             // Colocando la Entidad del Usuario
-            sendMail.enviarMail(getCorreoElectronico(), "empresaSempac@info.com", "Recuperacion Clave",
-                    "La clave es: " + clave);
+
+            String contenido = "<div><span style=\"color:blue;\">Estimado Usuari@: </span><span>" + firm.getNombre() + "</span> </div>\n"
+                    + "\n"
+                    + "<div style=\"margin-top:30px;\">Se ha aprobado su cuenta en semptac, sus credenciales de acceso son:</div>\n"
+                    + "\n"
+                    + "<div style=\"margin-top:30px;\">\n"
+                    + "<span style=\"color:blue;\">Email:</span> <span>" + firm.getCorreoElectronico() + "</span>\n"
+                    + "</div>\n"
+                    + "<span style=\"color:blue;\">Contraseña:</span> <span>" + clave + "</span>";
+            sendMail.enviar("Recuperacion de Contraseña", contenido, getCorreoElectronico());
+
             this.setEmpresa(firm);
             try {
                 ctx.redirect(ctxPath + "/faces/index.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(ContrasenaController.class.getName()).log(Level.SEVERE, null, ex);
-                
+
             }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(ContrasenaController.class.getName()).log(Level.SEVERE, null, ex);
-            
+
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(ContrasenaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(ContrasenaControllerEmpresa.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

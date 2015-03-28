@@ -16,24 +16,30 @@
                         border="0"
                         columnClasses="column1Class, column2Class,column3Class,column4Class,column1Class,column6Class" 
                         >
-                        <p:outputLabel rendered="true" value="UNIVERSIDAD: " 
+                        <p:outputLabel rendered="true" value="UNIVERSIDAD/INSTITUTO:" 
                                        for="universidad" />
                         <p:selectOneMenu id="universidad" 
+                                         required="true"
                                          value="#{estudiosUniversitariosController.selected.universidad}"
                                          >
                             <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
-                            <f:selectItems value="#{estudiosUniversitariosController.itemsUniversidad}"
+                            <f:selectItems value="#{universidadController.itemsAvailableSelectOne}"
                                            var="UniversidadItem"
+
                                            itemValue="#{UniversidadItem}"
                                            itemLabel="#{UniversidadItem.nombre}"
                                            />
                             <f:converter binding="#{universidadConverter}"/>
+                            <p:ajax event="change" 
+                                    listener="#{estudiosUniversitariosController.crearUniversidad}"
+                                    update="carrera"/>
                         </p:selectOneMenu>
 
 
                         <p:outputLabel rendered="true" value="CARRERA: " 
                                        for="carrera" />
                         <p:selectOneMenu id="carrera" 
+                                         style="width: 270px;"
                                          value="#{estudiosUniversitariosController.selected.carrera}"
                                          >
                             <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
@@ -43,12 +49,13 @@
                                            itemLabel="#{CarreraItem.nombre}"
                                            />
                             <f:converter binding="#{carreraConverter}"/>
+
                         </p:selectOneMenu>
 
                         <p:outputLabel value="TITULO: " 
                                        for="titulo" />
                         <p:inputText id="titulo" 
-                                     value="#{estudiosUniversitariosController.titulo}"
+                                     value="#{estudiosUniversitariosController.selected.titulo}"
                                      title="TITULO"
                                      onkeyup="value = value.toUpperCase()"
                                      required="false"
@@ -69,6 +76,15 @@
                                      title="AÑO DE EGRESO" 
                                      validatorMessage=""
                                      onkeyup="value = value.toUpperCase()"/>
+                        <p:commandButton id="buttonSubir" 
+                                         value="Cargar Certificado"
+                                         onclick="dialogSubida.show();
+                                                 return false;"/>
+                        <p:inputText id="url1" 
+                                     disabled="true"
+                                     style="width: 270px;"
+                                     value="#{estudiosUniversitariosController.selected.url}" 
+                                     title="#{bundle.CreateReferenciaPersonalTitle_url}" />
 
                     </h:panelGrid>
                     <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
@@ -87,5 +103,68 @@
                 </h:panelGroup>
             </p:panel>
         </h:form>
+        <p:dialog id="dialogoCrearUniversidad" widgetVar="digCrearEmpresa"
+                  header="Crear Universidad" 
+                  resizable="false"
+                  modal="true">
+            <h:form id="formguadarUniversidad">
+                <p:growl id="messagesCrearUniversidad" showDetail="true" />
+                #{universidadController.iniciarSelect()}
+                <h:panelGrid 
+                    columns="2" 
+                    border="0"
+                    columnClasses="column1Class, column2Class" 
+                    >
+                    <p:outputLabel rendered="true" value="NOMBRE UNIVERSIDAD:" 
+                                   for="Nombreuniversidad" />
+                    <p:inputText id="Nombreuniversidad" 
+                                 value="#{universidadController.selected.nombre}"
+                                 title="UNIVERSIDAD"
+                                 onkeyup="value = value.toUpperCase()"
+                                 required="true"
+                                 size="50"/>
+
+                    <p:outputLabel rendered="true" value="PAIS DE UBICACION:" 
+                                   for="PaisUniversidad" />
+                    <p:selectOneMenu id="PaisUniversidad" 
+                                     value="#{universidadController.selected.idPais}"
+                                     required="true" 
+                                     requiredMessage="#{bundleEtiquetasES.Pais} #{bundleEtiquetasES.CampoRequerido}">
+                        <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
+                        <f:selectItems value="#{paisController.itemsAvailableSelectOne}"
+                                       var="PaisItem"
+                                       itemValue="#{PaisItem}"
+                                       itemLabel="#{PaisItem.nombre}"
+                                       />
+                        <f:converter binding="#{paisConverter}"/>
+
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+                <div style="width: 50%; margin-top:5%; margin-left: 25%;">
+                    <p:commandButton value="GUARDAR" 
+                                     actionListener="#{universidadController.guadarNuevo}"
+                                     update="messagesCrearUniversidad,:#{p:component('universidad')}"
+                                     oncomplete="PF('digCrearEmpresa').hide();"/>
+                    <p:commandButton value="CANCELAR" oncomplete="PF('digCrearEmpresa').hide();"/>
+                </div>
+            </h:form>
+        </p:dialog>
+        <p:dialog widgetVar="dialogSubida" width="600" height="200" modal="true">
+            <h:form id="SubirArchivosuperior" enctype="multipart/form-data">
+                <p:fileUpload id="file" fileUploadListener="#{estudiosUniversitariosController.subirArchivos}" 
+                              mode="advanced" 
+                              dragDropSupport="false"
+                              label="Buscar Archivo"
+                              update="messages,:#{p:component('url1')}" 
+                              sizeLimit="900000" 
+                              cancelLabel="Cancelar"
+                              uploadLabel="Subir"
+                              fileLimit="1" 
+                              allowTypes="/(\.|\/)(png|jpg|pdf|doc|docx)$/" 
+                              oncomplete="PF('dialogSubida').hide();"/>
+                <p:growl id="messages" showDetail="true" />
+            </h:form>
+        </p:dialog>
     </ui:composition>
 </html>

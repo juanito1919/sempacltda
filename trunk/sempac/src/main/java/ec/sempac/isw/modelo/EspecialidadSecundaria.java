@@ -143,18 +143,18 @@ public class EspecialidadSecundaria implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EspecialidadSecundaria)) {
-            return false;
+        @Override
+        public boolean equals(Object object) {
+            // TODO: Warning - this method won't work in the case the id fields are not set
+            if (!(object instanceof EspecialidadSecundaria)) {
+                return false;
+            }
+            EspecialidadSecundaria other = (EspecialidadSecundaria) object;
+            if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+                return false;
+            }
+            return true;
         }
-        EspecialidadSecundaria other = (EspecialidadSecundaria) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

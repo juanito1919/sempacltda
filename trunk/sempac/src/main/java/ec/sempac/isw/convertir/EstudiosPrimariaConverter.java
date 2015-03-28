@@ -36,20 +36,15 @@ public class EstudiosPrimariaConverter implements Converter {
         return this.ejbFacade.find(getKey(value));
     }
 
-    ec.sempac.isw.modelo.EstudiosPrimariaPK getKey(String value) {
-        ec.sempac.isw.modelo.EstudiosPrimariaPK key;
-        String values[] = value.split(SEPARATOR_ESCAPED);
-        key = new ec.sempac.isw.modelo.EstudiosPrimariaPK();
-        key.setIdUsuario(Long.parseLong(values[0]));
-        key.setIdEscuela(Integer.parseInt(values[1]));
+    java.lang.Long getKey(String value) {
+        java.lang.Long key;
+        key = Long.parseLong(value);
         return key;
     }
 
-    String getStringKey(ec.sempac.isw.modelo.EstudiosPrimariaPK value) {
+    String getStringKey(java.lang.Long value) {
         StringBuilder sb = new StringBuilder();
-        sb.append(value.getIdUsuario());
-        sb.append(SEPARATOR);
-        sb.append(value.getIdEscuela());
+        sb.append(value);
         return sb.toString();
     }
 
@@ -60,7 +55,7 @@ public class EstudiosPrimariaConverter implements Converter {
         }
         if (object instanceof EstudiosPrimaria) {
             EstudiosPrimaria o = (EstudiosPrimaria) object;
-            return getStringKey(o.getEstudiosPrimariaPK());
+            return getStringKey(o.getIdUsuario());
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), EstudiosPrimaria.class.getName()});
             return null;

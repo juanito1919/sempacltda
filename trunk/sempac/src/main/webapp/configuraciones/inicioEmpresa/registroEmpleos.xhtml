@@ -29,9 +29,10 @@
                                      cellspacing="4"
                                      cellpadding="0"
                                      columnClasses="column1Class, column2Class">
-                            <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Habilidad}:" 
+                            <p:outputLabel rendered="true" value="AREA DE TRABAJO/#{bundleEtiquetasES.Habilidad}:" 
                                            for="habilidad" />
                             <p:selectOneMenu id="habilidad" required="true"
+                                             style="width: 80%;"
                                              value="#{personalRequeridoController.habilidadBusqueda}"
                                              >
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Seleccione}"/>
@@ -42,13 +43,14 @@
                                                />
                                 <f:converter binding="#{habilidadesConverter}"/>
                             </p:selectOneMenu>
-                            <p:outputLabel for="ciudad" value="#{bundleEtiquetasES.Ciudad}"  />
+                            <p:outputLabel for="ciudad" value="#{bundleEtiquetasES.Ciudad}/CANTON"  />
                             <p:selectOneMenu id="ciudad" 
                                              value="#{personalRequeridoController.ciudad}"
                                              required="true"
                                              effect="fade" 
+                                             style="width: 80%;"
                                              var="t" 
-                                             style="width:200px" 
+
                                              filter="true" 
                                              filterMatchMode="contains">
                                 <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
@@ -61,17 +63,23 @@
                                 </p:column>
                                 <f:converter binding="#{ciudadConverter}"/>
                             </p:selectOneMenu>  
-                            <p:outputLabel value="FECHA:" for="fecha" />
-                            <p:inputText id="fecha" rendered="true" value="#{personalRequeridoController.fechaActual}"/>
+                            <p:outputLabel value="FECHA PUBLICACION:" for="fecha" />
+                            <p:outputLabel id="fecha" style="width: 80%;" rendered="true" value="#{personalRequeridoController.fechaActual}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" /> 
+                            </p:outputLabel>
                             <p:outputLabel value="DESCRIPCION" for="desc"/>
                             <h:inputTextarea id="desc" required="true" cols="60" rows="5" value="#{personalRequeridoController.selected.descripcion}" />
                         </h:panelGrid>
-                        <div style=" margin-top:20px; margin-bottom: 20px; margin-left:30%; ">
+                        <div style=" margin-top:20px; margin-bottom: 20px; margin-left:40%; ">
                             <p:commandButton  value="PUBLICAR" actionListener="#{personalRequeridoController.guardarNuevo}" update="display" oncomplete="handleSubmit(args,'UsuarioCreateDialog');" ajax="false" />
                             <p:commandButton value="#{bundleEtiquetasES.Cancelar}" action="#{controlUrlControler.openPrincipalEmpresa()}"/>
                         </div>
                     </h:panelGroup>
                 </h:form>
+                <f:facet name="footer">
+                    <p:outputLabel value="Importante: " style="color:red; "/>
+                    <p:outputLabel value="Recuerde que si no Encuentra la Área de trabajo deseada comuníquese con el administrador" style="color: #0066ff;"/>
+                </f:facet>
             </p:panel>
         </div>
     </ui:define>

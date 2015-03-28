@@ -9,7 +9,10 @@ import ec.sempac.isw.negocio.EmpresaFacade;
 import ec.sempac.isw.negocio.SistemaEmpresaFacade;
 import ec.sempac.isw.seguridades.ActivacionUsuario;
 import ec.sempac.isw.seguridades.Sesion;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -25,10 +28,13 @@ import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.servlet.ServletException;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 @Named("empresaController")
 @SessionScoped
@@ -43,62 +49,67 @@ public class EmpresaController implements Serializable {
     private String confirmaContrasena;
     private String contrasena;
     private char estado;
+
     public EmpresaController() {
     }
-        @PostConstruct
+
+    @PostConstruct
     public void init() {
         selected = new Empresa();
         setEstado('V');
     }
-    public void guardar(){
-     if (this.getSelected() != null
-                    && this.getSelected().getNombre() != null
-                    && this.getSelected().getDireccion() != null
-                    && this.getSelected().getUsername() != null
-                    && this.getSelected().getCorreoElectronico() != null
-                    && this.getSelected().getContrasena() != null
-                    && this.getSelected().getRuc() != null) {
-                this.create();
-                this.crearSistema();
-            }
-         else {
+
+    public void guardar() {
+        if (this.getSelected() != null
+                && this.getSelected().getNombre() != null
+                && this.getSelected().getDireccion() != null
+                && this.getSelected().getUsername() != null
+                && this.getSelected().getCorreoElectronico() != null
+                && this.getSelected().getContrasena() != null
+                && this.getSelected().getRuc() != null) {
+            this.create();
+            this.crearSistema();
+        } else {
             System.out.println("Debe ingresar todos los campos por favor");
             MuestraMensaje.addError("Debe ingresar todos los campos por favor");
         }
     }
-    public void crearSistema(){
-            SistemaEmpresa sisEmpresa = new SistemaEmpresa();
-            Empresa e = this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
-            sisEmpresa.setIdEmpresa(e.getIdEmpresa());
-            sisEmpresa.setFechaAsignacion(new Date());
-            sisEmpresa.setEstado('V');
-            sisEmpresa.setTiempoBloqueo(0);
-            this.ejbFacadeSistEmpresa.create(sisEmpresa);
+
+    public void crearSistema() {
+        SistemaEmpresa sisEmpresa = new SistemaEmpresa();
+        Empresa e = this.ejbFacade.getItemsUserName(this.getSelected().getUsername());
+        sisEmpresa.setIdEmpresa(e.getIdEmpresa());
+        sisEmpresa.setFechaAsignacion(new Date());
+        sisEmpresa.setEstado('V');
+        sisEmpresa.setTiempoBloqueo(0);
+        this.ejbFacadeSistEmpresa.create(sisEmpresa);
     }
-    public void editar(){
-     if (this.getSelected() != null
-                    && this.getSelected().getNombre() != null
-                    && this.getSelected().getDireccion() != null
-                    && this.getSelected().getUsername() != null
-                    && this.getSelected().getCorreoElectronico() != null
-                    && this.getSelected().getContrasena() != null
-                    && this.getSelected().getRuc() != null) {
-                this.update();
-                this.editarSistema();
-            }
-         else {
+
+    public void editar() {
+        if (this.getSelected() != null
+                && this.getSelected().getNombre() != null
+                && this.getSelected().getDireccion() != null
+                && this.getSelected().getUsername() != null
+                && this.getSelected().getCorreoElectronico() != null
+                && this.getSelected().getContrasena() != null
+                && this.getSelected().getRuc() != null) {
+            this.update();
+            this.editarSistema();
+        } else {
             System.out.println("Debe ingresar todos los campos por favor");
             MuestraMensaje.addError("Debe ingresar todos los campos por favor");
         }
-     this.setSelected(null);
+        this.setSelected(null);
     }
-    public void editarSistema(){
-            SistemaEmpresa sisEmpresa = new SistemaEmpresa();
-            sisEmpresa = ejbFacadeSistEmpresa.find(this.getSelected().getIdEmpresa());
-            sisEmpresa.setEstado(estado);
-            sisEmpresa.setTiempoBloqueo(0);
-            this.ejbFacadeSistEmpresa.edit(sisEmpresa);
+
+    public void editarSistema() {
+        SistemaEmpresa sisEmpresa = new SistemaEmpresa();
+        sisEmpresa = ejbFacadeSistEmpresa.find(this.getSelected().getIdEmpresa());
+        sisEmpresa.setEstado(estado);
+        sisEmpresa.setTiempoBloqueo(0);
+        this.ejbFacadeSistEmpresa.edit(sisEmpresa);
     }
+
     public void validarUsername() {
         if (selected.getUsername() != null) {
             if (ejbFacade.getItemsUserName(selected.getUsername()) != null) {
@@ -111,6 +122,7 @@ public class EmpresaController implements Serializable {
             }
         }
     }
+
     public void validarEmail() {
         if (selected.getCorreoElectronico() != null) {
             if (ejbFacade.getUserEmail(selected.getCorreoElectronico()) != null) {
@@ -123,6 +135,7 @@ public class EmpresaController implements Serializable {
             }
         }
     }
+
     public void validarContrasena() {
         if (contrasena != null) {
             if (contrasena.length() < 6 || contrasena.length() > 15) {
@@ -137,6 +150,7 @@ public class EmpresaController implements Serializable {
             confirmaContrasena = null;
         }
     }
+
     public void validarConfirmacionContrasena() {
         if (contrasena != null) {
             if (confirmaContrasena != null) {
@@ -156,6 +170,7 @@ public class EmpresaController implements Serializable {
             confirmaContrasena = null;
         }
     }
+
     public void cifrarContrasena() {
         if (contrasena != null) {
             try {
@@ -170,7 +185,8 @@ public class EmpresaController implements Serializable {
             MuestraMensaje.addError("Ingrese una contrasena");
         }
     }
-        public void closeEmpresa() throws ServletException {
+
+    public void closeEmpresa() throws ServletException {
         Sesion.cerrarSesion();
         this.init();
     }
@@ -178,9 +194,11 @@ public class EmpresaController implements Serializable {
     public void validaSession() throws IOException {
         Sesion.validaSesion();
     }
-    public void asignarEmpresa(){
+
+    public void asignarEmpresa() {
         selected = ActivacionUsuario.getEmpresa();
     }
+
     public Empresa getSelected() {
         return selected;
     }
@@ -210,7 +228,7 @@ public class EmpresaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-        
+
     }
 
     public void update() {
@@ -223,6 +241,46 @@ public class EmpresaController implements Serializable {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+
+    public void subirFoto(FileUploadEvent event) {
+        UploadedFile file = event.getFile();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        String filePath = ec.getRealPath(String.format(File.separator + "Documentos" + File.separator + "Empresas" + File.separator + this.getSelected().getUsername() + "/%s", file.getFileName()));
+        //TODO
+        //AGRAGAR LA CARPETA DEL USUARIO
+        File file2 = new File(ec.getRealPath(File.separator + "Documentos" + File.separator + "Empresas" + File.separator + this.getSelected().getUsername()));
+        if (!file2.exists()) {
+            file2.mkdirs();
+            System.out.println("direciom epmpresa "+filePath);
+        }
+
+        String rutaRelativa = "../../Documentos" + File.separator + "Empresas" + File.separator + this.getSelected().getUsername() + File.separator + file.getFileName();
+
+        try {
+            this.getSelected().setUrl(rutaRelativa);//agrega la ruta
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+            byte[] buffer = new byte[6124];
+            int bulk;
+            InputStream inputStream = file.getInputstream();
+            while (true) {
+                bulk = inputStream.read(buffer);
+                if (bulk < 0) {
+                    break;
+                }
+                fileOutputStream.write(buffer, 0, bulk);
+                fileOutputStream.flush();
+            }
+            fileOutputStream.close();
+            inputStream.close();
+            this.update();
+            MuestraMensaje.addSatisfactorio("Archivo Subido");
+        } catch (Exception ex) {
+            Logger.getLogger(ReferenciaPersonalController.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+
+        return;
     }
 
     public List<Empresa> getItems() {

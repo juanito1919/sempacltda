@@ -80,8 +80,14 @@ public class ControlUrlControler implements Serializable {
     }
 
     //habilidadesEspectativas
-
     public void openHabilidadesEspectativas() throws IOException {
         Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("habilidadesEspectativas"));
+    }
+
+    public void openResultadoBusqueda() throws IOException {
+        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("PerfilUsuario"));
+    }
+    public void openOfertasTrabajo() throws IOException {
+        Sesion.redireccionaPagina(ResourceBundle.getBundle("/BundleObjetosES").getString("ofertasEmpleo"));
     }
 }

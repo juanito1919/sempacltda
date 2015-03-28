@@ -12,6 +12,7 @@
     </div> 
 
     <p:panel header="#{bundleEtiquetasES.ExperienciaLaboral}" 
+
              style="border: none; width: 80%; margin: 5px auto;">
         <h:form id="experienciaLaboralCreateForm">
             <p:growl id="growl" showDetail="true" life="3000" sticky="true" />  
@@ -28,6 +29,7 @@
                                      required="true"
                                      onkeyup="value = value.toUpperCase()"
                                      styleClass="inputText" 
+                                     requiredMessage="Ingrese el Nombre de La Empresa"
                                      value="#{experienciaLaboralController.selected.empresa}" 
                                      title="#{bundleEtiquetasES.Empresa}" >
                             <p:watermark for="empresa" value="Nombre Empresa o Negocio"/>
@@ -97,39 +99,70 @@
                         <p:inputText id="url" 
                                      disabled="true"
                                      styleClass="inputText" 
-                                     value="#{referenciaPersonalController.selected.url}" 
+                                     value="#{experienciaLaboralController.selected.url}" 
                                      title="#{bundle.CreateReferenciaPersonalTitle_url}" />
 
 
 
                     </h:panelGrid>
-                     <h:panelGrid columns="2" border="0" columnClasses="column1Class, column2Class">
-                    <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Actividades}:" 
-                                   for="actividades" />
-                    <p:inputTextarea id="actividades" 
-                                     onkeyup="value = value.toUpperCase()"
-                                     cols="125"
-                                     value="#{experienciaLaboralController.selected.actividades}" 
-                                     title="#{bundleEtiquetasES.Actividades}" >
-                        <p:watermark for="actividades" value="Ingresa las Actividades que haya realizado en tal Trabajo"/>
-                    </p:inputTextarea>
-                </h:panelGrid>
+                    <h:panelGrid columns="2" border="0" columnClasses="column1Class, column2Class">
+                        <p:outputLabel rendered="true" value="#{bundleEtiquetasES.Actividades}:" 
+                                       for="actividades" />
+                        <p:inputTextarea id="actividades" 
+                                         onkeyup="value = value.toUpperCase()"
+                                         cols="125"
+                                         value="#{experienciaLaboralController.selected.actividades}" 
+                                         title="#{bundleEtiquetasES.Actividades}" >
+                            <p:watermark for="actividades" value="Ingresa las Actividades que haya realizado en tal Trabajo"/>
+                        </p:inputTextarea>
+                    </h:panelGrid>
                 </p:fieldset>
-               
+
                 <div  style="margin-left: 50%; margin-bottom: 20px; margin-top: 10px;">
                     <p:commandButton actionListener="#{experienciaLaboralController.guardaNuevo(event)}" 
-                                     value="#{bundleEtiquetasES.Agregar}" icon="ui-icon-disk" 
-                                     update="growl,:experienciaLaboralListForm,:experienciaLaboralCreateForm:empresa,:experienciaLaboralCreateForm:cargo,:experienciaLaboralCreateForm:fechaInicio,:experienciaLaboralCreateForm:actividades,:experienciaLaboralCreateForm:tiempo"/>
+                                     value="#{bundleEtiquetasES.Agregar}/MODIFICAR" icon="ui-icon-disk" 
+                                     update="growl,:experienciaLaboralListForm,
+                                     :experienciaLaboralCreateForm:empresa,
+                                     :experienciaLaboralCreateForm:cargo,
+                                     :experienciaLaboralCreateForm:fechaInicio,
+                                     :experienciaLaboralCreateForm:actividades,
+                                     :experienciaLaboralCreateForm:tiempo,
+                                     :experienciaLaboralCreateForm:telefono,
+                                     :experienciaLaboralCreateForm:direccion,
+                                     :experienciaLaboralCreateForm:url" ajax="false"/>
 
-                    <p:commandButton actionListener="#{experienciaLaboralController.eliminar}"
-                                     value="#{bundleEtiquetasES.Quitar}" 
-                                     icon="ui-icon-circle-close"
-                                     update=":experienciaLaboralListForm"/>
+
                 </div>
             </h:panelGroup>
+
         </h:form>
+        <f:facet name="footer">
+            <p:outputLabel value="Nota: " style="color:red; "/>
+            <p:outputLabel value="En caso de subir Documento, subir del ultimo empleo, de Empleos anteriores no es necesario subir." style="color:#6600ff; "/>
+        </f:facet>
     </p:panel>
     <p:separator style="border-style: dotted; width: 75%; margin-bottom: 10px;"/>
     <ui:include src="lista.xhtml"/>
+    <p:dialog widgetVar="dialogSubida" width="600" height="200" modal="true">
+        <h:form id="SubirArchivoExperienciaLaboral" enctype="multipart/form-data">
+            <p:fileUpload fileUploadListener="#{experienciaLaboralController.subirArchivos}" 
+                          mode="advanced" 
+                          dragDropSupport="false"
+                          label="Buscar Archivo"
+                          update="messages,SubirArchivoExperienciaLaboral :experienciaLaboralCreateForm:url" 
+                          sizeLimit="900000" 
+                          cancelLabel="Cancelar"
+                          uploadLabel="Subir"
+                          fileLimit="1" 
+                          allowTypes="/(\.|\/)(png|jpg|pdf|doc|docx)$/" 
+                          oncomplete="PF('dialogSubida').hide();"/>
+            <p:growl id="messages" showDetail="true" />
+        </h:form>
+        <f:facet name="footer">
+            <p:outputLabel value="Nota: " style="color:red; "/>
+            <p:outputLabel value="Los formatos que permite subir son: png, jpg, pdf, doc, docx " style="color:#6600ff; "/>
+        </f:facet>
+    </p:dialog>
 </ui:composition>
+
 

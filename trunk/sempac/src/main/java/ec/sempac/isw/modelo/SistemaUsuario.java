@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.modelo;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -44,16 +45,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SistemaUsuario.findByTiempoBloqueo", query = "SELECT s FROM SistemaUsuario s WHERE s.tiempoBloqueo = :tiempoBloqueo"),
     @NamedQuery(name = "SistemaUsuario.findByIntentosFallidos", query = "SELECT s FROM SistemaUsuario s WHERE s.intentosFallidos = :intentosFallidos"),
     @NamedQuery(name = "SistemaUsuario.findByFechaUltimoIntentoFallido", query = "SELECT s FROM SistemaUsuario s WHERE s.fechaUltimoIntentoFallido = :fechaUltimoIntentoFallido"),
-    
+
     @NamedQuery(name = "SistemaUsuario.findByEstadoPago", query = "SELECT s.usuario FROM SistemaUsuario s WHERE s.idUsuario = :idUsuario AND s.estado = :estado"),
     @NamedQuery(name = "SistemaUsuario.findByEspera", query = "SELECT s.usuario FROM SistemaUsuario s WHERE s.estado = :estado AND s.usuario.eliminado = :eliminado")
-    
+
 })
 public class SistemaUsuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    public static final String findByEstadoPago ="SistemaUsuario.findByEstadoPago";
-    public static final String findByIdUsuario ="SistemaUsuario.findByIdUsuario";
-    public static final String findByEspera ="SistemaUsuario.findByEspera";
+    public static final String findByEstadoPago = "SistemaUsuario.findByEstadoPago";
+    public static final String findByIdUsuario = "SistemaUsuario.findByIdUsuario";
+    public static final String findByEspera = "SistemaUsuario.findByEspera";
     @Id
     @Basic(optional = false)
     @NotNull
@@ -106,6 +108,8 @@ public class SistemaUsuario implements Serializable {
         this.tiempoBloqueo = tiempoBloqueo;
     }
 
+   
+
     public Long getIdUsuario() {
         return idUsuario;
     }
@@ -115,6 +119,7 @@ public class SistemaUsuario implements Serializable {
     }
 
     public Date getFechaAsignacion() {
+        
         return fechaAsignacion;
     }
 
@@ -123,6 +128,7 @@ public class SistemaUsuario implements Serializable {
     }
 
     public Date getFechaCaducidad() {
+       
         return fechaCaducidad;
     }
 
@@ -219,5 +225,5 @@ public class SistemaUsuario implements Serializable {
     public String toString() {
         return "ec.sempac.ssw.modelo.SistemaUsuario[ idUsuario=" + idUsuario + " ]";
     }
-    
+
 }

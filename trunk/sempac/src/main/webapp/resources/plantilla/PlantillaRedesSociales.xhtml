@@ -5,19 +5,53 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui"
-    xmlns:c="http://java.sun.com/jsp/jstl/core">
-      <html>
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <html>
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <h:outputStylesheet library="css" name="estilo.css"/>
+            <h:outputStylesheet library="css" name="redesSociales.css"/>
+       
         </h:head>
-          <div class="panelRedSocial">
+        <h:body>
+            <div id='social-sidebar'>
+                <ul>
+                    <li>
+                        <a class='entypo-twitter' href='https://twitter.com/digitalhubinc' target='_blank'>
+                            <span>Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class='entypo-gplus' href='http://dribbble.com/digitalhubinc' target='_blank'>
+                            <span>google+</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class='entypo-tumblr' href='http://www.tumblr.net/digitalhubinc' target='_blank'>
+                            <span>tumblr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class='entypo-facebook' href='https://www.facebook.com/Semptac' target='_blank'>
+                            <span>facebook</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class='entypo-rss' href='http://feeds.feedburner.com/digitalhubinc' target='_blank'>
+                            <span>feedburner</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="panelRedSocial">
                 <ul class="social_icons clearfix">
                     <li><a href="#"><img src="/sempac/faces/resources/images/icons/social-icons.png" alt=""/></a></li>
                     <li><a href="#"><img src="/sempac/faces/resources/images/icons/follow_icon2.png" alt=""/></a></li>
                     <li><a href="#"><img src="/sempac/faces/resources/images/icons/follow_icon3.png" alt=""/></a></li>
                     <li><a href="#"><img src="/sempac/faces/resources/images/icons/follow_icon4.png" alt=""/></a></li>
                 </ul>
-            </div> 
-      </html>
+            </div>  
+        </h:body>
+
+    </html>
 </f:view>

@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.sempac.isw.negocio;
 
 import ec.sempac.isw.modelo.EstudiosUniversitarios;
+import ec.sempac.isw.modelo.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -19,6 +20,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class EstudiosUniversitariosFacade extends AbstractFacade<EstudiosUniversitarios> {
+
     @PersistenceContext(unitName = "ec.sempac_sempac_war_1.0PU")
     private EntityManager em;
 
@@ -30,11 +32,16 @@ public class EstudiosUniversitariosFacade extends AbstractFacade<EstudiosUnivers
     public EstudiosUniversitariosFacade() {
         super(EstudiosUniversitarios.class);
     }
-    
-     public List<EstudiosUniversitarios> getItemsEstUnivEliminadoUsuario(Long idUsuario, boolean eliminado) {
+
+    public List<EstudiosUniversitarios> getItemsEstUnivEliminadoUsuario(Long idUsuario, boolean eliminado) {
         Query query = this.em.createNamedQuery(EstudiosUniversitarios.findByUsuarioEliminado);
-        query.setParameter("eliminado", eliminado);
         query.setParameter("idUsuario", idUsuario);
-        return query.getResultList();
+        query.setParameter("eliminado", eliminado);
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+
     }
 }

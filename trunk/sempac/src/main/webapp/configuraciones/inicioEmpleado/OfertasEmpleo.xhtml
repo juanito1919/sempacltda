@@ -18,7 +18,7 @@
                 <h:form>
                     <p:dataTable  value="#{personalRequeridoController.items}" widgetVar="carsTable" var="item"
                                   emptyMessage="No Existe Ofertas de Trabajo" 
-
+                                  filteredValue="#{personalRequeridoController.itemsPersonalRequerido}"
                                   paginator="true"
                                   paginatorPosition="bottom"
                                   selection="#{personalRequeridoController.selected}"
@@ -28,28 +28,30 @@
 
                         <f:facet name="header">
                             <p:outputPanel>
-                                <h:outputText value="Search all fields:" />
-                                <p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                                <h:outputText value="Buscar :" />
+                                <p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()" style="width:250px" placeholder="Enter keyword"/>
                             </p:outputPanel>
                         </f:facet>
-                        <p:column headerText="EMPRESA">
+
+                        <p:column filterBy="#{item.idEmpresa.nombre}" headerText="EMPRESA" filterMatchMode="contains">
                             <h:outputText value="#{item.idEmpresa.nombre}" />
                         </p:column>
                         <p:column headerText="CARGO">
                             <h:outputText value="#{item.idHabilidades.nombre}" />
                         </p:column>
                         <p:column headerText="FECHA DE PUBLICACION">
-                            <h:outputText value="#{item.idCiudad.nombre}" />
+                            <h:outputText value="#{personalRequeridoController.cambiarFormatoFecha(item.fechaModificacion)}" />
                         </p:column>
                         <p:column headerText="CIUDAD/CANTON">
-                            <h:outputText value="#{item.fechaModificacion}" />
+
+                            <h:outputText value="#{item.idCiudad.nombre}" />
                         </p:column>
                         <p:column headerText="DESCRIPCION">
                             <h:outputText value="#{item.descripcion}" />
                         </p:column>
                         <p:column headerText="ACCION">
-                            <p:commandButton value="Ver" update=":aplicarEmpleoForm">
-                                <f:setPropertyActionListener target="#{personalRequeridoController.selected}" value="#{item}"/>
+                            <p:commandButton value="Ver" update=":aplicarEmpleoForm" actionListener="#{empleoRequeridoController.prepareCreate(event)}">
+                                <f:setPropertyActionListener  target="#{personalRequeridoController.selected}" value="#{item}"/>
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -60,6 +62,7 @@
             <p:panel header="Aplicar Empleo" footer="Informacion" style="width: 100%; border: none;">
                 <div style="margin: 10px auto 10px auto; font-size: 1.2em; color: #0066ff;">Seleciona el Empleo que necesitas y Aplica</div>
                 <h:form id="aplicarEmpleoForm">
+                    <p:growl id="growlAplicacion" showDetail="true" life="3000" sticky="true" />  
                     <h:panelGrid id="carDetail" 
                                  columns="2"
                                  border="0" 
@@ -70,7 +73,7 @@
                         <p:outputLabel value="CARGO/AREA:" for="cargo"/>
                         <p:outputLabel id="cargo" value="#{personalRequeridoController.selected.idHabilidades.nombre}"/>
 
-                        <p:outputLabel value="FECHA:" for="fecha"/>
+                        <p:outputLabel value="FECHA DE PUBLICACION:" for="fecha"/>
                         <p:inputText id="fecha" value="#{personalRequeridoController.selected.fechaModificacion}" size="35" readonly="true"/>
 
                         <p:outputLabel value="CIUDAD/CANTON:" for="ciudad"/>
@@ -81,11 +84,35 @@
 
                     </h:panelGrid>
                     <div style="margin-left: 20%;">
-                        <p:commandButton id="butonAplicarTrabajo" actionListener="#{empleoRequeridoController.guardaNuevo}" ajax="false" style="width: 190px;"  value="APLICAR"/>
-                        
+                        <p:commandButton id="butonAplicarTrabajo"  
+                                         actionListener="#{empleoRequeridoController.guardaNuevo(event,personalRequeridoController.selected)}" 
+                                         update="growlAplicacion,:aplicarEmpleoForm:empresa,
+                                         :aplicarEmpleoForm:cargo,
+                                         :aplicarEmpleoForm:fecha,
+                                         :aplicarEmpleoForm:ciudad,
+                                         :aplicarEmpleoForm:descripcion"
+
+                                         style="width: 190px;"  value="APLICAR"/>
+
                     </div>
+                    <p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="bar">
+                        <h:outputText value="PrimeFaces Rocks!" style="font-size:36px;" />
+                    </p:notificationBar>
                 </h:form>
             </p:panel>
+            <p:dialog header="Informacion" widgetVar="dlg2" modal="true" height="100">
+                <h:panelGrid id="carDetail" 
+                             columns="1"
+                             border="0">
+                    <h:outputText value="Ud. acaba de Aplicar a un empleo" style="font-size: 1.5em; color:#E34429; " />
+                    <h:form>
+                        <p:commandButton value="ACEPTAR" onclick="PF('dlg2').hide();" icon="ui-icon-circle-check" />
+                    </h:form>
+
+                </h:panelGrid>
+
+            </p:dialog> 
+
 
         </div>
 

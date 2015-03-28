@@ -45,7 +45,7 @@
                 </div>
             </p:panel>
         </div>
-        <div style="width: 60%; float: left;">
+        <div style="width: 80%; float: left;">
             <div style="float: left;">
                 <p:lightBox styleClass="imagebox" id="lighbox1"> 
                     <h:outputLink value="" title="Foto de Perfil">
@@ -55,7 +55,7 @@
                     </h:outputLink>
                 </p:lightBox>
                 <h:form id="formCambiarFoto">
-                    <p:commandLink value="Cambiar Foto" onclick="PF('dlg2').show();"/>
+                    <p:commandLink value="Insertar Logo" onclick="PF('dlg2').show();"/>
                 </h:form>
 
             </div>
@@ -65,7 +65,7 @@
                 <div><span class="title">Clase Empresa:</span><span class="contenido">#{empresaController.selected.idClaseEmpresa.nombre}</span></div>
                 <div><span class="title">UserName:</span><span class="contenido">#{empresaController.selected.username}</span></div>
                 <div><span class="title">Email:</span><span class="contenido">#{empresaController.selected.correoElectronico}</span></div>
-                <div><span class="title">Ciudad:</span><span class="contenido">#{empresaController.selected.idCiudad.nombre}</span></div>
+                <div><span class="title">Ciudad/Canton:</span><span class="contenido">#{empresaController.selected.idCiudad.nombre}</span></div>
                 <div><span class="title">Direccion:</span><span class="contenido">#{empresaController.selected.direccion}</span></div>
             </div>
             <div style="clear:both; margin-top: 10px;">
@@ -73,15 +73,13 @@
                     <h:form id="resultadoEmpleos">
 
                         <p:dataTable style="width: 100%;" id="datalist" value="#{empleoRequeridoController.listEmpleoRequerigo}" var="item"
-                                     selectionMode="single" 
+                                    
+                                     emptyMessage="No se Encuentra Empleados que Esten interesados en las publicaciones emitidas"
                                      selection="#{empleoRequeridoController.selected}"
                                      paginator="true"
                                      paginatorPosition="bottom"
                                      rowKey="#{item.idEmpleoRequerido}"
-                                     rows="11"
-
-
-                                     >
+                                     rows="11">
                             <p:column width="5">
                                 <f:facet name="header">
                                     <h:outputText value="HABILIDAD"/>
@@ -90,7 +88,7 @@
                             </p:column>
                             <p:column width="5">
                                 <f:facet name="header">
-                                    <h:outputText value="CIUDAD"/>
+                                    <h:outputText value="CIUDAD/CANTON"/>
                                 </f:facet>
                                 <h:outputText value="#{item.idPersonalRequerido.idCiudad.nombre}"/>
                             </p:column>
@@ -108,17 +106,23 @@
                                     <f:setPropertyActionListener target="#{usuarioController.selected}" value="#{item.idUsuario}"/>
                                 </p:commandLink>
                             </p:column>
+                            <p:column width="5">
+                                <f:facet name="header">
+                                    <h:outputText value="ACCION"/>
+                                </f:facet>
+                                <p:commandButton value="Contratar" 
+                                                 actionListener="#{empleoRequeridoController.contratarEmpleado(event, item)}"
+                                                 update=":resultadoEmpleos:datalist">
+                                    <f:setPropertyActionListener target="#{usuarioController.selected}" value="#{item.idUsuario}"/>
+                                </p:commandButton>
+                            </p:column>
                         </p:dataTable>
                     </h:form>
                 </p:panel>
             </div>
         </div>
 
-        <div style="width: 20%; float: left;">
-            <p:panel header="Publicidad" style="border: none;">
-                <img src="http://1.bp.blogspot.com/-mcq-h5B3Cjw/VHTnA4UPf4I/AAAAAAAAdvQ/P65oboyee8M/s1600/anunciate.gif" alt="" width="100%" height="150"/>
-            </p:panel>
-        </div>
+
         <p:dialog header="Selecionar foto de Perfil" widgetVar="dlg2" modal="true" height="500" width="800" resizable="false">
 
             <h:form id="SubirFotoUsuario" enctype="multipart/form-data">

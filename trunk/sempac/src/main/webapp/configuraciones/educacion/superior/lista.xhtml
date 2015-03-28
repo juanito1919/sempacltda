@@ -4,22 +4,23 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <h:form id="estudiosSuperioresListForm">
         <p:panel header="Lista de Estudios Superiores" style="border: none; width: 100%; margin: 0 auto;">
-            <p:dataTable id="datalist" value="#{estudiosUniversitariosController.itemsEstudiosUniversitarios}" 
+            <p:dataTable id="datalistU" value="#{estudiosUniversitariosController.itemsEstudiosUniversitarios}" 
                          var="item"
                          selectionMode="single" 
                          selection="#{estudiosUniversitariosController.seleccion}"
                          paginator="true"
                          rowKey="#{item.estudiosUniversitariosPK}"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,20,30"
+                         rows="5"
+
                          >
                 <p:ajax
                     event="rowSelect"
-                    listener="#{estudiosUniversitariosController.mostrar()}"
+                    listener="#{estudiosUniversitariosController.mostrar()}" update="editButton deleteButton"
                     />
                 <p:column >
                     <f:facet name="header">
@@ -27,33 +28,69 @@
                     </f:facet>
                     <h:outputText value="#{item.universidad.nombre}"/>
                 </p:column>
-                
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="CARRERA"/>
                     </f:facet>
                     <h:outputText value="#{item.carrera.nombre}"/>
                 </p:column>
-                
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="TITULO"/>
                     </f:facet>
                     <h:outputText value="#{item.titulo}"/>
                 </p:column>
-                
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="AÑOS ESTUDIO"/>
                     </f:facet>
                     <h:outputText value="#{item.tiempoEstudios}"/>
                 </p:column>
-                
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="AÑO EGRESO"/>
                     </f:facet>
                     <h:outputText value="#{item.anioEgresado}"/>
+                </p:column>
+                <p:column width="10%">
+                    <f:facet name="header">
+                        <h:outputText value="Archivo"/>
+                    </f:facet>
+
+
+                    <h:outputLink id="link1"  value="#{item.url}" target="_blank">
+                        #{estudiosUniversitariosController.detectarEnlace(item.url)}
+                    </h:outputLink>
+
+
+
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="ACCIONES"/>
+                    </f:facet>
+                    <p:commandButton id="editButton"   
+                                     icon="ui-icon-pencil" 
+                                     value="#{bundle.Edit}"
+                                     update=":#{p:component('universidad')},
+                                     :#{p:component('carrera')},
+                                     :#{p:component('titulo')},
+                                     :#{p:component('aniosEstudios')},
+                                     :#{p:component('anioEgreso')}"
+                                     >
+                        <f:setPropertyActionListener target="#{estudiosUniversitariosController.selected}"  value="#{item}"/>
+                    </p:commandButton>
+                    <p:commandButton id="deleteButton"
+                                     value="#{bundle.Delete}"
+                                     actionListener="#{estudiosUniversitariosController.eliminar(event, item)}"
+                                     update=":#{p:component('datalistU')}"
+                                     icon="ui-icon-close">
+                        <p:confirm header="Confirmation" message="Esta seguro que desea Eliminar?" icon="ui-icon-alert" />
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
         </p:panel>

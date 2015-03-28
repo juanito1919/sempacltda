@@ -5,22 +5,28 @@
                 template="../../resources/plantilla/VentanaPrincipalPlantilla.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:f="http://java.sun.com/jsf/core">
+    <style>
+        .jjj{
+            height: 1000px;
+
+        }
+    </style>
     <ui:define  name="formulario">
         <div class="panelTitulo">
             REGISTRO DE USUARIO
         </div> 
-        <h:form id="UsuarioRegistro">
-            <div style="width: 90%; margin-left: 5%; float: left;">
+        <div style=" height: 1000px;width: 90%; margin-left: 5%; float: left;">
+            <h:form id="UsuarioRegistro">
+
 
                 <p:panel header="Información personal" footer="La Informacion Ingresa debe ser veridica" style="border: none; background-color:#FAFAFA; " >
                     <div style="font-size: 1.8em; color:steelblue; margin-top: 10px; margin-bottom: 10px;">
                         Primera vez en Semptac? Registrate y  a las ofertas de trabajo:
                     </div> 
                     <p:growl id="mensaje" showDetail="true" life="3000"/> 
-                    <p:fieldset legend="Datos Personales" style="margin-bottom:10px; ">
+                    <p:fieldset legend="Datos Personales" style="margin-bottom:10px;">
                         <h:panelGrid columns="4" 
                                      border="0" 
                                      cellspacing="4" 
@@ -70,16 +76,19 @@
                                          styleClass="inputText" 
                                          value="#{usuarioController.selected.apellidos}" 
                                          title="#{bundleEtiquetasES.Apellidos}" />
-                            <p:outputLabel value="#{bundleEtiquetasES.UserName}" for="username" />
-                            <p:inputText id="username" 
-                                         value="#{usuarioController.selected.username}" 
-                                         title="#{bundleEtiquetasES.UserName}" 
-                                         required="true" 
-                                         requiredMessage="#{bundleEtiquetasES.UserName} #{bundleEtiquetasES.CampoRequerido}">
-                                <p:ajax event="blur" 
-                                        listener="#{usuarioController.validarUsername()}" 
-                                        update=":UsuarioCreateForm:mensaje"/>
-                            </p:inputText>
+                            <p:outputLabel value="#{bundleEtiquetasES.FechaNacimiento}" for="fechaNacimiento" />
+                            <p:calendar id="fechaNacimiento" 
+                                        value="#{usuarioController.selected.fechaNacimiento}" 
+                                        locale="de"
+                                        navigator="true"
+                                        size="42"
+
+                                        pattern="dd/MM/yyyy" 
+                                        title="#{bundleEtiquetasES.FechaNacimiento}" 
+                                        required="true" 
+                                        requiredMessage="#{bundleEtiquetasES.FechaNacimiento} #{bundleEtiquetasES.CampoRequerido}" 
+                                        maxdate="#{usuarioController.FMaxima}"
+                                        />
 
                         </h:panelGrid>
                     </p:fieldset>
@@ -139,7 +148,7 @@
 
                         </h:panelGrid>
                     </p:fieldset>
-                    <p:fieldset legend="Informacion de Interes" style="margin-bottom:10px">
+                    <p:fieldset legend="Informacion de Domicilio" style="margin-bottom:10px">
                         <h:panelGrid columns="4" 
                                      border="0" 
                                      cellspacing="4" 
@@ -185,7 +194,7 @@
 
 
 
-                            <p:outputLabel value="#{bundleEtiquetasES.Ciudad}" for="ciudad" />
+                            <p:outputLabel value="#{bundleEtiquetasES.Ciudad}/CANTON" for="ciudad" />
                             <p:selectOneMenu id="ciudad" 
                                              value="#{usuarioController.selected.idCiudad}"
                                              required="true" 
@@ -235,78 +244,87 @@
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.MedioTiempo}" itemValue="M" />
                                 <f:selectItem itemLabel="#{bundleEtiquetasES.Otro}" itemValue="O" />  
                             </p:selectOneMenu>
-                            
-                            
-                            <p:outputLabel value="#{bundleEtiquetasES.FechaNacimiento}" for="fechaNacimiento" />
-                            <p:calendar id="fechaNacimiento" 
-                                        value="#{usuarioController.selected.fechaNacimiento}" 
-                                        locale="de"
-                                        navigator="true"
-                                        pattern="dd/MM/yyyy" 
-                                        title="#{bundleEtiquetasES.FechaNacimiento}" 
-                                        required="true" 
-                                        requiredMessage="#{bundleEtiquetasES.FechaNacimiento} #{bundleEtiquetasES.CampoRequerido}" 
-                                        maxdate="#{usuarioController.FMaxima}"
-                                        showOn="button"/>
-                            <pe:tooltip for="fechaNacimiento" value="Fade effect is used by default" showEffect="fadeIn" hideEffect="fadeIn"/> 
                         </h:panelGrid>
-                        <p:commandButton actionListener="#{usuarioController.create}" value="REGISTRAR" update=":UsuarioRegistro:mensaje"/>
-                        <p:commandButton value="CANCELAR"/>
-                    
-                
-                <p:panel id="basic" header="SUSCRIPCION EN SERVIVIOS EMPLEOS Y TALENTOS"  style="margin-bottom:20px">
-                            <h:panelGrid columns="1" cellpadding="10">
-                                <h:outputText
-                                    value="PRIMERO:" style="font-weight: bold; color: #0480be ; text-align: center"/>
-                                <h:outputText
-                                    value="Llena tu FICHA ELECTRÓNICA, con todos los datos correspondientes a tu HOJA DE VIDA o Curriculum Vitae (CV)" />
-                                <h:outputText
-                                    value="SEGUNDO: PAGO DE LA SUSCRIPCION" style="font-weight: bold; color: #0480be"/>
-                                <h:outputText
-                                    value="Para acceder a los Beneficios de “Servicios Empleos y Talentos SEMPTAC CIA. LTDA.”  y poder ingresar al Basto mundo Laboral debes de cancelar la membrecía correspondiente a DIEZ DOLARES AMERICANOS  $10,00 correspondientes a la suscripción indefinida en la Compañía.
-                                    NOTA: Si deseas que llenemos tu hoja de vida en la plataforma comunícate con nosotros al correo semptac.ecu@hotmail.com o al teléfono 0987835870, este servicio tendrá un valor adicional de CINCO DOLARES AMERICANOS  $5,00. 
-                                    El Pago lo podrás realizar en:" />
-                                <h:outputText
-                                    value="BANCO PICHINCHA:" style="font-weight: bold; "/>
-                                <h:outputText
-                                    value="Cuenta corriente # 2100092029, cuenta a nombre de SERVICIOS EMPLEOS Y TALENTOS. 
-                                    En Cualquiera de las Agencias Banco Pichincha a Nivel Nacional o en Pichincha mi Vecino." />
-                                <h:outputText
-                                    value="BANCO DE GUAYAQUIL" style="font-weight: bold; "/>
-                                <h:outputText
-                                    value="Cuenta de Ahorros # 22556147, a nombre de Franklin Ortiz.
-                                    En cualquiera de las Agencias Banco de Guayaquil a Nivel Nacional o en Banco del Barrio." />
-                                <h:outputText
-                                    value="COOPERATIVA DE AHORRO Y CREDITO JARDÍN AZUAYO" style="font-weight: bold; "/>
-                                <h:outputText
-                                    value="Cuenta de Ahorros # 1981999, a nombre de Franklin Ortiz.
-                                    En cualquiera de las Agencias de COP. Jardín Azuayo." />
-                                <h:outputText
-                                    value="Una vez realizado el pago ingresa el NUMERO DE DEPOSITO CORRESPONDIENTE en el BOTON de número de cuenta en la página principal de usuario y quedaras suscrito. Además envíanos tu papeleta de depósito escaneada o una foto de ella al correo electrónico semptac.ecu@hotmail.com" />
-                                <h:outputText
-                                    value="Una vez suscrito tus Datos serán vistos por todas las EMPRESAS, COMPAÑIAS, MUNICIPIOS, ENTIDADES PUBLICAS, PRIVADAS Y DEMAS NEGOCIOS SUSCRITOS A NIVEL NACIONAL, para de esta manera conseguir el empleo que tanto necesitas." />
-                                <h:outputText
-                                    value="TERCERO" style="font-weight: bold; color: #0480be"/>
-                                <h:outputText
-                                    value="BENEFICIOS DE NUESTROS MIEMBROS" />
-                                <h:outputText
-                                    value="* SUSCRIPCION INDEFINIDA O HASTA CONSEGUIR UN EMPLEO." />
-                                <h:outputText
-                                    value="* GESTION RAPIDA, OPORTUNA Y EFICIENTE PARA CONSEGUIR TU EMPLEO DESEADO." />
-                                <h:outputText
-                                    value="* GESTION EN TODOS LAS EMPRESAS, COMPAÑIAS, NEGOCIOS, MUNICIPIOS, ENTIDADES PÚBLICAS Y PRIVADAS SUSCRITAS A NIVEL NACIONAL, PARA CONSEGUIR TU EMPLEO DESEADO CON LA MAYOR BREVEDAD POSIBLE." />
+                    </p:fieldset>
+                    <p:fieldset legend="Informacion de Interes" style="margin-bottom:10px">
+                        <h:panelGrid columns="2" 
+                                     border="0" 
+                                     cellspacing="10" 
+                                     cellpadding="10" 
+                                     rendered="#{usuarioController.selected != null}">
+                            <div style=" color: #0000cc; width: 80%; margin: auto;">
+                                Si deseas Registrate como un Empleado que requiere buscar trabajo como Pasante, entonces haz clic en SI
+                            </div>
+                            <p:selectOneButton id="pasante"
+                                               style="width: 200px!important;"
+                                               value="#{usuarioController.selected.tipo}"
+                                               required="true">
+                                <f:selectItem  itemLabel="NO"   itemEscaped=""  itemValue="U"/>
+                                <f:selectItem itemLabel="SI" itemValue="P"/>
+                            </p:selectOneButton>
+                        </h:panelGrid>
+                    </p:fieldset>
 
-                                <h:outputText
-                                    value="* PUBLICIDAD DE TUS DATOS, CV u HOJA DE VIDA EN TODAS LAS EMPRESAS, COMPAÑIAS, NEGOCIOS, MUNICIPIOS, ENTIDADES PÚBLICAS Y PRIVADAS SUSCRITAS A NIVEL NACIONAL." />
+                    <div style=" width: 25%; margin: auto;  margin-top: 20px;">
+                        <p:commandButton actionListener="#{usuarioController.create}" value="REGISTRAR" icon="ui-icon-disk" update=":UsuarioRegistro:mensaje"/>
+                        <p:commandButton value="CANCELAR" icon="ui-icon-closethick"/>
+                    </div>
 
-                                <h:outputText
-                                    value="* ACCESO A TODOS LOS CLASIFICADOS LABORALES PUBLICADOS POR TODAS LAS EMPRESAS, COMPAÑIAS, NEGOCIOS, MUNICIPIOS, ENTIDADES PÚBLICAS Y PRIVADAS SUSCRITAS A NIVEL NACIONAL." />
 
-                                <h:outputText
-                                    value="* MANEJO RESPONSABLE DE TUS DATOS." />
-                            </h:panelGrid>
-                        </p:panel>
-            </div>
-        </h:form>
+                </p:panel>
+                <p:panel id="basic" header="SUSCRIPCION EN SERVIVIOS EMPLEOS Y TALENTOS"  style=" margin-top: 20px;margin-bottom:20px; border: none;">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText
+                            value="PRIMERO:" style="font-weight: bold; color: #0480be ; text-align: center"/>
+                        <h:outputText
+                            value="Llena tu FICHA ELECTRÓNICA, con todos los datos correspondientes a tu HOJA DE VIDA o Curriculum Vitae (CV)" />
+                        <h:outputText
+                            value="SEGUNDO: PAGO DE LA SUSCRIPCION" style="font-weight: bold; color: #0480be"/>
+                        <h:outputText
+                            value="Para acceder a los Beneficios de “Servicios Empleos y Talentos SEMPTAC CIA. LTDA.”  y poder ingresar al Basto mundo Laboral debes de cancelar la membrecía correspondiente a DIEZ DOLARES AMERICANOS  $10,00 correspondientes a la suscripción indefinida en la Compañía.
+                            NOTA: Si deseas que llenemos tu hoja de vida en la plataforma comunícate con nosotros al correo semptac.ecu@hotmail.com o al teléfono 0987835870, este servicio tendrá un valor adicional de CINCO DOLARES AMERICANOS  $5,00. 
+                            El Pago lo podrás realizar en:" />
+                        <h:outputText
+                            value="BANCO PICHINCHA:" style="font-weight: bold; "/>
+                        <h:outputText
+                            value="Cuenta corriente # 2100092029, cuenta a nombre de SERVICIOS EMPLEOS Y TALENTOS. 
+                            En Cualquiera de las Agencias Banco Pichincha a Nivel Nacional o en Pichincha mi Vecino." />
+                        <h:outputText
+                            value="BANCO DE GUAYAQUIL" style="font-weight: bold; "/>
+                        <h:outputText
+                            value="Cuenta de Ahorros # 22556147, a nombre de Franklin Ortiz.
+                            En cualquiera de las Agencias Banco de Guayaquil a Nivel Nacional o en Banco del Barrio." />
+                        <h:outputText
+                            value="COOPERATIVA DE AHORRO Y CREDITO JARDÍN AZUAYO" style="font-weight: bold; "/>
+                        <h:outputText
+                            value="Cuenta de Ahorros # 1981999, a nombre de Franklin Ortiz.
+                            En cualquiera de las Agencias de COP. Jardín Azuayo." />
+                        <h:outputText
+                            value="Una vez realizado el pago ingresa el NUMERO DE DEPOSITO CORRESPONDIENTE en el BOTON de número de cuenta en la página principal de usuario y quedaras suscrito. Además envíanos tu papeleta de depósito escaneada o una foto de ella al correo electrónico semptac.ecu@hotmail.com" />
+                        <h:outputText
+                            value="Una vez suscrito tus Datos serán vistos por todas las EMPRESAS, COMPAÑIAS, MUNICIPIOS, ENTIDADES PUBLICAS, PRIVADAS Y DEMAS NEGOCIOS SUSCRITOS A NIVEL NACIONAL, para de esta manera conseguir el empleo que tanto necesitas." />
+                        <h:outputText
+                            value="TERCERO" style="font-weight: bold; color: #0480be"/>
+                        <h:outputText
+                            value="BENEFICIOS DE NUESTROS MIEMBROS" />
+                        <h:outputText
+                            value="* SUSCRIPCION INDEFINIDA O HASTA CONSEGUIR UN EMPLEO." />
+                        <h:outputText
+                            value="* GESTION RAPIDA, OPORTUNA Y EFICIENTE PARA CONSEGUIR TU EMPLEO DESEADO." />
+                        <h:outputText
+                            value="* GESTION EN TODOS LAS EMPRESAS, COMPAÑIAS, NEGOCIOS, MUNICIPIOS, ENTIDADES PÚBLICAS Y PRIVADAS SUSCRITAS A NIVEL NACIONAL, PARA CONSEGUIR TU EMPLEO DESEADO CON LA MAYOR BREVEDAD POSIBLE." />
+
+                        <h:outputText
+                            value="* PUBLICIDAD DE TUS DATOS, CV u HOJA DE VIDA EN TODAS LAS EMPRESAS, COMPAÑIAS, NEGOCIOS, MUNICIPIOS, ENTIDADES PÚBLICAS Y PRIVADAS SUSCRITAS A NIVEL NACIONAL." />
+
+                        <h:outputText
+                            value="* ACCESO A TODOS LOS CLASIFICADOS LABORALES PUBLICADOS POR TODAS LAS EMPRESAS, COMPAÑIAS, NEGOCIOS, MUNICIPIOS, ENTIDADES PÚBLICAS Y PRIVADAS SUSCRITAS A NIVEL NACIONAL." />
+
+                        <h:outputText
+                            value="* MANEJO RESPONSABLE DE TUS DATOS." />
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>

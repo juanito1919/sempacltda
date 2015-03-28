@@ -78,7 +78,9 @@ public class Sesion {
             HttpSession sesion = request.getSession();
             if (sesion != null) {
                 //new ActivacionUsuarioMKP().limpiaActivacion();
+                ActivacionUsuario.setUsuario(null);
                 sesion.invalidate();
+                
             }
             String url = ResourceBundle.getBundle("/BundleObjetosES").getString("index");
             FacesContext.getCurrentInstance().getExternalContext().redirect(url);
